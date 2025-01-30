@@ -1,33 +1,42 @@
-import PageHeader from "@/app/components/layout/page-header";
-import { Container, Input, FormGroup, FormControlLabel, Checkbox, Typography, Link, Button, Divider } from "@mui/material";
-import { UsersStep } from "./(2_2_users)/users";
+// src/app/(landing)/signup/page.tsx
+"use client";
+import React from "react";
+import { Box } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import ChooseRole from "./(1_choose_role)/choose-role";
+import ChooseService from "./(2_1_providers_choose_service)/choose-service";
 
-export default function SignUp() {
+export default function SignupPages() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const step = searchParams.get("step");
+  let userMessage = "";
+
+  let stepContent;
+  switch (step) {
+    case "1":
+      userMessage = "Welcome to Carelybay";
+      stepContent = <ChooseRole />;
+      break;
+    case "2":
+      userMessage = "";
+      stepContent = <ChooseService />;
+      break;
+    default:
+      userMessage = "Welcome to Carelybay";
+      stepContent = <ChooseRole />;
+      break;
+  }
+
   return (
-    <Container>
-      <PageHeader
-        heading="Sign up"
-        subtitle="Enter your details to sign-up for a new Carelybay account!"
-      />
-      <Input placeholder="Email*" type="email" fullWidth />
-      <Input placeholder="Create a password" type="password" fullWidth />
-      <FormControlLabel 
-        control={<Checkbox />} 
-        label={
-          <Typography>* I agree to the {" "}
-            <Link href="/terms-of-service" target="_blank" rel="noopener">Terms of Service</Link>
-            {" "} and {" "}
-            <Link href="/privacy-policy" target="_blank" rel="noopener"> Privacy Policy</Link>
-          </Typography>
-        } 
-      />
-      <Button fullWidth>Sign up</Button>
-      <Divider>Or</Divider>
-      <Button fullWidth>Sign up with Google</Button>
-      <Button fullWidth>Sign up with Facebook</Button>
-      <Typography style={{ textAlign: "center"}}>Already using Carelybay? <Link href="/signin">Sign in</Link></Typography>
-      {/* TODO: Remove after testing */}
-      <UsersStep />
-    </Container>
+    <Box>
+      <Box sx={{ display: "flex", alignItems: "center", gap: "1em" }}>
+        {/* "Welcome to Carelybay", "Email sent", etc */}
+        {userMessage && <img src="https://placehold.co/24x24" alt="Message image" width={24} height={24} />}
+        <p>{ userMessage }</p>
+      </Box>
+      {stepContent}
+    </Box>
   );
 }
