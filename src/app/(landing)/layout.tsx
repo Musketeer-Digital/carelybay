@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Container, Box } from "@mui/material";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,5 +11,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <Container maxWidth="md">{children}</Container>;
+  return (
+    <Container maxWidth="lg" sx={{ display: "flex", height: "100vh" }}>
+      <Box sx={{ flex: 2, padding: "20px" }}>{children}</Box> 
+      {/* Feature section */}
+      <Box sx={{ flex: 1, backgroundColor: "rgba(240, 240, 240, 1)", padding: "20px" }}>
+        <h2>Feature Section</h2>
+        <p>Details about the feature...</p>
+      </Box>
+    </Container>
+  )
 }
