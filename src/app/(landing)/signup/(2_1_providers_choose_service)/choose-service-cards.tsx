@@ -1,0 +1,80 @@
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import CardActionArea from "@mui/material/CardActionArea";
+
+const cards = [
+  {
+    id: 1,
+    image: "https://placehold.co/28x28",
+    title: "Childcare",
+  },
+  {
+    id: 2,
+    image: "https://placehold.co/28x28",
+    title: "Au Pairs",
+  },
+  {
+    id: 3,
+    image: "https://placehold.co/28x28",
+    title: "Tutors",
+  },
+  {
+    id: 4,
+    image: "https://placehold.co/28x28",
+    title: "Special needs care",
+  },
+  {
+    id: 5,
+    image: "https://placehold.co/28x28",
+    title: "Aged care",
+  },
+  {
+    id: 6,
+    image: "https://placehold.co/28x28",
+    title: "Household help",
+  },
+];
+
+function ChooseServiceCards() {
+  const [selectedCard, setSelectedCard] = React.useState(0);
+  console.log(selectedCard);
+  return (
+    <Box
+      sx={{
+        width: "100%",
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(min(200px, 100%), 1fr))",
+        gap: 2,
+      }}
+    >
+      {cards.map((card, index) => (
+        <Card key={card.id} sx={{ boxShadow: "none", border: "1px" }}>
+          <CardActionArea
+            onClick={() => setSelectedCard(index)}
+            data-active={selectedCard === index ? "" : undefined}
+            sx={{
+              height: "100%",
+              "&[data-active]": {
+                backgroundColor: "action.selected",
+                "&:hover": {
+                  backgroundColor: "action.selectedHover",
+                },
+              },
+            }}
+          >
+            <CardContent sx={{ height: "100%" }}>
+              <Typography variant="h5" component="div">
+                {card.title}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      ))}
+    </Box>
+  );
+}
+
+export default ChooseServiceCards;

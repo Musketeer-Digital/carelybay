@@ -1,10 +1,13 @@
 // src/app/(landing)/signup/page.tsx
 "use client";
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
+import CustomizedSteppers from "@/app/components/stepper";
 import ChooseRole from "./(1_choose_role)/choose-role";
 import ChooseService from "./(2_1_providers_choose_service)/choose-service";
+
+const MAX_STEPS = 2;
 
 export default function SignupPages() {
   const router = useRouter();
@@ -21,17 +24,21 @@ export default function SignupPages() {
   switch (step) {
     case 1:
       userMessage = "Welcome to Carelybay";
-      stepContent = <ChooseRole onStepChange={onStepChange} />;
+      stepContent = <ChooseRole />;
       break;
     case 2:
       userMessage = "";
-      stepContent = <ChooseService onStepChange={onStepChange} />;
+      stepContent = <ChooseService />;
       break;
     default:
       userMessage = "Welcome to Carelybay";
-      stepContent = <ChooseRole onStepChange={onStepChange} />;
+      stepContent = <ChooseRole />;
       break;
   }
+
+  const nextStep = () => {
+    setStep(step === MAX_STEPS ? 0 : step + 1);
+  };
 
   return (
     <>
@@ -48,6 +55,10 @@ export default function SignupPages() {
         <p>{userMessage}</p>
       </Box>
       {stepContent}
+      <Button variant="primary" onClick={nextStep}>
+        Continue
+      </Button>
+      <CustomizedSteppers step={step} />
     </>
   );
 }
