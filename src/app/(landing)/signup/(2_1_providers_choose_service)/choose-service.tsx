@@ -1,9 +1,13 @@
 import React from "react";
 import { Button } from "@mui/material";
 
-export default function ChooseService() {
+export default function ChooseService({
+  onStepChange,
+}: {
+  onStepChange: (newStep: number) => void;
+}) {
   const nextStep = () => {
-    window.location.search = "step=3";
+    onStepChange(3);
   };
 
   return (
