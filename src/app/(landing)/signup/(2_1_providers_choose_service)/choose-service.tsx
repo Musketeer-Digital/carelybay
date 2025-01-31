@@ -5,7 +5,7 @@ import ChooseServiceCards from "./choose-service-cards";
 export default function ChooseService() {
   return (
     <div>
-      <h2>Choose Your Service</h2>
+      <h2>&lt; Choose your main service</h2>
       <p>Pick your service for the signup process.</p>
       <ChooseServiceCards />
     </div>

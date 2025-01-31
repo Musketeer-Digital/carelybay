@@ -1,5 +1,6 @@
 import { Container, Box } from "@mui/material";
 import type { Metadata } from "next";
+import Content1 from "../components/feature/content1";
 
 export const metadata: Metadata = {
   title: "Carelybay - Login/Signup",
@@ -12,18 +13,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Container maxWidth="lg" sx={{ display: "flex", height: "100vh" }}>
-      <Box sx={{ flex: 2, padding: "20px" }}>{children}</Box>
+    <Container maxWidth="xl" sx={{ display: "flex", height: "100vh" }}>
+      <Box
+        sx={{
+          flex: 2,
+          padding: "4em",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {children}
+      </Box>
       {/* Feature section */}
       <Box
         sx={{
           flex: 1,
           backgroundColor: "rgba(240, 240, 240, 1)",
-          padding: "20px",
+          padding: "4em",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
-        <h2>Feature Section</h2>
-        <p>Details about the feature...</p>
+        <Content1 />
       </Box>
     </Container>
   );
