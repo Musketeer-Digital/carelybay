@@ -133,7 +133,8 @@ variable "service_account_roles" {
     "roles/logging.logWriter",
     "roles/monitoring.metricWriter",
     "roles/monitoring.viewer",
-    "roles/cloudtrace.agent"
+    "roles/cloudtrace.agent",
+    "roles/secretmanager.secretAccessor"
   ]
 }
 
@@ -143,4 +144,7 @@ variable "service_account_email" {
   default     = null
 }
 
-# Update existing service_account_email variable
+variable "environment_variable_keys" {
+  description = "List of non-sensitive keys for environment variables (used for iteration)"
+  type        = list(string)
+}

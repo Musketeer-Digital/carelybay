@@ -24,7 +24,6 @@ resource "google_cloud_run_service" "service" {
     spec {
       containers {
         image = var.image_url
-        
         resources {
           limits = {
             cpu    = var.cpu
@@ -33,15 +32,20 @@ resource "google_cloud_run_service" "service" {
         }
 
         dynamic "env" {
-          for_each = var.environment_variables
+          for_each = var.environment_variable_keys
           content {
-            name  = env.key
-            value = env.value
+            name = env.value
+            value_from {
+              secret_key_ref {
+                name = "${env.value}"
+                key  = "latest"
+              }
+            }
           }
         }
       }
 
-      service_account_name = var.service_account_email
+      service_account_name = google_service_account.service_account[0].email
       container_concurrency = var.container_concurrency
     }
 
@@ -51,7 +55,7 @@ resource "google_cloud_run_service" "service" {
           "autoscaling.knative.dev/maxScale" = var.max_instances
           "autoscaling.knative.dev/minScale" = var.min_instances
         },
-        var.create_vpc_connector  ? {
+        var.create_vpc_connector ? {
           "run.googleapis.com/vpc-access-connector" = google_vpc_access_connector.connector[0].name
           "run.googleapis.com/vpc-access-egress"    = var.vpc_access_egress
         } : {},
@@ -66,8 +70,7 @@ resource "google_cloud_run_service" "service" {
 
   autogenerate_revision_name = true
   depends_on = [
-    google_service_account.service_account,
-    google_project_iam_member.service_account_roles
+    google_service_account.service_account
   ]
 }
 

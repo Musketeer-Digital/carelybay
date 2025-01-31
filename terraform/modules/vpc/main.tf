@@ -63,3 +63,8 @@ resource "google_compute_router_nat" "nat_gateway" {
    filter = "ERRORS_ONLY"
  }
 }
+
+data  "google_compute_address" "nat_addr" {
+  name = "nat-address"
+  depends_on = [google_compute_address.nat_addr]
+}
