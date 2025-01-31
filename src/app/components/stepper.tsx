@@ -4,33 +4,31 @@ import {
   Stack,
   Stepper,
   Step,
-  StepLabel,
   StepConnector,
   stepConnectorClasses,
 } from "@mui/material";
 
-const QontoConnector = styled(StepConnector)(({ theme }) => ({
+const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
-    top: 10,
-    left: "calc(-50% + 16px)",
-    right: "calc(50% + 16px)",
+    top: 22,
   },
   [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      borderColor: "#784af4",
+      backgroundColor: "rgba(255, 104, 23, 1)",
     },
   },
   [`&.${stepConnectorClasses.completed}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      borderColor: "#784af4",
+      backgroundColor: "rgba(255, 104, 23, 1)",
     },
   },
   [`& .${stepConnectorClasses.line}`]: {
-    borderColor: "#eaeaf0",
-    borderTopWidth: 3,
+    height: 3,
+    border: 0,
+    backgroundColor: "#eaeaf0",
     borderRadius: 1,
     ...theme.applyStyles("dark", {
-      borderColor: theme.palette.grey[800],
+      backgroundColor: theme.palette.grey[800],
     }),
   },
 }));
@@ -47,7 +45,7 @@ export default function CustomizedSteppers({ step }: { step: number }) {
       <Stepper
         alternativeLabel
         activeStep={step}
-        connector={<QontoConnector />}
+        connector={<ColorlibConnector />}
       >
         {steps.map((label) => (
           <Step key={label}></Step>

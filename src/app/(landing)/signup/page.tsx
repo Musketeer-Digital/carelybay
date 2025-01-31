@@ -86,7 +86,12 @@ export default function SignupPages() {
       </Button>
       <Box sx={{ marginTop: "auto" }}>
         {showSignInMessage && (
-          <Typography sx={{ textAlign: "center" }}>
+          <Typography
+            fontWeight={"400"}
+            fontSize={"18px"}
+            lineHeight={"27px"}
+            sx={{ textAlign: "center" }}
+          >
             Already using Careleybay?{" "}
             <Link href="/signin" style={{ fontWeight: "600" }}>
               Sign in
