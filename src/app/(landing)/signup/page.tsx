@@ -22,6 +22,14 @@ export default function SignupPages() {
     setStep(newStep);
   };
 
+  const prevStep = () => {
+    setStep(step === 1 ? MAX_STEPS : step - 1);
+  };
+
+  const nextStep = () => {
+    setStep(step === MAX_STEPS ? 0 : step + 1);
+  };
+
   switch (step) {
     case 1:
       userMessage = "Welcome to Carelybay";
@@ -31,7 +39,7 @@ export default function SignupPages() {
     case 2:
       userMessage = "";
       showSignInMessage = false;
-      stepContent = <ChooseService />;
+      stepContent = <ChooseService prevStep={prevStep} />;
       break;
     default:
       userMessage = "Welcome to Carelybay";
@@ -39,10 +47,6 @@ export default function SignupPages() {
       stepContent = <ChooseRole />;
       break;
   }
-
-  const nextStep = () => {
-    setStep(step === MAX_STEPS ? 0 : step + 1);
-  };
 
   return (
     <Box
@@ -53,7 +57,14 @@ export default function SignupPages() {
         height: "100%",
       }}
     >
-      <Box sx={{ display: "flex", alignItems: "center", gap: "1em" }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: "1em",
+          height: "48px",
+        }}
+      >
         {/* "Welcome to Carelybay", "Email sent", etc */}
         {userMessage && (
           <img
