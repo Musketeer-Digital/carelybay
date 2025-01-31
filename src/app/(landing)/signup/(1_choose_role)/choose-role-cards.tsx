@@ -1,21 +1,18 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
+import { Box, Card, CardContent, Typography } from "@mui/material";
 import CardActionArea from "@mui/material/CardActionArea";
-
-import Image from "next/image";
+import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 const cards = [
   {
     id: 1,
-    image: "https://placehold.co/28x28",
+    image: <WorkOutlineIcon />,
     title: "Post a job",
   },
   {
     id: 2,
-    image: "https://placehold.co/28x28",
+    image: <PersonAddIcon />,
     title: "Find a job",
   },
 ];
@@ -66,13 +63,7 @@ function ChooseRoleCards() {
                   borderStyle: "solid",
                 }}
               >
-                <Image
-                  src={card.image}
-                  alt={card.title}
-                  width={28}
-                  height={28}
-                  unoptimized
-                />
+                {card.image}
               </Box>
               <Box sx={{ display: "flex", alignSelf: "flex-end", mt: 1 }}>
                 <Typography variant="h6" fontWeight="bold">
