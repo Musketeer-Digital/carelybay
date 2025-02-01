@@ -7,8 +7,9 @@ import Link from "next/link";
 import CustomizedSteppers from "@/app/components/stepper";
 import ChooseRole from "./(1_choose_role)/choose-role";
 import ChooseService from "./(2_1_providers_choose_service)/choose-service";
+import SignUp from "./(3_signup)/signup";
 
-const MAX_STEPS = 2;
+const MAX_STEPS = 3;
 
 export default function SignupPages() {
   const router = useRouter();
@@ -40,6 +41,11 @@ export default function SignupPages() {
       userMessage = "";
       showSignInMessage = false;
       stepContent = <ChooseService prevStep={prevStep} />;
+      break;
+    case 3:
+      userMessage = "Welcome to Carelybay";
+      showSignInMessage = true;
+      stepContent = <SignUp />;
       break;
     default:
       userMessage = "Welcome to Carelybay";

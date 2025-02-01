@@ -11,6 +11,8 @@ import {
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
     top: 22,
+    left: "calc(-50% + 6px)",
+    right: "calc(50% + 6px)",
   },
   [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
@@ -23,12 +25,12 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
     },
   },
   [`& .${stepConnectorClasses.line}`]: {
-    height: 3,
+    height: 8,
     border: 0,
     backgroundColor: "#eaeaf0",
-    borderRadius: 1,
+    borderRadius: "8px",
     ...theme.applyStyles("dark", {
-      backgroundColor: theme.palette.grey[800],
+      backgroundColor: "rgba(228, 228, 228, 1)",
     }),
   },
 }));
@@ -37,6 +39,7 @@ const steps = [
   "DEFAULT",
   "Create your Carelybay account (select role)",
   "Choose your service",
+  "Sign up",
 ];
 
 export default function CustomizedSteppers({ step }: { step: number }) {
@@ -46,9 +49,10 @@ export default function CustomizedSteppers({ step }: { step: number }) {
         alternativeLabel
         activeStep={step}
         connector={<ColorlibConnector />}
+        sx={{ gap: "0px" }}
       >
         {steps.map((label) => (
-          <Step key={label}></Step>
+          <Step key={label} sx={{ minWidth: "10px", px: 0 }}></Step>
         ))}
       </Stepper>
     </Stack>
