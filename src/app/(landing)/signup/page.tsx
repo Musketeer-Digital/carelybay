@@ -92,7 +92,7 @@ export default function SignupPages() {
             lineHeight={"27px"}
             sx={{ textAlign: "center" }}
           >
-            Already using Careleybay?{" "}
+            Already using Carelybay?{" "}
             <Link href="/signin" style={{ fontWeight: "600" }}>
               Sign in
             </Link>
