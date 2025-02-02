@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Banner() {
   return (
-    <>
+    <Box>
       {/* Logo and Name */}
       <Box
         sx={{
@@ -24,6 +24,6 @@ export default function Banner() {
         />
         <Typography variant="h5">Logotype</Typography>
       </Box>
-    </>
+    </Box>
   );
 }
