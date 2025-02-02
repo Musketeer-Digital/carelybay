@@ -101,6 +101,15 @@ resource "google_vpc_access_connector" "connector" {
   ]
 }
 
+resource "google_cloud_run_service_iam_member" "noauth" {
+  count = var.disable_rbac ? 1 : 0
+  location = google_cloud_run_service.service.location
+  project  = google_cloud_run_service.service.project
+  service  = google_cloud_run_service.service.name
+  role     = "roles/run.invoker"
+  member   = "allUsers"
+}
+
 # Enable required APIs
 resource "google_project_service" "run_api" {
   project = var.project_id
