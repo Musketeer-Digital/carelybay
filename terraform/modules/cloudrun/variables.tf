@@ -148,3 +148,9 @@ variable "environment_variable_keys" {
   description = "List of non-sensitive keys for environment variables (used for iteration)"
   type        = list(string)
 }
+
+variable "disable_rbac" {
+  description = "Disable/enable RBAC authentication in cloudrun"
+  type        = bool
+  default     = false
+}

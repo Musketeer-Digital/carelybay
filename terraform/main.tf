@@ -45,6 +45,7 @@ module "cloud_run" {
   vpc_network          = local.vpc_network_name
   vpc_connector_subnet  = local.cloudrun_subnet
   vpc_access_egress    = "all-traffic"
+  disable_rbac         = true
 
   depends_on = [module.vpc, module.gcr]
 }
