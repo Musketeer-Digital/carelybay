@@ -2,7 +2,6 @@
 "use client";
 import React from "react";
 import { Box, Button, Typography } from "@mui/material";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import CustomizedSteppers from "@/app/components/stepper";
 import ChooseRole from "./(1_choose_role)/choose-role";
@@ -11,16 +10,11 @@ import ChooseService from "./(2_1_providers_choose_service)/choose-service";
 const MAX_STEPS = 2;
 
 export default function SignupPages() {
-  const router = useRouter();
   const [step, setStep] = React.useState(1);
 
   let userMessage = "";
   let showSignInMessage = true;
   let stepContent;
-
-  const onStepChange = (newStep: number) => {
-    setStep(newStep);
-  };
 
   const prevStep = () => {
     setStep(step === 1 ? MAX_STEPS : step - 1);
@@ -98,7 +92,7 @@ export default function SignupPages() {
             </Link>
           </Typography>
         )}
-        <CustomizedSteppers step={step} />
+        <CustomizedSteppers activeStep={step} />
       </Box>
     </Box>
   );
