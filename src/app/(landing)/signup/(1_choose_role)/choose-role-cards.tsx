@@ -19,7 +19,6 @@ const cards = [
 
 function ChooseRoleCards() {
   const [selectedCard, setSelectedCard] = React.useState(0);
-  console.log(selectedCard);
   return (
     <Box
       sx={{

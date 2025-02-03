@@ -1,37 +1,6 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
-import {
-  Stack,
-  Stepper,
-  Step,
-  StepConnector,
-  stepConnectorClasses,
-} from "@mui/material";
-
-const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
-  [`&.${stepConnectorClasses.alternativeLabel}`]: {
-    top: 22,
-  },
-  [`&.${stepConnectorClasses.active}`]: {
-    [`& .${stepConnectorClasses.line}`]: {
-      backgroundColor: "rgba(255, 104, 23, 1)",
-    },
-  },
-  [`&.${stepConnectorClasses.completed}`]: {
-    [`& .${stepConnectorClasses.line}`]: {
-      backgroundColor: "rgba(255, 104, 23, 1)",
-    },
-  },
-  [`& .${stepConnectorClasses.line}`]: {
-    height: 3,
-    border: 0,
-    backgroundColor: "#eaeaf0",
-    borderRadius: 1,
-    ...theme.applyStyles("dark", {
-      backgroundColor: theme.palette.grey[800],
-    }),
-  },
-}));
+import { Stack, Box, MobileStepper } from "@mui/material";
 
 const steps = [
   "DEFAULT",
@@ -39,18 +8,35 @@ const steps = [
   "Choose your service",
 ];
 
-export default function CustomizedSteppers({ step }: { step: number }) {
+export const StepLineIcon = ({ active }: { active: boolean }) => {
+  return (
+    <Box
+      sx={{
+        maxWidth: 120,
+        height: 8,
+        backgroundColor: active ? "primary.main" : "divider",
+        borderRadius: 1,
+      }}
+    />
+  );
+};
+
+export default function CustomizedSteppers({
+  activeStep,
+}: {
+  activeStep: number;
+}) {
+  console.log("active step", activeStep);
   return (
     <Stack sx={{ width: "100%" }} spacing={4}>
-      <Stepper
-        alternativeLabel
-        activeStep={step}
-        connector={<ColorlibConnector />}
-      >
-        {steps.map((label) => (
-          <Step key={label}></Step>
-        ))}
-      </Stepper>
+      <MobileStepper
+        variant="dots"
+        position="static"
+        activeStep={activeStep}
+        steps={3}
+        nextButton={null}
+        backButton={null}
+      ></MobileStepper>
     </Stack>
   );
 }
