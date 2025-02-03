@@ -6,6 +6,7 @@ const steps = [
   "DEFAULT",
   "Create your Carelybay account (select role)",
   "Choose your service",
+  "Sign up",
 ];
 
 export const StepLineIcon = ({ active }: { active: boolean }) => {
