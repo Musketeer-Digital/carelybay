@@ -4,12 +4,21 @@ import Image from "next/image";
 export default function Content1() {
   return (
     <Box>
-      <Box sx={{ borderRadius: "20px", overflow: "hidden" }}>
+      <Box
+        sx={{
+          position: "relative",
+          width: "100%",
+          height: "auto",
+          borderRadius: 20,
+          overflow: "hidden",
+          marginBottom: 3,
+        }}
+      >
         <Image
-          src={"https://placehold.co/390x293"}
+          src={"https://placehold.co/1024x768"}
           alt="Child care worker"
-          width={390}
-          height={293}
+          height={100}
+          width={100}
           unoptimized
         />
       </Box>
@@ -18,10 +27,12 @@ export default function Content1() {
         fontWeight={"700"}
         fontSize={"24px"}
         lineHeight={"36px"}
+        sx={{
+          marginBottom: 3,
+        }}
       >
         Your Trusted Partner in Finding the Perfect Service!
       </Typography>
-      <br />
       <Typography letterSpacing={"1px"}>
         &#9733;&#9733;&#9733;&#9733;&#9733;
       </Typography>

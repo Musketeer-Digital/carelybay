@@ -50,8 +50,7 @@ export default function SignupPages() {
 
   return (
     <Container
-      maxWidth="lg"
-      sx={{ display: "flex", flexDirection: "column", height: "100vh" }}
+      sx={{ display: "flex", flexDirection: "column", height: "100%" }}
     >
       <Box
         sx={{
@@ -59,6 +58,7 @@ export default function SignupPages() {
           alignItems: "center",
           gap: "1em",
           height: "48px",
+          marginBottom: 4,
         }}
       >
         {/* User Notification Message */}
@@ -70,7 +70,7 @@ export default function SignupPages() {
             height={24}
           />
         )}
-        <Typography>{userMessage}</Typography>
+        <Typography fontWeight={400}>{userMessage}</Typography>
       </Box>
       {/* Step Content */}
       {stepContent}
@@ -85,7 +85,7 @@ export default function SignupPages() {
         {showSignInMessage && (
           <Typography
             variant="h5"
-            sx={{ textAlign: "center", marginBottom: 5 }}
+            sx={{ textAlign: "center", marginBottom: 6 }}
           >
             Already using Carelybay?&nbsp;
             <Link component={NextLink} href="/signin">

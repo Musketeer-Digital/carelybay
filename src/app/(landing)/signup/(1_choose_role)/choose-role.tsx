@@ -5,7 +5,14 @@ import ChooseRoleCards from "./choose-role-cards";
 
 export default function ChooseRole() {
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        gap: 2,
+      }}
+    >
       <PageHeader
         heading="Create your Carelybay account"
         subtitle="Choose your role"
