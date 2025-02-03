@@ -1,6 +1,6 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
-import { Stack, Box, MobileStepper } from "@mui/material";
+import { Stack, Box } from "@mui/material";
 
 const steps = [
   "DEFAULT",
@@ -9,35 +9,30 @@ const steps = [
   "Sign up",
 ];
 
-export const StepLineIcon = ({ active }: { active: boolean }) => {
-  return (
-    <Box
-      sx={{
-        maxWidth: 120,
-        height: 8,
-        backgroundColor: active ? "primary.main" : "divider",
-        borderRadius: 1,
-      }}
-    />
-  );
-};
+const ProgressBarSegment = styled(Box)<{ active: boolean }>(
+  ({ theme, active }) => ({
+    width: 120,
+    height: 8,
+    borderRadius: 8,
+    backgroundColor: active
+      ? theme.palette.primary.main
+      : theme.palette.divider,
+    transition: "background-color 0.17s",
+  }),
+);
 
 export default function CustomizedSteppers({
   activeStep,
 }: {
   activeStep: number;
 }) {
-  console.log("active step", activeStep);
   return (
     <Stack sx={{ width: "100%" }} spacing={4}>
-      <MobileStepper
-        variant="dots"
-        position="static"
-        activeStep={activeStep}
-        steps={3}
-        nextButton={null}
-        backButton={null}
-      ></MobileStepper>
+      <Box sx={{ display: "flex", justifyContent: "center", gap: 0.5 }}>
+        {steps.map((_, index) => (
+          <ProgressBarSegment key={index} active={index <= activeStep} />
+        ))}
+      </Box>
     </Stack>
   );
 }

@@ -16,7 +16,7 @@ export default function RootLayout({
     <Container
       maxWidth={false}
       disableGutters
-      sx={{ display: "flex", height: "100vh" }}
+      sx={{ display: "flex", minHeight: "100vh", width: "100vw" }}
     >
       {/* Left Section */}
       <Box
@@ -36,9 +36,10 @@ export default function RootLayout({
         sx={{
           flex: 1,
           backgroundColor: "rgba(240, 240, 240, 1)",
-          padding: "4em",
+          padding: 8,
           alignItems: "center",
           justifyContent: "center",
+          display: { xs: "none", md: "flex" },
         }}
       >
         <Content1 />

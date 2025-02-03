@@ -11,7 +11,7 @@ export default function PageHeader({
   subtitle = "<Subtitle required>",
 }: PageHeaderProps) {
   return (
-    <Box>
+    <Box sx={{ marginBottom: 2 }}>
       <Typography variant="h4" fontWeight="bold" marginBottom={1}>
         {heading}
       </Typography>

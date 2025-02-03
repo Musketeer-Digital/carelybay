@@ -15,19 +15,18 @@ export default function CardDisplay({ cards }: { cards: DisplayCardInfo[] }) {
     <Box
       sx={{
         width: "100%",
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fill, minmax(min(200px, 100%), 1fr))",
+        display: "flex",
         gap: 2,
         mb: 4,
       }}
     >
       {cards.map((card, index) => (
-        <Card key={card.id} sx={{ boxShadow: "none", border: "1px" }}>
+        <Card key={card.id} sx={{ boxShadow: "none", border: "1px", flex: 1 }}>
           <CardActionArea
             onClick={() => setSelectedCard(index)}
             data-active={selectedCard === index ? "" : undefined}
             sx={{
-              height: "100%",
+              height: 120,
               "&[data-active], &:hover": {
                 backgroundColor: "action.selected",
               },
@@ -35,10 +34,16 @@ export default function CardDisplay({ cards }: { cards: DisplayCardInfo[] }) {
               border: "1px",
               borderColor: "#D9D9D9",
               borderStyle: "solid",
-              padding: 1,
             }}
           >
-            <CardContent sx={{ height: "100%" }}>
+            <CardContent
+              sx={{
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+            >
               <CardImage
                 image={card.image}
                 isSelected={selectedCard === index}

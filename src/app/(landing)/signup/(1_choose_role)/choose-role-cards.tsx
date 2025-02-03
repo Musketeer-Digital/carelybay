@@ -8,12 +8,12 @@ const cards: DisplayCardInfo[] = [
   {
     id: 1,
     image: <WorkOutlineIcon />,
-    title: "Post a job",
+    title: "Post a Job",
   },
   {
     id: 2,
     image: <PersonAddIcon />,
-    title: "Find a job",
+    title: "Find a Job",
   },
 ];
 
