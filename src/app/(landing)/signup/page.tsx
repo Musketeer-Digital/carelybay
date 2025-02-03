@@ -50,7 +50,7 @@ export default function SignupPages() {
 
   return (
     <Container
-      maxWidth="md"
+      maxWidth="lg"
       sx={{ display: "flex", flexDirection: "column", height: "100vh" }}
     >
       <Box
