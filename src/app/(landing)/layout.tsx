@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <Container
-      maxWidth="xl"
+      maxWidth={false}
       disableGutters
       sx={{ display: "flex", height: "100vh" }}
     >
