@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import PageHeader from "@/app/components/layout/page-header";
 import ChooseRoleCards from "./choose-role-cards";
 
