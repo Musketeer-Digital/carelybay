@@ -1,20 +1,6 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
-import {
-  Stack,
-  Stepper,
-  Step,
-  StepConnector,
-  stepConnectorClasses,
-  StepIcon,
-  Box,
-} from "@mui/material";
-
-const HiddenConnector = styled(StepConnector)(({ theme }) => ({
-  [`&.${stepConnectorClasses.horizontal}`]: {
-    display: "none",
-  },
-}));
+import { Stack, Box, MobileStepper } from "@mui/material";
 
 const steps = [
   "DEFAULT",
@@ -26,7 +12,7 @@ export const StepLineIcon = ({ active }: { active: boolean }) => {
   return (
     <Box
       sx={{
-        width: 120,
+        maxWidth: 120,
         height: 8,
         backgroundColor: active ? "primary.main" : "divider",
         borderRadius: 1,
@@ -43,17 +29,14 @@ export default function CustomizedSteppers({
   console.log("active step", activeStep);
   return (
     <Stack sx={{ width: "100%" }} spacing={4}>
-      <Stepper
-        alternativeLabel
+      <MobileStepper
+        variant="dots"
+        position="static"
         activeStep={activeStep}
-        connector={<HiddenConnector />}
-      >
-        {steps.map((label, i) => (
-          <Step key={label} sx={{ px: 0.5, py: 2 }}>
-            <StepIcon icon={<StepLineIcon active={activeStep === i} />} />
-          </Step>
-        ))}
-      </Stepper>
+        steps={3}
+        nextButton={null}
+        backButton={null}
+      ></MobileStepper>
     </Stack>
   );
 }
