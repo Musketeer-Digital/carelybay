@@ -49,7 +49,10 @@ export default function SignupPages() {
   }
 
   return (
-    <Container maxWidth="md">
+    <Container
+      maxWidth="md"
+      sx={{ display: "flex", flexDirection: "column", height: "100vh" }}
+    >
       <Box
         sx={{
           display: "flex",
@@ -58,7 +61,7 @@ export default function SignupPages() {
           height: "48px",
         }}
       >
-        {/* "Welcome to Carelybay", "Email sent", etc */}
+        {/* User Notification Message */}
         {userMessage && (
           <img
             src="https://placehold.co/24x24"
@@ -69,6 +72,7 @@ export default function SignupPages() {
         )}
         <Typography>{userMessage}</Typography>
       </Box>
+      {/* Step Content */}
       {stepContent}
       <Button
         variant="primary"
