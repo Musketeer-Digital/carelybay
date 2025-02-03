@@ -1,6 +1,4 @@
 import { createTheme, ThemeOptions } from "@mui/material/styles";
-import { ButtonPropsVariantOverrides } from "@mui/material/Button";
-import { OverridableStringUnion } from "@mui/types";
 
 // Extend the ButtonPropsVariantOverrides to include the custom variant
 declare module "@mui/material/Button" {
@@ -28,6 +26,7 @@ const themeOptions: ThemeOptions = {
     },
     divider: "#E4E4E4",
     action: {
+      active: "#FF6817",
       selected: "#E0E8EF",
     },
     grey: {
@@ -35,6 +34,7 @@ const themeOptions: ThemeOptions = {
     },
   },
   components: {
+    // * COMPONENT -- Button
     MuiButton: {
       styleOverrides: {
         // Name of the slot
@@ -65,6 +65,46 @@ const themeOptions: ThemeOptions = {
         },
       },
     },
+    // * COMPONENT -- Links
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          color: "#453E3B",
+          fontWeight: "600",
+          textDecoration: "underline",
+        },
+      },
+    },
+    // * COMPONENT -- Progress Bar
+    MuiMobileStepper: {
+      styleOverrides: {
+        root: {
+          variants: [
+            {
+              props: { variant: "dots" },
+              style: {
+                display: "flex",
+                justifyContent: "center",
+
+                "& .MuiMobileStepper-dot": {
+                  maxWidth: 128,
+                  minWidth: 128,
+                  flex: 1,
+                  height: 8,
+                  backgroundColor: "#E4E4E4",
+                  borderRadius: 4,
+                  marginLeft: 3,
+                  marginRight: 3,
+                },
+                "& .MuiMobileStepper-dotActive": {
+                  backgroundColor: "#FF6817",
+                },
+              },
+            },
+          ],
+        },
+      },
+    },
   },
   typography: {
     fontFamily: '"Poppins", "Helvetica", "Arial", sans-serif',
@@ -72,6 +112,11 @@ const themeOptions: ThemeOptions = {
 
     h4: {
       lineHeight: 1.35,
+    },
+    h5: {
+      fontWeight: 400,
+      fontSize: 18,
+      lineHeight: 1.5,
     },
   },
 };

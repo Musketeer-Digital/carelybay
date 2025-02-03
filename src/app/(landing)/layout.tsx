@@ -1,4 +1,4 @@
-import { Container, Box } from "@mui/material";
+import { Container, Box, Stack } from "@mui/material";
 import type { Metadata } from "next";
 import Content1 from "../components/feature/content1";
 
@@ -13,17 +13,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Container maxWidth="xl" sx={{ display: "flex", height: "100vh" }}>
+    <Container
+      maxWidth="xl"
+      disableGutters
+      sx={{ display: "flex", height: "100vh" }}
+    >
+      {/* Left Section */}
       <Box
         sx={{
           flex: 2,
-          padding: "4em",
+          paddingTop: 8,
+          paddingBottom: 2,
           alignItems: "center",
           justifyContent: "center",
         }}
       >
         {children}
       </Box>
+
       {/* Feature section */}
       <Box
         sx={{

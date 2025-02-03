@@ -1,39 +1,6 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
-import {
-  Stack,
-  Stepper,
-  Step,
-  StepConnector,
-  stepConnectorClasses,
-} from "@mui/material";
-
-const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
-  [`&.${stepConnectorClasses.alternativeLabel}`]: {
-    top: 22,
-    left: "calc(-50% + 6px)",
-    right: "calc(50% + 6px)",
-  },
-  [`&.${stepConnectorClasses.active}`]: {
-    [`& .${stepConnectorClasses.line}`]: {
-      backgroundColor: "rgba(255, 104, 23, 1)",
-    },
-  },
-  [`&.${stepConnectorClasses.completed}`]: {
-    [`& .${stepConnectorClasses.line}`]: {
-      backgroundColor: "rgba(255, 104, 23, 1)",
-    },
-  },
-  [`& .${stepConnectorClasses.line}`]: {
-    height: 8,
-    border: 0,
-    backgroundColor: "#eaeaf0",
-    borderRadius: "8px",
-    ...theme.applyStyles("dark", {
-      backgroundColor: "rgba(228, 228, 228, 1)",
-    }),
-  },
-}));
+import { Stack, Box, MobileStepper } from "@mui/material";
 
 const steps = [
   "DEFAULT",
@@ -42,19 +9,35 @@ const steps = [
   "Sign up",
 ];
 
-export default function CustomizedSteppers({ step }: { step: number }) {
+export const StepLineIcon = ({ active }: { active: boolean }) => {
+  return (
+    <Box
+      sx={{
+        maxWidth: 120,
+        height: 8,
+        backgroundColor: active ? "primary.main" : "divider",
+        borderRadius: 1,
+      }}
+    />
+  );
+};
+
+export default function CustomizedSteppers({
+  activeStep,
+}: {
+  activeStep: number;
+}) {
+  console.log("active step", activeStep);
   return (
     <Stack sx={{ width: "100%" }} spacing={4}>
-      <Stepper
-        alternativeLabel
-        activeStep={step}
-        connector={<ColorlibConnector />}
-        sx={{ gap: "0px" }}
-      >
-        {steps.map((label) => (
-          <Step key={label} sx={{ minWidth: "10px", px: 0 }}></Step>
-        ))}
-      </Stepper>
+      <MobileStepper
+        variant="dots"
+        position="static"
+        activeStep={activeStep}
+        steps={3}
+        nextButton={null}
+        backButton={null}
+      ></MobileStepper>
     </Stack>
   );
 }

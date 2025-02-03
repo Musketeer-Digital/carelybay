@@ -50,7 +50,6 @@ const cards = [
 
 function ChooseServiceCards() {
   const [selectedCard, setSelectedCard] = React.useState(0);
-  console.log(selectedCard);
   return (
     <Box
       sx={{
