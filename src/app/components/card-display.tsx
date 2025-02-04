@@ -18,6 +18,8 @@ export default function CardDisplay({ cards }: { cards: DisplayCardInfo[] }) {
         display: "flex",
         gap: 2,
         mb: 4,
+
+        flexDirection: { xs: "column", sm: "row" },
       }}
     >
       {cards.map((card, index) => (

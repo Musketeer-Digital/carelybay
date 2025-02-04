@@ -7,6 +7,8 @@ import CustomizedSteppers from "@/app/components/stepper";
 import ChooseRole from "./(1_choose_role)/choose-role";
 import ChooseService from "./(2_1_providers_choose_service)/choose-service";
 import SignUp from "./(3_signup)/signup";
+import LandingActions from "./LandingActions";
+import Image from "next/image";
 
 const MAX_STEPS = 3;
 
@@ -62,39 +64,21 @@ export default function SignupPages() {
         }}
       >
         {/* User Notification Message */}
-        {userMessage && (
-          <img
-            src="https://placehold.co/24x24"
-            alt="Message image"
-            width={24}
-            height={24}
-          />
-        )}
-        <Typography fontWeight={400}>{userMessage}</Typography>
+        <Image
+          src="https://placehold.co/24x24"
+          alt="Message image"
+          width={24}
+          height={24}
+        />
+        <Typography variant="body1">Welcome to Carelybay</Typography>
       </Box>
       {/* Step Content */}
       {stepContent}
-      <Button
-        variant="primary"
-        onClick={nextStep}
-        sx={{ width: "200px", height: "48px", alignSelf: "end" }}
-      >
-        Continue
-      </Button>
-      <Box sx={{ marginTop: "auto" }}>
-        {showSignInMessage && (
-          <Typography
-            variant="h5"
-            sx={{ textAlign: "center", marginBottom: 6 }}
-          >
-            Already using Carelybay?&nbsp;
-            <Link component={NextLink} href="/signin">
-              Sign in
-            </Link>
-          </Typography>
-        )}
-        <CustomizedSteppers activeStep={step} />
-      </Box>
+      <LandingActions
+        nextStep={nextStep}
+        showSignInMessage={showSignInMessage}
+        step={step}
+      />
     </Container>
   );
 }

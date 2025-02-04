@@ -39,7 +39,7 @@ export default function RootLayout({
           padding: 8,
           alignItems: "center",
           justifyContent: "center",
-          display: { xs: "none", md: "flex" },
+          display: { xs: "none", sm: "none", md: "flex" },
         }}
       >
         <Content1 />
