@@ -13,3 +13,9 @@ output "cloudrun_service_url" {
   description = "Cloudrun service URL"
   value       = module.cloud_run.service_url
 }
+
+output "service_account_key" {
+  description = "Service account key (base64-encoded)"
+  value       = module.github_actions_sa.service_account_key
+  sensitive   = true
+}

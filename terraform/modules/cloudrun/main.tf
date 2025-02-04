@@ -58,7 +58,10 @@ resource "google_cloud_run_service" "service" {
         var.create_vpc_connector ? {
           "run.googleapis.com/vpc-access-connector" = google_vpc_access_connector.connector[0].name
           "run.googleapis.com/vpc-access-egress"    = var.vpc_access_egress
-        } : {},
+        } : {
+          "run.googleapis.com/vpc-access-connector" = var.vpc_connector_name
+          "run.googleapis.com/vpc-access-egress"    = var.vpc_access_egress
+        }
       )
     }
   }

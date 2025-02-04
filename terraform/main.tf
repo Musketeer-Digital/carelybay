@@ -30,12 +30,32 @@ module "secrets" {
   cloudrun_service_account = "${local.cloudrun_service_account}@${var.project_id}.iam.gserviceaccount.com"
 }
 
+module "cloud_run_dev" {
+  source = "./modules/cloudrun"
+
+  project_id           = var.project_id
+  region               = var.region
+  service_name         = "carelybay-frontend-dev"
+  image_url            = "${module.gcr.repository_url}/carelybay-frontend:latest" # push manually for now
+  create_service_account     = true
+  service_account_id         = "${local.cloudrun_service_account}-dev"
+  environment_variable_keys   = keys(local.secret_names)
+  create_vpc_connector  = false
+  vpc_connector_name    = "carelybay-connector"
+  vpc_network          = local.vpc_network_name
+  vpc_connector_subnet  = local.cloudrun_subnet
+  vpc_access_egress    = "all-traffic"
+  disable_rbac         = true
+
+  depends_on = [module.vpc, module.gcr, module.cloud_run]
+}
+
 module "cloud_run" {
   source = "./modules/cloudrun"
 
   project_id           = var.project_id
   region               = var.region
-  service_name         = "carelybay-frontend"
+  service_name         = "carelybay-frontend-test"
   image_url            = "${module.gcr.repository_url}/carelybay-frontend:latest" # push manually for now
   create_service_account     = true
   service_account_id         = local.cloudrun_service_account
@@ -48,6 +68,12 @@ module "cloud_run" {
   disable_rbac         = true
 
   depends_on = [module.vpc, module.gcr]
+}
+
+module "github_actions_sa" {
+  source = "./modules/iam"
+  project_id        = var.project_id
+  service_account_id = "github-actions-cicd"
 }
 
 module "vpc" {

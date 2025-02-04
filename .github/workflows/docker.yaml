@@ -1,0 +1,74 @@
+name: Build and Deploy
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - gha
+env:
+  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}  # Your GCP project ID
+  REGION: australia-southeast1                 # Region for Cloud Run
+  ARTIFACT_REGISTRY_REPO: carelybay-app              # Artifact Registry repository name
+  IMAGE_NAME: carelybay-frontend                               # Name of the container image
+  # CLOUD_RUN_SERVICE: carelybay-frontend       # Name of the Cloud Run service
+
+jobs:
+  build-push:
+    runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo:7.0
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongosh --eval 'db.runCommand(\"ping\").ok'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v3
+
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker ${{env.REGION}}-docker.pkg.dev
+
+      - name: Determine image tag
+        id: determine_tag
+        run: |
+          if [[ "$GITHUB_REF" == "refs/heads/main" ]]; then
+            echo "TAG=latest" >> $GITHUB_OUTPUT
+            echo "CLOUD_RUN_SERVICE=carelybay-frontend-test" >> $GITHUB_OUTPUT
+          elif [[ "$GITHUB_REF" == "refs/heads/dev" || "$GITHUB_REF" == "refs/heads/gha" ]]; then
+            echo "TAG=dev" >> $GITHUB_OUTPUT
+            echo "CLOUD_RUN_SERVICE=carelybay-frontend-dev" >> $GITHUB_OUTPUT
+          else
+            echo "TAG=unknown" >> $GITHUB_OUTPUT
+          fi
+
+      # Build the Docker image with the appropriate tag
+      - name: Build Docker image
+        env:
+          MONGODB_URL: mongodb://localhost:27017/carelybay-frontend
+        run: |
+          docker build --network host --build-arg MONGODB_URL="mongodb://localhost:27017/carelybay-frontend" -t ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO }}/${{ env.IMAGE_NAME }}:${{ steps.determine_tag.outputs.TAG }} .
+
+      # Push the Docker image to Google Artifact Registry
+      - name: Push Docker image
+        run: |
+          docker push ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO }}/${{ env.IMAGE_NAME }}:${{ steps.determine_tag.outputs.TAG }}
+
+      # Deploy the image to Cloud Run (main branch is Test env)
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy ${{ steps.determine_tag.outputs.CLOUD_RUN_SERVICE }} \
+            --image ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO }}/${{ env.IMAGE_NAME }}:${{ steps.determine_tag.outputs.TAG }} \
+            --region ${{ env.REGION }} \
+            --platform managed \
+            --allow-unauthenticated

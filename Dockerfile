@@ -4,7 +4,7 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 
 # Install pnpm globally
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN npm install -g pnpm
 
 # Copy package.json and pnpm-lock.yaml
 COPY package.json pnpm-lock.yaml ./
@@ -14,6 +14,10 @@ RUN pnpm install --frozen-lockfile
 
 # Copy the rest of the application code
 COPY . .
+
+# Set environment variable for MongoDB connection (for build stage)
+ARG MONGODB_URL
+ENV MONGODB_URL=$MONGODB_URL
 
 # Generate Prisma Client
 RUN pnpm prisma generate
@@ -30,7 +34,7 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Install pnpm globally again for runtime
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN npm install -g pnpm
 
 # Copy only the necessary runtime files from the builder stage
 COPY --from=builder /app/package.json ./
@@ -40,7 +44,7 @@ COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 # COPY --from=builder /app/prisma ./prisma # Prisma schema required for migrations
 
-# Set environment variable for MongoDB connection
+# Set environment variable for MongoDB connection (for runtime)
 ENV MONGODB_URL=$MONGODB_URL
 
 EXPOSE 3000
