@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { FC } from "react";
 import { styled } from "@mui/material/styles";
 import { Stack, Box } from "@mui/material";
 
@@ -21,13 +21,17 @@ const ProgressBarSegment = styled(Box)<{ active: boolean }>(
   }),
 );
 
-export default function CustomizedSteppers({
-  activeStep,
-}: {
+interface CustomizedSteppersProps {
   activeStep: number;
-}) {
+  sx?: object;
+}
+
+const CustomizedSteppers: FC<CustomizedSteppersProps> = ({
+  activeStep,
+  ...rest
+}) => {
   return (
-    <Stack sx={{ width: "100%" }} spacing={4}>
+    <Stack sx={{ width: "100%" }} spacing={4} {...rest}>
       <Box sx={{ display: "flex", justifyContent: "center", gap: 0.5 }}>
         {steps.map((_, index) => (
           <ProgressBarSegment key={index} active={index <= activeStep} />
@@ -35,4 +39,6 @@ export default function CustomizedSteppers({
       </Box>
     </Stack>
   );
-}
+};
+
+export default CustomizedSteppers;

@@ -15,7 +15,7 @@ const LandingActions: React.FC<LandingActionsProps> = ({
   step,
 }) => {
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
       <Button
         variant="primary"
         onClick={nextStep}
@@ -23,8 +23,6 @@ const LandingActions: React.FC<LandingActionsProps> = ({
           width: {
             xs: "100%",
             sm: 200,
-            md: "100%",
-            lg: 200,
           },
           height: "48px",
           alignSelf: "end",
@@ -37,7 +35,7 @@ const LandingActions: React.FC<LandingActionsProps> = ({
         {showSignInMessage && (
           <Typography
             variant="h5"
-            sx={{ textAlign: "center", marginBottom: 5 }}
+            sx={{ textAlign: "center", marginBottom: { xs: 2, md: 5 } }}
           >
             Already using Carelybay?&nbsp;
             <Link component={NextLink} href="/signin">
@@ -45,7 +43,10 @@ const LandingActions: React.FC<LandingActionsProps> = ({
             </Link>
           </Typography>
         )}
-        <CustomizedSteppers activeStep={step} />
+        <CustomizedSteppers
+          activeStep={step}
+          sx={{ display: { xs: "none", md: "flex" } }}
+        />
       </Box>
     </Box>
   );
