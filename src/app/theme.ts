@@ -75,6 +75,15 @@ const themeOptions: ThemeOptions = {
         },
       },
     },
+    // * COMPONENT -- OutlinedInput
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          borderColor: "FF6817",
+          borderRadius: "10px",
+        },
+      },
+    },
     // * COMPONENT -- Progress Bar
     MuiMobileStepper: {
       styleOverrides: {
@@ -102,6 +111,17 @@ const themeOptions: ThemeOptions = {
               },
             },
           ],
+        },
+      },
+    },
+    // * COMPONENT -- TextField
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          border: "1px",
+          borderStyle: "solid",
+          borderRadius: "10px",
+          borderColor: "#CCCCCC",
         },
       },
     },

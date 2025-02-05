@@ -1,25 +1,29 @@
 import PageHeader from "@/app/components/layout/page-header";
 import {
-  Container,
-  Input,
-  FormGroup,
+  Box,
   FormControlLabel,
   Checkbox,
   Typography,
   Link,
   Button,
   Divider,
+  TextField,
 } from "@mui/material";
 
 export default function SignUp() {
   return (
-    <Container>
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
       <PageHeader
         heading="Sign up"
-        subtitle="Enter your details to sign-up for a new Carelybay account!"
+        subtitle="Sign up to manage your services."
       />
-      <Input placeholder="Email*" type="email" fullWidth />
-      <Input placeholder="Create a password" type="password" fullWidth />
+      <TextField required placeholder="Email*" type="email" fullWidth />
+      <TextField
+        required
+        placeholder="Create a password"
+        type="password"
+        fullWidth
+      />
       <FormControlLabel
         control={<Checkbox />}
         label={
@@ -36,13 +40,12 @@ export default function SignUp() {
           </Typography>
         }
       />
-      <Button fullWidth>Sign up</Button>
+      <Button variant="primary" fullWidth>
+        Sign up
+      </Button>
       <Divider>Or</Divider>
       <Button fullWidth>Sign up with Google</Button>
       <Button fullWidth>Sign up with Facebook</Button>
-      <Typography style={{ textAlign: "center" }}>
-        Already using Carelybay? <Link href="/signin">Sign in</Link>
-      </Typography>
-    </Container>
+    </Box>
   );
 }
