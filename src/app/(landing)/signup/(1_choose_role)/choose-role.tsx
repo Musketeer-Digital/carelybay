@@ -1,9 +1,12 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 import PageHeader from "@/app/components/layout/page-header";
 import ChooseRoleCards from "./choose-role-cards";
 
 export default function ChooseRole() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Box
       sx={{
@@ -14,7 +17,11 @@ export default function ChooseRole() {
       }}
     >
       <PageHeader
-        heading="Create your Carelybay account"
+        heading={
+          isMobile
+            ? "Choose your main service"
+            : "Create your Carelybay account"
+        }
         subtitle="Choose your role"
       />
       <ChooseRoleCards />
