@@ -43,7 +43,7 @@ export default function RootLayout({
           display: { xs: "none", md: "flex" },
         }}
       >
-        <Content2 />
+        <Content1 />
       </Box>
     </Container>
   );

@@ -1,14 +1,10 @@
-// src/app/(landing)/signup/page.tsx
 "use client";
 import React from "react";
-import { Box, Button, Typography, Link, Stack, Container } from "@mui/material";
-import NextLink from "next/link";
-import CustomizedSteppers from "@/app/components/stepper";
+import { Box, Typography, Container } from "@mui/material";
 import ChooseRole from "./(1_choose_role)/choose-role";
 import ChooseService from "./(2_1_providers_choose_service)/choose-service";
 import SignUp from "./(3_signup)/signup";
 import LandingActions from "./LandingActions";
-import Image from "next/image";
 
 const MAX_STEPS = 3;
 
