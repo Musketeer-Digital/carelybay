@@ -1,5 +1,4 @@
 import { Box, Typography } from "@mui/material";
-import Image from "next/image";
 
 export default function Banner() {
   return (
@@ -10,18 +9,17 @@ export default function Banner() {
           display: "flex",
           alignItems: "center",
           position: "absolute",
-          gap: "1em",
+          gap: 1,
           margin: "1em",
           marginLeft: "2em",
         }}
       >
-        <Image
-          src="https://placehold.co/28x28"
-          alt="Logo"
-          width={28}
-          height={28}
-          unoptimized
-        />
+        <Typography
+          variant="h5"
+          sx={{ fontWeight: "1000", color: "rgba(253, 104, 25, 1)" }}
+        >
+          C
+        </Typography>
         <Typography variant="h5">Logotype</Typography>
       </Box>
     </Box>

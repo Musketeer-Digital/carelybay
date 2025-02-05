@@ -1,6 +1,7 @@
 import { Container, Box, Stack } from "@mui/material";
 import type { Metadata } from "next";
 import Content1 from "../components/feature/content1";
+import Content2 from "../components/feature/content2";
 
 export const metadata: Metadata = {
   title: "Carelybay - Login/Signup",
@@ -39,10 +40,10 @@ export default function RootLayout({
           padding: 8,
           alignItems: "center",
           justifyContent: "center",
-          display: { xs: "none", sm: "none", md: "flex" },
+          display: { xs: "none", md: "flex" },
         }}
       >
-        <Content1 />
+        <Content2 />
       </Box>
     </Container>
   );

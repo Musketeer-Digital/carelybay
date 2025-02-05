@@ -15,6 +15,7 @@ const MAX_STEPS = 3;
 export default function SignupPages() {
   const [step, setStep] = React.useState(1);
 
+  let userMessageIcon = "";
   let userMessage = "";
   let showSignInMessage = true;
   let stepContent;
@@ -29,21 +30,25 @@ export default function SignupPages() {
 
   switch (step) {
     case 1:
+      userMessageIcon = "👋";
       userMessage = "Welcome to Carelybay";
       showSignInMessage = true;
       stepContent = <ChooseRole />;
       break;
     case 2:
+      userMessageIcon = "";
       userMessage = "";
       showSignInMessage = false;
       stepContent = <ChooseService prevStep={prevStep} />;
       break;
     case 3:
+      userMessageIcon = "👋";
       userMessage = "Welcome to Carelybay";
       showSignInMessage = true;
       stepContent = <SignUp />;
       break;
     default:
+      userMessageIcon = "👋";
       userMessage = "Welcome to Carelybay";
       showSignInMessage = true;
       stepContent = <ChooseRole />;
@@ -60,18 +65,30 @@ export default function SignupPages() {
           alignItems: "center",
           gap: "1em",
           height: "48px",
-          marginBottom: 4,
         }}
       >
         {/* User Notification Message */}
-        <Image
-          src="https://placehold.co/24x24"
-          alt="Message image"
-          width={24}
-          height={24}
-        />
-        <Typography variant="body1">Welcome to Carelybay</Typography>
+        {userMessageIcon && userMessage && (
+          <Box sx={{ display: "flex", alignItems: "center", gap: "1em" }}>
+            <Box
+              sx={{
+                width: "48px",
+                height: "48px",
+                backgroundColor: "rgba(243, 243, 243, 1)",
+                borderRadius: "50%",
+                alignContent: "center",
+                textAlign: "center",
+              }}
+            >
+              <Typography sx={{ fontSize: "24px" }}>
+                {userMessageIcon}
+              </Typography>
+            </Box>
+            <Typography variant="body1">{userMessage}</Typography>
+          </Box>
+        )}
       </Box>
+
       {/* Step Content */}
       {stepContent}
       <LandingActions
