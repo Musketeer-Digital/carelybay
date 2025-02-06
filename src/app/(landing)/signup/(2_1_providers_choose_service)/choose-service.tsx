@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import ChooseServiceCards from "./choose-service-cards";
 import PageHeader from "@/app/components/layout/page-header";
 
@@ -22,11 +22,20 @@ export const InteractiveHeader = ({ prevStep }: ChooseServiceProps) => {
 };
 
 export default function ChooseService({ prevStep }: ChooseServiceProps) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         <PageHeader
-          heading={<InteractiveHeader prevStep={prevStep} />}
+          heading={
+            isMobile ? (
+              "Choose your main service"
+            ) : (
+              <InteractiveHeader prevStep={prevStep} />
+            )
+          }
           subtitle="Pick your service for the signup process"
         />
         <ChooseServiceCards />

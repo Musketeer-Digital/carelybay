@@ -4,30 +4,20 @@ import Image from "next/image";
 export default function Content1() {
   return (
     <Box>
-      <Box
-        sx={{
-          position: "relative",
-          width: "100%",
-          height: "auto",
-          borderRadius: 20,
-          overflow: "hidden",
-          marginBottom: 3,
-        }}
-      >
-        <Image
-          src={"https://placehold.co/1024x768"}
-          alt="Child care worker"
-          height={100}
-          width={100}
-          unoptimized
-        />
-      </Box>
+      <Image
+        src="/feature-content1-image.png"
+        alt="Child care worker"
+        height={293}
+        width={390}
+        unoptimized
+      />
       <Typography
         variant="h6"
         fontWeight={"700"}
         fontSize={"24px"}
         lineHeight={"36px"}
         sx={{
+          marginTop: 3,
           marginBottom: 3,
         }}
       >
