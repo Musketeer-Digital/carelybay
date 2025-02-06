@@ -17,11 +17,18 @@ export default function SignUp() {
         heading="Sign up"
         subtitle="Sign up to manage your services."
       />
-      <TextField required placeholder="Email*" type="email" fullWidth />
+      <TextField
+        required
+        placeholder="Email*"
+        type="email"
+        name="email"
+        fullWidth
+      />
       <TextField
         required
         placeholder="Create a password"
         type="password"
+        name="password"
         fullWidth
       />
       <FormControlLabel

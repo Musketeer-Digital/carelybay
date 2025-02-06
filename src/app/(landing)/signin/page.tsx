@@ -32,8 +32,20 @@ export default function SignIn() {
         heading="Sign In"
         subtitle="Sign in to manage your services."
       />
-      <TextField required placeholder="Email*" type="email" fullWidth />
-      <TextField required placeholder="Password" type="password" fullWidth />
+      <TextField
+        required
+        placeholder="Email*"
+        type="email"
+        name="email"
+        fullWidth
+      />
+      <TextField
+        required
+        placeholder="Password"
+        type="password"
+        name="password"
+        fullWidth
+      />
       <Link component={NextLink} href="/forgotpasword">
         Forgot Password
       </Link>
