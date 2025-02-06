@@ -48,7 +48,7 @@ export default function SignIn() {
         sx={{ textAlign: "center", marginBottom: { xs: 2, md: 5 } }}
       >
         Don't have a Carelybay account?&nbsp;
-        <Link component={NextLink} href="/signin">
+        <Link component={NextLink} href="/signup">
           Sign up
         </Link>
       </Typography>
