@@ -39,8 +39,8 @@ export default function SignIn() {
       <Box sx={{ display: "flex", alignItems: "center", gap: "1em" }}>
         <Box
           sx={{
-            width: "48px",
-            height: "48px",
+            width: 48,
+            height: 48,
             backgroundColor: "rgba(243, 243, 243, 1)",
             borderRadius: "50%",
             alignContent: "center",
