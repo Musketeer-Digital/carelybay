@@ -75,13 +75,13 @@ export default function SignIn() {
           name="password"
           fullWidth
         />
+        <Link component={NextLink} href="/forgotpasword">
+          Forgot Password
+        </Link>
+        <Button variant="primary" type="submit" fullWidth>
+          Sign in
+        </Button>
       </form>
-      <Link component={NextLink} href="/forgotpasword">
-        Forgot Password
-      </Link>
-      <Button variant="primary" fullWidth>
-        Sign in
-      </Button>
       <Divider>Or</Divider>
       <Button fullWidth>Sign in with Google</Button>
       <Button fullWidth>Sign in with Facebook</Button>

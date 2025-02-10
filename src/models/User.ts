@@ -26,10 +26,6 @@ const UserSchema = new Schema<UserDocument>(
       type: String,
       required: true,
     },
-    name: {
-      type: String,
-      required: [true, "Name is required"],
-    },
   },
   {
     timestamps: true,

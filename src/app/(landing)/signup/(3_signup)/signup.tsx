@@ -30,7 +30,7 @@ export default function SignUp() {
       setError(r.error);
       return;
     } else {
-      return router.push("/login");
+      return router.push("/signin");
     }
   };
 
@@ -72,7 +72,7 @@ export default function SignUp() {
             </Typography>
           }
         />
-        <Button variant="primary" fullWidth>
+        <Button variant="primary" type="submit" fullWidth>
           Sign up
         </Button>
       </form>
