@@ -13,6 +13,7 @@ import {
   Divider,
   TextField,
 } from "@mui/material";
+import { signIn } from "next-auth/react";
 
 export default function SignUp() {
   const [error, setError] = useState<string>();
@@ -77,8 +78,19 @@ export default function SignUp() {
         </Button>
       </form>
       <Divider>Or</Divider>
-      <Button fullWidth>Sign up with Google</Button>
-      <Button fullWidth>Sign up with Facebook</Button>
+      <Button
+        fullWidth
+        onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+      >
+        Sign up with Google
+      </Button>
+      {/* TODO: Replace with "facebook" when clientid/clientsecret is ready */}
+      <Button
+        fullWidth
+        onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+      >
+        Sign up with Facebook
+      </Button>
     </Box>
   );
 }

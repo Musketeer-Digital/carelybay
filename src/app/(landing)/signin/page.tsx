@@ -83,8 +83,19 @@ export default function SignIn() {
         </Button>
       </form>
       <Divider>Or</Divider>
-      <Button fullWidth>Sign in with Google</Button>
-      <Button fullWidth>Sign in with Facebook</Button>
+      <Button
+        fullWidth
+        onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+      >
+        Sign in with Google
+      </Button>
+      {/* TODO: Replace with "facebook" when clientid/clientsecret is ready */}
+      <Button
+        fullWidth
+        onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+      >
+        Sign in with Facebook
+      </Button>
       <Typography
         variant="h5"
         sx={{ textAlign: "center", marginBottom: { xs: 2, md: 5 } }}
