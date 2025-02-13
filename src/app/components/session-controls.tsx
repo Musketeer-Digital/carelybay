@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Link, Box, Button, Typography } from "@mui/material";
 
 export default function SessionControls() {
-  const { status } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   const showSession = () => {
@@ -35,6 +35,9 @@ export default function SessionControls() {
   return (
     <Box>
       <Typography>TESTING - Session Controls</Typography>
+      <Typography>
+        User signed in: {session?.user?.email || "Not signed in."}
+      </Typography>
       {showSession()}
     </Box>
   );
