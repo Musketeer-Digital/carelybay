@@ -5,7 +5,6 @@ import ChooseRole from "./(1_choose_role)/choose-role";
 import ChooseService from "./(2_1_providers_choose_service)/choose-service";
 import SignUp from "./(3_signup)/signup";
 import LandingActions from "./LandingActions";
-import SessionControls from "@/app/components/session-controls";
 
 const MAX_STEPS = 3;
 
@@ -93,7 +92,6 @@ export default function SignupPages() {
         showSignInMessage={showSignInMessage}
         step={step}
       />
-      <SessionControls />
     </Container>
   );
 }

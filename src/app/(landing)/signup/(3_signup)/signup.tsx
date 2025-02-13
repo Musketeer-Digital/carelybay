@@ -80,7 +80,11 @@ export default function SignUp() {
       <Divider>Or</Divider>
       <Button
         fullWidth
-        onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+        onClick={() =>
+          signIn("google", {
+            callbackUrl: "/dashboard",
+          })
+        }
       >
         Sign up with Google
       </Button>
