@@ -1,23 +1,17 @@
-import { Box, Container, Typography } from "@mui/material";
-import Image from "next/image";
+import { Box, Typography } from "@mui/material";
+import React from "react";
+
+interface PageHeaderProps {
+  heading: string | React.ReactNode;
+  subtitle: string | React.ReactNode;
+}
 
 export default function PageHeader({
   heading = "<Heading required>",
   subtitle = "<Subtitle required>",
-}) {
+}: PageHeaderProps) {
   return (
-    <Box>
-      {/* Logo and Name */}
-      <Box style={{ display: "flex", alignItems: "center" }}>
-        <Image
-          src="https://placehold.co/28x28"
-          alt="Logo"
-          width={28}
-          height={28}
-          unoptimized
-        />
-        <Typography variant="h5">Logotype</Typography>
-      </Box>
+    <Box sx={{ marginBottom: 2 }}>
       <Typography variant="h4" fontWeight="bold" marginBottom={1}>
         {heading}
       </Typography>

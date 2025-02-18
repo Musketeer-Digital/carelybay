@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ClientProvider from "./providers/client-provider";
+import Banner from "./components/layout/banner";
 
 import "@fontsource/poppins/300.css";
 import "@fontsource/poppins/400.css";
