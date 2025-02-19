@@ -25,7 +25,7 @@ const LandingScreen: React.FC = () => {
           sm={6}
           md={6}
           sx={{
-            textAlign: { xs: "center", sm: "left" }, 
+            textAlign: { xs: "center", sm: "left" },
             ml: { md: 20, sm: 10, xs: 0 },
           }}
         >
@@ -44,7 +44,7 @@ const LandingScreen: React.FC = () => {
               marginTop: 3,
             }}
           >
-            <Link href="/profile/create-profile" passHref>
+            <Link href="/profile" passHref>
               <CustomButton
                 variant="contained"
                 color="primary"
@@ -54,7 +54,7 @@ const LandingScreen: React.FC = () => {
                 Create Profile
               </CustomButton>
             </Link>
-            <Link href="/profile/update-profile" passHref>
+            <Link href="/profile" passHref>
               <CustomButton
                 variant="outlined"
                 size="large"
