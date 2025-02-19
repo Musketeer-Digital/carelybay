@@ -9,11 +9,9 @@ const themeOptions: ThemeOptions = {
     },
     primary: {
       main: "#FF6817",
-      contrastText: "#ffffff",
     },
     secondary: {
       main: "#929FD8",
-      contrastText: "#ffffff",
     },
     text: {
       primary: "#171717",

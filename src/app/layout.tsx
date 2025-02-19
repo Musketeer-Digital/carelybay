@@ -5,7 +5,6 @@ import "@fontsource/poppins/300.css";
 import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/500.css";
 import "@fontsource/poppins/700.css";
-import "@fontsource/poppins";
 
 export const metadata: Metadata = {
   title: "Carelybay",
@@ -20,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body style={{ fontFamily: "Poppins, sans-serif" }}>
+      <body>
         <ClientProvider>{children}</ClientProvider>
       </body>
     </html>
