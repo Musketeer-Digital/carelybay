@@ -1,4 +1,9 @@
+"use client";
+import { FormEvent, useState } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import PageHeader from "@/app/components/layout/page-header";
+import NextLink from "next/link";
 import {
   Container,
   TextField,
@@ -8,16 +13,34 @@ import {
   Link,
   Box,
 } from "@mui/material";
-import NextLink from "next/link";
 
 export default function SignIn() {
+  const [error, setError] = useState("");
+  const router = useRouter();
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const res = await signIn("credentials", {
+      email: formData.get("email"),
+      password: formData.get("password"),
+      redirect: false,
+    });
+    if (res?.error) {
+      setError(res.error as string);
+    }
+    if (res?.ok) {
+      return router.push("/dashboard");
+    }
+  };
+
   return (
     <Container sx={{ display: "flex", flexDirection: "column", gap: "1em" }}>
       <Box sx={{ display: "flex", alignItems: "center", gap: "1em" }}>
         <Box
           sx={{
-            width: "48px",
-            height: "48px",
+            width: 48,
+            height: 48,
             backgroundColor: "rgba(243, 243, 243, 1)",
             borderRadius: "50%",
             alignContent: "center",
@@ -32,23 +55,53 @@ export default function SignIn() {
         heading="Sign In"
         subtitle="Sign in to manage your services."
       />
-      <TextField required placeholder="Email*" type="email" fullWidth />
-      <TextField required placeholder="Password" type="password" fullWidth />
-      <Link component={NextLink} href="/forgotpasword">
-        Forgot Password
-      </Link>
-      <Button variant="primary" fullWidth>
-        Sign in
-      </Button>
+
+      <form
+        onSubmit={handleSubmit}
+        style={{ display: "flex", flexDirection: "column", gap: "1em" }}
+      >
+        {error && <Box>{error}</Box>}
+        <TextField
+          required
+          placeholder="Email*"
+          type="email"
+          name="email"
+          fullWidth
+        />
+        <TextField
+          required
+          placeholder="Password"
+          type="password"
+          name="password"
+          fullWidth
+        />
+        <Link component={NextLink} href="/forgotpasword">
+          Forgot Password
+        </Link>
+        <Button variant="primary" type="submit" fullWidth>
+          Sign in
+        </Button>
+      </form>
       <Divider>Or</Divider>
-      <Button fullWidth>Sign in with Google</Button>
-      <Button fullWidth>Sign in with Facebook</Button>
+      <Button
+        fullWidth
+        onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+      >
+        Sign in with Google
+      </Button>
+      {/* TODO: Replace with "facebook" when clientid/clientsecret is ready */}
+      <Button
+        fullWidth
+        onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+      >
+        Sign in with Facebook
+      </Button>
       <Typography
         variant="h5"
         sx={{ textAlign: "center", marginBottom: { xs: 2, md: 5 } }}
       >
         Don't have a Carelybay account?&nbsp;
-        <Link component={NextLink} href="/signin">
+        <Link component={NextLink} href="/signup">
           Sign up
         </Link>
       </Typography>
