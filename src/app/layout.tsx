@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import ClientProvider from "./providers/client-provider";
 import { SessionProvider } from "./providers/session-provider";
-import Banner from "./components/layout/banner";
 
 import "@fontsource/poppins/300.css";
 import "@fontsource/poppins/400.css";
@@ -22,7 +21,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Banner />
         <ClientProvider>
           <SessionProvider>{children}</SessionProvider>
         </ClientProvider>
