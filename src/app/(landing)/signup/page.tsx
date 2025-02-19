@@ -1,15 +1,105 @@
-import PageHeader from "@/app/components/layout/page-header";
-import { Container } from "@mui/material";
-import { UsersStep } from "./(2_2_users)/users";
+"use client";
+import React, { useState } from "react";
+import { Box, Typography, Container } from "@mui/material";
+import ChooseRole from "./(1_choose_role)/choose-role";
+import ChooseService from "./(2_1_providers_choose_service)/choose-service";
+import SignUp from "./(3_signup)/signup";
+import VerifyEmailCode from "./(4_verify_email_code)/verify-email-code";
+import LandingActions from "./LandingActions";
 
-export default function SignUp() {
+const MAX_STEPS = 3;
+
+export default function SignupPages() {
+  const [step, setStep] = useState(1);
+  const [email, setEmail] = useState("");
+
+  let userMessageIcon = "";
+  let userMessage = "";
+  let showSignInMessage = true;
+  let stepContent;
+
+  const prevStep = () => {
+    setStep(step === 1 ? MAX_STEPS : step - 1);
+  };
+
+  const nextStep = () => {
+    setStep(step === MAX_STEPS ? 0 : step + 1);
+  };
+
+  switch (step) {
+    case 1:
+      userMessageIcon = "👋";
+      userMessage = "Welcome to Carelybay";
+      showSignInMessage = true;
+      stepContent = <SignUp nextStep={nextStep} setEmail={setEmail} />;
+      break;
+    case 2:
+      userMessageIcon = "👋";
+      userMessage = "Email sent";
+      showSignInMessage = false;
+      stepContent = (
+        <VerifyEmailCode
+          prevStep={prevStep}
+          nextStep={nextStep}
+          email={email}
+        />
+      );
+      break;
+    case 3:
+      userMessageIcon = "✅";
+      userMessage = "Verification completed successfully.";
+      showSignInMessage = true;
+      stepContent = <ChooseRole />;
+      break;
+    default:
+      userMessageIcon = "👋";
+      userMessage = "Welcome to Carelybay";
+      showSignInMessage = true;
+      stepContent = <SignUp nextStep={nextStep} setEmail={setEmail} />;
+      break;
+  }
+
   return (
-    <Container>
-      <PageHeader
-        heading="Sign up"
-        subtitle="Enter your details to sign-up for a new Carelybay account!"
+    <Container
+      sx={{ display: "flex", flexDirection: "column", height: "100%" }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: "1em",
+          height: "48px",
+        }}
+      >
+        {/* User Notification Message */}
+        {userMessageIcon && userMessage && (
+          <Box sx={{ display: "flex", alignItems: "center", gap: "1em" }}>
+            <Box
+              sx={{
+                width: 48,
+                height: 48,
+                backgroundColor: "rgba(243, 243, 243, 1)",
+                borderRadius: "50%",
+                alignContent: "center",
+                textAlign: "center",
+              }}
+            >
+              <Typography sx={{ fontSize: "24px" }}>
+                {userMessageIcon}
+              </Typography>
+            </Box>
+            <Typography variant="body1">{userMessage}</Typography>
+          </Box>
+        )}
+      </Box>
+
+      {/* Step Content */}
+      {stepContent}
+      <LandingActions
+        nextStep={nextStep}
+        showSignInMessage={showSignInMessage}
+        step={step}
       />
-      <UsersStep />
     </Container>
   );
 }
