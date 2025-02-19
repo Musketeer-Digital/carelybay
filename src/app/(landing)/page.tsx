@@ -2,13 +2,10 @@
 
 import { Box, Grid, Typography } from "@mui/material";
 import Link from "next/link";
-import useIsMobile from "@/hooks/useIsMobile";
 import ProfileHeader from "../components/profile-header";
 import CustomButton from "../components/CustomButton";
 
 const LandingScreen: React.FC = () => {
-  const isMobile = useIsMobile();
-
   return (
     <Box sx={{ padding: { xs: 3, sm: 8 } }}>
       <Grid container spacing={4} alignItems="center">
@@ -28,7 +25,7 @@ const LandingScreen: React.FC = () => {
           sm={6}
           md={6}
           sx={{
-            textAlign: isMobile ? "center" : "left",
+            textAlign: { xs: "center", sm: "left" }, 
             ml: { md: 20, sm: 10, xs: 0 },
           }}
         >

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, MouseEvent } from "react";
+import { useState, MouseEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -12,27 +12,16 @@ import {
   Typography,
   Box,
   Container,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import { Menu as MenuIcon } from "@mui/icons-material";
 import { getFirstLetter } from "@/utils/utils";
 import { BG_DARK_GREEN_COLOR } from "@/constants/colors";
 
-// Custom Hook to Check Mobile View
-const useIsMobile = (): boolean => {
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  return isMobile;
-};
-
 export default function Header() {
-  const isMobile = useIsMobile();
+  const theme = useTheme();
+
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const profileData = { firstName: "S" };
@@ -56,13 +45,7 @@ export default function Header() {
             padding: "0 24px",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+          <Box sx={{ display: "flex", alignItems: "center" }}>
             <Link href="/">
               <Image
                 src="/logo.png"
@@ -74,72 +57,63 @@ export default function Header() {
             </Link>
 
             {/* Navigation (Hidden on Mobile) */}
-            {!isMobile && (
-              <Box
-                sx={{
-                  marginLeft: "100px",
-                  display: "flex",
-                  gap: 3,
-                  fontSize: "14px",
-                  color: "#333",
-                }}
-              >
-                <Link
-                  href="/find-job"
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
-                  Find your job
-                </Link>
-                <Link
-                  href="/job-status"
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
-                  Job status
-                </Link>
-                <Link
-                  href="/messages"
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
-                  Messages
-                </Link>
-              </Box>
-            )}
-          </div>
+            <Box
+              sx={{
+                marginLeft: { xs: 0, sm: "100px" },
+                display: { xs: "none", sm: "flex" },
+                gap: 3,
+                fontSize: "14px",
+                color: "#333",
+              }}
+            >
+              <Link href="/find-job" style={{ textDecoration: "none", color: "inherit" }}>
+                Find your job
+              </Link>
+              <Link href="/job-status" style={{ textDecoration: "none", color: "inherit" }}>
+                Job status
+              </Link>
+              <Link href="/messages" style={{ textDecoration: "none", color: "inherit" }}>
+                Messages
+              </Link>
+            </Box>
+          </Box>
 
           {/* Mobile Menu Icon */}
-          {isMobile ? (
-            <IconButton
-              sx={{
-                backgroundColor: BG_DARK_GREEN_COLOR,
-                color: "white",
-                width: 40,
-                height: 40,
-                borderRadius: "50%",
-              }}
-              edge="end"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              <MenuIcon />
-            </IconButton>
-          ) : (
-            <IconButton
-              edge="end"
-              onClick={handleMenuOpen}
-              sx={{
-                backgroundColor: BG_DARK_GREEN_COLOR,
-                color: "white",
-                width: 40,
-                height: 40,
-                borderRadius: "50%",
-              }}
-            >
-              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                {getFirstLetter(profileData?.firstName)}
-              </Typography>
-            </IconButton>
-          )}
+          <IconButton
+            sx={{
+              backgroundColor: BG_DARK_GREEN_COLOR,
+              color: "white",
+              width: 40,
+              height: 40,
+              borderRadius: "50%",
+              display: { xs: "flex", sm: "none" }, // Show only on mobile
+            }}
+            edge="end"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            <MenuIcon />
+          </IconButton>
 
-          {isMobile && menuOpen && (
+          {/* Profile Icon (Hidden on Mobile) */}
+          <IconButton
+            edge="end"
+            onClick={handleMenuOpen}
+            sx={{
+              backgroundColor: BG_DARK_GREEN_COLOR,
+              color: "white",
+              width: 40,
+              height: 40,
+              borderRadius: "50%",
+              display: { xs: "none", sm: "flex" }, // Show only on larger screens
+            }}
+          >
+            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+              {getFirstLetter(profileData?.firstName)}
+            </Typography>
+          </IconButton>
+
+          {/* Mobile Menu */}
+          {menuOpen && (
             <Box
               sx={{
                 position: "absolute",
@@ -149,7 +123,7 @@ export default function Header() {
                 backgroundColor: "white",
                 boxShadow: 3,
                 padding: 2,
-                display: "flex",
+                display: { xs: "flex", sm: "none" }, // Show only on mobile
                 flexDirection: "column",
                 alignItems: "center",
                 gap: 2,
@@ -159,60 +133,24 @@ export default function Header() {
                 zIndex: 50,
               }}
             >
-              <Link
-                href="/find-job"
-                style={{
-                  textDecoration: "none",
-                  color: "inherit",
-                  padding: "8px 0",
-                }}
-                onClick={() => setMenuOpen(false)}
-              >
+              <Link href="/find-job" style={{ textDecoration: "none", color: "inherit", padding: "8px 0" }} onClick={() => setMenuOpen(false)}>
                 Find your job
               </Link>
-              <Link
-                href="/job-status"
-                style={{
-                  textDecoration: "none",
-                  color: "inherit",
-                  padding: "8px 0",
-                }}
-                onClick={() => setMenuOpen(false)}
-              >
+              <Link href="/job-status" style={{ textDecoration: "none", color: "inherit", padding: "8px 0" }} onClick={() => setMenuOpen(false)}>
                 Job status
               </Link>
-              <Link
-                href="/messages"
-                style={{
-                  textDecoration: "none",
-                  color: "inherit",
-                  padding: "8px 0",
-                }}
-                onClick={() => setMenuOpen(false)}
-              >
+              <Link href="/messages" style={{ textDecoration: "none", color: "inherit", padding: "8px 0" }} onClick={() => setMenuOpen(false)}>
                 Messages
               </Link>
             </Box>
           )}
 
           {/* Profile Dropdown Menu */}
-          <MuiMenu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleMenuClose}
-          >
-            <MenuItem
-              onClick={handleMenuClose}
-              component={Link}
-              href="/profile"
-            >
+          <MuiMenu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
+            <MenuItem onClick={handleMenuClose} component={Link} href="/profile">
               Profile
             </MenuItem>
-            <MenuItem
-              onClick={handleMenuClose}
-              component={Link}
-              href="/settings"
-            >
+            <MenuItem onClick={handleMenuClose} component={Link} href="/settings">
               Settings
             </MenuItem>
           </MuiMenu>
