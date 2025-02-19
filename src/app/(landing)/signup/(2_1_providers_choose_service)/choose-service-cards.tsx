@@ -6,9 +6,9 @@ import EscalatorWarningIcon from "@mui/icons-material/EscalatorWarning";
 import ElderlyIcon from "@mui/icons-material/Elderly";
 import OtherHousesIcon from "@mui/icons-material/OtherHouses";
 import CardDisplay from "@/app/components/checkbox-card/card-display/card-display";
-import type { DisplayCardInfo } from "@/app/components/checkbox-card/card-display/card-display";
+import type { DisplayCardInfo } from "@/app/components/checkbox-card/checkbox-card";
 
-const cards = [
+const cards: DisplayCardInfo[] = [
   {
     id: 1,
     image: <ChildCareIcon />,
