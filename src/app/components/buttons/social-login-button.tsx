@@ -23,41 +23,39 @@ export default function SocialLoginButton({
 }: SocialLoginButtonProps) {
   return (
     <Button
+      {...buttonProps}
       fullWidth
       onClick={() => signIn(provider, { callbackUrl })}
       sx={{
-        border: "1px solid #000000",
+        border: "1px solid rgba(77, 73, 87, 0.6)",
         color: "#000000",
         textTransform: "none",
         fontWeight: "bold",
+        cursor: "pointer",
+
+        position: "relative",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        width: "100%",
+        justifyContent: "center",
+        gap: 1,
+
         "&:hover": {
-          border: "1px solid #000000",
+          border: "1px solid rgba(77, 73, 87, 0.6)",
           backgroundColor: "rgba(0, 0, 0, 0.04)",
         },
       }}
-      {...buttonProps}
     >
-      <Box
-        sx={{
-          position: "relative",
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          width: "100%",
-          justifyContent: "center",
-          gap: 1,
-        }}
-      >
-        <Box sx={{ width: 24, height: 24, position: "absolute", left: 16 }}>
-          <SocialIcon provider={provider} />
-        </Box>
-        <Typography
-          component="span"
-          sx={{ alignSelf: "center", fontWeight: 600 }}
-        >
-          {displayText}
-        </Typography>
+      <Box sx={{ width: 24, height: 24, position: "absolute", left: 16 }}>
+        <SocialIcon provider={provider} />
       </Box>
+      <Typography
+        component="span"
+        sx={{ alignSelf: "center", fontWeight: 600 }}
+      >
+        {displayText}
+      </Typography>
     </Button>
   );
 }
