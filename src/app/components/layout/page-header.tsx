@@ -4,7 +4,7 @@ import React from "react";
 interface PageHeaderProps {
   heading: string | React.ReactNode;
   subtitle: string | React.ReactNode;
-  sx: SxProps;
+  sx?: SxProps;
 }
 
 export default function PageHeader({

@@ -2,7 +2,7 @@ import * as React from "react";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import CardDisplay from "@/app/components/checkbox-card/card-display/card-display";
-import type { DisplayCardInfo } from "@/app/components/checkbox-card/card-display/card-display";
+import type { DisplayCardInfo } from "@/app/components/checkbox-card/checkbox-card";
 
 const cards: DisplayCardInfo[] = [
   {
