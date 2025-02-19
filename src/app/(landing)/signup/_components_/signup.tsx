@@ -121,9 +121,15 @@ export default function SignUp({ nextStep, setEmail }: SignUpProps) {
       </Divider>
 
       <Stack spacing={2}>
-        <SocialLoginButton provider="google" displayName="Google" />
+        <SocialLoginButton
+          provider="google"
+          displayText="Sign up with Google"
+        />
         {/* TODO: Replace provider with "facebook" when clientid/clientsecret is ready */}
-        <SocialLoginButton provider="facebook" displayName="Facebook" />
+        <SocialLoginButton
+          provider="facebook"
+          displayText="Sign up with Facebook"
+        />
       </Stack>
     </Box>
   );

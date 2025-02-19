@@ -12,7 +12,9 @@ import {
   Typography,
   Link,
   Box,
+  Stack,
 } from "@mui/material";
+import SocialLoginButton from "@/app/components/buttons/social-login-button";
 
 export default function SignIn() {
   const [error, setError] = useState("");
@@ -83,19 +85,17 @@ export default function SignIn() {
         </Button>
       </form>
       <Divider>Or</Divider>
-      <Button
-        fullWidth
-        onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-      >
-        Sign in with Google
-      </Button>
-      {/* TODO: Replace with "facebook" when clientid/clientsecret is ready */}
-      <Button
-        fullWidth
-        onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-      >
-        Sign in with Facebook
-      </Button>
+      <Stack spacing={2}>
+        <SocialLoginButton
+          provider="google"
+          displayText="Sign in with Google"
+        />
+        {/* TODO: Replace provider with "facebook" when clientid/clientsecret is ready */}
+        <SocialLoginButton
+          provider="facebook"
+          displayText="Sign in with Facebook"
+        />
+      </Stack>
       <Typography
         variant="h5"
         sx={{ textAlign: "center", marginBottom: { xs: 2, md: 5 } }}

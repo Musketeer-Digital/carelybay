@@ -2,11 +2,12 @@ import { Box, Button, ButtonProps, Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
+import SocialIcon from "../icons/social-icon";
 
 interface SocialLoginButtonProps extends Omit<ButtonProps, "onClick"> {
   provider: "google" | "facebook";
   callbackUrl?: string;
-  displayName: string;
+  displayText: string;
 }
 
 const providerIcons = {
@@ -17,7 +18,7 @@ const providerIcons = {
 export default function SocialLoginButton({
   provider,
   callbackUrl = "/dashboard",
-  displayName,
+  displayText,
   ...buttonProps
 }: SocialLoginButtonProps) {
   return (
@@ -48,13 +49,13 @@ export default function SocialLoginButton({
         }}
       >
         <Box sx={{ width: 24, height: 24, position: "absolute", left: 16 }}>
-          {providerIcons[provider]}
+          <SocialIcon provider={provider} />
         </Box>
         <Typography
           component="span"
           sx={{ alignSelf: "center", fontWeight: 600 }}
         >
-          Sign up with {displayName}
+          {displayText}
         </Typography>
       </Box>
     </Button>

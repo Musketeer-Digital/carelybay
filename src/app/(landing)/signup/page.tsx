@@ -1,10 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import { Box, Typography, Container } from "@mui/material";
-import ChooseRole from "./(1_choose_role)/choose-role";
-import ChooseService from "./(2_1_providers_choose_service)/choose-service";
-import SignUp from "./(3_signup)/signup";
-import VerifyEmailCode from "./(4_verify_email_code)/verify-email-code";
+import ChooseRole from "./_components_/choose-role";
+import SignUp from "./_components_/signup";
+import VerifyEmailCode from "./_components_/verify-email-code";
 import LandingActions from "./LandingActions";
 
 const MAX_STEPS = 3;
