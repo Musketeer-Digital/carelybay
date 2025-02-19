@@ -1,15 +1,17 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Box, Typography, Container } from "@mui/material";
 import ChooseRole from "./(1_choose_role)/choose-role";
 import ChooseService from "./(2_1_providers_choose_service)/choose-service";
 import SignUp from "./(3_signup)/signup";
+import VerifyEmailCode from "./(4_verify_email_code)/verify-email-code";
 import LandingActions from "./LandingActions";
 
 const MAX_STEPS = 3;
 
 export default function SignupPages() {
-  const [step, setStep] = React.useState(1);
+  const [step, setStep] = useState(1);
+  const [email, setEmail] = useState("");
 
   let userMessageIcon = "";
   let userMessage = "";
@@ -29,25 +31,31 @@ export default function SignupPages() {
       userMessageIcon = "👋";
       userMessage = "Welcome to Carelybay";
       showSignInMessage = true;
-      stepContent = <ChooseRole />;
+      stepContent = <SignUp nextStep={nextStep} setEmail={setEmail} />;
       break;
     case 2:
-      userMessageIcon = "";
-      userMessage = "";
+      userMessageIcon = "👋";
+      userMessage = "Email sent";
       showSignInMessage = false;
-      stepContent = <ChooseService prevStep={prevStep} />;
+      stepContent = (
+        <VerifyEmailCode
+          prevStep={prevStep}
+          nextStep={nextStep}
+          email={email}
+        />
+      );
       break;
     case 3:
-      userMessageIcon = "👋";
-      userMessage = "Welcome to Carelybay";
+      userMessageIcon = "✅";
+      userMessage = "Verification completed successfully.";
       showSignInMessage = true;
-      stepContent = <SignUp />;
+      stepContent = <ChooseRole />;
       break;
     default:
       userMessageIcon = "👋";
       userMessage = "Welcome to Carelybay";
       showSignInMessage = true;
-      stepContent = <ChooseRole />;
+      stepContent = <SignUp nextStep={nextStep} setEmail={setEmail} />;
       break;
   }
 
@@ -68,8 +76,8 @@ export default function SignupPages() {
           <Box sx={{ display: "flex", alignItems: "center", gap: "1em" }}>
             <Box
               sx={{
-                width: "48px",
-                height: "48px",
+                width: 48,
+                height: 48,
                 backgroundColor: "rgba(243, 243, 243, 1)",
                 borderRadius: "50%",
                 alignContent: "center",
