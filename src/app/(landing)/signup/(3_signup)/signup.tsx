@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 import PageHeader from "@/app/components/layout/page-header";
+import SocialLoginButton from "@/app/components/buttons/social-login-button";
 import {
   Box,
   FormControlLabel,
@@ -10,8 +11,8 @@ import {
   Button,
   Divider,
   TextField,
+  Stack,
 } from "@mui/material";
-import { signIn } from "next-auth/react";
 
 interface SignUpProps {
   nextStep: () => void;
@@ -53,8 +54,11 @@ export default function SignUp({ nextStep, setEmail }: SignUpProps) {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
       <form ref={ref} action={handleSubmit}>
-        {error && <div className="">{error}</div>}
+        {error && <Box>{error}</Box>}
         <PageHeader
+          sx={{
+            mb: 8,
+          }}
           heading="Sign up"
           subtitle="Sign up to manage your services."
         />
@@ -64,6 +68,9 @@ export default function SignUp({ nextStep, setEmail }: SignUpProps) {
           type="email"
           name="email"
           fullWidth
+          sx={{
+            mb: 2,
+          }}
         />
         <TextField
           required
@@ -73,16 +80,30 @@ export default function SignUp({ nextStep, setEmail }: SignUpProps) {
           fullWidth
         />
         <FormControlLabel
+          sx={{
+            mt: 3,
+            mb: 2,
+            fontSize: 16,
+          }}
           control={<Checkbox />}
           label={
             <Typography>
-              * I agree to the{" "}
-              <Link href="/terms-of-service" target="_blank" rel="noopener">
+              * I agree to the&nbsp;
+              <Link
+                href="/terms-of-service"
+                target="_blank"
+                rel="noopener"
+                sx={{ fontWeight: 500 }}
+              >
                 Terms of Service
-              </Link>{" "}
-              and{" "}
-              <Link href="/privacy-policy" target="_blank" rel="noopener">
-                {" "}
+              </Link>
+              &nbsp;and&nbsp;
+              <Link
+                href="/privacy-policy"
+                target="_blank"
+                rel="noopener"
+                sx={{ fontWeight: 500 }}
+              >
                 Privacy Policy
               </Link>
             </Typography>
@@ -92,24 +113,18 @@ export default function SignUp({ nextStep, setEmail }: SignUpProps) {
           Sign up
         </Button>
       </form>
-      <Divider>Or</Divider>
-      <Button
-        fullWidth
-        onClick={() =>
-          signIn("google", {
-            callbackUrl: "/dashboard",
-          })
-        }
-      >
-        Sign up with Google
-      </Button>
-      {/* TODO: Replace with "facebook" when clientid/clientsecret is ready */}
-      <Button
-        fullWidth
-        onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-      >
-        Sign up with Facebook
-      </Button>
+
+      <Divider>
+        <Typography variant="body2" sx={{ px: 1 }}>
+          Or
+        </Typography>
+      </Divider>
+
+      <Stack spacing={2}>
+        <SocialLoginButton provider="google" displayName="Google" />
+        {/* TODO: Replace provider with "facebook" when clientid/clientsecret is ready */}
+        <SocialLoginButton provider="facebook" displayName="Facebook" />
+      </Stack>
     </Box>
   );
 }

@@ -11,7 +11,7 @@ const themeOptions: ThemeOptions = {
   palette: {
     mode: "dark",
     background: {
-      default: "#FAFAF9",
+      default: "#FFF",
       paper: "#FAFAF9",
     },
     primary: {
