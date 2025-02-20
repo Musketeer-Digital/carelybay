@@ -34,7 +34,7 @@ export default function VerifyEmailCode({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password, otp: otp }),
+        body: JSON.stringify({ email, password, otp }),
       });
 
       if (response.ok) {
