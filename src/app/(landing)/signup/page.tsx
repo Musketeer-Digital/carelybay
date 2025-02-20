@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import { Box, Typography, Container } from "@mui/material";
-import ChooseRole from "./_components_/choose-role";
 import SignUp from "./_components_/signup";
 import VerifyEmailCode from "./_components_/verify-email-code";
+import PersonalInformation from "./_components_/personal-information";
 import LandingActions from "./LandingActions";
-import { useForm, FormProvider, useFormContext } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 
 const MAX_STEPS = 3;
 
@@ -49,7 +49,7 @@ export default function SignupPages() {
       userMessageIcon = "✅";
       userMessage = "Verification completed successfully.";
       showSignInMessage = true;
-      stepContent = <ChooseRole />;
+      stepContent = <PersonalInformation />;
       break;
     default:
       userMessageIcon = "👋";
