@@ -1,12 +1,11 @@
-import LandingScreen from "./(landing)/page";
+import LandingScreen from "./profile/page";
 import Header from "./components/header";
-import styles from "./page.module.css";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
+    <div>
       <Header />
-      <main className={styles.main}>
+      <main>
         <LandingScreen />
       </main>
     </div>

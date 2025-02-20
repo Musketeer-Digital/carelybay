@@ -3,7 +3,7 @@
 import { Avatar, Card, Box, Typography, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import ChildCareIcon from "@mui/icons-material/ChildCare";
-import { BG_LIGHT_GREY_COLOR, BG_LIGHT_ORANGE_COLOR } from "@/constants/colors";
+import { COLORS } from "@/constants/colors";
 
 const ProfileHeader = () => {
   return (
@@ -12,19 +12,22 @@ const ProfileHeader = () => {
         boxShadow: 2,
         borderRadius: 2,
         textAlign: "center",
-        padding: 5,
+        padding: { xs: 3, md: 5 },
         marginTop: 3,
+        width: "100%", 
+        maxWidth: 400, 
+        marginX: "auto", 
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
         <Avatar
           sx={{
-            bgcolor: BG_LIGHT_ORANGE_COLOR,
-            width: 100,
-            height: 100,
-            fontSize: 50,
+            bgcolor: COLORS.BG_LIGHT_ORANGE_COLOR,
+            width: { xs: 70, md: 100 }, 
+            height: { xs: 70, md: 100 },
+            fontSize: { xs: 30, md: 50 },
             fontWeight: "bold",
-            color: "black",
+            color: COLORS.BLACK_COLOR,
           }}
         >
           S
@@ -36,28 +39,25 @@ const ProfileHeader = () => {
       <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
         <Box
           sx={{
-            bgcolor: BG_LIGHT_GREY_COLOR,
+            bgcolor: COLORS.BG_LIGHT_GREY_COLOR,
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            gap: 2,
-            px: 2,
+            gap: 1,
+            px: { xs: 1, md: 2 }, 
             py: 1,
-            width: "60%",
+            width: "100%", 
+            maxWidth: 300, 
             borderRadius: 2,
             marginTop: 2,
           }}
         >
-          <ChildCareIcon />
-          <Typography sx={{ flex: 1, textAlign: "center", fontWeight: "bold" }}>
+          <ChildCareIcon fontSize="small" />
+          <Typography sx={{ flex: 1, textAlign: "center", fontWeight: "bold", fontSize: { xs: "0.9rem", md: "1rem" } }}>
             Childcare
           </Typography>
-          <IconButton
-            sx={{
-              color: "black",
-            }}
-          >
-            <EditIcon />
+          <IconButton sx={{ color: COLORS.BLACK_COLOR }}>
+            <EditIcon fontSize="small" />
           </IconButton>
         </Box>
       </Box>
