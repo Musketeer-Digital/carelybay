@@ -25,7 +25,6 @@ export default function SignUp({ nextStep }: SignUpProps) {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useFormContext<SignUpInputs>();
 
@@ -48,7 +47,6 @@ export default function SignUp({ nextStep }: SignUpProps) {
       }
 
       // OTP request successful, redirect user to OTP verification page
-      reset();
       nextStep();
     } catch (error) {
       setError("An error occurred while requesting OTP");
