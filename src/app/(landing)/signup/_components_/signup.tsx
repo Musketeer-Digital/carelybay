@@ -65,18 +65,17 @@ export default function SignUp({ nextStep }: SignUpProps) {
           subtitle="Sign up to manage your services."
         />
         <TextField
+          {...register("email", { required: "Email is required" })}
+          error={!!errors.email}
+          helperText={errors.email?.message}
           placeholder="Email*"
           type="email"
           fullWidth
-          {...register("email", { required: "Email is required" })}
           sx={{
             mb: 2,
           }}
         />
         <TextField
-          placeholder="Create a password"
-          type="password"
-          fullWidth
           {...register("password", {
             required: "Password is required",
             minLength: {
@@ -84,6 +83,11 @@ export default function SignUp({ nextStep }: SignUpProps) {
               message: "Password must be at least 6 characters",
             },
           })}
+          error={!!errors.password}
+          helperText={errors.password?.message}
+          placeholder="Create a password"
+          type="password"
+          fullWidth
         />
         <FormControlLabel
           sx={{

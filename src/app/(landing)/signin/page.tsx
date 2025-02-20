@@ -78,15 +78,19 @@ export default function SignIn() {
       >
         {error && <Box>{error}</Box>}
         <TextField
+          {...register("email", { required: "Email is required" })}
+          error={!!errors.email}
+          helperText={errors.email?.message}
           placeholder="Email*"
           type="email"
-          {...register("email", { required: "Email is required" })}
           fullWidth
         />
         <TextField
+          {...register("password", { required: "Password is required" })}
+          error={!!errors.password}
+          helperText={errors.password?.message}
           placeholder="Password"
           type="password"
-          {...register("password", { required: "Password is required" })}
           fullWidth
         />
         <Link component={NextLink} href="/forgotpasword">

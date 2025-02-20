@@ -21,8 +21,13 @@ export default function VerifyEmailCode({
   nextStep,
 }: VerifyEmailCodeProps) {
   const [error, setError] = useState("");
-  const { getValues, register, handleSubmit, reset } =
-    useFormContext<SignUpInputs>();
+  const {
+    getValues,
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useFormContext<SignUpInputs>();
 
   const onSubmit: SubmitHandler<SignUpInputs> = async (data) => {
     const { email, password } = getValues();
@@ -61,9 +66,12 @@ export default function VerifyEmailCode({
       <form onSubmit={handleSubmit(onSubmit)}>
         {error && <Box>{error}</Box>}
         <TextField
+          {...register("otp", { required: "OTP is required" })}
+          error={!!errors.otp}
+          helperText={errors.otp?.message}
           placeholder="123456"
           type="text"
-          {...register("otp", { required: "OTP is required" })}
+          margin="normal"
           fullWidth
         />
         <Button variant="primary" type="submit" fullWidth>
