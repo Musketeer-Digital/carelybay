@@ -28,7 +28,7 @@ export default function SignUp({ nextStep }: SignUpProps) {
     formState: { errors },
   } = useFormContext<SignUpInputs>();
 
-  const onSubmit: SubmitHandler<SignUpInputs> = async (data) => {
+  const onSubmit: SubmitHandler<SignUpInputs> = async (data: SignUpInputs) => {
     const { email } = data;
 
     try {

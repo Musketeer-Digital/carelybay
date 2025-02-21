@@ -29,7 +29,7 @@ export default function VerifyEmailCode({
     formState: { errors },
   } = useFormContext<SignUpInputs>();
 
-  const onSubmit: SubmitHandler<SignUpInputs> = async (data) => {
+  const onSubmit: SubmitHandler<SignUpInputs> = async (data: SignUpInputs) => {
     const { email, password } = getValues();
     const { otp } = data;
 
