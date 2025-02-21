@@ -5,12 +5,19 @@ import ChooseRole from "./_components_/choose-role";
 import SignUp from "./_components_/signup";
 import VerifyEmailCode from "./_components_/verify-email-code";
 import LandingActions from "./LandingActions";
+import { useForm, FormProvider, useFormContext } from "react-hook-form";
 
 const MAX_STEPS = 3;
 
+export type SignUpInputs = {
+  email: string;
+  password: string;
+  otp: string;
+};
+
 export default function SignupPages() {
   const [step, setStep] = useState(1);
-  const [email, setEmail] = useState("");
+  const methods = useForm<SignUpInputs>();
 
   let userMessageIcon = "";
   let userMessage = "";
@@ -30,19 +37,13 @@ export default function SignupPages() {
       userMessageIcon = "👋";
       userMessage = "Welcome to Carelybay";
       showSignInMessage = true;
-      stepContent = <SignUp nextStep={nextStep} setEmail={setEmail} />;
+      stepContent = <SignUp nextStep={nextStep} />;
       break;
     case 2:
       userMessageIcon = "👋";
       userMessage = "Email sent";
       showSignInMessage = false;
-      stepContent = (
-        <VerifyEmailCode
-          prevStep={prevStep}
-          nextStep={nextStep}
-          email={email}
-        />
-      );
+      stepContent = <VerifyEmailCode prevStep={prevStep} nextStep={nextStep} />;
       break;
     case 3:
       userMessageIcon = "✅";
@@ -54,7 +55,7 @@ export default function SignupPages() {
       userMessageIcon = "👋";
       userMessage = "Welcome to Carelybay";
       showSignInMessage = true;
-      stepContent = <SignUp nextStep={nextStep} setEmail={setEmail} />;
+      stepContent = <SignUp nextStep={nextStep} />;
       break;
   }
 
@@ -93,7 +94,7 @@ export default function SignupPages() {
       </Box>
 
       {/* Step Content */}
-      {stepContent}
+      <FormProvider {...methods}>{stepContent}</FormProvider>
       <LandingActions
         nextStep={nextStep}
         showSignInMessage={showSignInMessage}

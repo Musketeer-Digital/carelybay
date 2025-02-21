@@ -1,5 +1,7 @@
 import PageHeader from "@/app/components/layout/page-header";
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { useFormContext, SubmitHandler } from "react-hook-form";
+import { SignUpInputs } from "../page";
 import {
   Container,
   Typography,
@@ -12,18 +14,24 @@ import {
 interface VerifyEmailCodeProps {
   prevStep: () => void;
   nextStep: () => void;
-  email: string;
 }
+
 export default function VerifyEmailCode({
   prevStep,
   nextStep,
-  email,
 }: VerifyEmailCodeProps) {
   const [error, setError] = useState("");
-  const ref = useRef<HTMLFormElement>(null);
+  const {
+    getValues,
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useFormContext<SignUpInputs>();
 
-  const handleSubmit = async (formData: FormData) => {
-    const otp = formData.get("otp") as string;
+  const onSubmit: SubmitHandler<SignUpInputs> = async (data) => {
+    const { email, password } = getValues();
+    const { otp } = data;
 
     try {
       const response = await fetch("/api/user", {
@@ -31,10 +39,11 @@ export default function VerifyEmailCode({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, otp }),
+        body: JSON.stringify({ email, password, otp }),
       });
-      ref.current?.reset();
+
       if (response.ok) {
+        reset();
         return nextStep();
       }
     } catch (error) {
@@ -50,17 +59,19 @@ export default function VerifyEmailCode({
         heading="Check your email for a code"
         subtitle={
           <Typography>
-            We sent a code to {email} to verify your email
+            We sent a code to {getValues("email")} to verify your email
           </Typography>
         }
       />
-      <form ref={ref} action={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         {error && <Box>{error}</Box>}
         <TextField
-          required
+          {...register("otp", { required: "OTP is required" })}
+          error={!!errors.otp}
+          helperText={errors.otp?.message}
           placeholder="123456"
-          type="string"
-          name="otp"
+          type="text"
+          margin="normal"
           fullWidth
         />
         <Button variant="primary" type="submit" fullWidth>

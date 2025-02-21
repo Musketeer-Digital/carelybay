@@ -7,10 +7,10 @@ import OTP from "@/models/OTP";
 export async function POST(req: Request) {
   try {
     await connectDB();
-    const { email, otp } = await req.json();
+    const { email, password, otp } = await req.json();
 
     // Check if all required fields are provided
-    if (!email || !otp) {
+    if (!email || !password || !otp) {
       return NextResponse.json(
         { success: false, message: "All fields are required" },
         { status: 403 },
@@ -36,8 +36,11 @@ export async function POST(req: Request) {
       );
     }
 
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     // Create new user
-    const newUser = await User.create({ email });
+    const newUser = await User.create({ email, password: hashedPassword });
 
     return NextResponse.json(
       { success: true, message: "User registered successfully", user: newUser },
