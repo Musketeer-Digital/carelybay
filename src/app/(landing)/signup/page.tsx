@@ -4,8 +4,8 @@ import { Box, Typography, Container } from "@mui/material";
 import SignUp from "./_components_/signup";
 import VerifyEmailCode from "./_components_/verify-email-code";
 import PersonalInformation from "./_components_/personal-information";
-import LandingActions from "./LandingActions";
 import { useForm, FormProvider } from "react-hook-form";
+import SignInMessage from "@/app/components/SignInMessage";
 
 const MAX_STEPS = 3;
 
@@ -61,7 +61,12 @@ export default function SignupPages() {
 
   return (
     <Container
-      sx={{ display: "flex", flexDirection: "column", height: "100%" }}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        flex: 1,
+        height: "100%",
+      }}
     >
       <Box
         sx={{
@@ -95,11 +100,17 @@ export default function SignupPages() {
 
       {/* Step Content */}
       <FormProvider {...methods}>{stepContent}</FormProvider>
-      <LandingActions
+      {/* Step Content */}
+
+      <SignInMessage sx={{ marginBottom: { xs: 2, md: 5 } }} />
+
+      {/* TODO: Remove after debugging */}
+      {/* <SessionControls /> */}
+      {/* <LandingActions
         nextStep={nextStep}
         showSignInMessage={showSignInMessage}
         step={step}
-      />
+      /> */}
     </Container>
   );
 }
