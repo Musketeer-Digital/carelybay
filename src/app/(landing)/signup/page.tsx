@@ -5,6 +5,8 @@ import ChooseRole from "./_components_/choose-role";
 import SignUp from "./_components_/signup";
 import VerifyEmailCode from "./_components_/verify-email-code";
 import LandingActions from "./LandingActions";
+import SignInMessage from "@/app/components/SignInMessage";
+import SessionControls from "@/app/components/session-controls";
 
 const MAX_STEPS = 3;
 
@@ -60,7 +62,12 @@ export default function SignupPages() {
 
   return (
     <Container
-      sx={{ display: "flex", flexDirection: "column", height: "100%" }}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        flex: 1,
+        height: "100%",
+      }}
     >
       <Box
         sx={{
@@ -94,11 +101,17 @@ export default function SignupPages() {
 
       {/* Step Content */}
       {stepContent}
-      <LandingActions
+      {/* Step Content */}
+
+      <SignInMessage sx={{ marginBottom: { xs: 2, md: 5 } }} />
+
+      {/* TODO: Remove after debugging */}
+      {/* <SessionControls /> */}
+      {/* <LandingActions
         nextStep={nextStep}
         showSignInMessage={showSignInMessage}
         step={step}
-      />
+      /> */}
     </Container>
   );
 }
