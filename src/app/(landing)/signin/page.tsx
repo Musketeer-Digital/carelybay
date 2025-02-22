@@ -32,7 +32,7 @@ export default function SignIn() {
     formState: { errors },
   } = useForm<SignInInputs>();
 
-  const onSubmit: SubmitHandler<SignInInputs> = async (data) => {
+  const onSubmit: SubmitHandler<SignInInputs> = async (data: SignInInputs) => {
     const { email, password } = data;
 
     const res = await signIn("credentials", {
