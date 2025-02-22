@@ -15,7 +15,9 @@ export default function RootLayout({
   return (
     <>
       <Banner />
-      <Container maxWidth="md">{children}</Container>;
+      <Container sx={{ display: "flex", flexGrow: 1 }} maxWidth="md">
+        {children}
+      </Container>
     </>
   );
 }
