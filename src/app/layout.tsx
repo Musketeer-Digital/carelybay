@@ -21,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        {/* <Banner /> */}
         <ClientProvider>
           <SessionProvider>{children}</SessionProvider>
         </ClientProvider>

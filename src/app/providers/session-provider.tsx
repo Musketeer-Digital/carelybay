@@ -12,7 +12,7 @@ export const SessionProvider = ({ children }: Props) => {
     <AuthProvider>
       {children}
       {/* TODO: Remove after debugging */}
-      <SessionControls />
+      {/* <SessionControls /> */}
     </AuthProvider>
   );
 };
