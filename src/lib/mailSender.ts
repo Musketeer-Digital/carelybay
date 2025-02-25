@@ -9,6 +9,7 @@ export const mailSender = async (
     // Create a Transporter to send emails
     let transporter = nodemailer.createTransport({
       host: process.env.MAIL_HOST,
+      port: process.env.MAIL_PORT,
       auth: {
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASS,
@@ -16,7 +17,7 @@ export const mailSender = async (
     });
     // Send emails to users
     let info = await transporter.sendMail({
-      from: "CarelyBay",
+      from: process.env.MAIL_FROM,
       to: email,
       subject: title,
       html: body,

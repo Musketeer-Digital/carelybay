@@ -1,17 +1,23 @@
 "use client";
 import React, { useState } from "react";
 import { Box, Typography, Container } from "@mui/material";
-import ChooseRole from "./(1_choose_role)/choose-role";
-import ChooseService from "./(2_1_providers_choose_service)/choose-service";
-import SignUp from "./(3_signup)/signup";
-import VerifyEmailCode from "./(4_verify_email_code)/verify-email-code";
-import LandingActions from "./LandingActions";
+import SignUp from "./_components_/signup";
+import VerifyEmailCode from "./_components_/verify-email-code";
+import PersonalInformation from "./_components_/personal-information";
+import { useForm, FormProvider } from "react-hook-form";
+import SignInMessage from "@/app/components/SignInMessage";
 
 const MAX_STEPS = 3;
 
+export type SignUpInputs = {
+  email: string;
+  password: string;
+  otp: string;
+};
+
 export default function SignupPages() {
   const [step, setStep] = useState(1);
-  const [email, setEmail] = useState("");
+  const methods = useForm<SignUpInputs>();
 
   let userMessageIcon = "";
   let userMessage = "";
@@ -31,37 +37,36 @@ export default function SignupPages() {
       userMessageIcon = "👋";
       userMessage = "Welcome to Carelybay";
       showSignInMessage = true;
-      stepContent = <SignUp nextStep={nextStep} setEmail={setEmail} />;
+      stepContent = <SignUp nextStep={nextStep} />;
       break;
     case 2:
       userMessageIcon = "👋";
       userMessage = "Email sent";
       showSignInMessage = false;
-      stepContent = (
-        <VerifyEmailCode
-          prevStep={prevStep}
-          nextStep={nextStep}
-          email={email}
-        />
-      );
+      stepContent = <VerifyEmailCode prevStep={prevStep} nextStep={nextStep} />;
       break;
     case 3:
       userMessageIcon = "✅";
       userMessage = "Verification completed successfully.";
       showSignInMessage = true;
-      stepContent = <ChooseRole />;
+      stepContent = <PersonalInformation />;
       break;
     default:
       userMessageIcon = "👋";
       userMessage = "Welcome to Carelybay";
       showSignInMessage = true;
-      stepContent = <SignUp nextStep={nextStep} setEmail={setEmail} />;
+      stepContent = <SignUp nextStep={nextStep} />;
       break;
   }
 
   return (
     <Container
-      sx={{ display: "flex", flexDirection: "column", height: "100%" }}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        flex: 1,
+        height: "100%",
+      }}
     >
       <Box
         sx={{
@@ -94,12 +99,18 @@ export default function SignupPages() {
       </Box>
 
       {/* Step Content */}
-      {stepContent}
-      <LandingActions
+      <FormProvider {...methods}>{stepContent}</FormProvider>
+      {/* Step Content */}
+
+      <SignInMessage sx={{ marginBottom: { xs: 2, md: 5 } }} />
+
+      {/* TODO: Remove after debugging */}
+      {/* <SessionControls /> */}
+      {/* <LandingActions
         nextStep={nextStep}
         showSignInMessage={showSignInMessage}
         step={step}
-      />
+      /> */}
     </Container>
   );
 }

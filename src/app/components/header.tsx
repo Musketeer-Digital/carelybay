@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { Menu as MenuIcon } from "@mui/icons-material";
 import { getFirstLetter } from "@/utils/utils";
-import { BG_DARK_GREEN_COLOR } from "@/constants/colors";
+import { COLORS } from "@/constants/colors";
 
 export default function Header() {
   const theme = useTheme();
@@ -81,7 +81,7 @@ export default function Header() {
           {/* Mobile Menu Icon */}
           <IconButton
             sx={{
-              backgroundColor: BG_DARK_GREEN_COLOR,
+              backgroundColor: COLORS.BG_DARK_GREEN_COLOR,
               color: "white",
               width: 40,
               height: 40,
@@ -99,7 +99,7 @@ export default function Header() {
             edge="end"
             onClick={handleMenuOpen}
             sx={{
-              backgroundColor: BG_DARK_GREEN_COLOR,
+              backgroundColor: COLORS.BG_DARK_GREEN_COLOR,
               color: "white",
               width: 40,
               height: 40,

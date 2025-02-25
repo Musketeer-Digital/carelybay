@@ -1,5 +1,6 @@
 import { Container } from "@mui/material";
 import type { Metadata } from "next";
+import Banner from "../components/layout/banner";
 
 export const metadata: Metadata = {
   title: "Carelybay - Login/Signup",
@@ -11,5 +12,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <Container maxWidth="md">{children}</Container>;
+  return (
+    <>
+      <Banner />
+      <Container sx={{ display: "flex", flexGrow: 1 }} maxWidth="md">
+        {children}
+      </Container>
+    </>
+  );
 }

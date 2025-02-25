@@ -1,7 +1,7 @@
 import React from "react";
-import { Box, Button, Typography, Link } from "@mui/material";
-import NextLink from "next/link";
+import { Box, Button } from "@mui/material";
 import CustomizedSteppers from "@/app/components/stepper";
+import SignInMessage from "@/app/components/SignInMessage";
 
 interface LandingActionsProps {
   nextStep: () => void;
@@ -32,17 +32,6 @@ const LandingActions: React.FC<LandingActionsProps> = ({
         Continue
       </Button>
       <Box sx={{ marginTop: "auto" }}>
-        {showSignInMessage && (
-          <Typography
-            variant="h5"
-            sx={{ textAlign: "center", marginBottom: { xs: 2, md: 5 } }}
-          >
-            Already using Carelybay?&nbsp;
-            <Link component={NextLink} href="/signin">
-              Sign in
-            </Link>
-          </Typography>
-        )}
         <CustomizedSteppers
           activeStep={step}
           sx={{ display: { xs: "none", md: "flex" } }}
