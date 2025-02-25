@@ -114,7 +114,6 @@ const Services = () => {
     <Box
       sx={{
         p: 3,
-        backgroundColor: "#fff",
         borderRadius: 2,
         mx: "auto",
       }}

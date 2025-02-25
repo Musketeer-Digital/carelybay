@@ -29,7 +29,6 @@ const CustomButton = ({
 }: CustomButtonProps) => {
   return (
     <Button
-      variant="contained"
       color={color}
       className={`flex items-center gap-2 ${className}`}
       sx={{

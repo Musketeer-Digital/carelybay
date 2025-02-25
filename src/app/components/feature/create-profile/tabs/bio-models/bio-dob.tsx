@@ -1,7 +1,15 @@
 "use client";
 
-import CustomButton from "@/app/components/CustomButton";
-import { Modal, Select, Typography, Box, MenuItem } from "@mui/material";
+import { useState } from "react";
+import {
+  Modal,
+  Box,
+  Typography,
+  Select,
+  MenuItem,
+  Button,
+  Divider,
+} from "@mui/material";
 
 interface ProfileBioDOBSModalProps {
   isDOBModalOpen: boolean;
@@ -27,23 +35,33 @@ const DOBSModal: React.FC<ProfileBioDOBSModalProps> = ({
       open={isDOBModalOpen}
       onClose={() => setIsDOBModalOpen(false)}
       aria-labelledby="dob-modal-title"
+      sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
     >
       <Box
         sx={{
-          padding: 3,
-          borderRadius: 2,
           backgroundColor: "white",
-          minHeight: "300px",
+          borderRadius: "12px",
+          padding: "24px",
+          width: "420px",
+          boxShadow: 24,
           display: "flex",
           flexDirection: "column",
         }}
       >
         <Typography variant="h5" fontWeight="bold" gutterBottom>
-          Date of Birth
+          Date of the Birth
         </Typography>
 
-        {/* DOB Select Inputs */}
-        <Box sx={{ display: "flex", justifyContent: "space-between", gap: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            gap: 2,
+            marginTop: 4,
+            marginBottom: 5,
+            width: "100%",
+          }}
+        >
           <Select
             fullWidth
             displayEmpty
@@ -51,7 +69,16 @@ const DOBSModal: React.FC<ProfileBioDOBSModalProps> = ({
             onChange={(event) =>
               handleSelectDOB("month", event.target.value as string)
             }
+            sx={{
+              borderRadius: "8px",
+              backgroundColor: "#F5F5F5",
+              textAlign: "center",
+              fontWeight: "bold",
+            }}
           >
+            <MenuItem value="" disabled>
+              MM
+            </MenuItem>
             {months.map((month) => (
               <MenuItem key={month} value={month}>
                 {month}
@@ -66,8 +93,17 @@ const DOBSModal: React.FC<ProfileBioDOBSModalProps> = ({
             onChange={(event) =>
               handleSelectDOB("day", event.target.value as string)
             }
+            sx={{
+              borderRadius: "8px",
+              backgroundColor: "#F5F5F5",
+              textAlign: "center",
+              fontWeight: "bold",
+            }}
           >
-            {days.map((day: any) => (
+            <MenuItem value="" disabled>
+              DD
+            </MenuItem>
+            {days.map((day) => (
               <MenuItem key={day} value={day}>
                 {day}
               </MenuItem>
@@ -81,7 +117,16 @@ const DOBSModal: React.FC<ProfileBioDOBSModalProps> = ({
             onChange={(event) =>
               handleSelectDOB("year", event.target.value as string)
             }
+            sx={{
+              borderRadius: "8px",
+              backgroundColor: "#F5F5F5",
+              textAlign: "center",
+              fontWeight: "bold",
+            }}
           >
+            <MenuItem value="" disabled>
+              YYYY
+            </MenuItem>
             {years.map((year) => (
               <MenuItem key={year} value={year}>
                 {year}
@@ -90,16 +135,11 @@ const DOBSModal: React.FC<ProfileBioDOBSModalProps> = ({
           </Select>
         </Box>
 
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginTop: "auto",
-          }}
-        >
-          <CustomButton onClick={() => setIsDOBModalOpen(false)}>
+        <Divider />
+        <Box sx={{ width: "100%", marginTop: "16px", textAlign: "right" }}>
+          <Button variant="primary" onClick={() => setIsDOBModalOpen(false)}>
             Save
-          </CustomButton>
+          </Button>
         </Box>
       </Box>
     </Modal>

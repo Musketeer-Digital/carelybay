@@ -1,17 +1,17 @@
 "use client";
 
-import CustomButton from "@/app/components/CustomButton";
 import {
   Modal,
-  Radio,
   Typography,
   Box,
-  FormControlLabel,
-  FormLabel,
-  FormControl,
-  RadioGroup,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Radio,
+  Button,
+  Divider,
 } from "@mui/material";
-import { useState } from "react";
 
 interface ProfileBioQualificationModalProps {
   isQualificationModalOpen: boolean;
@@ -33,51 +33,84 @@ const QualificationModal: React.FC<ProfileBioQualificationModalProps> = ({
       open={isQualificationModalOpen}
       onClose={() => setIsQualificationModalOpen(false)}
       aria-labelledby="qualification-modal-title"
+      sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
     >
       <Box
         sx={{
-          padding: 3,
-          borderRadius: 2,
           backgroundColor: "white",
-          minHeight: "300px",
+          borderRadius: "12px",
+          padding: "24px",
+          width: "600px",
+          boxShadow: 24,
           display: "flex",
           flexDirection: "column",
         }}
       >
-        {/* Title */}
-        <Typography variant="h5" fontWeight="bold" gutterBottom>
+        <Typography
+          variant="h5"
+          fontWeight="bold"
+          sx={{ marginBottom: "16px" }}
+        >
           Qualification
         </Typography>
 
-        {/* Radio Group */}
-        <FormControl component="fieldset">
-          <FormLabel component="legend">Select your qualification</FormLabel>
-          <RadioGroup
-            value={selectedQualification}
-            onChange={(event) => setSelectedQualification(event.target.value)}
-          >
-            {qualifications.map((qualification) => (
-              <FormControlLabel
-                key={qualification}
-                value={qualification}
-                control={<Radio />}
-                label={qualification}
-              />
-            ))}
-          </RadioGroup>
-        </FormControl>
-
-        {/* Save Button */}
-        <Box
+        <List
           sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginTop: "auto",
+            width: "100%",
+            maxHeight: "350px",
+            overflowY: "auto",
+            borderRadius: "8px",
           }}
         >
-          <CustomButton onClick={() => setIsQualificationModalOpen(false)}>
+          {qualifications.map((qualification) => (
+            <ListItem key={qualification} disablePadding>
+              <ListItemButton
+                selected={selectedQualification === qualification}
+                onClick={() => setSelectedQualification(qualification)}
+                sx={{
+                  borderRadius: "8px",
+                  padding: "12px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  backgroundColor:
+                    selectedQualification === qualification
+                      ? "#F5F5F5"
+                      : "transparent",
+                  "&:hover": { backgroundColor: "#F5F5F5" },
+                }}
+              >
+                <ListItemText
+                  primary={qualification}
+                  primaryTypographyProps={{
+                    fontWeight:
+                      selectedQualification === qualification
+                        ? "bold"
+                        : "normal",
+                  }}
+                />
+                <Radio
+                  checked={selectedQualification === qualification}
+                  sx={{
+                    color:
+                      selectedQualification === qualification
+                        ? "black"
+                        : "gray",
+                    "&.Mui-checked": { color: "black" },
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+
+        <Divider />
+        <Box sx={{ width: "100%", marginTop: "16px", textAlign: "right" }}>
+          <Button
+            variant="primary"
+            onClick={() => setIsQualificationModalOpen(false)}
+          >
             Save
-          </CustomButton>
+          </Button>
         </Box>
       </Box>
     </Modal>

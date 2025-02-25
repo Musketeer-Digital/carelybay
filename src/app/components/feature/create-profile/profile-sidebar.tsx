@@ -95,10 +95,7 @@ const ProfileSidebar = () => {
         <Typography fontWeight="medium" sx={{ mt: 2, color: "gray" }}>
           Identity Verifications by CarelyBay
         </Typography>
-        <Button
-          variant="contained"
-          sx={{ mt: 2, bgcolor: "gray", color: "white" }}
-        >
+        <Button variant="contained" sx={{ mt: 2 }}>
           Get the badge
         </Button>
       </Card>

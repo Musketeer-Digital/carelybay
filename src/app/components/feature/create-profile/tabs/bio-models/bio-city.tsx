@@ -1,14 +1,34 @@
 "use client";
 
-import CustomButton from "@/app/components/CustomButton";
-import { Modal, Select, Typography, Box, MenuItem } from "@mui/material";
 import { useState } from "react";
+import {
+  Modal,
+  Box,
+  Typography,
+  TextField,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  IconButton,
+  Button,
+  Divider,
+} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import CheckIcon from "@mui/icons-material/Check";
+
+const cities = [
+  "San Francisco, CA, USA",
+  "New York, NY, USA",
+  "Los Angeles, CA, USA",
+  "Chicago, IL, USA",
+  "Houston, TX, USA",
+];
 
 interface ProfileBioCityModalProps {
   isCityModalOpen: boolean;
   setIsCityModalOpen: (open: boolean) => void;
-  cities?: string[];
-  handleSelectCity?: (city: string) => void;
+  handleSelectCity: (city: string) => void;
 }
 
 const CityModal: React.FC<ProfileBioCityModalProps> = ({
@@ -16,15 +36,8 @@ const CityModal: React.FC<ProfileBioCityModalProps> = ({
   setIsCityModalOpen,
   handleSelectCity,
 }) => {
-  const cities = [
-    "San Francisco, CA, USA",
-    "New York, NY, USA",
-    "Los Angeles, CA, USA",
-    "Chicago, IL, USA",
-    "Houston, TX, USA",
-  ];
-
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCity, setSelectedCity] = useState<string | null>(null);
 
   // Filter cities based on search input
   const filteredCities = cities.filter((city) =>
@@ -36,51 +49,101 @@ const CityModal: React.FC<ProfileBioCityModalProps> = ({
       open={isCityModalOpen}
       onClose={() => setIsCityModalOpen(false)}
       aria-labelledby="city-modal-title"
+      sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
     >
       <Box
         sx={{
-          padding: 3,
-          borderRadius: 2,
           backgroundColor: "white",
-          minHeight: "300px",
+          borderRadius: "12px",
+          padding: "24px",
+          width: "600px",
+          boxShadow: 24,
           display: "flex",
           flexDirection: "column",
         }}
       >
-        {/* Title */}
-        <Typography variant="h5" fontWeight="bold" gutterBottom>
-          Where I Live
+        <Typography
+          variant="h5"
+          fontWeight="bold"
+          sx={{ marginBottom: "16px" }}
+        >
+          Where I live
         </Typography>
 
-        {/* City Dropdown */}
-        <Select
-          displayEmpty
-          fullWidth
-          value={searchTerm || ""}
-          onChange={(event) => handleSelectCity(event.target.value as string)}
-        >
-          {filteredCities.length > 0 ? (
-            filteredCities.map((city) => (
-              <MenuItem key={city} value={city}>
-                {city}
-              </MenuItem>
-            ))
-          ) : (
-            <MenuItem disabled>No matching city found</MenuItem>
-          )}
-        </Select>
+        {/* Search Field */}
+        <Box sx={{ position: "relative", width: "100%", marginBottom: 2 }}>
+          <TextField
+            fullWidth
+            placeholder="Search for your city"
+            variant="outlined"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            sx={{
+              borderRadius: "24px",
+              backgroundColor: "#F5F5F5",
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "24px",
+                paddingRight: "40px",
+              },
+            }}
+          />
+          <IconButton
+            sx={{
+              position: "absolute",
+              right: 10,
+              top: "50%",
+              transform: "translateY(-50%)",
+              color: "gray",
+            }}
+          >
+            <SearchIcon />
+          </IconButton>
+        </Box>
 
-        {/* Save Button at Bottom-Right */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginTop: "auto",
-          }}
-        >
-          <CustomButton onClick={() => setIsCityModalOpen(false)}>
+        {filteredCities.length > 0 ? (
+          <List sx={{ width: "100%", maxHeight: "350px", overflowY: "auto" }}>
+            {filteredCities.map((city) => (
+              <ListItem key={city} disablePadding>
+                <ListItemButton
+                  selected={selectedCity === city}
+                  onClick={() => setSelectedCity(city)}
+                  sx={{
+                    borderRadius: "8px",
+                    padding: "12px",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <ListItemText
+                    primary={city}
+                    primaryTypographyProps={{
+                      fontWeight: selectedCity === city ? "bold" : "normal",
+                    }}
+                  />
+                  {selectedCity === city && (
+                    <CheckIcon sx={{ color: "#FF6600" }} />
+                  )}
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        ) : (
+          <Typography color="textSecondary">No matching city found</Typography>
+        )}
+        <Divider />
+        <Box sx={{ width: "100%", marginTop: "16px", textAlign: "right" }}>
+          <Button
+            variant="primary"
+            onClick={() => {
+              if (selectedCity) {
+                handleSelectCity(selectedCity);
+                setIsCityModalOpen(false);
+              }
+            }}
+            disabled={!selectedCity}
+          >
             Save
-          </CustomButton>
+          </Button>
         </Box>
       </Box>
     </Modal>

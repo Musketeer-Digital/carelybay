@@ -1,16 +1,8 @@
 "use client";
 
 import { Box, Grid } from "@mui/material";
-import {
-  Typography,
-  Button,
-  Divider,
-  Modal,
-  Select,
-  Input,
-  Checkbox,
-} from "@mui/material";
-import { Edit, Search, Cake, Public, School, Place } from "@mui/icons-material";
+import { Typography, Button, Divider } from "@mui/material";
+import { Cake, Public, School, Place } from "@mui/icons-material";
 import { useState } from "react";
 import CityModal from "./bio-models/bio-city";
 import LanguageModel from "./bio-models/bio-language";
@@ -135,7 +127,7 @@ const ProfileBio: React.FC = () => {
 
   return (
     <div>
-      <Box sx={{ p: 3, backgroundColor: "#fff", borderRadius: 2 }}>
+      <Box sx={{ p: 3, borderRadius: 2 }}>
         <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>
           Profile Bio
         </Typography>
@@ -144,7 +136,7 @@ const ProfileBio: React.FC = () => {
             Write something punchy ex: Experienced and Caring Nanny for Infants
             and Toddlers...
           </Typography>
-          <Button sx={{ mt: 1, textTransform: "none", fontWeight: "bold" }}>
+          <Button sx={{ marginTop: 3 }} variant="contained">
             Add Intro
           </Button>
         </Box>
@@ -171,11 +163,10 @@ const ProfileBio: React.FC = () => {
           ))}
         </Grid>
       </Box>
-      <Divider />
-
       <CityModal
         isCityModalOpen={isCityModalOpen}
         setIsCityModalOpen={setIsCityModalOpen}
+        handleSelectCity={handleSelectCity}
       />
 
       <LanguageModel
