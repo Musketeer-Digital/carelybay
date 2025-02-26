@@ -1,0 +1,9 @@
+
+export enum COLORS {  
+  BG_LIGHT_ORANGE = '#FFF7E9' ,
+  BG_LIGHT_ORANGE_COLOR = "#FFF7E9",
+  BG_LIGHT_GREY_COLOR = "#EEE",
+  BG_DARK_GREEN_COLOR = "#005F56",
+  BLACK_COLOR = "black",
+
+  }  

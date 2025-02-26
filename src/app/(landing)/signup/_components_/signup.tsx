@@ -1,7 +1,9 @@
 "use client";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import PageHeader from "@/app/components/layout/page-header";
 import SocialLoginButton from "@/app/components/buttons/social-login-button";
+import { useFormContext, SubmitHandler } from "react-hook-form";
+import { SignUpInputs } from "../page";
 import {
   Box,
   FormControlLabel,
@@ -16,16 +18,18 @@ import {
 
 interface SignUpProps {
   nextStep: () => void;
-  setEmail: (email: string) => void;
 }
 
-export default function SignUp({ nextStep, setEmail }: SignUpProps) {
+export default function SignUp({ nextStep }: SignUpProps) {
   const [error, setError] = useState<string>();
-  const ref = useRef<HTMLFormElement>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useFormContext<SignUpInputs>();
 
-  const handleSubmit = async (formData: FormData) => {
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
+  const onSubmit: SubmitHandler<SignUpInputs> = async (data: SignUpInputs) => {
+    const { email } = data;
 
     try {
       const otpResponse = await fetch("/api/otp", {
@@ -35,7 +39,6 @@ export default function SignUp({ nextStep, setEmail }: SignUpProps) {
         },
         body: JSON.stringify({ email }), // Send email to generate OTP
       });
-      ref.current?.reset();
       const otpData = await otpResponse.json();
 
       if (!otpResponse.ok) {
@@ -44,7 +47,6 @@ export default function SignUp({ nextStep, setEmail }: SignUpProps) {
       }
 
       // OTP request successful, redirect user to OTP verification page
-      setEmail(email);
       nextStep();
     } catch (error) {
       setError("An error occurred while requesting OTP");
@@ -53,7 +55,7 @@ export default function SignUp({ nextStep, setEmail }: SignUpProps) {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-      <form ref={ref} action={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         {error && <Box>{error}</Box>}
         <PageHeader
           sx={{
@@ -63,20 +65,28 @@ export default function SignUp({ nextStep, setEmail }: SignUpProps) {
           subtitle="Sign up to manage your services."
         />
         <TextField
-          required
+          {...register("email", { required: "Email is required" })}
+          error={!!errors.email}
+          helperText={errors.email?.message}
           placeholder="Email*"
           type="email"
-          name="email"
           fullWidth
           sx={{
             mb: 2,
           }}
         />
         <TextField
-          required
+          {...register("password", {
+            required: "Password is required",
+            minLength: {
+              value: 6,
+              message: "Password must be at least 6 characters",
+            },
+          })}
+          error={!!errors.password}
+          helperText={errors.password?.message}
           placeholder="Create a password"
           type="password"
-          name="password"
           fullWidth
         />
         <FormControlLabel

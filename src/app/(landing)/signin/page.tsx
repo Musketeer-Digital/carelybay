@@ -1,9 +1,10 @@
 "use client";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import PageHeader from "@/app/components/layout/page-header";
 import NextLink from "next/link";
+import { useForm, SubmitHandler } from "react-hook-form";
 import {
   Container,
   TextField,
@@ -16,21 +17,34 @@ import {
 } from "@mui/material";
 import SocialLoginButton from "@/app/components/buttons/social-login-button";
 
+interface SignInInputs {
+  email: string;
+  password: string;
+}
+
 export default function SignIn() {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignInInputs>();
+
+  const onSubmit: SubmitHandler<SignInInputs> = async (data: SignInInputs) => {
+    const { email, password } = data;
+
     const res = await signIn("credentials", {
-      email: formData.get("email"),
-      password: formData.get("password"),
+      email: email,
+      password: password,
       redirect: false,
     });
+
     if (res?.error) {
       setError(res.error as string);
     }
+
     if (res?.ok) {
       return router.push("/dashboard");
     }
@@ -59,22 +73,24 @@ export default function SignIn() {
       />
 
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         style={{ display: "flex", flexDirection: "column", gap: "1em" }}
       >
         {error && <Box>{error}</Box>}
         <TextField
-          required
+          {...register("email", { required: "Email is required" })}
+          error={!!errors.email}
+          helperText={errors.email?.message}
           placeholder="Email*"
           type="email"
-          name="email"
           fullWidth
         />
         <TextField
-          required
+          {...register("password", { required: "Password is required" })}
+          error={!!errors.password}
+          helperText={errors.password?.message}
           placeholder="Password"
           type="password"
-          name="password"
           fullWidth
         />
         <Link component={NextLink} href="/forgotpasword">
