@@ -190,7 +190,7 @@ const Services = () => {
         Additional information
       </Button>
 
-      <ServiceModal
+      {/* <ServiceModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         servicesList={servicesList}
@@ -208,7 +208,7 @@ const Services = () => {
         additionalInfoOptions={additionalInfoOptions}
         selectedAdditionalInfo={selectedAdditionalInfo}
         toggleAdditionalInfo={toggleAdditionalInfo}
-      />
+      /> */}
     </Box>
   );
 };

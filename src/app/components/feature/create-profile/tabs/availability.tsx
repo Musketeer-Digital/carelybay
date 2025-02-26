@@ -70,7 +70,7 @@ const Availability = () => {
           </Box>
         ))}
       </Box>
-      <AvailabilityRatesModal
+      {/* <AvailabilityRatesModal
         isRatesModalOpen={isRatesModalOpen}
         setIsRatesModalOpen={setIsRatesModalOpen}
       />
@@ -78,7 +78,7 @@ const Availability = () => {
       <AvailabilitySetModal
         isAvailabilityModalOpen={isAvailabilityModalOpen}
         setIsAvailabilityModalOpen={setIsAvailabilityModalOpen}
-      />
+      /> */}
     </Box>
   );
 };
