@@ -8,6 +8,7 @@ import CityModal from "./bio-models/bio-city";
 import LanguageModel from "./bio-models/bio-language";
 import DOBSModal from "./bio-models/bio-dob";
 import QualificationModal from "./bio-models/bio-qualification";
+import ProfileBioDescription from "./bio-models/bio-description";
 
 const ProfileBio: React.FC = () => {
   const qualificationsList: string[] = [
@@ -21,6 +22,12 @@ const ProfileBio: React.FC = () => {
     useState<boolean>(false);
   const [selectedQualification, setSelectedQualification] =
     useState<string>("");
+
+  const [profileBioDescription, setProfileBioDescription] = useState<string>(
+    "Write something punchy ex: Experienced and Caring Nanny for Infants and Toddlers...",
+  );
+  const [isBioDescriptionModelOpen, setIsDescriptionBioModelOpen] =
+    useState<boolean>(false);
 
   const [isCityModalOpen, setIsCityModalOpen] = useState<boolean>(false);
   const [isLanguageModalOpen, setIsLanguageModalOpen] =
@@ -132,11 +139,12 @@ const ProfileBio: React.FC = () => {
           Profile Bio
         </Typography>
         <Box sx={{ border: "1px dashed #ccc", p: 2, borderRadius: 2, mb: 3 }}>
-          <Typography color="textSecondary">
-            Write something punchy ex: Experienced and Caring Nanny for Infants
-            and Toddlers...
-          </Typography>
-          <Button sx={{ marginTop: 3 }} variant="contained">
+          <Typography color="textSecondary">{profileBioDescription}</Typography>
+          <Button
+            sx={{ marginTop: 3 }}
+            variant="contained"
+            onClick={() => setIsDescriptionBioModelOpen(true)}
+          >
             Add Intro
           </Button>
         </Box>
@@ -163,6 +171,14 @@ const ProfileBio: React.FC = () => {
           ))}
         </Grid>
       </Box>
+
+      <ProfileBioDescription
+        isBioDescriptionModelOpen={isBioDescriptionModelOpen}
+        setIsDescriptionBioModelOpen={setIsDescriptionBioModelOpen}
+        profileBioDescription={profileBioDescription}
+        setProfileBioDescription={setProfileBioDescription}
+      />
+
       <CityModal
         isCityModalOpen={isCityModalOpen}
         setIsCityModalOpen={setIsCityModalOpen}

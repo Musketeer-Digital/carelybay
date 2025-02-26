@@ -6,6 +6,7 @@ import ProfileBio from "./tabs/bio";
 import Services from "./tabs/services";
 import Availability from "./tabs/availability";
 import Documents from "./tabs/documents";
+import { COLORS } from "@/constants/colors";
 
 const tabLabels = [
   "Personal Info",
@@ -14,12 +15,18 @@ const tabLabels = [
   "Documents",
 ];
 
+const sectionIds = ["personal-info", "services", "availability", "documents"];
+
 const ProfileTabs = () => {
   const [activeTab, setActiveTab] = useState(0);
-  const sectionRefs = tabLabels.map(() => useRef<HTMLDivElement>(null));
+  const sectionRefs = sectionIds.map(() => useRef<HTMLDivElement>(null));
 
   const handleTabClick = (index: number) => {
     setActiveTab(index);
+    const sectionId = sectionIds[index];
+
+    window.history.pushState(null, "", `#${sectionId}`);
+
     sectionRefs[index].current?.scrollIntoView({
       behavior: "smooth",
       block: "start",
@@ -36,10 +43,28 @@ const ProfileTabs = () => {
         }
       });
       setActiveTab(currentTab);
+
+      // ✅ Update URL Hash when scrolling
+      window.history.replaceState(null, "", `#${sectionIds[currentTab]}`);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Scroll to Section on Page Load (If URL has a Hash)
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.location.hash) {
+      const sectionId = window.location.hash.replace("#", "");
+      const index = sectionIds.indexOf(sectionId);
+      if (index !== -1) {
+        setActiveTab(index);
+        sectionRefs[index].current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }
   }, []);
 
   return (
@@ -50,12 +75,13 @@ const ProfileTabs = () => {
         variant="scrollable"
         scrollButtons="auto"
         sx={{
-          borderBottom: "1px solid #E0E0E0",
+          borderBottom: `1px solid ${COLORS.BORDER_COLOR}`,
           ".MuiTabs-indicator": {
-            backgroundColor: "#FF6600",
+            backgroundColor: COLORS.PRIMARY_COLOR,
             height: "3px",
           },
         }}
+        role="tablist"
       >
         {tabLabels.map((label, index) => (
           <Tab
@@ -64,7 +90,10 @@ const ProfileTabs = () => {
               <Typography
                 sx={{
                   fontWeight: activeTab === index ? "bold" : "normal",
-                  color: activeTab === index ? "#FF6600" : "#666",
+                  color:
+                    activeTab === index
+                      ? COLORS.PRIMARY_COLOR
+                      : COLORS.SECONDARY_TEXT_COLOR,
                   textTransform: "none",
                 }}
               >
@@ -75,17 +104,28 @@ const ProfileTabs = () => {
             sx={{
               minWidth: "auto",
               padding: "12px 16px",
-              "&:hover": { color: "#FF6600" },
+              "&:hover": { color: COLORS.PRIMARY_COLOR },
             }}
+            role="tab"
+            aria-selected={activeTab === index}
           />
         ))}
       </Tabs>
 
-      <Box sx={{ mt: 3, p: 2, backgroundColor: "#F9F9F9", borderRadius: 2 }}>
-        <Box sx={{ p: 3, backgroundColor: "#fff", borderRadius: 2 }}>
+      <Box
+        sx={{
+          mt: 3,
+          p: 2,
+          backgroundColor: COLORS.BG_LIGHT_GREY_COLOR,
+          borderRadius: 2,
+        }}
+      >
+        <Box
+          sx={{ p: 3, backgroundColor: COLORS.WHITE_COLOR, borderRadius: 2 }}
+        >
           {sectionRefs.map((ref, index) => (
             <React.Fragment key={index}>
-              <div ref={ref}>
+              <div ref={ref} id={sectionIds[index]}>
                 {index === 0 && <ProfileBio />}
                 {index === 1 && <Services />}
                 {index === 2 && <Availability />}
