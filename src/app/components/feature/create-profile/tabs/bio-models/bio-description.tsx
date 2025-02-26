@@ -57,7 +57,6 @@ const ProfileBioDescription: React.FC<ProfileBioDescriptionProps> = ({
           onChange={(e) => setProfileBioDescription(e.target.value)}
           placeholder="Write about yourself..."
           sx={{
-            backgroundColor: "#F5F5F5",
             borderRadius: "8px",
             "& .MuiOutlinedInput-root": {
               borderRadius: "8px",
