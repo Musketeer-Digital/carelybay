@@ -16,6 +16,7 @@ import {
   Stack,
 } from "@mui/material";
 import SocialLoginButton from "@/app/components/buttons/social-login-button";
+import UserNotificationMessage from "../signup/_components_/UserNotificationMessage";
 
 interface SignInInputs {
   email: string;
@@ -51,30 +52,30 @@ export default function SignIn() {
   };
 
   return (
-    <Container sx={{ display: "flex", flexDirection: "column", gap: "1em" }}>
-      <Box sx={{ display: "flex", alignItems: "center", gap: "1em" }}>
-        <Box
-          sx={{
-            width: 48,
-            height: 48,
-            backgroundColor: "rgba(243, 243, 243, 1)",
-            borderRadius: "50%",
-            alignContent: "center",
-            textAlign: "center",
-          }}
-        >
-          <Typography sx={{ fontSize: "24px" }}>👋</Typography>
-        </Box>
-        <Typography variant="body1">Welcome back to Carelybay</Typography>
-      </Box>
+    <Container
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "1em",
+        marginTop: { xs: 12 },
+      }}
+    >
+      <UserNotificationMessage icon="👋" message="Welcome back to Carelybay" />
       <PageHeader
         heading="Sign In"
         subtitle="Sign in to manage your services."
+        sx={{
+          mb: 4,
+        }}
       />
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        style={{ display: "flex", flexDirection: "column", gap: "1em" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "1em",
+        }}
       >
         {error && <Box>{error}</Box>}
         <TextField
@@ -93,15 +94,39 @@ export default function SignIn() {
           type="password"
           fullWidth
         />
-        <Link component={NextLink} href="/forgotpasword">
-          Forgot Password
-        </Link>
+
+        <Box flexDirection="column" flexGrow={1} marginTop={4} marginBottom={2}>
+          <Typography variant="body1" textAlign="center">
+            Forgot password?&nbsp;
+            <Link
+              component={NextLink}
+              href="/forgotpasword"
+              sx={{
+                textDecoration: "none",
+                pb: 0.25,
+                borderBottom: "1px solid",
+              }}
+            >
+              Reset
+            </Link>
+          </Typography>
+        </Box>
+
         <Button variant="primary" type="submit" fullWidth>
           Sign in
         </Button>
       </form>
       <Divider>Or</Divider>
-      <Stack spacing={2}>
+      <Stack
+        spacing={2}
+        sx={{
+          mb: {
+            xs: 2,
+            sm: 4,
+            md: 12,
+          },
+        }}
+      >
         <SocialLoginButton
           provider="google"
           displayText="Sign in with Google"
