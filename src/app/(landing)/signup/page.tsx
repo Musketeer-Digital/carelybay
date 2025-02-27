@@ -6,6 +6,7 @@ import VerifyEmailCode from "./_components_/verify-email-code";
 import SignInMessage from "@/app/components/SignInMessage";
 import PersonalInformation from "./_components_/personal-information";
 import { FormProvider, useForm } from "react-hook-form";
+import UserNotificationMessage from "./_components_/UserNotificationMessage";
 
 const MAX_STEPS = 3;
 
@@ -66,43 +67,21 @@ export default function SignupPages() {
         flexDirection: "column",
         flex: 1,
         height: "100%",
+        marginTop: { xs: 12 },
       }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          gap: "1em",
-          height: "48px",
-        }}
-      >
-        {/* User Notification Message */}
-        {userMessageIcon && userMessage && (
-          <Box sx={{ display: "flex", alignItems: "center", gap: "1em" }}>
-            <Box
-              sx={{
-                width: 48,
-                height: 48,
-                backgroundColor: "rgba(243, 243, 243, 1)",
-                borderRadius: "50%",
-                alignContent: "center",
-                textAlign: "center",
-              }}
-            >
-              <Typography sx={{ fontSize: "24px" }}>
-                {userMessageIcon}
-              </Typography>
-            </Box>
-            <Typography variant="body1">{userMessage}</Typography>
-          </Box>
-        )}
-      </Box>
+      <UserNotificationMessage
+        icon={userMessageIcon}
+        message={userMessage}
+        sx={{ mb: 4 }}
+      />
 
       {/* Step Content */}
-      {stepContent}
-      <FormProvider {...methods}>{stepContent}</FormProvider>
+      <FormProvider {...methods}>
+        <Box sx={{ mb: 6 }}>{stepContent}</Box>
+      </FormProvider>
 
-      <SignInMessage sx={{ marginBottom: { xs: 2, md: 5 } }} />
+      <SignInMessage sx={{ mb: { xs: 2, md: 5 } }} />
 
       {/* TODO: Remove after debugging */}
       {/* <SessionControls /> */}

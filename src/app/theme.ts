@@ -30,7 +30,7 @@ const themeOptions: ThemeOptions = {
       selected: "#E0E8EF",
     },
     grey: {
-      400: "##D9D9D9",
+      400: "#D9D9D9",
     },
   },
   components: {
@@ -65,6 +65,16 @@ const themeOptions: ThemeOptions = {
         },
       },
     },
+    // * COMPONENT -- Checkbox
+    MuiCheckbox: {
+      styleOverrides: {
+        root: {
+          color: "#D9D9D9",
+          transition: "0.167s all ease-in-out",
+        },
+      },
+    },
+
     // * COMPONENT -- Links
     MuiLink: {
       styleOverrides: {

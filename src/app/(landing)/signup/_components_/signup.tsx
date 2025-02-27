@@ -59,7 +59,7 @@ export default function SignUp({ nextStep }: SignUpProps) {
         {error && <Box>{error}</Box>}
         <PageHeader
           sx={{
-            mb: 8,
+            mb: 6,
           }}
           heading="Sign up"
           subtitle="Sign up to manage your services."
@@ -92,10 +92,20 @@ export default function SignUp({ nextStep }: SignUpProps) {
         <FormControlLabel
           sx={{
             mt: 3,
-            mb: 2,
+            mb: {
+              xs: 5,
+              md: 2,
+            },
             fontSize: 16,
           }}
-          control={<Checkbox />}
+          control={
+            <Checkbox
+              color="info"
+              sx={{
+                mx: 0.5,
+              }}
+            />
+          }
           label={
             <Typography>
               * I agree to the&nbsp;
@@ -119,7 +129,12 @@ export default function SignUp({ nextStep }: SignUpProps) {
             </Typography>
           }
         />
-        <Button variant="primary" type="submit" fullWidth>
+        <Button
+          variant="primary"
+          type="submit"
+          fullWidth
+          sx={{ textTransform: "none" }}
+        >
           Sign up
         </Button>
       </form>
