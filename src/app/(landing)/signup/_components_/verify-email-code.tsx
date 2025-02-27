@@ -16,6 +16,17 @@ interface VerifyEmailCodeProps {
   nextStep: () => void;
 }
 
+const OTPInput = ({ name, error, register }) => (
+  <TextField
+    {...register(name, { required: "OTP is required" })}
+    error={!!error}
+    helperText={error?.message}
+    type="text"
+    inputProps={{ maxLength: 1 }}
+    margin="normal"
+  />
+);
+
 export default function VerifyEmailCode({
   prevStep,
   nextStep,
@@ -31,7 +42,7 @@ export default function VerifyEmailCode({
 
   const onSubmit: SubmitHandler<SignUpInputs> = async (data: SignUpInputs) => {
     const { email, password } = getValues();
-    const { otp } = data;
+    const otp = `${data.otp1}${data.otp2}${data.otp3}${data.otp4}${data.otp5}${data.otp6}`;
 
     try {
       const response = await fetch("/api/user", {
@@ -65,15 +76,16 @@ export default function VerifyEmailCode({
       />
       <form onSubmit={handleSubmit(onSubmit)}>
         {error && <Box>{error}</Box>}
-        <TextField
-          {...register("otp", { required: "OTP is required" })}
-          error={!!errors.otp}
-          helperText={errors.otp?.message}
-          placeholder="123456"
-          type="text"
-          margin="normal"
-          fullWidth
-        />
+        <Box display="flex" justifyContent="space-between">
+          {["otp1", "otp2", "otp3", "otp4", "otp5", "otp6"].map((name) => (
+            <OTPInput
+              key={name}
+              name={name}
+              error={errors[name]}
+              register={register}
+            />
+          ))}
+        </Box>
         <Button variant="primary" type="submit" fullWidth>
           Confirm
         </Button>

@@ -7,6 +7,7 @@ import SignInMessage from "@/app/components/SignInMessage";
 import PersonalInformation from "./_components_/personal-information";
 import { FormProvider, useForm } from "react-hook-form";
 import UserNotificationMessage from "./_components_/UserNotificationMessage";
+import LandingActions from "./LandingActions";
 
 const MAX_STEPS = 3;
 
@@ -85,11 +86,11 @@ export default function SignupPages() {
 
       {/* TODO: Remove after debugging */}
       {/* <SessionControls /> */}
-      {/* <LandingActions
+      <LandingActions
         nextStep={nextStep}
         showSignInMessage={showSignInMessage}
         step={step}
-      /> */}
+      />
     </Container>
   );
 }
