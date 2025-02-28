@@ -1,15 +1,15 @@
 "use client";
-
-import { Box, Grid, Typography } from "@mui/material";
-import Link from "next/link";
+import React from "react";
+import { Grid, Typography, Box } from "@mui/material";
 import ProfileHeader from "../components/profile-header";
 import CustomButton from "../components/CustomButton";
+import Link from "next/link";
 
 const LandingScreen: React.FC = () => {
   return (
     <Box
       sx={{
-        padding: { xs: 3, sm: 6, md: 10 }, 
+        padding: { xs: 3, sm: 6, md: 10 },
         width: "100%",
         maxWidth: "1400px",
       }}
@@ -28,7 +28,10 @@ const LandingScreen: React.FC = () => {
             You can easily update or customize your profile anytime in the
             settings section.
           </Typography>
-          <Box display="flex" justifyContent={{ xs: "center", sm: "flex-start" }}>
+          <Box
+            display="flex"
+            justifyContent={{ xs: "center", sm: "flex-start" }}
+          >
             <ProfileHeader />
           </Box>
         </Grid>
@@ -41,7 +44,7 @@ const LandingScreen: React.FC = () => {
           lg={6}
           sx={{
             textAlign: { xs: "center", sm: "left" },
-            paddingLeft: { md: 5, sm: 3, xs: 0 }, 
+            ml: { md: 20, sm: 10, xs: 0 },
           }}
         >
           <Typography variant="h5" sx={{ fontWeight: "bold" }}>
@@ -72,7 +75,7 @@ const LandingScreen: React.FC = () => {
                 Create Profile
               </CustomButton>
             </Link>
-            <Link href="/profile/update-profile" passHref>
+            <Link href="/profile" passHref>
               <CustomButton
                 variant="outlined"
                 size="large"
