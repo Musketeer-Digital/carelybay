@@ -6,6 +6,7 @@ import {
   MenuItem,
   Stack,
 } from "@mui/material";
+import InputGroup from "./input-group"; // Import the new InputGroup component
 
 interface Location {
   id: number;
@@ -32,21 +33,22 @@ export default function LocationSelector({
 
   return (
     <Stack>
-      <Typography variant="caption">{heading}</Typography>
-      <TextField
-        select
-        label="Search for your city"
-        {...register("location.id", { required: "Location is required" })}
-        onChange={handleChange}
-        fullWidth
-        margin="normal"
-      >
-        {locations.map((location) => (
-          <MenuItem key={location.id} value={location.id}>
-            {location.name}
-          </MenuItem>
-        ))}
-      </TextField>
+      <InputGroup heading={heading}>
+        <TextField
+          select
+          label="Search for your city"
+          {...register("location.id", { required: "Location is required" })}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+        >
+          {locations.map((location) => (
+            <MenuItem key={location.id} value={location.id}>
+              {location.name}
+            </MenuItem>
+          ))}
+        </TextField>
+      </InputGroup>
     </Stack>
   );
 }

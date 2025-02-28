@@ -1,7 +1,15 @@
+import React from "react";
 import PageHeader from "@/app/components/layout/page-header";
-import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-import { Container, Button, Box } from "@mui/material";
+import {
+  useForm,
+  SubmitHandler,
+  FormProvider,
+  useFormContext,
+  Controller,
+} from "react-hook-form";
+import { Button, Box, Slider } from "@mui/material";
 import LocationSelector from "@/components/location-selector";
+import InputGroup from "@/components/input-group";
 
 interface PersonalInformationInputs {
   firstName: string;
@@ -17,8 +25,12 @@ const locations = [
   { id: 3, name: "Chicago" },
 ];
 
+const maxDistance = 100; // Maximum distance in kilometers
+const step = 5; // Step increments in kilometers
+
 export default function SetLocation() {
   const methods = useForm<PersonalInformationInputs>();
+  const { control } = useFormContext<PersonalInformationInputs>();
 
   const onSubmit: SubmitHandler<PersonalInformationInputs> = (data) => {
     console.log(data);
@@ -39,6 +51,50 @@ export default function SetLocation() {
               heading="Where are you located?"
               locations={locations}
             />
+          </Box>
+
+          <Box sx={{ mb: 12 }}>
+            <InputGroup heading={"How far are you willing to travel?"}>
+              <Controller
+                name="travelDistance"
+                control={control}
+                defaultValue={0}
+                render={({ field }) => (
+                  <Slider
+                    {...field}
+                    step={step}
+                    min={0}
+                    max={maxDistance}
+                    sx={{
+                      pt: 4,
+                      pb: 4,
+                      "& .MuiSlider-thumb": {
+                        "&::before": {
+                          boxShadow: "none",
+                        },
+                        "&::after": {
+                          content: `"${field.value} km"`,
+                          width: 48,
+                          position: "absolute",
+                          top: "48px",
+                          fontSize: 14,
+                          fontWeight: 800,
+                          textAlign: "center",
+                          color: "#000",
+                        },
+                      },
+                      "& .MuiSlider-track": {
+                        backgroundColor: "rgba(255, 173, 31, 0.2)",
+                        borderColor: "rgba(255, 173, 31, 0.2)",
+                      },
+                      "& .MuiSlider-rail": {
+                        backgroundColor: "#D9D9D9",
+                      },
+                    }}
+                  />
+                )}
+              />
+            </InputGroup>
           </Box>
 
           <Button variant="primary" type="submit" fullWidth>
