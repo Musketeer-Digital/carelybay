@@ -10,6 +10,7 @@ import {
 import { Button, Box, Slider } from "@mui/material";
 import LocationSelector from "@/components/location-selector";
 import InputGroup from "@/components/input-group";
+import TravelDistanceSlider from "./travel-distance-slider";
 
 interface PersonalInformationInputs {
   firstName: string;
@@ -17,6 +18,7 @@ interface PersonalInformationInputs {
   dob: string;
   phoneNumber: string;
   location: { id: number; name: string };
+  travelDistanceKm: number;
 }
 
 const locations = [
@@ -55,44 +57,10 @@ export default function SetLocation() {
 
           <Box sx={{ mb: 12 }}>
             <InputGroup heading={"How far are you willing to travel?"}>
-              <Controller
-                name="travelDistance"
-                control={control}
-                defaultValue={0}
-                render={({ field }) => (
-                  <Slider
-                    {...field}
-                    step={step}
-                    min={0}
-                    max={maxDistance}
-                    sx={{
-                      pt: 4,
-                      pb: 4,
-                      "& .MuiSlider-thumb": {
-                        "&::before": {
-                          boxShadow: "none",
-                        },
-                        "&::after": {
-                          content: `"${field.value} km"`,
-                          width: 48,
-                          position: "absolute",
-                          top: "48px",
-                          fontSize: 14,
-                          fontWeight: 800,
-                          textAlign: "center",
-                          color: "#000",
-                        },
-                      },
-                      "& .MuiSlider-track": {
-                        backgroundColor: "rgba(255, 173, 31, 0.2)",
-                        borderColor: "rgba(255, 173, 31, 0.2)",
-                      },
-                      "& .MuiSlider-rail": {
-                        backgroundColor: "#D9D9D9",
-                      },
-                    }}
-                  />
-                )}
+              <TravelDistanceSlider
+                name="travelDistanceKm"
+                maxDistance={maxDistance}
+                step={step}
               />
             </InputGroup>
           </Box>

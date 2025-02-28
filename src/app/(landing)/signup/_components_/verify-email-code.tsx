@@ -1,6 +1,6 @@
 import PageHeader from "@/app/components/layout/page-header";
 import { useState } from "react";
-import { useFormContext, SubmitHandler } from "react-hook-form";
+import { useFormContext, SubmitHandler, FieldError } from "react-hook-form";
 import { SignUpInputs } from "../page";
 import {
   Container,
@@ -16,7 +16,15 @@ interface VerifyEmailCodeProps {
   nextStep: () => void;
 }
 
-const OTPInput = ({ name, error, register }) => (
+const OTPInput = ({
+  name,
+  error,
+  register,
+}: {
+  name: string;
+  error: FieldError | undefined;
+  register: any;
+}) => (
   <TextField
     {...register(name, { required: "OTP is required" })}
     error={!!error}
@@ -31,7 +39,6 @@ const OTPInput = ({ name, error, register }) => (
       },
       height: {
         xs: 60,
-
         md: 48,
       },
     }}
@@ -53,7 +60,7 @@ export default function VerifyEmailCode({
 
   const onSubmit: SubmitHandler<SignUpInputs> = async (data: SignUpInputs) => {
     const { email, password } = getValues();
-    const otp = `${data.otp1}${data.otp2}${data.otp3}${data.otp4}${data.otp5}${data.otp6}`;
+    const otp = `${data.otp}`;
 
     try {
       const response = await fetch("/api/user", {
@@ -99,14 +106,16 @@ export default function VerifyEmailCode({
             },
           }}
         >
-          {["otp1", "otp2", "otp3", "otp4", "otp5", "otp6"].map((name) => (
-            <OTPInput
-              key={name}
-              name={name}
-              error={errors[name]}
-              register={register}
-            />
-          ))}
+          {Array(6)
+            .fill(0)
+            .map((_, index) => (
+              <OTPInput
+                key={index}
+                name={`otp[${index}]`}
+                error={errors.otp}
+                register={register}
+              />
+            ))}
         </Box>
         <Button variant="primary" type="submit" fullWidth sx={{ mb: 4 }}>
           Confirm
@@ -117,7 +126,7 @@ export default function VerifyEmailCode({
           textAlign: "left",
           maxWidth: {
             xs: "100%",
-            sm: "50%",
+            md: "50%",
           },
         }}
       >
