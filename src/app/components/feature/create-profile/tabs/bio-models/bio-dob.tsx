@@ -10,15 +10,32 @@ import {
   Button,
   Divider,
 } from "@mui/material";
+import { COLORS } from "@/constants/colors";
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+const days = Array.from({ length: 31 }, (_, i) => i + 1);
+const years = Array.from(
+  { length: 100 },
+  (_, i) => new Date().getFullYear() - i,
+);
 
 interface ProfileBioDOBSModalProps {
   isDOBModalOpen: boolean;
   setIsDOBModalOpen: (open: boolean) => void;
   selectedDOB: { month: string; day: string; year: string };
   handleSelectDOB: (key: string, value: string) => void;
-  months: string[];
-  days: number[];
-  years: number[];
 }
 
 const DOBSModal: React.FC<ProfileBioDOBSModalProps> = ({
@@ -26,9 +43,6 @@ const DOBSModal: React.FC<ProfileBioDOBSModalProps> = ({
   setIsDOBModalOpen,
   selectedDOB,
   handleSelectDOB,
-  months,
-  days,
-  years,
 }) => {
   return (
     <Modal
@@ -71,7 +85,7 @@ const DOBSModal: React.FC<ProfileBioDOBSModalProps> = ({
             }
             sx={{
               borderRadius: "8px",
-              backgroundColor: "#F5F5F5",
+              backgroundColor: COLORS.BG_LIGHT_GREY_COLOR,
               textAlign: "center",
               fontWeight: "bold",
             }}
@@ -95,7 +109,7 @@ const DOBSModal: React.FC<ProfileBioDOBSModalProps> = ({
             }
             sx={{
               borderRadius: "8px",
-              backgroundColor: "#F5F5F5",
+              backgroundColor: COLORS.BG_LIGHT_GREY_COLOR,
               textAlign: "center",
               fontWeight: "bold",
             }}
@@ -119,7 +133,7 @@ const DOBSModal: React.FC<ProfileBioDOBSModalProps> = ({
             }
             sx={{
               borderRadius: "8px",
-              backgroundColor: "#F5F5F5",
+              backgroundColor: COLORS.BG_LIGHT_GREY_COLOR,
               textAlign: "center",
               fontWeight: "bold",
             }}

@@ -1,17 +1,81 @@
 "use client";
 
 import { useState } from "react";
-import { Typography, Box, Divider, IconButton } from "@mui/material";
+import {
+  Typography,
+  Box,
+  Divider,
+  IconButton,
+  Button,
+  Link,
+  Tooltip,
+} from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ChildCareIcon from "@mui/icons-material/ChildCare";
 import AvailabilityRatesModal from "./availability-model/availability-rates";
 import AvailabilityForModal from "./availability-model/availability-for";
 import AvailabilitySetModal from "./availability-model/availability-set";
+import { COLORS } from "@/constants/colors";
+import { Edit, InfoOutlined } from "@mui/icons-material";
+interface Rates {
+  nightRate: number;
+  holidayRate: number;
+  additionalChildRate: number;
+}
 
 const Availability = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isRatesModalOpen, setIsRatesModalOpen] = useState(false);
   const [isAvailabilityModalOpen, setIsAvailabilityModalOpen] = useState(false);
+  const [availabilityData, setAvailabilityData] = useState<{
+    selectedAvailability: string | null;
+    selectedUrgency: string | null;
+  }>({
+    selectedAvailability: null,
+    selectedUrgency: null,
+  });
+  const [rateData, setRateData] = useState<{
+    generalRate: number;
+    rates: Rates;
+  }>({
+    generalRate: 0,
+    rates: { nightRate: 0, holidayRate: 0, additionalChildRate: 0 },
+  });
+  const [availabilityTimeData, setAvailabilityTimeData] = useState<{
+    selectedDays: string[];
+    selectedTimeSlots: string[];
+    additionalHours: { from: string; to: string }[];
+  }>({
+    selectedDays: [],
+    selectedTimeSlots: [],
+    additionalHours: [],
+  });
+
+  const handleRatesSelection = (data: {
+    generalRate: number;
+    rates: Rates;
+  }) => {
+    setRateData(data);
+  };
+
+  const handleAvailabilitySelection = (data: {
+    selectedAvailability: string | null;
+    selectedUrgency: string | null;
+  }) => {
+    setAvailabilityData(data);
+  };
+
+  const onSelectAvailabilitySet = (data: {
+    selectedDays: string[];
+    selectedTimeSlots: string[];
+    additionalHours: { from: string; to: string }[];
+  }): void => {
+    setAvailabilityTimeData({
+      selectedDays: data.selectedDays,
+      selectedTimeSlots: data.selectedTimeSlots,
+      additionalHours: data.additionalHours,
+    });
+  };
 
   const availabilityOptions = [
     {
@@ -64,21 +128,242 @@ const Availability = () => {
             <Typography variant="body2" color="textSecondary" sx={{ mt: 0.5 }}>
               {option.description}
             </Typography>
+
+            <Box>
+              {option.title === "Available For" &&
+                availabilityData.selectedAvailability &&
+                availabilityData.selectedUrgency && (
+                  <>
+                    <Button
+                      variant="outlined"
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        mt: 2,
+                        borderRadius: "24px",
+                        textTransform: "none",
+                      }}
+                    >
+                      {availabilityData.selectedAvailability}{" "}
+                      {availabilityData.selectedUrgency}
+                    </Button>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        mt: 3,
+                        gap: 1,
+                        flexWrap: "wrap",
+                        color: COLORS.BLACK_COLOR,
+                        alignItems: "center",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <Edit />
+                      <Link
+                        href="#"
+                        sx={{
+                          color: COLORS.BLACK_COLOR,
+                          textDecoration: "none",
+                        }}
+                      >
+                        Edit
+                      </Link>
+                    </Box>
+                  </>
+                )}
+
+              {option.title === "Set your Rates" &&
+                rateData.generalRate > 0 && (
+                  <Box
+                    sx={{
+                      mt: 2,
+                      p: 2,
+                      borderRadius: "8px",
+                      width: 400,
+                    }}
+                  >
+                    {[
+                      { label: "General Rate", key: "generalRate" },
+                      {
+                        label: "Night Rate",
+                        key: "nightRate",
+                        tooltip: "This applies for overnight stays",
+                      },
+                      {
+                        label: "Holiday Rate",
+                        key: "holidayRate",
+                        tooltip: "This applies for public holidays",
+                      },
+                      {
+                        label: "Additional Child Rate",
+                        key: "additionalChildRate",
+                        tooltip: "This applies for each extra child",
+                      },
+                    ].map(({ label, key, tooltip }) => (
+                      <Box
+                        key={key}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          mb: 1,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 0.5,
+                          }}
+                        >
+                          <Typography variant="body1">{label}</Typography>
+                          {tooltip && (
+                            <Tooltip title={tooltip}>
+                              <IconButton sx={{ p: 0, color: "grey.600" }}>
+                                <InfoOutlined fontSize="small" />
+                              </IconButton>
+                            </Tooltip>
+                          )}
+                        </Box>
+                        <Typography variant="body1">
+                          <span>
+                            $
+                            {key in rateData
+                              ? (rateData as any)[key]
+                              : (rateData.rates as any)[key] || 0}
+                          </span>{" "}
+                          / hour
+                        </Typography>
+                      </Box>
+                    ))}
+
+                    <Box
+                      sx={{
+                        display: "flex",
+                        mt: 3,
+                        gap: 1,
+                        flexWrap: "wrap",
+                        color: COLORS.BLACK_COLOR,
+                        alignItems: "center",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <Edit />
+                      <Link
+                        href="#"
+                        sx={{
+                          color: COLORS.BLACK_COLOR,
+                          textDecoration: "none",
+                        }}
+                      >
+                        Edit
+                      </Link>
+                    </Box>
+                  </Box>
+                )}
+
+              {option.title === "Set your availability" && (
+                <Box
+                  sx={{
+                    mt: 2,
+                  }}
+                >
+                  {availabilityTimeData.selectedDays.length > 0 &&
+                    ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(
+                      (day) => {
+                        const isSelected =
+                          availabilityTimeData.selectedDays.includes(day);
+                        return (
+                          <Button
+                            key={day}
+                            variant="contained"
+                            sx={{
+                              mr: 1,
+                              minWidth: "7vh",
+                              height: "7vh",
+                              borderRadius: "50%",
+                              backgroundColor: isSelected
+                                ? COLORS.PRIMARY_COLOR
+                                : COLORS.WHITE_COLOR,
+                              color: isSelected
+                                ? COLORS.WHITE_COLOR
+                                : COLORS.BLACK_COLOR,
+                              border: `1px solid ${isSelected ? COLORS.PRIMARY_COLOR : "#E0E0E0"}`,
+                              fontSize: "14px",
+                              fontWeight: "500",
+                              textTransform: "none",
+                            }}
+                          >
+                            {day}
+                          </Button>
+                        );
+                      },
+                    )}
+
+                  {availabilityTimeData.selectedTimeSlots.length > 0 && (
+                    <Button
+                      variant="outlined"
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        mt: 2,
+                        borderRadius: "24px",
+                        textTransform: "none",
+                      }}
+                    >
+                      {availabilityTimeData.selectedTimeSlots[0]}s{" "}
+                    </Button>
+                  )}
+
+                  {(availabilityTimeData.selectedDays.length > 0 ||
+                    availabilityTimeData.selectedTimeSlots.length > 0) && (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        mt: 3,
+                        gap: 1,
+                        flexWrap: "wrap",
+                        color: COLORS.BLACK_COLOR,
+                        alignItems: "center",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <Edit />
+                      <Link
+                        href="#"
+                        sx={{
+                          color: COLORS.BLACK_COLOR,
+                          textDecoration: "none",
+                        }}
+                      >
+                        Edit
+                      </Link>
+                    </Box>
+                  )}
+                </Box>
+              )}
+            </Box>
             {index < availabilityOptions.length - 1 && (
               <Divider sx={{ mt: 2 }} />
             )}
           </Box>
         ))}
       </Box>
-      {/* <AvailabilityRatesModal
+      <AvailabilityForModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        handleAvailabilitySelection={handleAvailabilitySelection}
+      />
+      <AvailabilityRatesModal
         isRatesModalOpen={isRatesModalOpen}
         setIsRatesModalOpen={setIsRatesModalOpen}
+        handleRatesSelection={handleRatesSelection}
       />
-      <AvailabilityForModal isOpen={isOpen} setIsOpen={setIsOpen} />
       <AvailabilitySetModal
         isAvailabilityModalOpen={isAvailabilityModalOpen}
         setIsAvailabilityModalOpen={setIsAvailabilityModalOpen}
-      /> */}
+        onSelectAvailabilitySet={onSelectAvailabilitySet}
+      />
     </Box>
   );
 };

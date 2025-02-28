@@ -44,7 +44,6 @@ const ProfileTabs = () => {
       });
       setActiveTab(currentTab);
 
-      // ✅ Update URL Hash when scrolling
       window.history.replaceState(null, "", `#${sectionIds[currentTab]}`);
     };
 
@@ -52,7 +51,6 @@ const ProfileTabs = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Scroll to Section on Page Load (If URL has a Hash)
   useEffect(() => {
     if (typeof window !== "undefined" && window.location.hash) {
       const sectionId = window.location.hash.replace("#", "");

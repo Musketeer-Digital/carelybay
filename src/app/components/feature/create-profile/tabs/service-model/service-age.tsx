@@ -11,6 +11,7 @@ import {
   Button,
   IconButton,
   Divider,
+  Box,
 } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
@@ -24,9 +25,10 @@ interface ServiceAgeModalProps {
 const AgeModal: React.FC<ServiceAgeModalProps> = ({
   isAgeModalOpen,
   setIsAgeModalOpen,
+  toggleAgeGroup,
 }) => {
   const [ageValue, setAgeValue] = useState<number>(10);
-  const [childrenCount, setChildrenCount] = useState<number>(2);
+  const [children, setChildren] = useState<number>(2);
 
   return (
     <Dialog
@@ -44,8 +46,7 @@ const AgeModal: React.FC<ServiceAgeModalProps> = ({
           Select all that apply
         </Typography>
 
-        {/* Age Slider */}
-        <div style={{ padding: "16px 0" }}>
+        <Box sx={{ padding: "16px 0" }}>
           <Slider
             min={0}
             max={99}
@@ -53,66 +54,67 @@ const AgeModal: React.FC<ServiceAgeModalProps> = ({
             onChange={(_, newValue) => setAgeValue(newValue as number)}
             valueLabelDisplay="on"
           />
-          <div
-            style={{
+          <Box
+            sx={{
               display: "flex",
               justifyContent: "space-between",
               fontSize: "14px",
-              color: "#6b7280",
+              color: "text.secondary",
             }}
           >
-            <span>0</span>
-            <span style={{ fontWeight: "bold" }}>{ageValue} years</span>
-            <span>99</span>
-          </div>
-        </div>
+            <Typography variant="body2">0</Typography>
+            <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+              {ageValue} years
+            </Typography>
+            <Typography variant="body2">99</Typography>
+          </Box>
+        </Box>
 
-        {/* Children Counter */}
-        <div style={{ textAlign: "center", marginTop: "24px" }}>
+        <Box sx={{ textAlign: "center", mt: 3 }}>
           <Typography variant="body1" fontWeight="medium">
             I’m comfortable caring for
           </Typography>
-          <div
-            style={{
+          <Box
+            sx={{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: "16px",
-              marginTop: "8px",
+              gap: 2,
+              mt: 1,
             }}
           >
             <IconButton
               color="warning"
-              onClick={() => setChildrenCount(Math.max(1, childrenCount - 1))}
-              disabled={childrenCount === 1}
+              onClick={() => setChildren(Math.max(1, children - 1))}
+              disabled={children === 1}
             >
               <RemoveIcon />
             </IconButton>
             <Typography variant="h5" fontWeight="bold">
-              {childrenCount}
+              {children}
             </Typography>
             <IconButton
               color="warning"
-              onClick={() => setChildrenCount(childrenCount + 1)}
+              onClick={() => setChildren(children + 1)}
             >
               <AddIcon />
             </IconButton>
-          </div>
+          </Box>
           <Typography variant="body2" color="textSecondary">
             Children
           </Typography>
-        </div>
+        </Box>
       </DialogContent>
       <Divider />
-      {/* Next Button Stuck at Bottom */}
       <DialogActions>
         <Button
-          variant="contained"
-          color="warning"
-          size="large"
-          onClick={() => setIsAgeModalOpen(false)}
+          variant="primary"
+          onClick={() => {
+            toggleAgeGroup({ ageValue, children });
+            setIsAgeModalOpen(false);
+          }}
         >
-          Next
+          Save
         </Button>
       </DialogActions>
     </Dialog>

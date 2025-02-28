@@ -1,5 +1,6 @@
 "use client";
 
+import { COLORS } from "@/constants/colors";
 import {
   Modal,
   Typography,
@@ -74,9 +75,9 @@ const QualificationModal: React.FC<ProfileBioQualificationModalProps> = ({
                   justifyContent: "space-between",
                   backgroundColor:
                     selectedQualification === qualification
-                      ? "#F5F5F5"
+                      ? COLORS.BG_LIGHT_GREY_COLOR
                       : "transparent",
-                  "&:hover": { backgroundColor: "#F5F5F5" },
+                  "&:hover": { backgroundColor: COLORS.BG_LIGHT_GREY_COLOR },
                 }}
               >
                 <ListItemText

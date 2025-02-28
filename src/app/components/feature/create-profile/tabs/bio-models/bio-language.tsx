@@ -16,11 +16,21 @@ import {
   Divider,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { COLORS } from "@/constants/colors";
+
+const languages = [
+  "English",
+  "Spanish",
+  "French",
+  "German",
+  "Chinese",
+  "Arabic",
+  "Hindi",
+];
 
 interface ProfileBioLanguageModalProps {
   isLanguageModalOpen: boolean;
   setIsLanguageModalOpen: (open: boolean) => void;
-  languages: string[];
   selectedLanguages: string[];
   setSelectedLanguages: (languages: string[]) => void;
 }
@@ -28,7 +38,6 @@ interface ProfileBioLanguageModalProps {
 const LanguageModal: React.FC<ProfileBioLanguageModalProps> = ({
   isLanguageModalOpen,
   setIsLanguageModalOpen,
-  languages,
   selectedLanguages,
   setSelectedLanguages,
 }) => {
@@ -82,7 +91,7 @@ const LanguageModal: React.FC<ProfileBioLanguageModalProps> = ({
             onChange={(e) => setSearchTerm(e.target.value)}
             sx={{
               borderRadius: "24px",
-              backgroundColor: "#F5F5F5",
+              backgroundColor: COLORS.BG_LIGHT_GREY_COLOR,
               "& .MuiOutlinedInput-root": {
                 borderRadius: "24px",
                 paddingRight: "40px",

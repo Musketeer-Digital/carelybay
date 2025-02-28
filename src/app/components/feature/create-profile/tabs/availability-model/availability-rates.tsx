@@ -19,17 +19,19 @@ import CustomButton from "@/app/components/CustomButton";
 interface AvailabilityRatesModalProps {
   isRatesModalOpen: boolean;
   setIsRatesModalOpen: (open: boolean) => void;
+  handleRatesSelection: Function;
 }
 
 const AvailabilityRatesModal: React.FC<AvailabilityRatesModalProps> = ({
   isRatesModalOpen,
   setIsRatesModalOpen,
+  handleRatesSelection,
 }) => {
-  const [generalRate, setGeneralRate] = useState<number>(500);
+  const [generalRate, setGeneralRate] = useState<number>(0);
   const [rates, setRates] = useState<any>({
-    nightRate: 20,
-    holidayRate: 20,
-    additionalChildRate: 10,
+    nightRate: 0,
+    holidayRate: 0,
+    additionalChildRate: 0,
   });
 
   const handleRateChange = (key: string, value: string) => {
@@ -51,7 +53,6 @@ const AvailabilityRatesModal: React.FC<AvailabilityRatesModalProps> = ({
         </Typography>
       </DialogTitle>
       <DialogContent>
-        {/* General Rate Section */}
         <Typography
           variant="body1"
           fontWeight="medium"
@@ -92,7 +93,6 @@ const AvailabilityRatesModal: React.FC<AvailabilityRatesModalProps> = ({
 
         <Divider sx={{ my: 2 }} />
 
-        {/* Additional Rates Section */}
         <Typography
           variant="body1"
           fontWeight="medium"
@@ -151,15 +151,17 @@ const AvailabilityRatesModal: React.FC<AvailabilityRatesModalProps> = ({
         ))}
       </DialogContent>
 
-      {/* Done Button */}
-      <DialogActions>
-        <CustomButton
-          variant="contained"
-          color="warning"
-          onClick={() => setIsRatesModalOpen(false)}
+      <Divider />
+      <DialogActions sx={{ pt: 2, mb: 2 }}>
+        <Button
+          variant="primary"
+          onClick={() => {
+            setIsRatesModalOpen(false);
+            handleRatesSelection({ generalRate, rates });
+          }}
         >
           Done
-        </CustomButton>
+        </Button>
       </DialogActions>
     </Dialog>
   );

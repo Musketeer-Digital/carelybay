@@ -9,8 +9,10 @@ import {
   Button,
   Grid,
   IconButton,
+  Divider,
 } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
+import { COLORS } from "@/constants/colors";
 
 interface AdditionalInfo {
   label: string;
@@ -49,12 +51,7 @@ const ServiceAdditionalInfoModal: React.FC<ServiceAdditionalInfoModalProps> = ({
         </IconButton>
       </DialogTitle>
       <DialogContent>
-        <Typography
-          variant="body2"
-          color="textSecondary"
-          align="center"
-          gutterBottom
-        >
+        <Typography variant="body2" color="textSecondary" gutterBottom>
           This information you share will be used across the platform
         </Typography>
 
@@ -70,8 +67,10 @@ const ServiceAdditionalInfoModal: React.FC<ServiceAdditionalInfoModalProps> = ({
                     width: 48,
                     height: 48,
                     borderRadius: "50%",
-                    bgcolor: isSelected ? "#FF9800" : "#f5f5f5",
-                    color: isSelected ? "white" : "#616161",
+                    bgcolor: isSelected
+                      ? COLORS.PRIMARY_COLOR
+                      : COLORS.WHITE_COLOR,
+                    color: isSelected ? COLORS.WHITE_COLOR : COLORS.BLACK_COLOR,
                     boxShadow: isSelected ? 3 : 0,
                     transition: "all 0.3s ease",
                   }}
@@ -91,12 +90,18 @@ const ServiceAdditionalInfoModal: React.FC<ServiceAdditionalInfoModalProps> = ({
             );
           })}
         </Grid>
-
+      </DialogContent>
+      <Divider />
+      <DialogActions
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
         <Typography
           variant="body2"
           color="textSecondary"
-          align="center"
-          sx={{ mt: 3 }}
+          sx={{ ml: 2, mb: 2, mt: 2 }}
         >
           <b>
             {selectedAdditionalInfo.length}/{additionalInfoOptions.length}{" "}
@@ -105,12 +110,8 @@ const ServiceAdditionalInfoModal: React.FC<ServiceAdditionalInfoModalProps> = ({
           <br />
           Your selection will appear here
         </Typography>
-      </DialogContent>
-      <DialogActions>
         <Button
-          variant="contained"
-          color="warning"
-          fullWidth
+          variant="primary"
           onClick={() => setIsAdditionalInfoModalOpen(false)}
         >
           Save

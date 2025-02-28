@@ -46,45 +46,6 @@ const ProfileBio: React.FC = () => {
     year: "",
   });
 
-  const days = Array.from({ length: 31 }, (_, i) => i + 1);
-  const years = Array.from(
-    { length: 100 },
-    (_, i) => new Date().getFullYear() - i,
-  );
-
-  const cities = [
-    "San Francisco, CA, USA",
-    "New York, NY, USA",
-    "Los Angeles, CA, USA",
-    "Chicago, IL, USA",
-    "Houston, TX, USA",
-  ];
-
-  const languages = [
-    "English",
-    "Spanish",
-    "French",
-    "German",
-    "Chinese",
-    "Arabic",
-    "Hindi",
-  ];
-
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
   const profileDetails = [
     {
       icon: <Place fontSize="small" color="action" />,
@@ -120,15 +81,11 @@ const ProfileBio: React.FC = () => {
     },
   ];
 
-  const handleSelectCity = (value: any) => {
+  const handleSelectCity = (value: string) => {
     setSelectedCity(value);
   };
 
-  const handleSelectLanguages = (value: any) => {
-    setSelectedLanguages(value);
-  };
-
-  const handleSelectDOB = (key: any, value: any) => {
+  const handleSelectDOB = (key: string, value: string) => {
     setSelectedDOB((prev) => ({ ...prev, [key]: value }));
   };
 
@@ -188,7 +145,6 @@ const ProfileBio: React.FC = () => {
       <LanguageModel
         isLanguageModalOpen={isLanguageModalOpen}
         setIsLanguageModalOpen={setIsLanguageModalOpen}
-        languages={languages}
         selectedLanguages={selectedLanguages}
         setSelectedLanguages={setSelectedLanguages}
       />
@@ -197,9 +153,6 @@ const ProfileBio: React.FC = () => {
         setIsDOBModalOpen={setIsDOBModalOpen}
         selectedDOB={selectedDOB}
         handleSelectDOB={handleSelectDOB}
-        months={months}
-        days={days}
-        years={years}
       />
 
       <QualificationModal

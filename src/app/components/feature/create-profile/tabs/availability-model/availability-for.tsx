@@ -8,21 +8,27 @@ import {
   DialogActions,
   Typography,
   ToggleButton,
-  ToggleButtonGroup,
+  Button,
+  Box,
+  Divider,
 } from "@mui/material";
-import CustomButton from "@/app/components/CustomButton";
+import { COLORS } from "@/constants/colors";
 
 interface AvailabilityForModalProps {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
+  handleAvailabilitySelection: Function;
 }
 
 const AvailabilityForModal: React.FC<AvailabilityForModalProps> = ({
   isOpen,
   setIsOpen,
+  handleAvailabilitySelection,
 }) => {
-  const [selectedAvailability, setSelectedAvailability] = useState<string>("");
-  const [selectedUrgency, setSelectedUrgency] = useState<string>("");
+  const [selectedAvailability, setSelectedAvailability] = useState<
+    string | null
+  >(null);
+  const [selectedUrgency, setSelectedUrgency] = useState<string | null>(null);
 
   const availabilityOptions = ["Long term", "Short Term", "One time"];
   const urgencyOptions = [
@@ -33,66 +39,112 @@ const AvailabilityForModal: React.FC<AvailabilityForModalProps> = ({
   ];
 
   return (
-    <Dialog open={isOpen} onClose={() => setIsOpen(false)} fullWidth>
-      <DialogTitle>
-        <Typography variant="h6" fontWeight="bold">
-          Availability
-        </Typography>
-      </DialogTitle>
-      <DialogContent>
-        {/* Available For Section */}
+    <Dialog
+      open={isOpen}
+      onClose={() => setIsOpen(false)}
+      fullWidth
+      sx={{
+        "& .MuiPaper-root": {
+          borderRadius: "16px",
+          padding: "24px",
+        },
+      }}
+    >
+      <Typography sx={{ fontSize: "20px", fontWeight: "bold", pb: 3 }}>
+        Availability
+      </Typography>
+
+      <DialogContent sx={{ px: 1 }}>
         <Typography
           variant="body1"
-          color="textSecondary"
-          fontWeight="medium"
-          gutterBottom
+          fontWeight="500"
+          sx={{ textAlign: "left", mb: 1 }}
         >
           Available For
         </Typography>
-        <ToggleButtonGroup
-          value={selectedAvailability}
-          exclusive
-          onChange={(_, value) => setSelectedAvailability(value)}
-          fullWidth
-        >
-          {availabilityOptions.map((option) => (
-            <ToggleButton key={option} value={option}>
-              {option}
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>
+        <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+          {availabilityOptions.map((option) => {
+            const isSelected = selectedAvailability === option;
+            return (
+              <ToggleButton
+                key={option}
+                value={option}
+                selected={isSelected}
+                onClick={() => setSelectedAvailability(option)}
+                sx={{
+                  borderRadius: "24px",
+                  backgroundColor: isSelected
+                    ? `${COLORS.BG_LIGHT_ORANGE_COLOR} !important`
+                    : "",
+                  border: `1px solid ${isSelected ? `${COLORS.PRIMARY_COLOR} !important` : COLORS.BORDER_COLOR}`,
+                  color: isSelected ? COLORS.PRIMARY_COLOR : COLORS.BLACK_COLOR,
+                  textTransform: "none",
+                  px: 2,
+                  "&:hover": {
+                    backgroundColor: isSelected
+                      ? `${COLORS.PRIMARY_COLOR} !important`
+                      : COLORS.BG_LIGHT_GREY_COLOR,
+                  },
+                }}
+              >
+                {option}
+              </ToggleButton>
+            );
+          })}
+        </Box>
 
-        {/* Urgency Section */}
         <Typography
           variant="body1"
-          color="textSecondary"
-          fontWeight="medium"
-          gutterBottom
-          sx={{ mt: 3 }}
+          fontWeight="500"
+          sx={{ textAlign: "left", mt: 3, mb: 1 }}
         >
           Urgency
         </Typography>
-        <ToggleButtonGroup
-          value={selectedUrgency}
-          exclusive
-          onChange={(_, value) => setSelectedUrgency(value)}
-          fullWidth
-        >
-          {urgencyOptions.map((option) => (
-            <ToggleButton key={option} value={option}>
-              {option}
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>
+        <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+          {urgencyOptions.map((option) => {
+            const isSelected = selectedUrgency === option;
+            return (
+              <ToggleButton
+                key={option}
+                value={option}
+                selected={isSelected}
+                onClick={() => setSelectedUrgency(option)}
+                sx={{
+                  borderRadius: "24px",
+                  backgroundColor: isSelected
+                    ? `${COLORS.BG_LIGHT_ORANGE_COLOR} !important`
+                    : "",
+                  border: `1px solid ${isSelected ? `${COLORS.PRIMARY_COLOR} !important` : COLORS.BORDER_COLOR}`,
+                  color: isSelected ? COLORS.PRIMARY_COLOR : COLORS.BLACK_COLOR,
+                  textTransform: "none",
+                  px: 2,
+                  "&:hover": {
+                    backgroundColor: isSelected
+                      ? `${COLORS.PRIMARY_COLOR} !important`
+                      : COLORS.BG_LIGHT_GREY_COLOR,
+                  },
+                }}
+              >
+                {option}
+              </ToggleButton>
+            );
+          })}
+        </Box>
       </DialogContent>
-      <DialogActions>
-        <CustomButton
-          variant="contained"
-          color="warning"
-          onClick={() => setIsOpen(false)}
+      <Divider />
+      <DialogActions sx={{ pt: 2, mb: 2 }}>
+        <Button
+          variant="primary"
+          onClick={() => {
+            setIsOpen(false);
+            handleAvailabilitySelection({
+              selectedAvailability,
+              selectedUrgency,
+            });
+          }}
         >
           Done
-        </CustomButton>
+        </Button>
       </DialogActions>
     </Dialog>
   );
