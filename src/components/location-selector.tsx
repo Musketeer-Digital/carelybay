@@ -7,6 +7,7 @@ import {
   Stack,
 } from "@mui/material";
 import InputGroup from "./input-group"; // Import the new InputGroup component
+import { ChangeEvent, FormEvent } from "react";
 
 interface Location {
   id: number;
@@ -24,9 +25,9 @@ export default function LocationSelector({
 }: LocationSelectorProps) {
   const { register, setValue } = useFormContext();
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedLocation = locations.find(
-      (location) => location.id === event.target.value,
+      (location) => location.id === +event.target.value,
     );
     setValue("location", selectedLocation);
   };
