@@ -9,8 +9,9 @@ import { FormProvider, useForm } from "react-hook-form";
 import UserNotificationMessage from "./_components_/UserNotificationMessage";
 import LandingActions from "./LandingActions";
 import SetLocation from "./_components_/set-location";
+import WelcomeTo from "./_components_/welcome-to";
 
-const MAX_STEPS = 4;
+const MAX_STEPS = 5;
 
 export type SignUpInputs = {
   email: string;
@@ -59,6 +60,9 @@ export default function SignupPages() {
       userMessage = "Profile info added.";
       showSignInMessage = false;
       stepContent = <SetLocation />;
+      break;
+    case 5:
+      stepContent = <WelcomeTo />;
       break;
     default:
       userMessageIcon = "👋";
