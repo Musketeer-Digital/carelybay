@@ -24,6 +24,17 @@ const OTPInput = ({ name, error, register }) => (
     type="text"
     inputProps={{ maxLength: 1 }}
     margin="normal"
+    sx={{
+      width: {
+        xs: 50,
+        md: 48,
+      },
+      height: {
+        xs: 60,
+
+        md: 48,
+      },
+    }}
   />
 );
 
@@ -73,10 +84,21 @@ export default function VerifyEmailCode({
             We sent a code to {getValues("email")} to verify your email
           </Typography>
         }
+        sx={{ mb: 4 }}
       />
       <form onSubmit={handleSubmit(onSubmit)}>
         {error && <Box>{error}</Box>}
-        <Box display="flex" justifyContent="space-between">
+        <Box
+          display="flex"
+          gap={{ xs: 2, md: 4 }}
+          sx={{
+            mb: 4,
+            justifyContent: {
+              xs: "space-between",
+              sm: "flex-start",
+            },
+          }}
+        >
           {["otp1", "otp2", "otp3", "otp4", "otp5", "otp6"].map((name) => (
             <OTPInput
               key={name}
@@ -86,12 +108,20 @@ export default function VerifyEmailCode({
             />
           ))}
         </Box>
-        <Button variant="primary" type="submit" fullWidth>
+        <Button variant="primary" type="submit" fullWidth sx={{ mb: 4 }}>
           Confirm
         </Button>
       </form>
-      <Typography style={{ textAlign: "center" }}>
-        Can't find the email? Check your spam folder or{" "}
+      <Typography
+        sx={{
+          textAlign: "left",
+          maxWidth: {
+            xs: "100%",
+            sm: "50%",
+          },
+        }}
+      >
+        Can't find the email? Check your spam folder, or{" "}
         <Link onClick={prevStep} sx={{ cursor: "pointer" }}>
           re-enter your email and try again
         </Link>
