@@ -14,7 +14,7 @@ export default function PageHeader({
 }: PageHeaderProps) {
   return (
     <Box {...rest}>
-      <Typography variant="h4" fontWeight="bold" marginBottom={1}>
+      <Typography variant="h4" fontWeight="bold" marginBottom={2}>
         {heading}
       </Typography>
       <Typography variant="body1" color="text.secondary">
