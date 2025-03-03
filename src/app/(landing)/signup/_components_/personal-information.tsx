@@ -8,6 +8,7 @@ import {
   Button,
   Input,
 } from "@mui/material";
+import { useState } from "react";
 
 interface PersonalInformationInputs {
   firstName: string;
@@ -18,6 +19,7 @@ interface PersonalInformationInputs {
 }
 
 export default function PersonalInformation() {
+  const [isUploading, setIsUploading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -27,20 +29,38 @@ export default function PersonalInformation() {
   const onSubmit: SubmitHandler<PersonalInformationInputs> = async (
     data: PersonalInformationInputs,
   ) => {
-    const { file } = data;
-    const formData = new FormData();
-    formData.append("file", data.file);
+    try {
+      setIsUploading(true);
+      const file = data.file;
 
-    const uploadResponse = await fetch("api/file", {
-      method: "PUT",
-      body: formData,
-    });
+      // Get signed URL
+      const response = await fetch('/api/signed-url', {
+        method: 'POST',
+        body: JSON.stringify({ fileName: file.name })
+      });
+      const { url } = await response.json();
 
-    if (!uploadResponse.ok) {
-      throw new Error("Failed to upload file");
+      // Upload file directly to Google Cloud Storage
+      const uploadResponse = await fetch(url, {
+        method: 'PUT',
+        body: file,
+        headers: {
+          'Content-Type': 'application/octet-stream',
+        },
+      });
+
+      if (!uploadResponse.ok) {
+        throw new Error('Failed to upload file');
+      }
+
+      // Continue with the rest of your form submission logic
+      console.log('File uploaded successfully');
+      
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    } finally {
+      setIsUploading(false);
     }
-
-    console.log(uploadResponse);
   };
 
   return (
@@ -164,8 +184,13 @@ export default function PersonalInformation() {
           type="tel"
           fullWidth
         />
-        <Button variant="primary" type="submit" fullWidth>
-          Next
+        <Button 
+          variant="primary" 
+          type="submit" 
+          fullWidth 
+          disabled={isUploading}
+        >
+          {isUploading ? 'Uploading...' : 'Next'}
         </Button>
       </form>
     </Container>
