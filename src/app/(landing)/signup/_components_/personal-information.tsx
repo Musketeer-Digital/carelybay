@@ -1,12 +1,20 @@
 import PageHeader from "@/app/components/layout/page-header";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Container, Box, Typography, TextField, Button } from "@mui/material";
+import {
+  Container,
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Input,
+} from "@mui/material";
 
 interface PersonalInformationInputs {
   firstName: string;
   lastName: string;
   dob: string;
   phoneNumber: string;
+  file: File;
 }
 
 export default function PersonalInformation() {
@@ -16,8 +24,23 @@ export default function PersonalInformation() {
     formState: { errors },
   } = useForm<PersonalInformationInputs>();
 
-  const onSubmit: SubmitHandler<PersonalInformationInputs> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<PersonalInformationInputs> = async (
+    data: PersonalInformationInputs,
+  ) => {
+    const { file } = data;
+    const formData = new FormData();
+    formData.append("file", data.file);
+
+    const uploadResponse = await fetch("api/file", {
+      method: "PUT",
+      body: formData,
+    });
+
+    if (!uploadResponse.ok) {
+      throw new Error("Failed to upload file");
+    }
+
+    console.log(uploadResponse);
   };
 
   return (
@@ -26,74 +49,89 @@ export default function PersonalInformation() {
         heading="Personal Information"
         subtitle="Sign in to manage your services."
       />
-      <Box
-        sx={{
-          display: "flex",
-          gap: 2,
-          alignItems: "center",
-        }}
-      >
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
             gap: 2,
-            position: "relative",
+            alignItems: "center",
           }}
         >
           <Box
             sx={{
               display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "120px",
-              height: "120px",
-              borderRadius: "50%",
-              backgroundColor: "#FFAE1F1A",
+              flexDirection: "column",
+              gap: 2,
+              position: "relative",
             }}
           >
-            {/* TODO: profilePicture ? profilePicture : Initial */}
-            <Typography
-              fontWeight={"700"}
-              fontSize={"64px"}
-              lineHeight={"46px"}
-            >
-              S
-            </Typography>
-            <Button
+            <Box
               sx={{
-                position: "absolute",
-                bottom: 0,
-                left: "50%",
-                transform: "translate(-50%, 50%)",
-                backgroundColor: "#FFFFFF",
-                color: "#171717",
-                fontWeight: "600",
-                fontSize: "16px",
-                lineHeight: "24px",
-                border: "1px solid #EAEAEA",
-                borderRadius: "16px",
-                minWidth: "40px",
-                height: "40px",
-                whiteSpace: "nowrap",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "120px",
+                height: "120px",
+                borderRadius: "50%",
+                backgroundColor: "#FFAE1F1A",
               }}
             >
-              + Add
-            </Button>
+              {/* TODO: profilePicture ? profilePicture : Initial */}
+              <Typography
+                fontWeight={"700"}
+                fontSize={"64px"}
+                lineHeight={"46px"}
+              >
+                S
+              </Typography>
+              <Button
+                component="label"
+                sx={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: "50%",
+                  transform: "translate(-50%, 50%)",
+                  backgroundColor: "#FFFFFF",
+                  color: "#171717",
+                  fontWeight: "600",
+                  fontSize: "16px",
+                  lineHeight: "24px",
+                  border: "1px solid #EAEAEA",
+                  borderRadius: "16px",
+                  minWidth: "40px",
+                  height: "40px",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <input
+                  {...register("file")}
+                  type="file"
+                  hidden
+                  onChange={(e) => console.log(e.target.files?.[0])}
+                />
+                + Add
+              </Button>
+            </Box>
+          </Box>
+
+          <Box>
+            <Typography
+              fontWeight={"600"}
+              fontSize={"18px"}
+              lineHeight={"27px"}
+            >
+              Upload Profile picture
+            </Typography>
+            <Typography
+              fontWeight={"400"}
+              fontSize={"16px"}
+              lineHeight={"24px"}
+            >
+              You can skip for now and upload profile picture later
+            </Typography>
           </Box>
         </Box>
 
-        <Box>
-          <Typography fontWeight={"600"} fontSize={"18px"} lineHeight={"27px"}>
-            Upload Profile picture
-          </Typography>
-          <Typography fontWeight={"400"} fontSize={"16px"} lineHeight={"24px"}>
-            You can skip for now and upload profile picture later
-          </Typography>
-        </Box>
-      </Box>
-
-      <form onSubmit={handleSubmit(onSubmit)}>
         <Box sx={{ display: "flex", gap: 2 }}>
           <TextField
             {...register("firstName", { required: "First name is required" })}
