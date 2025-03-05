@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import {
-  Modal,
   Box,
   Typography,
   TextField,
@@ -16,6 +15,9 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import CheckIcon from "@mui/icons-material/Check";
+import CustomDialog from "@/app/components/CustomDialog";
+import CustomButton from "@/app/components/CustomButton";
+import { COLORS } from "@/constants/colors";
 
 const cities = [
   "San Francisco, CA, USA",
@@ -45,108 +47,90 @@ const CityModal: React.FC<ProfileBioCityModalProps> = ({
   );
 
   return (
-    <Modal
+    <CustomDialog
       open={isCityModalOpen}
       onClose={() => setIsCityModalOpen(false)}
-      aria-labelledby="city-modal-title"
-      sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
-    >
-      <Box
-        sx={{
-          backgroundColor: "white",
-          borderRadius: "12px",
-          padding: "24px",
-          width: "600px",
-          boxShadow: 24,
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <Typography
-          variant="h5"
-          fontWeight="bold"
-          sx={{ marginBottom: "16px" }}
+      title="Where I live"
+      footerButtons={
+        <CustomButton
+          variant="primary"
+          onClick={() => {
+            if (selectedCity) {
+              handleSelectCity(selectedCity);
+              setIsCityModalOpen(false);
+            }
+          }}
+          sx={{
+            px: 3,
+            borderRadius: 20,
+            height: 40,
+            color: COLORS.WHITE_COLOR,
+          }}
         >
-          Where I live
-        </Typography>
-
-        {/* Search Field */}
-        <Box sx={{ position: "relative", width: "100%", marginBottom: 2 }}>
-          <TextField
-            fullWidth
-            placeholder="Search for your city"
-            variant="outlined"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            sx={{
+          Save
+        </CustomButton>
+      }
+    >
+      <Box sx={{ position: "relative", width: "100%", marginBottom: 2 }}>
+        <TextField
+          fullWidth
+          placeholder="Search for your city"
+          variant="outlined"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          sx={{
+            borderRadius: "24px",
+            backgroundColor: "#F5F5F5",
+            "& .MuiOutlinedInput-root": {
               borderRadius: "24px",
-              backgroundColor: "#F5F5F5",
-              "& .MuiOutlinedInput-root": {
-                borderRadius: "24px",
-                paddingRight: "40px",
-              },
-            }}
-          />
-          <IconButton
-            sx={{
-              position: "absolute",
-              right: 10,
-              top: "50%",
-              transform: "translateY(-50%)",
-              color: "gray",
-            }}
-          >
-            <SearchIcon />
-          </IconButton>
-        </Box>
-
-        {filteredCities.length > 0 ? (
-          <List sx={{ width: "100%", maxHeight: "350px", overflowY: "auto" }}>
-            {filteredCities.map((city) => (
-              <ListItem key={city} disablePadding>
-                <ListItemButton
-                  selected={selectedCity === city}
-                  onClick={() => setSelectedCity(city)}
-                  sx={{
-                    borderRadius: "8px",
-                    padding: "12px",
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <ListItemText
-                    primary={city}
-                    primaryTypographyProps={{
-                      fontWeight: selectedCity === city ? "bold" : "normal",
-                    }}
-                  />
-                  {selectedCity === city && (
-                    <CheckIcon sx={{ color: "#FF6600" }} />
-                  )}
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-        ) : (
-          <Typography color="textSecondary">No matching city found</Typography>
-        )}
-        <Divider />
-        <Box sx={{ width: "100%", marginTop: "16px", textAlign: "right" }}>
-          <Button
-            variant="primary"
-            onClick={() => {
-              if (selectedCity) {
-                handleSelectCity(selectedCity);
-                setIsCityModalOpen(false);
-              }
-            }}
-            disabled={!selectedCity}
-          >
-            Save
-          </Button>
-        </Box>
+              paddingRight: "40px",
+            },
+          }}
+        />
+        <IconButton
+          sx={{
+            position: "absolute",
+            right: 10,
+            top: "50%",
+            transform: "translateY(-50%)",
+            color: "gray",
+          }}
+        >
+          <SearchIcon />
+        </IconButton>
       </Box>
-    </Modal>
+
+      {filteredCities.length > 0 ? (
+        <List sx={{ width: "100%", maxHeight: "350px", overflowY: "auto" }}>
+          {filteredCities.map((city) => (
+            <ListItem key={city} disablePadding>
+              <ListItemButton
+                selected={selectedCity === city}
+                onClick={() => setSelectedCity(city)}
+                sx={{
+                  borderRadius: "8px",
+                  padding: "12px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <ListItemText
+                  primary={city}
+                  primaryTypographyProps={{
+                    fontWeight: selectedCity === city ? "bold" : "normal",
+                  }}
+                />
+                {selectedCity === city && (
+                  <CheckIcon sx={{ color: "#FF6600" }} />
+                )}
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      ) : (
+        <Typography color="textSecondary">No matching city found</Typography>
+      )}
+    </CustomDialog>
   );
 };
 

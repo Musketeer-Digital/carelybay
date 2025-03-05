@@ -67,8 +67,7 @@ const LandingScreen: React.FC = () => {
           >
             <Link href="/profile/create-profile" passHref>
               <CustomButton
-                variant="contained"
-                color="primary"
+                variant="primary"
                 size="large"
                 sx={{ borderRadius: 50, width: { xs: "100%", sm: "auto" } }}
               >

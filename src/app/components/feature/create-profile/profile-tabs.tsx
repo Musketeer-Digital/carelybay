@@ -113,14 +113,10 @@ const ProfileTabs = () => {
       <Box
         sx={{
           mt: 3,
-          p: 2,
-          backgroundColor: COLORS.BG_LIGHT_GREY_COLOR,
-          borderRadius: 2,
+          backgroundColor: COLORS.WHITE_COLOR,
         }}
       >
-        <Box
-          sx={{ p: 3, backgroundColor: COLORS.WHITE_COLOR, borderRadius: 2 }}
-        >
+        <Box sx={{ backgroundColor: COLORS.WHITE_COLOR }}>
           {sectionRefs.map((ref, index) => (
             <React.Fragment key={index}>
               <div ref={ref} id={sectionIds[index]}>
@@ -129,7 +125,9 @@ const ProfileTabs = () => {
                 {index === 2 && <Availability />}
                 {index === 3 && <Documents />}
               </div>
-              {index < sectionRefs.length - 1 && <Divider sx={{ my: 3 }} />}
+              {index < sectionRefs.length - 1 && index !== 0 && (
+                <Divider sx={{ my: 3 }} />
+              )}
             </React.Fragment>
           ))}
         </Box>

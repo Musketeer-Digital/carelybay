@@ -1,16 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import {
-  Modal,
-  Box,
-  Typography,
-  Select,
-  MenuItem,
-  Button,
-  Divider,
-} from "@mui/material";
+import { Box, Select, MenuItem, Divider } from "@mui/material";
 import { COLORS } from "@/constants/colors";
+import CustomDialog from "@/app/components/CustomDialog";
+import CustomButton from "@/app/components/CustomButton";
+
 const months = [
   "January",
   "February",
@@ -45,118 +39,109 @@ const DOBSModal: React.FC<ProfileBioDOBSModalProps> = ({
   handleSelectDOB,
 }) => {
   return (
-    <Modal
+    <CustomDialog
       open={isDOBModalOpen}
       onClose={() => setIsDOBModalOpen(false)}
-      aria-labelledby="dob-modal-title"
-      sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+      title="Date of Birth"
+      maxWidth="xs"
+      footerButtons={
+        <CustomButton
+          variant="primary"
+          onClick={() => setIsDOBModalOpen(false)}
+          sx={{
+            px: 3,
+            borderRadius: 20,
+            height: 40,
+            color: COLORS.WHITE_COLOR,
+          }}
+        >
+          Save
+        </CustomButton>
+      }
     >
       <Box
         sx={{
-          backgroundColor: "white",
-          borderRadius: "12px",
-          padding: "24px",
-          width: "420px",
-          boxShadow: 24,
           display: "flex",
-          flexDirection: "column",
+          justifyContent: "center",
+          gap: 2,
+          mt: 2,
+          mb: 3,
+          width: "100%",
         }}
       >
-        <Typography variant="h5" fontWeight="bold" gutterBottom>
-          Date of the Birth
-        </Typography>
-
-        <Box
+        <Select
+          fullWidth
+          displayEmpty
+          value={selectedDOB.month || ""}
+          onChange={(event) =>
+            handleSelectDOB("month", event.target.value as string)
+          }
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            gap: 2,
-            marginTop: 4,
-            marginBottom: 5,
-            width: "100%",
+            borderRadius: "8px",
+            backgroundColor: COLORS.BG_LIGHT_GREY_COLOR,
+            textAlign: "center",
+            fontWeight: "bold",
           }}
         >
-          <Select
-            fullWidth
-            displayEmpty
-            value={selectedDOB.month || ""}
-            onChange={(event) =>
-              handleSelectDOB("month", event.target.value as string)
-            }
-            sx={{
-              borderRadius: "8px",
-              backgroundColor: COLORS.BG_LIGHT_GREY_COLOR,
-              textAlign: "center",
-              fontWeight: "bold",
-            }}
-          >
-            <MenuItem value="" disabled>
-              MM
+          <MenuItem value="" disabled>
+            MM
+          </MenuItem>
+          {months.map((month) => (
+            <MenuItem key={month} value={month}>
+              {month}
             </MenuItem>
-            {months.map((month) => (
-              <MenuItem key={month} value={month}>
-                {month}
-              </MenuItem>
-            ))}
-          </Select>
+          ))}
+        </Select>
 
-          <Select
-            fullWidth
-            displayEmpty
-            value={selectedDOB.day || ""}
-            onChange={(event) =>
-              handleSelectDOB("day", event.target.value as string)
-            }
-            sx={{
-              borderRadius: "8px",
-              backgroundColor: COLORS.BG_LIGHT_GREY_COLOR,
-              textAlign: "center",
-              fontWeight: "bold",
-            }}
-          >
-            <MenuItem value="" disabled>
-              DD
+        <Select
+          fullWidth
+          displayEmpty
+          value={selectedDOB.day || ""}
+          onChange={(event) =>
+            handleSelectDOB("day", event.target.value as string)
+          }
+          sx={{
+            borderRadius: "8px",
+            backgroundColor: COLORS.BG_LIGHT_GREY_COLOR,
+            textAlign: "center",
+            fontWeight: "bold",
+          }}
+        >
+          <MenuItem value="" disabled>
+            DD
+          </MenuItem>
+          {days.map((day) => (
+            <MenuItem key={day} value={day}>
+              {day}
             </MenuItem>
-            {days.map((day) => (
-              <MenuItem key={day} value={day}>
-                {day}
-              </MenuItem>
-            ))}
-          </Select>
+          ))}
+        </Select>
 
-          <Select
-            fullWidth
-            displayEmpty
-            value={selectedDOB.year || ""}
-            onChange={(event) =>
-              handleSelectDOB("year", event.target.value as string)
-            }
-            sx={{
-              borderRadius: "8px",
-              backgroundColor: COLORS.BG_LIGHT_GREY_COLOR,
-              textAlign: "center",
-              fontWeight: "bold",
-            }}
-          >
-            <MenuItem value="" disabled>
-              YYYY
+        <Select
+          fullWidth
+          displayEmpty
+          value={selectedDOB.year || ""}
+          onChange={(event) =>
+            handleSelectDOB("year", event.target.value as string)
+          }
+          sx={{
+            borderRadius: "8px",
+            backgroundColor: COLORS.BG_LIGHT_GREY_COLOR,
+            textAlign: "center",
+            fontWeight: "bold",
+          }}
+        >
+          <MenuItem value="" disabled>
+            YYYY
+          </MenuItem>
+          {years.map((year) => (
+            <MenuItem key={year} value={year}>
+              {year}
             </MenuItem>
-            {years.map((year) => (
-              <MenuItem key={year} value={year}>
-                {year}
-              </MenuItem>
-            ))}
-          </Select>
-        </Box>
-
-        <Divider />
-        <Box sx={{ width: "100%", marginTop: "16px", textAlign: "right" }}>
-          <Button variant="primary" onClick={() => setIsDOBModalOpen(false)}>
-            Save
-          </Button>
-        </Box>
+          ))}
+        </Select>
       </Box>
-    </Modal>
+    </CustomDialog>
   );
 };
 

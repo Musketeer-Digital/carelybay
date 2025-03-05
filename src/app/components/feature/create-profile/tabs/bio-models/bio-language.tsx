@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import {
-  Modal,
   Box,
   Typography,
   TextField,
@@ -12,11 +11,11 @@ import {
   ListItemText,
   Checkbox,
   IconButton,
-  Button,
-  Divider,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { COLORS } from "@/constants/colors";
+import CustomDialog from "@/app/components/CustomDialog";
+import CustomButton from "@/app/components/CustomButton";
 
 const languages = [
   "English",
@@ -57,104 +56,87 @@ const LanguageModal: React.FC<ProfileBioLanguageModalProps> = ({
   };
 
   return (
-    <Modal
+    <CustomDialog
       open={isLanguageModalOpen}
       onClose={() => setIsLanguageModalOpen(false)}
-      aria-labelledby="language-modal-title"
-      sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
-    >
-      <Box
-        sx={{
-          backgroundColor: "white",
-          borderRadius: "12px",
-          padding: "24px",
-          width: "600px",
-          boxShadow: 24,
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <Typography
-          variant="h5"
-          fontWeight="bold"
-          sx={{ marginBottom: "16px" }}
+      title="Language I Speak"
+      footerButtons={
+        <CustomButton
+          variant="primary"
+          onClick={() => setIsLanguageModalOpen(false)}
+          sx={{
+            px: 3,
+            borderRadius: 20,
+            height: 40,
+            color: COLORS.WHITE_COLOR,
+          }}
         >
-          Language I Speak
-        </Typography>
-
-        <Box sx={{ position: "relative", width: "100%", marginBottom: 2 }}>
-          <TextField
-            fullWidth
-            placeholder="Search for a language"
-            variant="outlined"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            sx={{
+          Save
+        </CustomButton>
+      }
+    >
+      <Box sx={{ position: "relative", width: "100%", marginBottom: 2 }}>
+        <TextField
+          fullWidth
+          placeholder="Search for a language"
+          variant="outlined"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          sx={{
+            borderRadius: "24px",
+            backgroundColor: COLORS.BG_LIGHT_GREY_COLOR,
+            "& .MuiOutlinedInput-root": {
               borderRadius: "24px",
-              backgroundColor: COLORS.BG_LIGHT_GREY_COLOR,
-              "& .MuiOutlinedInput-root": {
-                borderRadius: "24px",
-                paddingRight: "40px",
-              },
-            }}
-          />
-          <IconButton
-            sx={{
-              position: "absolute",
-              right: 10,
-              top: "50%",
-              transform: "translateY(-50%)",
-              color: "gray",
-            }}
-          >
-            <SearchIcon />
-          </IconButton>
-        </Box>
-
-        <List sx={{ width: "100%", maxHeight: "350px", overflowY: "auto" }}>
-          {filteredLanguages.length > 0 ? (
-            filteredLanguages.map((language) => (
-              <ListItem key={language} disablePadding>
-                <ListItemButton
-                  onClick={() => handleSelectLanguage(language)}
-                  sx={{
-                    borderRadius: "8px",
-                    padding: "12px",
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <ListItemText primary={language} />
-                  <Checkbox
-                    checked={selectedLanguages.includes(language)}
-                    sx={{
-                      color: "#FF6600",
-                      "&.Mui-checked": {
-                        color: "#FF6600",
-                      },
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            ))
-          ) : (
-            <Typography color="textSecondary" align="center">
-              No matching languages found
-            </Typography>
-          )}
-        </List>
-
-        <Divider />
-        <Box sx={{ width: "100%", marginTop: "16px", textAlign: "right" }}>
-          <Button
-            variant="primary"
-            onClick={() => setIsLanguageModalOpen(false)}
-          >
-            Save
-          </Button>
-        </Box>
+              paddingRight: "40px",
+            },
+          }}
+        />
+        <IconButton
+          sx={{
+            position: "absolute",
+            right: 10,
+            top: "50%",
+            transform: "translateY(-50%)",
+            color: "gray",
+          }}
+        >
+          <SearchIcon />
+        </IconButton>
       </Box>
-    </Modal>
+
+      <List sx={{ width: "100%", maxHeight: "350px", overflowY: "auto" }}>
+        {filteredLanguages.length > 0 ? (
+          filteredLanguages.map((language) => (
+            <ListItem key={language} disablePadding>
+              <ListItemButton
+                onClick={() => handleSelectLanguage(language)}
+                sx={{
+                  borderRadius: "8px",
+                  padding: "12px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <ListItemText primary={language} />
+                <Checkbox
+                  checked={selectedLanguages.includes(language)}
+                  sx={{
+                    color: "#FF6600",
+                    "&.Mui-checked": {
+                      color: "#FF6600",
+                    },
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          ))
+        ) : (
+          <Typography color="textSecondary" align="center">
+            No matching languages found
+          </Typography>
+        )}
+      </List>
+    </CustomDialog>
   );
 };
 

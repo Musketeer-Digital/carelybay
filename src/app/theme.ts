@@ -42,13 +42,7 @@ const themeOptions: ThemeOptions = {
           // Some CSS
           borderRadius: 100,
           fontSize: "1rem",
-          border: "1px",
-          borderStyle: "solid",
-          borderColor: "#D9D9D9",
-          background: "#FFF",
-          minWidth: 200,
           height: 48,
-
           variants: [
             {
               props: { variant: "primary" },
@@ -56,7 +50,6 @@ const themeOptions: ThemeOptions = {
                 background: "#FF6817",
                 borderColor: "#FF6817",
                 color: "#FFF",
-                fontWeight: "bold",
                 fontSize: 16,
                 textTransform: "capitalize",
               },

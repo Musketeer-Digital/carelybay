@@ -1,15 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Button,
-  Typography,
-  Divider,
-  Box,
-  Chip,
-  Link,
-  Grid,
-} from "@mui/material";
+import { Button, Typography, Divider, Box, Link, Grid } from "@mui/material";
 import ChildCareIcon from "@mui/icons-material/ChildCare";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
@@ -19,11 +11,14 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import AccessibleIcon from "@mui/icons-material/Accessible";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import HotelIcon from "@mui/icons-material/Hotel";
-import { CalendarMonth, Add, Edit } from "@mui/icons-material";
+import { CalendarMonth, Edit } from "@mui/icons-material";
 import ServiceModal from "./service-model/service-model";
 import AgeModal from "./service-model/service-age";
 import AdditionalInfoModal from "./service-model/service-additional-info";
 import { COLORS } from "@/constants/colors";
+import EscalatorWarningIcon from "@mui/icons-material/EscalatorWarning";
+import CustomButton from "@/app/components/CustomButton";
+import AddIcon from "@mui/icons-material/Add";
 interface IService {
   label: string;
   icon: JSX.Element;
@@ -102,9 +97,9 @@ const Services = () => {
   return (
     <Box
       sx={{
-        p: 3,
         borderRadius: 2,
         mx: "auto",
+        mt: 5,
       }}
     >
       <Typography variant="h6" fontWeight="bold">
@@ -119,12 +114,38 @@ const Services = () => {
         >
           <ChildCareIcon /> What kind of child carer are you?
         </Typography>
-        <Button
-          variant="contained"
-          sx={{ mt: 2, mb: 5, bgcolor: "#E0E8EF", color: "black" }}
+        <Box
+          sx={{
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            bgcolor: "#E0E8EF",
+            borderRadius: 4,
+            px: 1,
+            p: 3,
+            py: 1.2,
+            width: "fit-content",
+            mb: 3,
+            mt: 2,
+            height: 65,
+          }}
         >
-          👤 Babysitter
-        </Button>
+          <Box
+            sx={{
+              bgcolor: "white",
+              borderRadius: "8px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: 30,
+              height: 30,
+            }}
+          >
+            <EscalatorWarningIcon sx={{ color: "black" }} />
+          </Box>
+          <Typography fontSize="1rem">Babysitter</Typography>
+        </Box>
       </Box>
       <Divider />
 
@@ -137,7 +158,7 @@ const Services = () => {
         >
           <ChildCareIcon /> Add your Services provided
         </Typography>
-        <Typography color="textSecondary">
+        <Typography sx={{ ml: 4 }} color="textSecondary">
           Skills Ex: Cooking/Meal preparation
         </Typography>
         <Box sx={{ display: "flex", gap: 1, mt: 2, flexWrap: "wrap" }}>
@@ -149,7 +170,7 @@ const Services = () => {
               sx={{
                 display: "flex",
                 alignItems: "center",
-                gap: 1, // Adds spacing between icon and label
+                gap: 1,
               }}
             >
               {service.icon}
@@ -160,13 +181,28 @@ const Services = () => {
 
         <Box sx={{ display: "flex", gap: 1, mb: 3, flexWrap: "wrap" }}>
           {selectedServices.length === 0 ? (
-            <Button
-              variant="outlined"
-              startIcon={<Add />}
-              onClick={() => setIsModalOpen(true)}
-            >
-              Add
-            </Button>
+            <Box sx={{ display: "flex", gap: 1 }}>
+              {[...Array(3)].map((_, index) => (
+                <CustomButton
+                  key={index}
+                  variant="outlined"
+                  sx={{
+                    border: "1px dashed black",
+                    borderRadius: "24px",
+                    width: 70,
+                    height: 35,
+                    minWidth: "unset",
+                    padding: 0,
+                    color: "black",
+                    "&:hover": { bgcolor: "transparent" },
+                    fontSize: 18,
+                  }}
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  +
+                </CustomButton>
+              ))}
+            </Box>
           ) : (
             <Box
               sx={{
@@ -196,7 +232,7 @@ const Services = () => {
       </Box>
       <Divider />
       <Box
-        sx={{ mt: 3, cursor: "pointer" }}
+        sx={{ mt: 3, mb: 4, cursor: "pointer" }}
         onClick={() => setIsAgeModalOpen(true)}
       >
         <Typography
@@ -209,7 +245,7 @@ const Services = () => {
         </Typography>
         <Box sx={{ display: "flex", gap: 1, mt: 2, flexWrap: "wrap" }}>
           {selectedAges.length === 0 ? (
-            <Typography color="textSecondary">
+            <Typography sx={{ ml: 4 }} color="textSecondary">
               Ex: “Newborn · up to 12 months”
             </Typography>
           ) : (
@@ -258,79 +294,95 @@ const Services = () => {
           </Box>
         )}
       </Box>
+      <Divider />
+      <Box sx={{ mt: 3, mb: 4, cursor: "pointer" }}>
+        {selectedAdditionalInfo.length > 0 && (
+          <Grid container spacing={3} alignItems="center" sx={{ mt: 2 }}>
+            {selectedAdditionalInfo.map(({ label, icon }) => (
+              <Grid
+                item
+                key={label}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  textAlign: "center",
+                }}
+              >
+                {/* Circular Icon */}
+                <Box
+                  sx={{
+                    width: 48,
+                    height: 48,
+                    borderRadius: "50%",
+                    backgroundColor: "grey.200",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  {icon}
+                </Box>
 
-      {selectedAdditionalInfo.length > 0 && (
-        <Grid container spacing={3} alignItems="center" sx={{ mt: 2 }}>
-          {selectedAdditionalInfo.map(({ label, icon }) => (
-            <Grid
-              item
-              key={label}
+                {/* Label */}
+                <Typography
+                  variant="body2"
+                  sx={{
+                    mt: 1,
+                    width: 100,
+                    fontSize: "11px",
+                    wordWrap: "break-word",
+                  }}
+                >
+                  {label}
+                </Typography>
+              </Grid>
+            ))}
+          </Grid>
+        )}
+
+        {/* Edit Additional Information Button */}
+        {selectedAdditionalInfo.length > 0 ? (
+          <Box
+            sx={{
+              display: "flex",
+              gap: 1,
+              flexWrap: "wrap",
+              color: COLORS.BLACK_COLOR,
+              alignItems: "center",
+              cursor: "pointer",
+              mt: 3,
+            }}
+            onClick={() => setIsAdditionalInfoModalOpen(true)}
+          >
+            <Edit />
+            <Link
+              href="#"
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                textAlign: "center",
+                color: COLORS.BLACK_COLOR,
+                textDecoration: "none",
               }}
             >
-              {/* Circular Icon */}
-              <Box
-                sx={{
-                  width: 48,
-                  height: 48,
-                  borderRadius: "50%",
-                  backgroundColor: "grey.200",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                {icon}
-              </Box>
-
-              {/* Label */}
-              <Typography
-                variant="body2"
-                sx={{
-                  mt: 1,
-                  width: 100,
-                  fontSize: "11px",
-                  wordWrap: "break-word",
-                }}
-              >
-                {label}
-              </Typography>
-            </Grid>
-          ))}
-        </Grid>
-      )}
-
-      {/* Edit Additional Information Button */}
-      {selectedAdditionalInfo.length > 0 && (
-        <Box
-          sx={{
-            display: "flex",
-            gap: 1,
-            flexWrap: "wrap",
-            color: COLORS.BLACK_COLOR,
-            alignItems: "center",
-            cursor: "pointer",
-            mt: 3,
-          }}
-          onClick={() => setIsAdditionalInfoModalOpen(true)}
-        >
-          <Edit />
-          <Link
-            href="#"
+              Edit additional information
+            </Link>
+          </Box>
+        ) : (
+          <CustomButton
+            variant="outlined"
+            onClick={() => setIsAdditionalInfoModalOpen(true)}
             sx={{
+              mt: 3,
               color: COLORS.BLACK_COLOR,
-              textDecoration: "none",
+              borderColor: COLORS.BLACK_COLOR,
+              height: 35,
+              borderRadius: 4,
             }}
           >
-            Edit additional information
-          </Link>
-        </Box>
-      )}
-
+            <AddIcon />
+            Add additional information
+          </CustomButton>
+        )}
+      </Box>
       <ServiceModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}

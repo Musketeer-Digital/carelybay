@@ -9,9 +9,13 @@ import {
   Button,
   List,
   ListItem,
-  IconButton,
 } from "@mui/material";
-import { CheckCircle, Edit, Add, ChildCare } from "@mui/icons-material";
+import { Edit, Add, ChildCare, Elderly, Info } from "@mui/icons-material";
+import { COLORS } from "@/constants/colors";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import CheckIcon from "@mui/icons-material/Check";
+import CustomButton from "../../CustomButton";
 
 const ProfileSidebar = () => {
   const confirmedInfo = [
@@ -45,41 +49,107 @@ const ProfileSidebar = () => {
         >
           {profileData.firstName.charAt(0)}
         </Avatar>
-        <Button
+        <CustomButton
           variant="outlined"
+          size="small"
           startIcon={<Add />}
-          sx={{ mt: -2, position: "relative", zIndex: 1 }}
+          sx={{
+            color: "black",
+            bgcolor: "white",
+            border: "1px solid #eee",
+            mt: -4,
+            position: "relative",
+            zIndex: 1,
+            borderRadius: 5,
+          }}
         >
           Add
-        </Button>
+        </CustomButton>
         <Typography
-          variant="h5"
+          variant="h4"
           fontWeight="bold"
           sx={{ mt: 2 }}
         >{`${profileData.firstName} ${profileData.lastName}`}</Typography>
-        <Box
+      </Box>
+
+      <Card
+        sx={{
+          p: 2,
+          mt: 2,
+          borderRadius: 4,
+          boxShadow: 1,
+          bgcolor: COLORS.WHITE_COLOR,
+        }}
+      >
+        <Typography
           sx={{
             display: "flex",
             alignItems: "center",
-            bgcolor: "#F7F7F7",
-            px: 2,
-            py: 1,
-            borderRadius: 2,
-            mt: 2,
-            width: "50%",
-            justifyContent: "space-between",
+            fontWeight: "bold",
+            fontSize: "1.1rem",
+            mb: 2,
           }}
         >
-          <ChildCare />
-          <Typography fontWeight="bold">Childcare</Typography>
-          <IconButton>
-            <Edit />
-          </IconButton>
-        </Box>
-      </Box>
-      <Card sx={{ mt: 3, p: 3, borderRadius: 2, boxShadow: 1 }}>
+          Your profile
+          <AddCircleOutlineIcon sx={{ ml: 1, fontSize: "30px" }} />
+        </Typography>
+
+        <List sx={{ p: 0 }}>
+          <ListItem
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              borderRadius: 2,
+              mb: 1,
+              p: 1.2,
+              bgcolor: COLORS.BG_LIGHT_GREY_COLOR,
+              cursor: "pointer",
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <ChildCare sx={{ mr: 1 }} />
+              <Typography fontSize="0.95rem" fontWeight="medium">
+                Childcare
+              </Typography>
+
+              <Edit sx={{ ml: 2 }} fontSize="small" />
+            </Box>
+
+            <ArrowForwardIosIcon sx={{ fontSize: "14px" }} />
+          </ListItem>
+
+          <ListItem
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              borderRadius: 2,
+              p: 1.2,
+              cursor: "pointer",
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Elderly sx={{ mr: 1 }} />
+              <Typography fontSize="0.95rem" fontWeight="medium">
+                Aged care
+              </Typography>
+            </Box>
+            <Edit sx={{ ml: 2 }} fontSize="small" />
+          </ListItem>
+        </List>
+      </Card>
+
+      <Card
+        sx={{
+          mt: 3,
+          p: 3,
+          borderRadius: 4,
+          boxShadow: 1,
+          bgcolor: COLORS.WHITE_COLOR,
+        }}
+      >
         <Typography variant="h6" fontWeight="bold">
-          Confirmed Info
+          {`${profileData.firstName} ${profileData.lastName}`} confirmed info
         </Typography>
         <List>
           {confirmedInfo.map((item, index) => (
@@ -87,17 +157,30 @@ const ProfileSidebar = () => {
               key={index}
               sx={{ display: "flex", alignItems: "center" }}
             >
-              <CheckCircle sx={{ color: "green", mr: 1 }} />
+              <CheckIcon sx={{ mr: 1 }} />
               {item.title}
             </ListItem>
           ))}
         </List>
-        <Typography fontWeight="medium" sx={{ mt: 2, color: "gray" }}>
+        <Typography
+          fontWeight="medium"
+          sx={{ display: "flex", alignItems: "center", mt: 2 }}
+        >
           Identity Verifications by CarelyBay
+          <Info sx={{ ml: 1, color: "#4D4D4D" }} />
         </Typography>
-        <Button variant="contained" sx={{ mt: 2 }}>
+        <CustomButton
+          variant="outlined"
+          sx={{
+            color: "#4D4D4D",
+            border: `1px solid #4D4D4D`,
+            mt: 2,
+            borderRadius: 20,
+            height: 40,
+          }}
+        >
           Get the badge
-        </Button>
+        </CustomButton>
       </Card>
     </Box>
   );

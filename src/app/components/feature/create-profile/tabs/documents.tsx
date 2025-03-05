@@ -8,6 +8,7 @@ import {
   Select,
   MenuItem,
   IconButton,
+  Checkbox,
 } from "@mui/material";
 import {
   Info as InfoIcon,
@@ -43,13 +44,19 @@ const Documents = () => {
   return (
     <Box
       sx={{
-        p: 3,
         borderRadius: 2,
         mx: "auto",
+        mt: 5,
       }}
     >
-      <Box sx={{ maxWidth: 600 }}>
-        <Typography variant="h6" fontWeight="bold" display="flex" gap={1}>
+      <Box sx={{ maxWidth: 450 }}>
+        <Typography
+          sx={{ alignItems: "center" }}
+          variant="h6"
+          fontWeight="bold"
+          display="flex"
+          gap={1}
+        >
           Upload Documents <InfoIcon sx={{ color: "gray" }} />
         </Typography>
 
@@ -61,7 +68,12 @@ const Documents = () => {
           value={selectedDocument}
           onChange={(e) => setSelectedDocument(e.target.value)}
           displayEmpty
-          sx={{ mt: 1, mb: 3, bgcolor: COLORS.BG_LIGHT_GREY_COLOR }}
+          sx={{
+            mt: 1,
+            mb: 3,
+            borderRadius: 20,
+            bgcolor: COLORS.BG_LIGHT_GREY_COLOR,
+          }}
         >
           <MenuItem value="">Select document</MenuItem>
           <MenuItem value="ID">Identification</MenuItem>
@@ -160,8 +172,8 @@ const Documents = () => {
 
       {fileList.length > 0 && (
         <Box sx={{ mt: 3 }}>
-          <Box sx={{ display: "flex", gap: 1 }}>
-            <input type="checkbox" id="confirm" />
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Checkbox />
             <Typography variant="body2">
               I confirm that the documents I upload are true and accurate
               documents pertaining to me.

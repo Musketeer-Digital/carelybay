@@ -98,9 +98,9 @@ const Availability = () => {
   return (
     <Box
       sx={{
-        p: 3,
         borderRadius: 2,
         mx: "auto",
+        mt: 5,
       }}
     >
       <Typography variant="h6" fontWeight="bold">
@@ -111,7 +111,7 @@ const Availability = () => {
           <Box
             key={index}
             onClick={option.onClick}
-            sx={{ cursor: "pointer", p: 2 }}
+            sx={{ cursor: "pointer", mt: 4 }}
           >
             <Typography
               fontWeight="bold"
@@ -121,11 +121,13 @@ const Availability = () => {
             >
               <ChildCareIcon />
               <span style={{ flexGrow: 1 }}>{option.title}</span>
-              <IconButton size="small">
-                <ArrowForwardIosIcon fontSize="small" />
-              </IconButton>
+              <ArrowForwardIosIcon fontSize="small" />
             </Typography>
-            <Typography variant="body2" color="textSecondary" sx={{ mt: 0.5 }}>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              sx={{ mt: 0.5, ml: 4 }}
+            >
               {option.description}
             </Typography>
 

@@ -7,4 +7,5 @@ export enum COLORS {
   BORDER_COLOR = "#E0E0E0",
   BLACK_COLOR = "black",
   WHITE_COLOR = "white",
+  GREY_COLOR = "#4D4D4D",
 }

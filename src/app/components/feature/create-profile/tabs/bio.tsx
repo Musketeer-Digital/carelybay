@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Link } from "@mui/material";
 import { Typography, Button, Divider } from "@mui/material";
 import { Cake, Public, School, Place } from "@mui/icons-material";
 import { useState } from "react";
@@ -91,19 +91,18 @@ const ProfileBio: React.FC = () => {
 
   return (
     <div>
-      <Box sx={{ p: 3, borderRadius: 2 }}>
+      <Box>
         <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>
           Profile Bio
         </Typography>
         <Box sx={{ border: "1px dashed #ccc", p: 2, borderRadius: 2, mb: 3 }}>
           <Typography color="textSecondary">{profileBioDescription}</Typography>
-          <Button
-            sx={{ marginTop: 3 }}
-            variant="contained"
+          <Link
+            sx={{ marginTop: 3, cursor: "pointer" }}
             onClick={() => setIsDescriptionBioModelOpen(true)}
           >
             Add Intro
-          </Button>
+          </Link>
         </Box>
         <Grid container spacing={2}>
           {profileDetails.map((detail, index) => (
