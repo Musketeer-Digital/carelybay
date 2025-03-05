@@ -7,5 +7,11 @@ type Props = {
 };
 
 export const SessionProvider = ({ children }: Props) => {
-  return <AuthProvider>{children}</AuthProvider>;
+  return (
+    <AuthProvider>
+      {children}
+      {/* TODO: Remove after debugging */}
+      {/* <SessionControls /> */}
+    </AuthProvider>
+  );
 };
