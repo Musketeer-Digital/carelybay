@@ -42,11 +42,10 @@ jobs:
       - name: Prepare Docker tag
         id: determine_tag
         run: |
-          echo "CLOUD_RUN_SERVICE=carelybay-frontend-dev" >> $GITHUB_OUTPUT
-          BRANCH=${{ github.event.inputs.branch }}
-          # Replace / with - and convert to lowercase for Docker tag compatibility
+          BRANCH=${GITHUB_REF#refs/heads/}  # Extracts branch name from ref
           TAG=$(echo "${BRANCH}" | sed 's/\//-/g' | tr '[:upper:]' '[:lower:]')
           echo "TAG=${TAG}" >> $GITHUB_OUTPUT
+          echo "CLOUD_RUN_SERVICE=carelybay-frontend-dev" >> $GITHUB_OUTPUT
 
       # Build the Docker image with the appropriate tag
       - name: Build Docker image
