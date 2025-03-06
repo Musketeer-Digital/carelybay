@@ -55,6 +55,7 @@ export default function PersonalInformation() {
             display: "flex",
             gap: 2,
             alignItems: "center",
+            marginTop: 4,
           }}
         >
           <Box
@@ -63,6 +64,7 @@ export default function PersonalInformation() {
               flexDirection: "column",
               gap: 2,
               position: "relative",
+              marginBottom: 4,
             }}
           >
             <Box
@@ -132,7 +134,7 @@ export default function PersonalInformation() {
           </Box>
         </Box>
 
-        <Box sx={{ display: "flex", gap: 2 }}>
+        <Box sx={{ display: "flex", gap: 2, marginBottom: 2 }}>
           <TextField
             {...register("firstName", { required: "First name is required" })}
             error={!!errors.firstName}
@@ -155,6 +157,7 @@ export default function PersonalInformation() {
           placeholder="Date of birth*"
           type="date"
           fullWidth
+          sx={{ marginBottom: 2 }}
         ></TextField>
         <TextField
           {...register("phoneNumber", { required: "Phone number is required" })}
@@ -163,6 +166,7 @@ export default function PersonalInformation() {
           placeholder="Phone Number*"
           type="tel"
           fullWidth
+          sx={{ marginBottom: 4 }}
         />
         <Button variant="primary" type="submit" fullWidth>
           Next
