@@ -8,8 +8,9 @@ import PersonalInformation from "./_components_/personal-information";
 import { FormProvider, useForm } from "react-hook-form";
 import UserNotificationMessage from "./_components_/UserNotificationMessage";
 import LandingActions from "./LandingActions";
+import SetLocation from "./_components_/set-location";
 
-const MAX_STEPS = 3;
+const MAX_STEPS = 4;
 
 export type SignUpInputs = {
   email: string;
@@ -52,6 +53,12 @@ export default function SignupPages() {
       userMessage = "Verification completed successfully.";
       showSignInMessage = true;
       stepContent = <PersonalInformation />;
+      break;
+    case 4:
+      userMessageIcon = "✅";
+      userMessage = "Profile info added.";
+      showSignInMessage = false;
+      stepContent = <SetLocation />;
       break;
     default:
       userMessageIcon = "👋";
