@@ -2,11 +2,6 @@ name: Deploy Feature Branch
 
 on:
   workflow_dispatch:
-    inputs:
-      branch:
-        description: 'Select feature branch to deploy'
-        required: true
-        type: choice
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}  # Your GCP project ID
   REGION: australia-southeast1                 # Region for Cloud Run
@@ -28,8 +23,8 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-    environment: staging  # Define your environment name here
-    if: startsWith(github.event.inputs.branch, 'feature/')
+    environment: dev  # Define your environment name here
+    if: startsWith(github.ref, 'refs/heads/feature/')
     steps:
       - uses: actions/checkout@v3
 
