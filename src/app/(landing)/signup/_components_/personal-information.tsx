@@ -24,6 +24,7 @@ export default function PersonalInformation() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<PersonalInformationInputs>();
 
@@ -38,23 +39,37 @@ export default function PersonalInformation() {
 
     for (let start = 0; start < fileSize; start += chunkSize) {
       const chunk = file.slice(start, start + chunkSize);
-      const response = await fetch(url, {
-        method: "PUT",
-        body: chunk,
-        headers: {
-          ...headers,
-          "Content-Range": `bytes ${start}-${start + chunk.size - 1}/${fileSize}`,
-        },
-      });
+      try {
+        const response = await fetch(url, {
+          method: "PUT",
+          body: chunk,
+          headers: {
+            ...headers,
+            "Content-Range": `bytes ${start}-${start + chunk.size - 1}/${fileSize}`,
+          },
+        });
 
-      if (!response.ok) {
-        throw new Error(`Upload failed at byte ${start}`);
+        if (!response.ok) {
+          throw new Error(`Upload failed at byte ${start}`);
+        }
+
+        uploadedBytes += chunk.size;
+        const progress = Math.round((uploadedBytes / fileSize) * 100);
+        setUploadProgress(progress);
+      } catch (error) {
+        console.error("Error uploading chunk:", error);
       }
-
-      uploadedBytes += chunk.size;
-      const progress = Math.round((uploadedBytes / fileSize) * 100);
-      setUploadProgress(progress);
     }
+  };
+
+  const handleUploadedFile = (data: InputEvent) => {
+    const target = data.target as HTMLInputElement;
+    const file = target?.files?.[0];
+    if (!file) {
+      console.error("No file selected");
+      return;
+    }
+    setValue("file", file);
   };
 
   const onSubmit: SubmitHandler<PersonalInformationInputs> = async (data) => {
@@ -153,10 +168,11 @@ export default function PersonalInformation() {
                 }}
               >
                 <input
-                  {...register("file")}
+                  {...register("file", {
+                    onChange: (e) => handleUploadedFile(e),
+                  })}
                   type="file"
                   hidden
-                  onChange={(e) => console.log(e.target.files?.[0])}
                 />
                 + Add
               </Button>
