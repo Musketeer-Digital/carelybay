@@ -86,14 +86,16 @@ export default function PersonalInformation() {
         }),
       });
 
-      const { url, headers } = await response.json();
+      const { uploadUrl: url, headers } = response as any;
+      const headersObj: Record<string, string> = {};
+      headers.forEach((value: string, key: string) => {
+        headersObj[key] = value;
+      });
 
-      if (!url) {
-        throw new Error("Failed to get signed URL");
-      }
+      await streamFileToGCP(url, file, headersObj);
 
-      await streamFileToGCP(url, file, headers);
-      console.log("File uploaded successfully");
+      // await streamFileToGCP(url, file, headers);
+      // console.log("File uploaded successfully");
 
       // Continue with rest of form submission
       // ...
