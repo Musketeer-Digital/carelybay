@@ -1,15 +1,6 @@
 import PageHeader from "@/app/components/layout/page-header";
 import { useState } from "react";
-<<<<<<< Updated upstream
 import { useFormContext, SubmitHandler, FieldError } from "react-hook-form";
-=======
-import {
-  useFormContext,
-  SubmitHandler,
-  FieldError,
-  FieldErrors,
-} from "react-hook-form";
->>>>>>> Stashed changes
 import { SignUpInputs } from "../page";
 import {
   Container,
