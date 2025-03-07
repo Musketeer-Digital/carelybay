@@ -50,7 +50,10 @@ export default function PersonalInformation() {
         });
 
         if (!response.ok) {
-          throw new Error(`Upload failed at byte ${start}`);
+          const errorText = await response.text();
+          throw new Error(
+            `Upload failed at byte ${start}: ${response.status} ${response.statusText} - ${errorText}`,
+          );
         }
 
         uploadedBytes += chunk.size;
@@ -86,13 +89,11 @@ export default function PersonalInformation() {
         }),
       });
 
-      const { uploadUrl: url, headers } = response as any;
-      const headersObj: Record<string, string> = {};
-      headers.forEach((value: string, key: string) => {
-        headersObj[key] = value;
-      });
+      const res = await response.json();
 
-      await streamFileToGCP(url, file, headersObj);
+      const { uploadUrl: url, headers } = res;
+
+      await streamFileToGCP(url, file, headers);
 
       // await streamFileToGCP(url, file, headers);
       // console.log("File uploaded successfully");

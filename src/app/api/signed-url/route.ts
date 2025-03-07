@@ -1,9 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
 import { GetSignedUrlConfig, Storage } from "@google-cloud/storage";
+import { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 
-export async function POST(
-  req: NextRequest,
-): Promise<NextResponse<{ uploadUrl: string } | { error: string }>> {
+export async function POST(req: NextApiRequest) {
   try {
     const { fileName = "new_image_1" } = await req.json();
 
@@ -11,18 +10,13 @@ export async function POST(
 
     return NextResponse.json({
       uploadUrl: url,
-      // Add additional headers needed for chunked upload
       headers: {
         "x-goog-resumable": "start",
         "content-type": "application/octet-stream",
       },
     });
   } catch (error) {
-    console.error("Error:", error);
-    return NextResponse.json(
-      { error: "Error generating signed URL" },
-      { status: 500 },
-    );
+    throw Error("Error generating signed URL");
   }
 }
 
@@ -46,10 +40,20 @@ async function generateV4UploadSignedUrl(fileName: string) {
   };
 
   try {
-    const [url] = await storage
-      .bucket(process.env.BUCKET_NAME || "musketeer-dev-image-assets")
-      .file(fileName)
-      .getSignedUrl(options);
+    const bucket = storage.bucket(
+      process.env.BUCKET_NAME || "musketeer-dev-image-assets",
+    );
+
+    await bucket.setCorsConfiguration([
+      {
+        maxAgeSeconds: 3600,
+        method: ["POST", "PUT", "GET"],
+        origin: ["*"],
+        responseHeader: ["Content-Type"],
+      },
+    ]);
+
+    const [url] = await bucket.file(fileName).getSignedUrl(options);
 
     console.log("Generated PUT signed URL:", url);
     return url;

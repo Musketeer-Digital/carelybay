@@ -1,0 +1,10 @@
+{
+  "cors": [
+    {
+      "origin": ["*"],
+      "method": ["GET", "PUT", "POST"],
+      "responseHeader": ["Content-Type"],
+      "maxAgeSeconds": 3600
+    }
+  ]
+}

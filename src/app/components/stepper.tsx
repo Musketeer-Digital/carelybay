@@ -9,12 +9,12 @@ const steps = [
   "Sign up",
 ];
 
-const ProgressBarSegment = styled(Box)<{ isActive: boolean }>(
-  ({ theme, isActive }) => ({
+const ProgressBarSegment = styled(Box)<{ isactive: boolean }>(
+  ({ theme, isactive }) => ({
     width: 120,
     height: 8,
     borderRadius: 8,
-    backgroundColor: isActive
+    backgroundColor: isactive
       ? theme.palette.primary.main
       : theme.palette.divider,
     transition: "background-color 0.17s",
@@ -34,7 +34,7 @@ const CustomizedSteppers: FC<CustomizedSteppersProps> = ({
     <Stack sx={{ width: "100%" }} spacing={4} {...rest}>
       <Box sx={{ display: "flex", justifyContent: "center", gap: 0.5 }}>
         {steps.map((_, index) => (
-          <ProgressBarSegment key={index} isActive={index <= activeStep} />
+          <ProgressBarSegment key={index} isactive={index <= activeStep} />
         ))}
       </Box>
     </Stack>
