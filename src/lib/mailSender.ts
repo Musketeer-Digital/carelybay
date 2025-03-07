@@ -14,7 +14,7 @@ export const mailSender = async (
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASS,
       },
-    });
+    } as nodemailer.SendMailOptions);
     // Send emails to users
     let info = await transporter.sendMail({
       from: process.env.MAIL_FROM,

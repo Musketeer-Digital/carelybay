@@ -1,6 +1,6 @@
 import PageHeader from "@/app/components/layout/page-header";
 import { useState } from "react";
-import { useFormContext, SubmitHandler } from "react-hook-form";
+import { useFormContext, SubmitHandler, FieldError } from "react-hook-form";
 import { SignUpInputs } from "../page";
 import {
   Container,
@@ -16,7 +16,15 @@ interface VerifyEmailCodeProps {
   nextStep: () => void;
 }
 
-const OTPInput = ({ name, error, register }) => (
+const OTPInput = ({
+  name,
+  error,
+  register,
+}: {
+  name: string;
+  error: FieldError | undefined;
+  register: any;
+}) => (
   <TextField
     {...register(name, { required: "OTP is required" })}
     error={!!error}
@@ -24,6 +32,16 @@ const OTPInput = ({ name, error, register }) => (
     type="text"
     inputProps={{ maxLength: 1 }}
     margin="normal"
+    sx={{
+      width: {
+        xs: 50,
+        md: 48,
+      },
+      height: {
+        xs: 60,
+        md: 48,
+      },
+    }}
   />
 );
 
@@ -42,7 +60,7 @@ export default function VerifyEmailCode({
 
   const onSubmit: SubmitHandler<SignUpInputs> = async (data: SignUpInputs) => {
     const { email, password } = getValues();
-    const otp = `${data.otp1}${data.otp2}${data.otp3}${data.otp4}${data.otp5}${data.otp6}`;
+    const otp = `${data.otp}`;
 
     try {
       const response = await fetch("/api/user", {
@@ -73,25 +91,46 @@ export default function VerifyEmailCode({
             We sent a code to {getValues("email")} to verify your email
           </Typography>
         }
+        sx={{ mb: 4 }}
       />
       <form onSubmit={handleSubmit(onSubmit)}>
         {error && <Box>{error}</Box>}
-        <Box display="flex" justifyContent="space-between">
-          {["otp1", "otp2", "otp3", "otp4", "otp5", "otp6"].map((name) => (
-            <OTPInput
-              key={name}
-              name={name}
-              error={errors[name]}
-              register={register}
-            />
-          ))}
+        <Box
+          display="flex"
+          gap={{ xs: 2, md: 4 }}
+          sx={{
+            mb: 4,
+            justifyContent: {
+              xs: "space-between",
+              sm: "flex-start",
+            },
+          }}
+        >
+          {Array(6)
+            .fill(0)
+            .map((_, index) => (
+              <OTPInput
+                key={index}
+                name={`otp[${index}]`}
+                error={errors.otp}
+                register={register}
+              />
+            ))}
         </Box>
-        <Button variant="primary" type="submit" fullWidth>
+        <Button variant="primary" type="submit" fullWidth sx={{ mb: 4 }}>
           Confirm
         </Button>
       </form>
-      <Typography style={{ textAlign: "center" }}>
-        Can't find the email? Check your spam folder or{" "}
+      <Typography
+        sx={{
+          textAlign: "left",
+          maxWidth: {
+            xs: "100%",
+            md: "50%",
+          },
+        }}
+      >
+        Can't find the email? Check your spam folder, or{" "}
         <Link onClick={prevStep} sx={{ cursor: "pointer" }}>
           re-enter your email and try again
         </Link>
