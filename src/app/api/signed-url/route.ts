@@ -1,13 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GetSignedUrlConfig, Storage } from "@google-cloud/storage";
 
-export async function POST(req: NextRequest) {
+export async function POST(
+  req: NextRequest,
+): Promise<NextResponse<{ uploadUrl: string } | { error: string }>> {
   try {
     const { fileName = "new_image_1" } = await req.json();
+
     const url = await generateV4UploadSignedUrl(fileName);
 
     return NextResponse.json({
-      url,
+      uploadUrl: url,
       // Add additional headers needed for chunked upload
       headers: {
         "x-goog-resumable": "start",
