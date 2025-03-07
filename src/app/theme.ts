@@ -141,6 +141,10 @@ const themeOptions: ThemeOptions = {
       fontSize: 18,
       lineHeight: 1.5,
     },
+    caption: {
+      fontSize: 14,
+      color: "#453E3B",
+    },
   },
 };
 
