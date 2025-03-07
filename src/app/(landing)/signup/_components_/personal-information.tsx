@@ -20,46 +20,73 @@ interface PersonalInformationInputs {
 
 export default function PersonalInformation() {
   const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<PersonalInformationInputs>();
 
-  const onSubmit: SubmitHandler<PersonalInformationInputs> = async (
-    data: PersonalInformationInputs,
-  ) => {
-    try {
-      setIsUploading(true);
-      const file = data.file;
+  const streamFileToGCP = async (
+    url: string,
+    file: File,
+    headers: Record<string, string>,
+  ): Promise<void> => {
+    const chunkSize = 1024 * 1024; // 1MB chunks
+    const fileSize = file.size;
+    let uploadedBytes = 0;
 
-      // Get signed URL
-      const response = await fetch('/api/signed-url', {
-        method: 'POST',
-        body: JSON.stringify({ fileName: file.name })
-      });
-      const { url } = await response.json();
-
-      // Upload file directly to Google Cloud Storage
-      const uploadResponse = await fetch(url, {
-        method: 'PUT',
-        body: file,
+    for (let start = 0; start < fileSize; start += chunkSize) {
+      const chunk = file.slice(start, start + chunkSize);
+      const response = await fetch(url, {
+        method: "PUT",
+        body: chunk,
         headers: {
-          'Content-Type': 'application/octet-stream',
+          ...headers,
+          "Content-Range": `bytes ${start}-${start + chunk.size - 1}/${fileSize}`,
         },
       });
 
-      if (!uploadResponse.ok) {
-        throw new Error('Failed to upload file');
+      if (!response.ok) {
+        throw new Error(`Upload failed at byte ${start}`);
       }
 
-      // Continue with the rest of your form submission logic
-      console.log('File uploaded successfully');
-      
+      uploadedBytes += chunk.size;
+      const progress = Math.round((uploadedBytes / fileSize) * 100);
+      setUploadProgress(progress);
+    }
+  };
+
+  const onSubmit: SubmitHandler<PersonalInformationInputs> = async (data) => {
+    try {
+      setIsUploading(true);
+      setUploadProgress(0);
+      const file = data.file;
+
+      // Get signed URL with headers
+      const response = await fetch("/api/signed-url", {
+        method: "POST",
+        body: JSON.stringify({
+          fileName: file.name,
+        }),
+      });
+
+      const { url, headers } = await response.json();
+
+      if (!url) {
+        throw new Error("Failed to get signed URL");
+      }
+
+      await streamFileToGCP(url, file, headers);
+      console.log("File uploaded successfully");
+
+      // Continue with rest of form submission
+      // ...
     } catch (error) {
-      console.error('Error uploading file:', error);
+      console.error("Error uploading file:", error);
     } finally {
       setIsUploading(false);
+      setUploadProgress(0);
     }
   };
 
@@ -184,13 +211,13 @@ export default function PersonalInformation() {
           type="tel"
           fullWidth
         />
-        <Button 
-          variant="primary" 
-          type="submit" 
-          fullWidth 
+        <Button
+          variant="primary"
+          type="submit"
+          fullWidth
           disabled={isUploading}
         >
-          {isUploading ? 'Uploading...' : 'Next'}
+          {isUploading ? `Uploading... ${uploadProgress}%` : "Next"}
         </Button>
       </form>
     </Container>
