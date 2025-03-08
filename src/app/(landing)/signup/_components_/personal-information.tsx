@@ -9,7 +9,7 @@ import {
   Input,
 } from "@mui/material";
 import { useState } from "react";
-
+import Image from "next/image";
 interface PersonalInformationInputs {
   firstName: string;
   lastName: string;
@@ -20,6 +20,7 @@ interface PersonalInformationInputs {
 
 export default function PersonalInformation() {
   const [isUploading, setIsUploading] = useState(false);
+  const [profileImageSrc, setProfileImageSrc] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);
   const {
     register,
@@ -28,40 +29,6 @@ export default function PersonalInformation() {
     formState: { errors },
   } = useForm<PersonalInformationInputs>();
 
-  const streamFileToGCP = async (
-    url: string,
-    file: File,
-    headers: Record<string, string>,
-  ): Promise<void> => {
-    const chunkSize = 1024 * 1024; // 1MB chunks
-    const fileSize = file.size;
-    let uploadedBytes = 0;
-
-    for (let start = 0; start < fileSize; start += chunkSize) {
-      const chunk = file.slice(start, start + chunkSize);
-      try {
-        const response = await fetch(url, {
-          method: "PUT",
-          body: chunk,
-          headers: {
-            ...headers,
-            "Content-Range": `bytes ${start}-${start + chunk.size - 1}/${fileSize}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`Upload failed at byte ${start}`);
-        }
-
-        uploadedBytes += chunk.size;
-        const progress = Math.round((uploadedBytes / fileSize) * 100);
-        setUploadProgress(progress);
-      } catch (error) {
-        console.error("Error uploading chunk:", error);
-      }
-    }
-  };
-
   const handleUploadedFile = (data: InputEvent) => {
     const target = data.target as HTMLInputElement;
     const file = target?.files?.[0];
@@ -69,7 +36,9 @@ export default function PersonalInformation() {
       console.error("No file selected");
       return;
     }
+    console.log(URL.createObjectURL(file));
     setValue("file", file);
+    setProfileImageSrc(URL.createObjectURL(file));
   };
 
   const onSubmit: SubmitHandler<PersonalInformationInputs> = async (data) => {
@@ -78,27 +47,15 @@ export default function PersonalInformation() {
       setUploadProgress(0);
       const file = data.file;
 
-      // Get signed URL with headers
-      const response = await fetch("/api/signed-url", {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await fetch("/api/users/new/profile-photo", {
         method: "POST",
-        body: JSON.stringify({
-          fileName: file.name,
-        }),
+        body: formData,
       });
 
-      const { uploadUrl: url, headers } = response as any;
-      const headersObj: Record<string, string> = {};
-      headers.forEach((value: string, key: string) => {
-        headersObj[key] = value;
-      });
-
-      await streamFileToGCP(url, file, headersObj);
-
-      // await streamFileToGCP(url, file, headers);
-      // console.log("File uploaded successfully");
-
-      // Continue with rest of form submission
-      // ...
+      console.log("File uploaded successfully", { response });
     } catch (error) {
       console.error("Error uploading file:", error);
     } finally {
@@ -143,13 +100,22 @@ export default function PersonalInformation() {
               }}
             >
               {/* TODO: profilePicture ? profilePicture : Initial */}
-              <Typography
-                fontWeight={"700"}
-                fontSize={"64px"}
-                lineHeight={"46px"}
-              >
-                S
-              </Typography>
+              {profileImageSrc ? (
+                <Image
+                  src={profileImageSrc}
+                  alt={"uploaded image"}
+                  width={64}
+                  height={64}
+                />
+              ) : (
+                <Typography
+                  fontWeight={"700"}
+                  fontSize={"64px"}
+                  lineHeight={"46px"}
+                >
+                  S
+                </Typography>
+              )}
               <Button
                 component="label"
                 sx={{
