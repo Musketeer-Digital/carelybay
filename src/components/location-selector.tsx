@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import InputGroup from "./input-group"; // Import the new InputGroup component
 import { ChangeEvent, FormEvent } from "react";
+import useSWR from "swr";
 
 interface Location {
   id: number;

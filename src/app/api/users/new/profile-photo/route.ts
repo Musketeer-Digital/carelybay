@@ -25,20 +25,21 @@ export async function POST(req: NextRequest) {
 async function uploadFileToGCP(file: File) {
   // Creates a client
   const storage = new Storage({
-    projectId: process.env.PROJECT_ID,
+    projectId: process.env.GCP_PROJECT_ID,
     credentials: {
-      client_email: process.env.CLIENT_EMAIL,
-      private_key: process.env.PRIVATE_KEY,
+      client_email: process.env.GCP_CLIENT_EMAIL,
+      private_key: process.env.GCP_PRIVATE_KEY,
     },
   });
-  const bucketName = process.env.BUCKET_NAME || "musketeer-dev-image-assets";
+  const bucketName =
+    process.env.GCP_BUCKET_NAME || "musketeer-dev-image-assets";
 
   try {
     const buffer = await file.arrayBuffer();
     return await storage
       .bucket(bucketName)
       .file(
-        `${process.env.BUCKET_PROFILE_PHOTOS_DIRECTORY || "profile-photos"}/${file.name}`,
+        `${process.env.GCP_BUCKET_PROFILE_PHOTOS_DIRECTORY || "profile-photos"}/${file.name}`,
       )
       .save(Buffer.from(buffer));
   } catch (e) {

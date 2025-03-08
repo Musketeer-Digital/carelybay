@@ -11,6 +11,8 @@ import { Button, Box, Slider } from "@mui/material";
 import LocationSelector from "@/components/location-selector";
 import InputGroup from "@/components/input-group";
 import TravelDistanceSlider from "./travel-distance-slider";
+import useSWR from "swr";
+import { fetcher } from "@/app/api/fetcher";
 
 interface PersonalInformationInputs {
   firstName: string;
@@ -21,18 +23,14 @@ interface PersonalInformationInputs {
   travelDistanceKm: number;
 }
 
-const locations = [
-  { id: 1, name: "New York" },
-  { id: 2, name: "Los Angeles" },
-  { id: 3, name: "Chicago" },
-];
-
 const maxDistance = 100; // Maximum distance in kilometers
 const step = 5; // Step increments in kilometers
 
 export default function SetLocation() {
   const methods = useForm<PersonalInformationInputs>();
   const { control } = useFormContext<PersonalInformationInputs>();
+  const { data: res } = useSWR("/api/locations", fetcher);
+  const locations = res?.data || [];
 
   const onSubmit: SubmitHandler<PersonalInformationInputs> = (data) => {
     console.log(data);

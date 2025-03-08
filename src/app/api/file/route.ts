@@ -6,16 +6,16 @@ export async function PUT(req: NextRequest) {
     const formData = await req.formData();
     const file = formData.get("file") as File;
     const storage = new Storage({
-      projectId: process.env.PROJECT_ID,
+      projectId: process.env.GCP_PROJECT_ID,
       credentials: {
-        client_email: process.env.CLIENT_EMAIL,
-        private_key: process.env.PRIVATE_KEY,
+        client_email: process.env.GCP_CLIENT_EMAIL,
+        private_key: process.env.GCP_PRIVATE_KEY,
       },
     });
 
     // TODO: Pass in userid
     await storage
-      .bucket(process.env.BUCKET_NAME || "")
+      .bucket(process.env.GCP_BUCKET_NAME || "")
       .upload(file.name, { destination: "file" });
 
     return NextResponse.json({ message: "File uploaded successfully" });
