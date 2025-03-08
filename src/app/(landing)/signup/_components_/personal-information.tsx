@@ -41,7 +41,7 @@ export default function PersonalInformation() {
       const chunk = file.slice(start, start + chunkSize);
       try {
         const response = await fetch(url, {
-          method: "PUT",
+          method: "POST",
           body: chunk,
           headers: {
             ...headers,
@@ -91,7 +91,7 @@ export default function PersonalInformation() {
 
       const res = await response.json();
 
-      const { uploadUrl: url, headers } = res;
+      const { url, headers } = res;
 
       await streamFileToGCP(url, file, headers);
 

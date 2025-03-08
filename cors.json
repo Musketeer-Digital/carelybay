@@ -1,11 +1,14 @@
 [
   {
-    "origin": ["*"],
-    "method": ["GET", "PUT", "POST"],
+    "origin": [
+      "http://localhost:3000"
+    ],
+    "method": [
+      "POST"
+    ],
     "responseHeader": [
       "Content-Type",
-      "Access-Control-Allow-Origin",
-      "x-goog-resumable"
+      "Access-Control-Allow-Origin"
     ],
     "maxAgeSeconds": 3600
   }
