@@ -15,9 +15,9 @@ import AvailabilityRatesModal from "./availability-model/availability-rates";
 import AvailabilityForModal from "./availability-model/availability-for";
 import AvailabilitySetModal from "./availability-model/availability-set";
 import { COLORS } from "@/constants/colors";
-import { Edit, InfoOutlined } from "@mui/icons-material";
 import { EditIcon } from "@/app/components/icons/edit-icon";
 import { ChildCareIcon } from "@/app/components/icons/childcare-icon";
+import { QuestionIcon } from "@/app/components/icons/question-icon";
 interface Rates {
   nightRate: number;
   holidayRate: number;
@@ -147,7 +147,8 @@ const Availability = () => {
                         textTransform: "none",
                       }}
                     >
-                      {availabilityData.selectedAvailability}{" "}
+                      {availabilityData.selectedAvailability}
+                      {" - "}
                       {availabilityData.selectedUrgency}
                     </Button>
                     <Box
@@ -223,13 +224,13 @@ const Availability = () => {
                           {tooltip && (
                             <Tooltip title={tooltip}>
                               <IconButton sx={{ p: 0, color: "grey.600" }}>
-                                <InfoOutlined fontSize="small" />
+                                <QuestionIcon />
                               </IconButton>
                             </Tooltip>
                           )}
                         </Box>
                         <Typography variant="body1">
-                          <span>
+                          <span style={{ fontWeight: "bold" }}>
                             $
                             {key in rateData
                               ? (rateData as any)[key]
