@@ -1,14 +1,17 @@
 "use client";
 
 import { Box, Grid, Link } from "@mui/material";
-import { Typography, Button, Divider } from "@mui/material";
-import { Cake, Public, School, Place } from "@mui/icons-material";
+import { Typography, Divider } from "@mui/material";
 import { useState } from "react";
 import CityModal from "./bio-models/bio-city";
 import LanguageModel from "./bio-models/bio-language";
 import DOBSModal from "./bio-models/bio-dob";
 import QualificationModal from "./bio-models/bio-qualification";
 import ProfileBioDescription from "./bio-models/bio-description";
+import { CakeIcon } from "@/app/components/icons/cake-icon";
+import { MarkerIcon } from "@/app/components/icons/marker-icon";
+import { LanguageIcon } from "@/app/components/icons/language-icon";
+import { QualificationIcon } from "@/app/components/icons/qualification-icon";
 
 const ProfileBio: React.FC = () => {
   const qualificationsList: string[] = [
@@ -48,13 +51,13 @@ const ProfileBio: React.FC = () => {
 
   const profileDetails = [
     {
-      icon: <Place fontSize="small" color="action" />,
+      icon: <MarkerIcon />,
       title: "Where I live",
       value: selectedCity || "Click to select",
       onClick: () => setIsCityModalOpen(true),
     },
     {
-      icon: <Public fontSize="small" color="action" />,
+      icon: <LanguageIcon />,
       title: "Languages",
       value:
         selectedLanguages.length > 0
@@ -63,7 +66,7 @@ const ProfileBio: React.FC = () => {
       onClick: () => setIsLanguageModalOpen(true),
     },
     {
-      icon: <Cake fontSize="small" color="action" />,
+      icon: <CakeIcon />,
       title: "Date of Birth",
       value:
         selectedDOB.month && selectedDOB.day && selectedDOB.year
@@ -72,7 +75,7 @@ const ProfileBio: React.FC = () => {
       onClick: () => setIsDOBModalOpen(true),
     },
     {
-      icon: <School fontSize="small" color="action" />,
+      icon: <QualificationIcon />,
       title: "Qualification",
       value: selectedQualification
         ? `${selectedQualification} `

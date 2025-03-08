@@ -19,6 +19,7 @@ import { COLORS } from "@/constants/colors";
 import EscalatorWarningIcon from "@mui/icons-material/EscalatorWarning";
 import CustomButton from "@/app/components/CustomButton";
 import AddIcon from "@mui/icons-material/Add";
+import { EditIcon } from "@/app/components/icons/edit-icon";
 interface IService {
   label: string;
   icon: JSX.Element;
@@ -216,7 +217,7 @@ const Services = () => {
               }}
               onClick={() => setIsModalOpen(true)}
             >
-              <Edit />
+              <EditIcon />
               <Link
                 href="#"
                 sx={{
@@ -281,7 +282,7 @@ const Services = () => {
             }}
             onClick={() => setIsAgeModalOpen(true)}
           >
-            <Edit />
+            <EditIcon />
             <Link
               href="#"
               sx={{
@@ -341,7 +342,6 @@ const Services = () => {
           </Grid>
         )}
 
-        {/* Edit Additional Information Button */}
         {selectedAdditionalInfo.length > 0 ? (
           <Box
             sx={{
@@ -355,7 +355,7 @@ const Services = () => {
             }}
             onClick={() => setIsAdditionalInfoModalOpen(true)}
           >
-            <Edit />
+            <EditIcon />
             <Link
               href="#"
               sx={{

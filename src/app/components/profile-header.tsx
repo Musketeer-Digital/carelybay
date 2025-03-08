@@ -14,16 +14,16 @@ const ProfileHeader = () => {
         textAlign: "center",
         padding: { xs: 3, md: 5 },
         marginTop: 3,
-        width: "100%", 
-        maxWidth: 400, 
-        marginX: "auto", 
+        width: "100%",
+        maxWidth: 400,
+        marginX: "auto",
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
         <Avatar
           sx={{
             bgcolor: COLORS.BG_LIGHT_ORANGE_COLOR,
-            width: { xs: 70, md: 100 }, 
+            width: { xs: 70, md: 100 },
             height: { xs: 70, md: 100 },
             fontSize: { xs: 30, md: 50 },
             fontWeight: "bold",
@@ -44,20 +44,27 @@ const ProfileHeader = () => {
             alignItems: "center",
             justifyContent: "space-between",
             gap: 1,
-            px: { xs: 1, md: 2 }, 
+            px: { xs: 1, md: 2 },
             py: 1,
-            width: "100%", 
-            maxWidth: 300, 
+            width: "100%",
+            maxWidth: 300,
             borderRadius: 2,
             marginTop: 2,
           }}
         >
           <ChildCareIcon fontSize="small" />
-          <Typography sx={{ flex: 1, textAlign: "center", fontWeight: "bold", fontSize: { xs: "0.9rem", md: "1rem" } }}>
+          <Typography
+            sx={{
+              flex: 1,
+              textAlign: "center",
+              fontWeight: "bold",
+              fontSize: { xs: "0.9rem", md: "1rem" },
+            }}
+          >
             Childcare
           </Typography>
           <IconButton sx={{ color: COLORS.BLACK_COLOR }}>
-            <EditIcon fontSize="small" />
+            <EditIcon />
           </IconButton>
         </Box>
       </Box>

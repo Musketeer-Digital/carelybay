@@ -17,6 +17,7 @@ import AvailabilityForModal from "./availability-model/availability-for";
 import AvailabilitySetModal from "./availability-model/availability-set";
 import { COLORS } from "@/constants/colors";
 import { Edit, InfoOutlined } from "@mui/icons-material";
+import { EditIcon } from "@/app/components/icons/edit-icon";
 interface Rates {
   nightRate: number;
   holidayRate: number;
@@ -160,7 +161,7 @@ const Availability = () => {
                         cursor: "pointer",
                       }}
                     >
-                      <Edit />
+                      <EditIcon />
                       <Link
                         href="#"
                         sx={{
@@ -250,7 +251,7 @@ const Availability = () => {
                         cursor: "pointer",
                       }}
                     >
-                      <Edit />
+                      <EditIcon />
                       <Link
                         href="#"
                         sx={{
@@ -330,7 +331,7 @@ const Availability = () => {
                         cursor: "pointer",
                       }}
                     >
-                      <Edit />
+                      <EditIcon />
                       <Link
                         href="#"
                         sx={{

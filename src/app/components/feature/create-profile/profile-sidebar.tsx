@@ -6,16 +6,19 @@ import {
   Box,
   Card,
   Avatar,
-  Button,
   List,
   ListItem,
+  IconButton,
 } from "@mui/material";
-import { Edit, Add, ChildCare, Elderly, Info } from "@mui/icons-material";
 import { COLORS } from "@/constants/colors";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import CheckIcon from "@mui/icons-material/Check";
 import CustomButton from "../../CustomButton";
+import { PlusIcon } from "../../icons/plus-icon";
+import { ChildCareIcon } from "../../icons/childcare-icon";
+import { EditIcon } from "../../icons/edit-icon";
+import { GreaterIcon } from "../../icons/greater-icon";
+import { ElderAgeIcon } from "../../icons/elderage-icon";
+import { InfoIcon } from "../../icons/info-icon";
+import { CheckIcon } from "../../icons/check-icon";
 
 const ProfileSidebar = () => {
   const confirmedInfo = [
@@ -52,7 +55,7 @@ const ProfileSidebar = () => {
         <CustomButton
           variant="outlined"
           size="small"
-          startIcon={<Add />}
+          startIcon={<PlusIcon />}
           sx={{
             color: "black",
             bgcolor: "white",
@@ -91,7 +94,9 @@ const ProfileSidebar = () => {
           }}
         >
           Your profile
-          <AddCircleOutlineIcon sx={{ ml: 1, fontSize: "30px" }} />
+          <IconButton sx={{ border: "1px solid grey", ml: 1 }}>
+            <PlusIcon />
+          </IconButton>
         </Typography>
 
         <List sx={{ p: 0 }}>
@@ -108,15 +113,19 @@ const ProfileSidebar = () => {
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <ChildCare sx={{ mr: 1 }} />
-              <Typography fontSize="0.95rem" fontWeight="medium">
+              <ChildCareIcon />
+              <Typography
+                sx={{ ml: 1, mr: 1 }}
+                fontSize="0.95rem"
+                fontWeight="medium"
+              >
                 Childcare
               </Typography>
 
-              <Edit sx={{ ml: 2 }} fontSize="small" />
+              <EditIcon />
             </Box>
 
-            <ArrowForwardIosIcon sx={{ fontSize: "14px" }} />
+            <GreaterIcon />
           </ListItem>
 
           <ListItem
@@ -129,12 +138,16 @@ const ProfileSidebar = () => {
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Elderly sx={{ mr: 1 }} />
-              <Typography fontSize="0.95rem" fontWeight="medium">
+              <ElderAgeIcon />
+              <Typography
+                sx={{ ml: 1, mr: 1 }}
+                fontSize="0.95rem"
+                fontWeight="medium"
+              >
                 Aged care
               </Typography>
             </Box>
-            <Edit sx={{ ml: 2 }} fontSize="small" />
+            <EditIcon />
           </ListItem>
         </List>
       </Card>
@@ -157,18 +170,22 @@ const ProfileSidebar = () => {
               key={index}
               sx={{ display: "flex", alignItems: "center" }}
             >
-              <CheckIcon sx={{ mr: 1 }} />
-              {item.title}
+              <CheckIcon />
+              <Typography sx={{ ml: 1 }}> {item.title}</Typography>
             </ListItem>
           ))}
         </List>
-        <Typography
-          fontWeight="medium"
-          sx={{ display: "flex", alignItems: "center", mt: 2 }}
+        <Box
+          sx={{ display: "flex", alignItems: "center", alignContent: "center" }}
         >
-          Identity Verifications by CarelyBay
-          <Info sx={{ ml: 1, color: "#4D4D4D" }} />
-        </Typography>
+          <Typography
+            fontWeight="medium"
+            sx={{ display: "flex", alignItems: "center", mr: 1 }}
+          >
+            Identity Verifications by CarelyBay
+          </Typography>
+          <InfoIcon />
+        </Box>
         <CustomButton
           variant="outlined"
           sx={{
