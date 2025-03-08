@@ -13,8 +13,8 @@ import {
   Divider,
   Box,
 } from "@mui/material";
-import RemoveIcon from "@mui/icons-material/Remove";
-import AddIcon from "@mui/icons-material/Add";
+import { PlusIcon } from "@/app/components/icons/plus-icon";
+import { MinusIcon } from "@/app/components/icons/minus-icon";
 
 interface ServiceAgeModalProps {
   isAgeModalOpen: boolean;
@@ -88,7 +88,7 @@ const AgeModal: React.FC<ServiceAgeModalProps> = ({
               onClick={() => setChildren(Math.max(1, children - 1))}
               disabled={children === 1}
             >
-              <RemoveIcon />
+              <MinusIcon />
             </IconButton>
             <Typography variant="h5" fontWeight="bold">
               {children}
@@ -97,7 +97,7 @@ const AgeModal: React.FC<ServiceAgeModalProps> = ({
               color="warning"
               onClick={() => setChildren(children + 1)}
             >
-              <AddIcon />
+              <PlusIcon />
             </IconButton>
           </Box>
           <Typography variant="body2" color="textSecondary">

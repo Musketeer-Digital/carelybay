@@ -66,6 +66,7 @@ const ServiceAdditionalInfoModal: React.FC<ServiceAdditionalInfoModalProps> = ({
                   sx={{
                     width: 48,
                     height: 48,
+                    border: `1px solid #CDCDCD`,
                     borderRadius: "50%",
                     bgcolor: isSelected
                       ? COLORS.PRIMARY_COLOR

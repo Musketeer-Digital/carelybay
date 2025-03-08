@@ -11,13 +11,13 @@ import {
   Tooltip,
 } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import ChildCareIcon from "@mui/icons-material/ChildCare";
 import AvailabilityRatesModal from "./availability-model/availability-rates";
 import AvailabilityForModal from "./availability-model/availability-for";
 import AvailabilitySetModal from "./availability-model/availability-set";
 import { COLORS } from "@/constants/colors";
 import { Edit, InfoOutlined } from "@mui/icons-material";
 import { EditIcon } from "@/app/components/icons/edit-icon";
+import { ChildCareIcon } from "@/app/components/icons/childcare-icon";
 interface Rates {
   nightRate: number;
   holidayRate: number;

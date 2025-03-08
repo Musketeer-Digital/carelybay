@@ -10,14 +10,12 @@ import {
   ListItemButton,
   ListItemText,
   IconButton,
-  Button,
-  Divider,
 } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import CheckIcon from "@mui/icons-material/Check";
 import CustomDialog from "@/app/components/CustomDialog";
 import CustomButton from "@/app/components/CustomButton";
 import { COLORS } from "@/constants/colors";
+import { CheckIcon } from "@/app/components/icons/check-icon";
+import { SearchIcon } from "@/app/components/icons/search-icon";
 
 const cities = [
   "San Francisco, CA, USA",
@@ -120,9 +118,7 @@ const CityModal: React.FC<ProfileBioCityModalProps> = ({
                     fontWeight: selectedCity === city ? "bold" : "normal",
                   }}
                 />
-                {selectedCity === city && (
-                  <CheckIcon sx={{ color: "#FF6600" }} />
-                )}
+                {selectedCity === city && <CheckIcon />}
               </ListItemButton>
             </ListItem>
           ))}

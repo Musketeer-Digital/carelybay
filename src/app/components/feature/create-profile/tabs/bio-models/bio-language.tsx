@@ -12,10 +12,10 @@ import {
   Checkbox,
   IconButton,
 } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
 import { COLORS } from "@/constants/colors";
 import CustomDialog from "@/app/components/CustomDialog";
 import CustomButton from "@/app/components/CustomButton";
+import { SearchIcon } from "@/app/components/icons/search-icon";
 
 const languages = [
   "English",
@@ -42,7 +42,6 @@ const LanguageModal: React.FC<ProfileBioLanguageModalProps> = ({
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Filter languages based on search input
   const filteredLanguages = languages.filter((lang) =>
     lang.toLowerCase().includes(searchTerm.toLowerCase()),
   );

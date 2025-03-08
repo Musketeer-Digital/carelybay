@@ -14,14 +14,15 @@ import {
   Chip,
 } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
-import LocalDiningIcon from "@mui/icons-material/LocalDining";
-import HomeIcon from "@mui/icons-material/Home";
-import VideocamIcon from "@mui/icons-material/Videocam";
-import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
-import SchoolIcon from "@mui/icons-material/School";
-import ChildCareIcon from "@mui/icons-material/ChildCare";
 import { COLORS } from "@/constants/colors";
+import { OutDoorGrillIcon } from "@/app/components/icons/outdoorgrill-icon";
+import { CarDirectionIcon } from "@/app/components/icons/car-direction-icon";
+import { HouseIcon } from "@/app/components/icons/house-icon";
+import { SwimmingIcon } from "@/app/components/icons/swimming-icon";
+import { NightShelterIcon } from "@/app/components/icons/night-shelter-icon";
+import { BedroomIcon } from "@/app/components/icons/bedroom-icon";
+import { BathIcon } from "@/app/components/icons/bath-icon";
+import { VirtualCareIcon } from "@/app/components/icons/virtualcare-icon";
 
 interface Service {
   label: string;
@@ -42,14 +43,14 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
   toggleService,
 }) => {
   const servicesList: Service[] = [
-    { label: "Cooking/Meal preparation", icon: <LocalDiningIcon /> },
-    { label: "Pick-up/Drop off", icon: <DirectionsCarIcon /> },
-    { label: "Light housekeeping", icon: <HomeIcon /> },
-    { label: "Activities (e.g swimming)", icon: <EmojiEmotionsIcon /> },
-    { label: "Putting kids to bed", icon: <SchoolIcon /> },
-    { label: "Homework help", icon: <SchoolIcon /> },
-    { label: "Bathing", icon: <ChildCareIcon /> },
-    { label: "Virtual Care", icon: <VideocamIcon /> },
+    { label: "Cooking/Meal preparation", icon: <OutDoorGrillIcon /> },
+    { label: "Pick-up/Drop off", icon: <CarDirectionIcon /> },
+    { label: "Light housekeeping", icon: <HouseIcon /> },
+    { label: "Activities (e.g swimming)", icon: <SwimmingIcon /> },
+    { label: "Putting kids to bed", icon: <NightShelterIcon /> },
+    { label: "Homework help", icon: <BedroomIcon /> },
+    { label: "Bathing", icon: <BathIcon /> },
+    { label: "Virtual Care", icon: <VirtualCareIcon /> },
   ];
 
   return (

@@ -13,8 +13,7 @@ import {
   Button,
 } from "@mui/material";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import InfoIcon from "@mui/icons-material/Info";
-import CustomButton from "@/app/components/CustomButton";
+import { InfoIcon } from "@/app/components/icons/info-icon";
 
 interface AvailabilityRatesModalProps {
   isRatesModalOpen: boolean;
@@ -125,10 +124,7 @@ const AvailabilityRatesModal: React.FC<AvailabilityRatesModalProps> = ({
                 {item.label}
               </Typography>
               <Tooltip title="Extra charge applies">
-                <InfoIcon
-                  fontSize="small"
-                  style={{ color: "gray", cursor: "pointer" }}
-                />
+                <InfoIcon />
               </Tooltip>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>

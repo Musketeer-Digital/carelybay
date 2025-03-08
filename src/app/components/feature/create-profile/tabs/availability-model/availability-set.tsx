@@ -15,9 +15,9 @@ import {
   Divider,
 } from "@mui/material";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import AddIcon from "@mui/icons-material/Add";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { COLORS } from "@/constants/colors";
+import { PlusIcon } from "@/app/components/icons/plus-icon";
 
 interface AvailabilitySetModalProps {
   isAvailabilityModalOpen: boolean;
@@ -217,7 +217,7 @@ const AvailabilitySetModal: React.FC<AvailabilitySetModalProps> = ({
           }}
           onClick={handleAddAdditionalHours}
         >
-          <AddIcon />
+          <PlusIcon />
           <Typography variant="body2">Add additional hours</Typography>
         </Box>
       </DialogContent>

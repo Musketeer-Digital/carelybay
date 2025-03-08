@@ -2,24 +2,25 @@
 
 import { useState } from "react";
 import { Button, Typography, Divider, Box, Link, Grid } from "@mui/material";
-import ChildCareIcon from "@mui/icons-material/ChildCare";
-import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
-import SchoolIcon from "@mui/icons-material/School";
-import PetsIcon from "@mui/icons-material/Pets";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import AccessibleIcon from "@mui/icons-material/Accessible";
-import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
-import HotelIcon from "@mui/icons-material/Hotel";
 import { CalendarMonth, Edit } from "@mui/icons-material";
 import ServiceModal from "./service-model/service-model";
 import AgeModal from "./service-model/service-age";
 import AdditionalInfoModal from "./service-model/service-additional-info";
 import { COLORS } from "@/constants/colors";
-import EscalatorWarningIcon from "@mui/icons-material/EscalatorWarning";
 import CustomButton from "@/app/components/CustomButton";
-import AddIcon from "@mui/icons-material/Add";
 import { EditIcon } from "@/app/components/icons/edit-icon";
+import { BabySitterIcon } from "@/app/components/icons/babysitter-icon";
+import { ChildCareIcon } from "@/app/components/icons/childcare-icon";
+import { SmokeFreeIcon } from "@/app/components/icons/smoke-free-icon";
+import { CarDirectionIcon } from "@/app/components/icons/car-direction-icon";
+import { PetIcon } from "@/app/components/icons/pets.icon";
+import { SickIcon } from "@/app/components/icons/sick-icon";
+import { BabyChangingIcon } from "@/app/components/icons/baby-changing-icon";
+import { VaccineIcon } from "@/app/components/icons/vaccine-icon";
+import { HouseIcon } from "@/app/components/icons/house-icon";
+import { HouseSidingIcon } from "@/app/components/icons/house-siding-icon";
+import { YardIcon } from "@/app/components/icons/yard-icon";
+import { PlusIcon } from "@/app/components/icons/plus-icon";
 interface IService {
   label: string;
   icon: JSX.Element;
@@ -40,32 +41,36 @@ const Services = () => {
   const [selectedAges, setSelectedAges] = useState<IAge[]>([]);
 
   const additionalInfoOptions = [
-    { label: "Non-smoker", icon: <DirectionsCarIcon fontSize="small" /> },
-    { label: "Own transport", icon: <DirectionsCarIcon fontSize="small" /> },
-    { label: "Comfortable with pets", icon: <PetsIcon fontSize="small" /> },
+    { label: "Non-smoker", icon: <SmokeFreeIcon /> },
+    { label: "Own transport", icon: <CarDirectionIcon /> },
+    { label: "Comfortable with pets", icon: <PetIcon /> },
     {
       label: "Willing to care for sick kids",
-      icon: <EmojiEmotionsIcon fontSize="small" />,
+      icon: <SickIcon />,
     },
     {
       label: "Exp. with twins/multiples",
-      icon: <VisibilityIcon fontSize="small" />,
+      icon: <ChildCareIcon />,
     },
     {
       label: "Exp. with special needs",
-      icon: <AccessibleIcon fontSize="small" />,
+      icon: <BabyChangingIcon />,
     },
     {
       label: "Exp. with nursing",
-      icon: <MedicalServicesIcon fontSize="small" />,
+      icon: <VaccineIcon />,
     },
     {
       label: "Available for after-school care",
-      icon: <SchoolIcon fontSize="small" />,
+      icon: <HouseIcon />,
     },
     {
       label: "Interested in live-in jobs",
-      icon: <HotelIcon fontSize="small" />,
+      icon: <HouseSidingIcon />,
+    },
+    {
+      label: "Interested in live-out jobs",
+      icon: <YardIcon />,
     },
   ];
 
@@ -143,7 +148,7 @@ const Services = () => {
               height: 30,
             }}
           >
-            <EscalatorWarningIcon sx={{ color: "black" }} />
+            <BabySitterIcon />
           </Box>
           <Typography fontSize="1rem">Babysitter</Typography>
         </Box>
@@ -378,7 +383,7 @@ const Services = () => {
               borderRadius: 4,
             }}
           >
-            <AddIcon />
+            <PlusIcon />
             Add additional information
           </CustomButton>
         )}

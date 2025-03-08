@@ -2,8 +2,8 @@
 
 import { Avatar, Card, Box, Typography, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import ChildCareIcon from "@mui/icons-material/ChildCare";
 import { COLORS } from "@/constants/colors";
+import { ChildCareIcon } from "./icons/childcare-icon";
 
 const ProfileHeader = () => {
   return (
@@ -52,7 +52,7 @@ const ProfileHeader = () => {
             marginTop: 2,
           }}
         >
-          <ChildCareIcon fontSize="small" />
+          <ChildCareIcon />
           <Typography
             sx={{
               flex: 1,

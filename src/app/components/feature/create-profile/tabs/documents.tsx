@@ -10,12 +10,11 @@ import {
   IconButton,
   Checkbox,
 } from "@mui/material";
-import {
-  Info as InfoIcon,
-  InsertDriveFile as FileIcon,
-  Close as CloseIcon,
-} from "@mui/icons-material";
 import { COLORS } from "@/constants/colors";
+import { InfoIcon } from "@/app/components/icons/info-icon";
+import { UploadIcon } from "@/app/components/icons/upload-icon";
+import { CloseIcon } from "@/app/components/icons/close-icon";
+import { PDFIcon } from "@/app/components/icons/pdf-icon";
 
 interface UploadedFile {
   name: string;
@@ -57,7 +56,7 @@ const Documents = () => {
           display="flex"
           gap={1}
         >
-          Upload Documents <InfoIcon sx={{ color: "gray" }} />
+          Upload Documents <InfoIcon />
         </Typography>
 
         <Typography variant="body2" color="textSecondary" sx={{ mt: 2 }}>
@@ -112,7 +111,7 @@ const Documents = () => {
             alignItems="center"
             gap={1}
           >
-            <FileIcon sx={{ fontSize: 40, color: "grey" }} />
+            <UploadIcon />
             <Typography variant="body2" color="textSecondary">
               Drag and drop file here
             </Typography>
@@ -151,7 +150,7 @@ const Documents = () => {
                 }}
               >
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <FileIcon sx={{ color: COLORS.PRIMARY_COLOR }} />
+                  <PDFIcon />
                   <Typography variant="body2" fontWeight="500">
                     {file.name}
                   </Typography>
@@ -161,7 +160,7 @@ const Documents = () => {
                     {file.size} KB
                   </Typography>
                   <IconButton onClick={() => handleRemoveFile(index)}>
-                    <CloseIcon fontSize="small" />
+                    <CloseIcon />
                   </IconButton>
                 </Box>
               </Box>
