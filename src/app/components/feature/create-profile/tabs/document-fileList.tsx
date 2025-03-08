@@ -1,12 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { COLORS } from "@/constants/colors";
 import DocumentFileItem from "./documen-fileItem";
-
-interface UploadedFile {
-  name: string;
-  size: number;
-  progress?: number; // Add progress to indicate uploading state
-}
+import { UploadedFile } from "@/types/documentTypes";
 
 interface DocumentFileListProps {
   fileList: UploadedFile[];

@@ -7,11 +7,7 @@ import { InfoIcon } from "@/app/components/icons/info-icon";
 import DocumentFileList from "./document-fileList";
 import DocumentConfirmation from "./documen-confirmation";
 import DocumentUpload from "./document-upload";
-
-interface UploadedFile {
-  name: string;
-  size: number;
-}
+import { UploadedFile } from "@/types/documentTypes";
 
 const Documents = () => {
   const [selectedDocument, setSelectedDocument] = useState("");
