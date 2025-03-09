@@ -9,6 +9,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import UserNotificationMessage from "./_components_/UserNotificationMessage";
 import LandingActions from "./LandingActions";
 import SetLocation from "./_components_/set-location";
+import SignupMarketingPanel from "@/app/components/signup-marketing-panel/signup-marketing-panel";
 
 const MAX_STEPS = 4;
 
@@ -72,32 +73,66 @@ export default function SignupPages() {
     <Container
       sx={{
         display: "flex",
-        flexDirection: "column",
+        flexDirection: "row",
         flex: 1,
         height: "100%",
-        marginTop: { xs: 12 },
+        gap: 4,
       }}
+      disableGutters={true}
+      maxWidth={false}
     >
-      <UserNotificationMessage
-        icon={userMessageIcon}
-        message={userMessage}
-        sx={{ mb: 4 }}
-      />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          flex: 6,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Container
+          maxWidth="md"
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <UserNotificationMessage
+            icon={userMessageIcon}
+            message={userMessage}
+            sx={{ mb: 4 }}
+          />
 
-      {/* Step Content */}
-      <FormProvider {...methods}>
-        <Box sx={{ mb: 6 }}>{stepContent}</Box>
-      </FormProvider>
+          {/* Step Content */}
+          <FormProvider {...methods}>
+            <Box sx={{ mb: 6 }}>{stepContent}</Box>
+          </FormProvider>
 
-      <SignInMessage sx={{ mb: { xs: 2, md: 5 } }} />
+          <SignInMessage sx={{ mb: { xs: 2, md: 5 } }} />
 
-      {/* TODO: Remove after debugging */}
-      {/* <SessionControls /> */}
-      <LandingActions
-        nextStep={nextStep}
-        showSignInMessage={showSignInMessage}
-        step={step}
-      />
+          {/* TODO: Remove after debugging */}
+          {/* <SessionControls /> */}
+          <LandingActions
+            nextStep={nextStep}
+            showSignInMessage={showSignInMessage}
+            step={step}
+          />
+        </Container>
+      </Box>
+
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          flex: 2,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <SignupMarketingPanel />
+      </Box>
     </Container>
   );
 }

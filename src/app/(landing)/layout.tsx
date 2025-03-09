@@ -12,21 +12,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <>
-      <Banner />
-      <Container
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          flexGrow: 1,
-          height: "100%",
-        }}
-        maxWidth="md"
-      >
-        {children}
-      </Container>
-    </>
-  );
+  return <>{children}</>;
 }
