@@ -135,6 +135,23 @@ const themeOptions: ThemeOptions = {
         },
       },
     },
+    // * COMPONENT -- ToggleButton
+    MuiToggleButton: {
+      styleOverrides: {
+        root: {
+          border: "1px solid #CDCDCD !important",
+          borderRadius: "20px !important",
+          color: "#171717",
+          fontWeight: "400",
+          fontSize: "16px",
+          textTransform: "none",
+
+          "&.Mui-selected": {
+            background: "#E0E8EF",
+          },
+        },
+      },
+    },
   },
   typography: {
     fontFamily: '"Poppins", "Helvetica", "Arial", sans-serif',
