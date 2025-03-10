@@ -9,6 +9,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import UserNotificationMessage from "./_components_/UserNotificationMessage";
 import LandingActions from "./LandingActions";
 import SetLocation from "./_components_/set-location";
+import { useUserStore } from "@/store/userStore";
 
 const MAX_STEPS = 4;
 
@@ -22,6 +23,8 @@ export default function SignupPages() {
   const [step, setStep] = useState(1);
   const methods = useForm<SignUpInputs>();
 
+  const setCurrentStep = useUserStore((state) => state.setCurrentStep);
+
   let userMessageIcon = "";
   let userMessage = "";
   let showSignInMessage = true;
@@ -33,6 +36,7 @@ export default function SignupPages() {
 
   const nextStep = () => {
     setStep(step === MAX_STEPS ? 0 : step + 1);
+    setCurrentStep(step + 1);
   };
 
   switch (step) {
