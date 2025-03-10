@@ -124,6 +124,39 @@ const themeOptions: ThemeOptions = {
         },
       },
     },
+    // * COMPONENT -- Slider
+    MuiSlider: {
+      styleOverrides: {
+        root: {
+          "& .MuiSlider-track": {
+            opacity: 0.2,
+            border: "none",
+            height: 5,
+            backgroundColor: "#FFAE1F",
+          },
+          "& .MuiSlider-rail": {
+            opacity: 0.5,
+            boxShadow: "inset 0px 0px 4px -2px #000",
+            backgroundColor: "#F2F2F2",
+          },
+        },
+        valueLabel: {
+          top: "20px",
+          transform: "none",
+          fontSize: "14px",
+          backgroundColor: "transparent",
+          color: "#171717",
+
+          "&::before": {
+            display: "none",
+          },
+
+          "&.MuiSlider-valueLabelOpen": {
+            transform: "none !important",
+          },
+        },
+      },
+    },
     // * COMPONENT -- TextField
     MuiTextField: {
       styleOverrides: {

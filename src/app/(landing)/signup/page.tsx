@@ -5,10 +5,12 @@ import SignUp from "./_components_/signup";
 import VerifyEmailCode from "./_components_/verify-email-code";
 import SignInMessage from "@/app/components/SignInMessage";
 import PersonalInformation from "./_components_/personal-information";
+import Location from "./_components_/location";
 import { FormProvider, useForm } from "react-hook-form";
 import UserNotificationMessage from "./_components_/UserNotificationMessage";
+import LandingActions from "./LandingActions";
 
-const MAX_STEPS = 3;
+const MAX_STEPS = 4;
 
 export type SignUpInputs = {
   email: string;
@@ -52,6 +54,12 @@ export default function SignupPages() {
       showSignInMessage = true;
       stepContent = <PersonalInformation />;
       break;
+    case 4:
+      userMessageIcon = "✅";
+      userMessage = "Profile info added.";
+      showSignInMessage = false;
+      stepContent = <Location />;
+      break;
     default:
       userMessageIcon = "👋";
       userMessage = "Welcome to Carelybay";
@@ -85,11 +93,11 @@ export default function SignupPages() {
 
       {/* TODO: Remove after debugging */}
       {/* <SessionControls /> */}
-      {/* <LandingActions
+      <LandingActions
         nextStep={nextStep}
         showSignInMessage={showSignInMessage}
         step={step}
-      /> */}
+      />
     </Container>
   );
 }
