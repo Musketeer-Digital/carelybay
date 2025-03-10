@@ -140,7 +140,7 @@ const themeOptions: ThemeOptions = {
       styleOverrides: {
         root: {
           border: "1px solid #CDCDCD !important",
-          borderRadius: "20px !important",
+          borderRadius: "50px !important",
           color: "#171717",
           fontWeight: "400",
           fontSize: "16px",
