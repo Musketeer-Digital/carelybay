@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from "zustand";
 
 interface UserState {
   userInfo: {
@@ -14,28 +14,33 @@ interface UserState {
     id: number;
     name: string;
   };
-  setUserInfo: (userInfo: Partial<UserState['userInfo']>) => void;
+  currentStep: number;
+  setUserInfo: (userInfo: Partial<UserState["userInfo"]>) => void;
   setProfilePhoto: (profilePhoto: string) => void;
-  setLocation: (location: UserState['location']) => void;
+  setLocation: (location: UserState["location"]) => void;
+  setCurrentStep: (currentStep: UserState["currentStep"]) => void;
 }
 
 export const useUserStore = create<UserState>((set) => ({
   userInfo: {
-    firstName: '',
-    lastName: '',
-    dob: '',
-    phoneNumber: '',
-    email: '',
-    password: '',
+    firstName: "",
+    lastName: "",
+    dob: "",
+    phoneNumber: "",
+    email: "",
+    password: "",
   },
-  profilePhoto: '',
+  profilePhoto: "",
   location: {
     id: 0,
-    name: '',
+    name: "",
   },
-  setUserInfo: (userInfo) => set((state) => ({
-    userInfo: { ...state.userInfo, ...userInfo }
-  })),
+  currentStep: 0,
+  setUserInfo: (userInfo) =>
+    set((state) => ({
+      userInfo: { ...state.userInfo, ...userInfo },
+    })),
   setProfilePhoto: (profilePhoto) => set({ profilePhoto }),
   setLocation: (location) => set({ location }),
+  setCurrentStep: (currentStep) => set({ currentStep }),
 }));
