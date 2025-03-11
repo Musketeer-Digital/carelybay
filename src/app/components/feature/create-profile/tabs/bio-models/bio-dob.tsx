@@ -43,7 +43,7 @@ const DOBSModal: React.FC<ProfileBioDOBSModalProps> = ({
       open={isDOBModalOpen}
       onClose={() => setIsDOBModalOpen(false)}
       title="Date of Birth"
-      maxWidth="xs"
+      maxWidth="sm"
       footerButtons={
         <CustomButton
           variant="primary"

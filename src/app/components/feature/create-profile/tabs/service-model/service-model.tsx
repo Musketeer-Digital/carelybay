@@ -4,17 +4,9 @@ import { Box, Typography, Grid, Chip } from "@mui/material";
 import { COLORS } from "@/constants/colors";
 import CustomDialog from "@/app/components/CustomDialog";
 import CustomButton from "@/app/components/CustomButton";
-import { Close as CloseIcon } from "@mui/icons-material";
-import { OutDoorGrillIcon } from "@/app/components/icons/outdoorgrill-icon";
-import { CarDirectionIcon } from "@/app/components/icons/car-direction-icon";
-import { HouseIcon } from "@/app/components/icons/house-icon";
-import { SwimmingIcon } from "@/app/components/icons/swimming-icon";
-import { NightShelterIcon } from "@/app/components/icons/night-shelter-icon";
-import { BedroomIcon } from "@/app/components/icons/bedroom-icon";
-import { BathIcon } from "@/app/components/icons/bath-icon";
-import { VirtualCareIcon } from "@/app/components/icons/virtualcare-icon";
+import { servicesList } from "../../profile-options";
 
-interface Service {
+export interface Service {
   label: string;
   icon: JSX.Element;
 }
@@ -32,17 +24,6 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
   selectedServices,
   toggleService,
 }) => {
-  const servicesList: Service[] = [
-    { label: "Cooking/Meal preparation", icon: <OutDoorGrillIcon /> },
-    { label: "Pick-up/Drop off", icon: <CarDirectionIcon /> },
-    { label: "Light housekeeping", icon: <HouseIcon /> },
-    { label: "Activities (e.g swimming)", icon: <SwimmingIcon /> },
-    { label: "Putting kids to bed", icon: <NightShelterIcon /> },
-    { label: "Homework help", icon: <BedroomIcon /> },
-    { label: "Bathing", icon: <BathIcon /> },
-    { label: "Virtual Care", icon: <VirtualCareIcon /> },
-  ];
-
   return (
     <CustomDialog
       open={isModalOpen}

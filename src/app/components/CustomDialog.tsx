@@ -22,11 +22,14 @@ interface CustomDialogProps {
 }
 
 const StyledDialog = styled(Dialog)(({ theme }) => ({
+  "& .MuiPaper-root": {
+    borderRadius: "15px",
+  },
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
   },
   "& .MuiDialogActions-root": {
-    padding: theme.spacing(1),
+    padding: theme.spacing(3),
   },
 }));
 

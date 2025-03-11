@@ -9,13 +9,14 @@ import {
   ListItemButton,
   ListItemText,
   Radio,
-  Divider,
 } from "@mui/material";
+import { qualificationsList } from "../../profile-options";
+import { CheckIcon } from "@/app/components/icons/check-icon";
+import { CheckedIcon } from "@/app/components/icons/checked-icon";
 
 interface ProfileBioQualificationModalProps {
   isQualificationModalOpen: boolean;
   setIsQualificationModalOpen: (open: boolean) => void;
-  qualifications: string[];
   selectedQualification: string;
   setSelectedQualification: (qualification: string) => void;
 }
@@ -23,7 +24,6 @@ interface ProfileBioQualificationModalProps {
 const QualificationModal: React.FC<ProfileBioQualificationModalProps> = ({
   isQualificationModalOpen,
   setIsQualificationModalOpen,
-  qualifications,
   selectedQualification,
   setSelectedQualification,
 }) => {
@@ -51,26 +51,33 @@ const QualificationModal: React.FC<ProfileBioQualificationModalProps> = ({
       <List
         sx={{
           width: "100%",
-          maxHeight: "350px",
+          maxHeight: "450px",
           overflowY: "auto",
           borderRadius: "8px",
+          p: 3,
         }}
       >
-        {qualifications.map((qualification) => (
+        {qualificationsList.map((qualification) => (
           <ListItem key={qualification} disablePadding>
             <ListItemButton
               selected={selectedQualification === qualification}
               onClick={() => setSelectedQualification(qualification)}
               sx={{
-                borderRadius: "8px",
+                mb: 1.5,
+                borderRadius: "16px",
+                border: "0.5px solid #D9D9D9",
+                backgroundColor:
+                  selectedQualification === qualification
+                    ? "#E0E8EF!important"
+                    : "transparent",
+                boxShadow:
+                  selectedQualification === qualification
+                    ? "0px 1px 2px 0px rgba(0, 0, 0, 0.04)"
+                    : "none",
                 padding: "12px",
                 display: "flex",
                 justifyContent: "space-between",
-                backgroundColor:
-                  selectedQualification === qualification
-                    ? COLORS.BG_LIGHT_GREY_COLOR
-                    : "transparent",
-                "&:hover": { backgroundColor: COLORS.BG_LIGHT_GREY_COLOR },
+                "&:hover": { backgroundColor: "#E0E8EF" },
               }}
             >
               <ListItemText
@@ -80,14 +87,20 @@ const QualificationModal: React.FC<ProfileBioQualificationModalProps> = ({
                     selectedQualification === qualification ? "bold" : "normal",
                 }}
               />
-              <Radio
-                checked={selectedQualification === qualification}
-                sx={{
-                  color:
-                    selectedQualification === qualification ? "black" : "gray",
-                  "&.Mui-checked": { color: "black" },
+              <div
+                style={{
+                  width: 24,
+                  height: 24,
+                  border: "1px solid #D9DADB",
+                  borderRadius: "50%",
+                  background: "#FFF",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
-              />
+              >
+                {selectedQualification === qualification && <CheckedIcon />}
+              </div>
             </ListItemButton>
           </ListItem>
         ))}

@@ -16,16 +16,7 @@ import { COLORS } from "@/constants/colors";
 import CustomDialog from "@/app/components/CustomDialog";
 import CustomButton from "@/app/components/CustomButton";
 import { SearchIcon } from "@/app/components/icons/search-icon";
-
-const languages = [
-  "English",
-  "Spanish",
-  "French",
-  "German",
-  "Chinese",
-  "Arabic",
-  "Hindi",
-];
+import { languagesOptions } from "../../profile-options";
 
 interface ProfileBioLanguageModalProps {
   isLanguageModalOpen: boolean;
@@ -42,7 +33,7 @@ const LanguageModal: React.FC<ProfileBioLanguageModalProps> = ({
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredLanguages = languages.filter((lang) =>
+  const filteredLanguages = languagesOptions.filter((lang) =>
     lang.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 

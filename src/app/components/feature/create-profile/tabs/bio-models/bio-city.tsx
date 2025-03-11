@@ -16,14 +16,7 @@ import CustomButton from "@/app/components/CustomButton";
 import { COLORS } from "@/constants/colors";
 import { CheckIcon } from "@/app/components/icons/check-icon";
 import { SearchIcon } from "@/app/components/icons/search-icon";
-
-const cities = [
-  "San Francisco, CA, USA",
-  "New York, NY, USA",
-  "Los Angeles, CA, USA",
-  "Chicago, IL, USA",
-  "Houston, TX, USA",
-];
+import { citiesOptions } from "../../profile-options";
 
 interface ProfileBioCityModalProps {
   isCityModalOpen: boolean;
@@ -39,8 +32,8 @@ const CityModal: React.FC<ProfileBioCityModalProps> = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
 
-  // Filter cities based on search input
-  const filteredCities = cities.filter((city) =>
+  // Filter citiesOptions based on search input
+  const filteredCities = citiesOptions.filter((city) =>
     city.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
@@ -110,6 +103,7 @@ const CityModal: React.FC<ProfileBioCityModalProps> = ({
                   padding: "12px",
                   display: "flex",
                   justifyContent: "space-between",
+                  backgroundColor: "transparent!important",
                 }}
               >
                 <ListItemText
@@ -118,7 +112,7 @@ const CityModal: React.FC<ProfileBioCityModalProps> = ({
                     fontWeight: selectedCity === city ? "bold" : "normal",
                   }}
                 />
-                {selectedCity === city && <CheckIcon />}
+                {selectedCity === city && <CheckIcon color={"#FF6817"} />}
               </ListItemButton>
             </ListItem>
           ))}

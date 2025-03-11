@@ -16,14 +16,13 @@ import { PlusIcon } from "@/app/components/icons/plus-icon";
 import { CalendarIcon } from "@/app/components/icons/calendar-icon";
 import CustomDialog from "@/app/components/CustomDialog";
 import CustomButton from "@/app/components/CustomButton";
+import { days, timeSlots } from "../../profile-options";
 
 interface AvailabilitySetModalProps {
   isAvailabilityModalOpen: boolean;
   setIsAvailabilityModalOpen: (open: boolean) => void;
   onSelectAvailabilitySet: Function;
 }
-
-const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 const AvailabilitySetModal: React.FC<AvailabilitySetModalProps> = ({
   isAvailabilityModalOpen,
@@ -35,8 +34,6 @@ const AvailabilitySetModal: React.FC<AvailabilitySetModalProps> = ({
   const [additionalHours, setAdditionalHours] = useState<
     { from: string; to: string }[]
   >([]);
-
-  const timeSlots = ["9am - 5 pm", "6am - 9am", "2pm - 6pm", "From 6pm"];
 
   const handleDone = () => {
     onSelectAvailabilitySet({
@@ -98,7 +95,7 @@ const AvailabilitySetModal: React.FC<AvailabilitySetModalProps> = ({
           <CalendarIcon /> Select days
         </Typography>
 
-        <Box sx={{ display: "flex", gap: 1 }}>
+        <Box sx={{ display: "flex", justifyContent: "center", gap: 1 }}>
           {days.map((day) => {
             const isSelected = selectedDays.includes(day);
             return (
@@ -132,7 +129,15 @@ const AvailabilitySetModal: React.FC<AvailabilitySetModalProps> = ({
       </Box>
 
       <Box sx={{ mt: 3 }}>
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mt: 1 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            flexWrap: "wrap",
+            gap: 1,
+            mt: 1,
+          }}
+        >
           {timeSlots.map((slot) => (
             <Chip
               key={slot}
@@ -204,15 +209,22 @@ const AvailabilitySetModal: React.FC<AvailabilitySetModalProps> = ({
         sx={{
           display: "flex",
           alignItems: "center",
-          gap: 1,
-          color: "#FF9800",
-          cursor: "pointer",
-          mt: 2,
+          justifyContent: "center",
         }}
-        onClick={handleAddAdditionalHours}
       >
-        <PlusIcon />
-        <Typography variant="body2">Add additional hours</Typography>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            cursor: "pointer",
+            mt: 4,
+          }}
+          onClick={handleAddAdditionalHours}
+        >
+          <PlusIcon />
+          <Typography variant="body2">Add additional hours</Typography>
+        </Box>
       </Box>
     </CustomDialog>
   );

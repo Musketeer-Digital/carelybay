@@ -11,16 +11,9 @@ import CustomButton from "@/app/components/CustomButton";
 import { EditIcon } from "@/app/components/icons/edit-icon";
 import { BabySitterIcon } from "@/app/components/icons/babysitter-icon";
 import { ChildCareIcon } from "@/app/components/icons/childcare-icon";
-import { SmokeFreeIcon } from "@/app/components/icons/smoke-free-icon";
-import { CarDirectionIcon } from "@/app/components/icons/car-direction-icon";
-import { PetIcon } from "@/app/components/icons/pets.icon";
-import { SickIcon } from "@/app/components/icons/sick-icon";
-import { BabyChangingIcon } from "@/app/components/icons/baby-changing-icon";
-import { VaccineIcon } from "@/app/components/icons/vaccine-icon";
-import { HouseIcon } from "@/app/components/icons/house-icon";
-import { HouseSidingIcon } from "@/app/components/icons/house-siding-icon";
-import { YardIcon } from "@/app/components/icons/yard-icon";
 import { PlusIcon } from "@/app/components/icons/plus-icon";
+import { SPAIcon } from "@/app/components/icons/spa-icon";
+import { GreyDotIcon } from "@/app/components/icons/greydot-icon";
 interface IService {
   label: string;
   icon: JSX.Element;
@@ -39,40 +32,6 @@ const Services = () => {
   const [selectedAdditionalInfo, setSelectedAdditionalInfo] = useState([]);
 
   const [selectedAges, setSelectedAges] = useState<IAge[]>([]);
-
-  const additionalInfoOptions = [
-    { label: "Non-smoker", icon: <SmokeFreeIcon /> },
-    { label: "Own transport", icon: <CarDirectionIcon /> },
-    { label: "Comfortable with pets", icon: <PetIcon /> },
-    {
-      label: "Willing to care for sick kids",
-      icon: <SickIcon />,
-    },
-    {
-      label: "Exp. with twins/multiples",
-      icon: <ChildCareIcon />,
-    },
-    {
-      label: "Exp. with special needs",
-      icon: <BabyChangingIcon />,
-    },
-    {
-      label: "Exp. with nursing",
-      icon: <VaccineIcon />,
-    },
-    {
-      label: "Available for after-school care",
-      icon: <HouseIcon />,
-    },
-    {
-      label: "Interested in live-in jobs",
-      icon: <HouseSidingIcon />,
-    },
-    {
-      label: "Interested in live-out jobs",
-      icon: <YardIcon />,
-    },
-  ];
 
   const toggleAgeGroup = (ageObject: IAge) => {
     setSelectedAges((prev: IAge[]) =>
@@ -162,14 +121,14 @@ const Services = () => {
           alignItems="center"
           gap={1}
         >
-          <ChildCareIcon /> Add your Services provided
+          <SPAIcon /> Add your Services provided
         </Typography>
         <Typography sx={{ ml: 4 }} color="textSecondary">
           Skills Ex: Cooking/Meal preparation
         </Typography>
         <Box sx={{ display: "flex", gap: 1, mt: 2, flexWrap: "wrap" }}>
           {selectedServices.map((service: IService) => (
-            <Button
+            <CustomButton
               variant="outlined"
               key={service.label}
               onClick={() => toggleService(service)}
@@ -177,11 +136,14 @@ const Services = () => {
                 display: "flex",
                 alignItems: "center",
                 gap: 1,
+                borderRadius: "30px",
+                color: "black",
+                border: "1px solid black",
               }}
             >
-              {service.icon}
+              <GreyDotIcon />
               <Box component="span">{service.label}</Box>
-            </Button>
+            </CustomButton>
           ))}
         </Box>
 
@@ -266,9 +228,11 @@ const Services = () => {
                   gap: 1,
                   borderRadius: "24px",
                   textTransform: "none",
+                  color: "black",
+                  borderColor: "black",
                 }}
               >
-                {ageObjct.ageValue} Year · {ageObjct.children}
+                0-{ageObjct.ageValue} Year · {ageObjct.children}
                 {ageObjct.children > 1 ? " children" : " child"}
               </Button>
             ))
@@ -321,7 +285,7 @@ const Services = () => {
                     width: 48,
                     height: 48,
                     borderRadius: "50%",
-                    backgroundColor: "grey.200",
+                    backgroundColor: "#E0E8EF",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -402,7 +366,6 @@ const Services = () => {
       <AdditionalInfoModal
         isAdditionalInfoModalOpen={isAdditionalInfoModalOpen}
         setIsAdditionalInfoModalOpen={setIsAdditionalInfoModalOpen}
-        additionalInfoOptions={additionalInfoOptions}
         selectedAdditionalInfo={selectedAdditionalInfo}
         toggleAdditionalInfo={toggleAdditionalInfo}
       />

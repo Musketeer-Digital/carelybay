@@ -18,6 +18,7 @@ import { COLORS } from "@/constants/colors";
 import { EditIcon } from "@/app/components/icons/edit-icon";
 import { ChildCareIcon } from "@/app/components/icons/childcare-icon";
 import { QuestionIcon } from "@/app/components/icons/question-icon";
+import CustomButton from "@/app/components/CustomButton";
 interface Rates {
   nightRate: number;
   holidayRate: number;
@@ -132,12 +133,12 @@ const Availability = () => {
               {option.description}
             </Typography>
 
-            <Box>
+            <Box sx={{ ml: 3 }}>
               {option.title === "Available For" &&
                 availabilityData.selectedAvailability &&
                 availabilityData.selectedUrgency && (
                   <>
-                    <Button
+                    <CustomButton
                       variant="outlined"
                       sx={{
                         display: "flex",
@@ -145,12 +146,14 @@ const Availability = () => {
                         mt: 2,
                         borderRadius: "24px",
                         textTransform: "none",
+                        color: "#171717",
+                        border: "1px solid #171717",
                       }}
                     >
                       {availabilityData.selectedAvailability}
-                      {" - "}
+                      {" · "}
                       {availabilityData.selectedUrgency}
-                    </Button>
+                    </CustomButton>
                     <Box
                       sx={{
                         display: "flex",
@@ -167,10 +170,10 @@ const Availability = () => {
                         href="#"
                         sx={{
                           color: COLORS.BLACK_COLOR,
-                          textDecoration: "none",
+                          textDecoration: "underline",
                         }}
                       >
-                        Edit
+                        Edit your experience
                       </Link>
                     </Box>
                   </>
@@ -181,7 +184,6 @@ const Availability = () => {
                   <Box
                     sx={{
                       mt: 2,
-                      p: 2,
                       borderRadius: "8px",
                       width: 400,
                     }}
@@ -257,10 +259,10 @@ const Availability = () => {
                         href="#"
                         sx={{
                           color: COLORS.BLACK_COLOR,
-                          textDecoration: "none",
+                          textDecoration: "underline",
                         }}
                       >
-                        Edit
+                        Edit your availability
                       </Link>
                     </Box>
                   </Box>
@@ -337,10 +339,10 @@ const Availability = () => {
                         href="#"
                         sx={{
                           color: COLORS.BLACK_COLOR,
-                          textDecoration: "none",
+                          textDecoration: "underline",
                         }}
                       >
-                        Edit
+                        Edit rates
                       </Link>
                     </Box>
                   )}

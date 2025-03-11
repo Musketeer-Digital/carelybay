@@ -4,6 +4,8 @@ import { Typography, Grid, IconButton, Divider, Box } from "@mui/material";
 import { COLORS } from "@/constants/colors";
 import CustomDialog from "@/app/components/CustomDialog";
 import CustomButton from "@/app/components/CustomButton";
+import { additionalInfoOptions } from "../../profile-options";
+import React from "react";
 
 interface AdditionalInfo {
   label: string;
@@ -13,7 +15,6 @@ interface AdditionalInfo {
 interface ServiceAdditionalInfoModalProps {
   isAdditionalInfoModalOpen: boolean;
   setIsAdditionalInfoModalOpen: (open: boolean) => void;
-  additionalInfoOptions: AdditionalInfo[];
   selectedAdditionalInfo: AdditionalInfo[];
   toggleAdditionalInfo: (info: AdditionalInfo) => void;
 }
@@ -21,7 +22,6 @@ interface ServiceAdditionalInfoModalProps {
 const ServiceAdditionalInfoModal: React.FC<ServiceAdditionalInfoModalProps> = ({
   isAdditionalInfoModalOpen,
   setIsAdditionalInfoModalOpen,
-  additionalInfoOptions,
   selectedAdditionalInfo,
   toggleAdditionalInfo,
 }) => {
@@ -51,7 +51,15 @@ const ServiceAdditionalInfoModal: React.FC<ServiceAdditionalInfoModalProps> = ({
             (i) => i.label === item.label,
           );
           return (
-            <Grid item key={item.label} xs={6} sm={3} textAlign="center">
+            <Grid
+              item
+              key={item.label}
+              xs={6}
+              sm={3}
+              textAlign="center"
+              sx={{ cursor: "pointer" }}
+              onClick={() => toggleAdditionalInfo(item)}
+            >
               <IconButton
                 sx={{
                   width: 48,
@@ -64,11 +72,13 @@ const ServiceAdditionalInfoModal: React.FC<ServiceAdditionalInfoModalProps> = ({
                   color: isSelected ? COLORS.WHITE_COLOR : COLORS.BLACK_COLOR,
                   boxShadow: isSelected ? 3 : 0,
                   transition: "all 0.3s ease",
+                  "&:hover": { backgroundColor: COLORS.PRIMARY_COLOR },
+                  "& svg": { filter: isSelected ? "invert(1)" : "invert(0)" },
                 }}
-                onClick={() => toggleAdditionalInfo(item)}
               >
                 {item.icon}
               </IconButton>
+
               <Typography
                 variant="caption"
                 fontWeight={500}

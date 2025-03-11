@@ -95,7 +95,11 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
         </Box>
 
         <Box display="flex" flexDirection="column" alignItems="center" gap={1}>
-          <Typography variant="body2" color="textSecondary">
+          <Typography
+            sx={{ textDecoration: "underline" }}
+            variant="body2"
+            color="textSecondary"
+          >
             {isDragging ? "Drop files here" : "Drag and drop file here"}
           </Typography>
 

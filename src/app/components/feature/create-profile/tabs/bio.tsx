@@ -14,13 +14,6 @@ import { LanguageIcon } from "@/app/components/icons/language-icon";
 import { QualificationIcon } from "@/app/components/icons/qualification-icon";
 
 const ProfileBio: React.FC = () => {
-  const qualificationsList: string[] = [
-    "High School",
-    "Bachelor Degree",
-    "Master Degree",
-    "Diploma",
-    "Other",
-  ];
   const [isQualificationModalOpen, setIsQualificationModalOpen] =
     useState<boolean>(false);
   const [selectedQualification, setSelectedQualification] =
@@ -51,13 +44,15 @@ const ProfileBio: React.FC = () => {
 
   const profileDetails = [
     {
-      icon: <MarkerIcon />,
+      icon: <MarkerIcon color={selectedCity ? "#FF6817" : ""} />,
       title: "Where I live",
       value: selectedCity || "Click to select",
       onClick: () => setIsCityModalOpen(true),
     },
     {
-      icon: <LanguageIcon />,
+      icon: (
+        <LanguageIcon color={selectedLanguages.length > 0 ? "#FF6817" : ""} />
+      ),
       title: "Languages",
       value:
         selectedLanguages.length > 0
@@ -66,7 +61,15 @@ const ProfileBio: React.FC = () => {
       onClick: () => setIsLanguageModalOpen(true),
     },
     {
-      icon: <CakeIcon />,
+      icon: (
+        <CakeIcon
+          color={
+            selectedDOB.month && selectedDOB.day && selectedDOB.year
+              ? "#FF6817"
+              : ""
+          }
+        />
+      ),
       title: "Date of Birth",
       value:
         selectedDOB.month && selectedDOB.day && selectedDOB.year
@@ -75,7 +78,9 @@ const ProfileBio: React.FC = () => {
       onClick: () => setIsDOBModalOpen(true),
     },
     {
-      icon: <QualificationIcon />,
+      icon: (
+        <QualificationIcon color={selectedQualification ? "#FF6817" : ""} />
+      ),
       title: "Qualification",
       value: selectedQualification
         ? `${selectedQualification} `
@@ -118,10 +123,12 @@ const ProfileBio: React.FC = () => {
                 onClick={detail.onClick}
               >
                 {detail.icon}
-                <Typography variant="body1" fontWeight="bold">
-                  {detail.title}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
+                <Typography variant="body1">{detail.title}</Typography>
+                <Typography
+                  variant="body2"
+                  fontWeight="bold"
+                  color="textSecondary"
+                >
                   {detail.value}
                 </Typography>
               </Box>
@@ -160,7 +167,6 @@ const ProfileBio: React.FC = () => {
       <QualificationModal
         isQualificationModalOpen={isQualificationModalOpen}
         setIsQualificationModalOpen={setIsQualificationModalOpen}
-        qualifications={qualificationsList}
         selectedQualification={selectedQualification}
         setSelectedQualification={setSelectedQualification}
       />

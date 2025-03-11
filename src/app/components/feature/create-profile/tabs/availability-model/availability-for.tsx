@@ -5,6 +5,7 @@ import { Typography, ToggleButton, Box, Divider } from "@mui/material";
 import { COLORS } from "@/constants/colors";
 import CustomDialog from "@/app/components/CustomDialog";
 import CustomButton from "@/app/components/CustomButton";
+import { availabilityOptions, urgencyOptions } from "../../profile-options";
 
 interface AvailabilityForModalProps {
   isOpen: boolean;
@@ -21,14 +22,6 @@ const AvailabilityForModal: React.FC<AvailabilityForModalProps> = ({
     string | null
   >(null);
   const [selectedUrgency, setSelectedUrgency] = useState<string | null>(null);
-
-  const availabilityOptions = ["Long term", "Short Term", "One time"];
-  const urgencyOptions = [
-    "As Soon As Possible (ASAP)",
-    "Next Week",
-    "Within Two Weeks",
-    "Next Month",
-  ];
 
   return (
     <CustomDialog
