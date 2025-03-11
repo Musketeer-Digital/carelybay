@@ -10,6 +10,8 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import Image from "next/image";
+import { useUserStore } from "@/store/userStore";
+
 interface PersonalInformationInputs {
   firstName: string;
   lastName: string;
@@ -28,6 +30,8 @@ export default function PersonalInformation() {
     setValue,
     formState: { errors },
   } = useForm<PersonalInformationInputs>();
+
+  const setProfilePhoto = useUserStore((state) => state.setProfilePhoto);
 
   const handleUploadedFile = (data: InputEvent) => {
     const target = data.target as HTMLInputElement;
@@ -56,6 +60,9 @@ export default function PersonalInformation() {
       });
 
       console.log("File uploaded successfully", { response });
+
+      // Update the user store with the profile photo
+      setProfilePhoto(profileImageSrc);
     } catch (error) {
       console.error("Error uploading file:", error);
     } finally {
