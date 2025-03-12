@@ -1,6 +1,14 @@
 import { useState } from "react";
-import { Container, ToggleButtonGroup, ToggleButton } from "@mui/material";
+import { Container, Box, ToggleButtonGroup, ToggleButton } from "@mui/material";
 import PageHeader from "@/app/components/layout/page-header";
+import OutdoorGrillIcon from "@mui/icons-material/OutdoorGrill";
+import LocalTaxiIcon from "@mui/icons-material/LocalTaxi";
+import HouseIcon from "@mui/icons-material/House";
+import PoolIcon from "@mui/icons-material/Pool";
+import NightShelterIcon from "@mui/icons-material/NightShelter";
+import BedroomParentIcon from "@mui/icons-material/BedroomParent";
+import BathtubIcon from "@mui/icons-material/Bathtub";
+import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 
 export default function AddServices() {
   const [services, setServices] = useState(() => [
@@ -34,21 +42,109 @@ export default function AddServices() {
         sx={{ display: "flex", gap: 2, marginTop: 4, alignItems: "flex-start" }}
       >
         <ToggleButton value="Cooking/Meal preparation">
+          <Box
+            sx={{
+              width: "24px",
+              height: "24px",
+              backgroundColor: "white",
+              borderRadius: "50%",
+            }}
+          >
+            <OutdoorGrillIcon />
+          </Box>
           Cooking/Meal preparation
         </ToggleButton>
-        <ToggleButton value="Pick-up/Drop-off">Pick-up/Drop-off</ToggleButton>
+        <ToggleButton value="Pick-up/Drop-off">
+          <Box
+            sx={{
+              width: "24px",
+              height: "24px",
+              backgroundColor: "white",
+              borderRadius: "50%",
+            }}
+          >
+            <LocalTaxiIcon />
+          </Box>
+          Pick-up/Drop-off
+        </ToggleButton>
         <ToggleButton value="Light housekeeping">
+          <Box
+            sx={{
+              width: "24px",
+              height: "24px",
+              backgroundColor: "white",
+              borderRadius: "50%",
+            }}
+          >
+            <HouseIcon />
+          </Box>
           Light housekeeping
         </ToggleButton>
         <ToggleButton value="Activities (e.g swimming)">
+          <Box
+            sx={{
+              width: "24px",
+              height: "24px",
+              backgroundColor: "white",
+              borderRadius: "50%",
+            }}
+          >
+            <PoolIcon />
+          </Box>
           Activities (e.g swimming)
         </ToggleButton>
         <ToggleButton value="Putting kids to bed">
+          <Box
+            sx={{
+              width: "24px",
+              height: "24px",
+              backgroundColor: "white",
+              borderRadius: "50%",
+            }}
+          >
+            <NightShelterIcon />
+          </Box>
           Putting kids to bed
         </ToggleButton>
-        <ToggleButton value="Homework help">Homework help</ToggleButton>
-        <ToggleButton value="Bathing">Bathing</ToggleButton>
-        <ToggleButton value="Virtual Cart">Virtual Cart</ToggleButton>
+        <ToggleButton value="Homework help">
+          <Box
+            sx={{
+              width: "24px",
+              height: "24px",
+              backgroundColor: "white",
+              borderRadius: "50%",
+            }}
+          >
+            <BedroomParentIcon />
+          </Box>
+          Homework help
+        </ToggleButton>
+        <ToggleButton value="Bathing">
+          <Box
+            sx={{
+              width: "24px",
+              height: "24px",
+              backgroundColor: "white",
+              borderRadius: "50%",
+            }}
+          >
+            <BathtubIcon />
+          </Box>
+          Bathing
+        </ToggleButton>
+        <ToggleButton value="Virtual Cart">
+          <Box
+            sx={{
+              width: "24px",
+              height: "24px",
+              backgroundColor: "white",
+              borderRadius: "50%",
+            }}
+          >
+            <SupportAgentIcon />
+          </Box>
+          Virtual Cart
+        </ToggleButton>
       </ToggleButtonGroup>
     </Container>
   );
