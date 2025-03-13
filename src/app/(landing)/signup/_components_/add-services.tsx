@@ -13,7 +13,7 @@ import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 export default function AddServices() {
   const [services, setServices] = useState<string[]>([]);
 
-  const handleFormat = (
+  const handleServices = (
     event: React.MouseEvent<HTMLElement>,
     newServices: string[],
   ) => {
@@ -28,7 +28,7 @@ export default function AddServices() {
       />
       <ToggleButtonGroup
         value={services}
-        onChange={handleFormat}
+        onChange={handleServices}
         orientation="vertical"
         sx={{ display: "flex", gap: 2, marginTop: 4, alignItems: "flex-start" }}
       >
