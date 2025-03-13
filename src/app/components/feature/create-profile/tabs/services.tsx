@@ -14,6 +14,7 @@ import { ChildCareIcon } from "@/app/components/icons/childcare-icon";
 import { PlusIcon } from "@/app/components/icons/plus-icon";
 import { SPAIcon } from "@/app/components/icons/spa-icon";
 import { GreyDotIcon } from "@/app/components/icons/greydot-icon";
+import BabySitterModal from "./service-model/baby-sitter";
 interface IService {
   label: string;
   icon: JSX.Element;
@@ -25,6 +26,7 @@ interface IAge {
 }
 const Services = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isBabysitterModalOpen, setIsBabysitterModalOpen] = useState(false);
   const [selectedServices, setSelectedServices] = useState<IService[]>([]);
   const [isAgeModalOpen, setIsAgeModalOpen] = useState(false);
   const [isAdditionalInfoModalOpen, setIsAdditionalInfoModalOpen] =
@@ -95,6 +97,7 @@ const Services = () => {
             mt: 2,
             height: 65,
           }}
+          onClick={() => setIsBabysitterModalOpen(true)}
         >
           <Box
             sx={{
@@ -352,6 +355,10 @@ const Services = () => {
           </CustomButton>
         )}
       </Box>
+      <BabySitterModal
+        isBabysitterModalOpen={isBabysitterModalOpen}
+        setIsBabysitterModalOpen={setIsBabysitterModalOpen}
+      />
       <ServiceModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}

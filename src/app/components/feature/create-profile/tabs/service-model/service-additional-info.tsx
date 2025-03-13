@@ -32,13 +32,33 @@ const ServiceAdditionalInfoModal: React.FC<ServiceAdditionalInfoModalProps> = ({
       title="Select additional information"
       maxWidth="sm"
       footerButtons={
-        <CustomButton
-          variant="primary"
-          onClick={() => setIsAdditionalInfoModalOpen(false)}
-          sx={{ px: 3, borderRadius: 20, height: 40 }}
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-between",
+            mt: 2,
+          }}
         >
-          Save
-        </CustomButton>
+          <Typography variant="body2" color="textSecondary">
+            <b>
+              {selectedAdditionalInfo.length}/{additionalInfoOptions.length}
+              selected
+            </b>
+            <br />
+            Your selection will appear here
+          </Typography>
+
+          <Box sx={{ display: "flex", gap: 2 }}>
+            <CustomButton
+              variant="primary"
+              onClick={() => setIsAdditionalInfoModalOpen(false)}
+              sx={{ px: 3, borderRadius: 20, height: 40 }}
+            >
+              Save
+            </CustomButton>
+          </Box>
+        </Box>
       }
     >
       <Typography variant="body2" color="textSecondary" gutterBottom>
@@ -91,25 +111,6 @@ const ServiceAdditionalInfoModal: React.FC<ServiceAdditionalInfoModalProps> = ({
           );
         })}
       </Grid>
-
-      <Divider sx={{ my: 2 }} />
-
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Typography variant="body2" color="textSecondary">
-          <b>
-            {selectedAdditionalInfo.length}/{additionalInfoOptions.length}{" "}
-            selected
-          </b>
-          <br />
-          Your selection will appear here
-        </Typography>
-      </Box>
     </CustomDialog>
   );
 };

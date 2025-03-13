@@ -1,10 +1,11 @@
 "use client";
 
-import { Box, Typography, Grid, Chip } from "@mui/material";
+import { Box, Typography, Grid, Chip, IconButton } from "@mui/material";
 import { COLORS } from "@/constants/colors";
 import CustomDialog from "@/app/components/CustomDialog";
 import CustomButton from "@/app/components/CustomButton";
 import { servicesList } from "../../profile-options";
+import React from "react";
 
 export interface Service {
   label: string;
@@ -31,18 +32,50 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
       title="Add your Services provided"
       maxWidth="sm"
       footerButtons={
-        <CustomButton
-          variant="primary"
-          onClick={() => setIsModalOpen(false)}
+        <Box
           sx={{
-            px: 3,
-            borderRadius: 20,
-            height: 40,
-            color: COLORS.WHITE_COLOR,
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-between",
+            mt: 2,
           }}
         >
-          Save
-        </CustomButton>
+          <Typography variant="body2" color="textSecondary">
+            <b>
+              {selectedServices.length}/{servicesList.length} selected
+            </b>
+            <br />
+            Your selection will appear here
+          </Typography>
+
+          <Box sx={{ display: "flex", gap: 2 }}>
+            <CustomButton
+              onClick={() => setIsModalOpen(false)}
+              sx={{
+                bgcolor: "#F3F3F3",
+                color: "#333",
+                px: 3,
+                borderRadius: 20,
+                height: 40,
+              }}
+            >
+              Cancel
+            </CustomButton>
+
+            <CustomButton
+              variant="primary"
+              onClick={() => setIsModalOpen(false)}
+              sx={{
+                px: 3,
+                borderRadius: 20,
+                height: 40,
+                color: COLORS.WHITE_COLOR,
+              }}
+            >
+              Save
+            </CustomButton>
+          </Box>
+        </Box>
       }
     >
       <Typography variant="body2" sx={{ color: "text.secondary", mb: 5 }}>
@@ -59,12 +92,47 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
               <Chip
                 label={service.label}
                 icon={
-                  <span style={{ color: COLORS.BLACK_COLOR }}>
-                    {service.icon}
-                  </span>
+                  isSelected ? (
+                    <IconButton
+                      sx={{
+                        width: "35px",
+                        height: "35px",
+                        borderRadius: "50%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        bgcolor: isSelected ? COLORS.WHITE_COLOR : "white",
+                        transition: "all 0.3s ease",
+                        "&:hover": {
+                          bgcolor: isSelected
+                            ? "#FFC4A1"
+                            : COLORS.BG_LIGHT_GREY_COLOR,
+                        },
+                      }}
+                    >
+                      {service.icon}
+                    </IconButton>
+                  ) : (
+                    <IconButton
+                      sx={{
+                        width: "35px",
+                        height: "35px",
+                        borderRadius: "50%",
+                      }}
+                    >
+                      <span
+                        style={{
+                          color: COLORS.BLACK_COLOR,
+                        }}
+                      >
+                        {service.icon}
+                      </span>
+                    </IconButton>
+                  )
                 }
                 onClick={() => toggleService(service)}
                 sx={{
+                  height: "7vh",
                   fontSize: "14px",
                   padding: "8px 12px",
                   borderRadius: "24px",
@@ -89,18 +157,21 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
       <Box
         sx={{
           mt: 3,
-          py: 1,
-          px: 2,
-          backgroundColor: COLORS.BG_LIGHT_GREY_COLOR,
-          borderRadius: "12px",
-          display: "inline-block",
+          backgroundColor: "#F7F5EC",
+          borderRadius: "20px",
+          display: "flex",
+          height: "40px",
+          padding: "4px 16px",
+          justifyContent: "center",
+          alignItems: "center",
+          maxWidth: "fit-content",
         }}
       >
         <Typography variant="body2">
           Need a different category?{" "}
           <span
             style={{
-              color: COLORS.PRIMARY_COLOR,
+              color: COLORS.GREY_COLOR,
               fontWeight: "bold",
               cursor: "pointer",
             }}
