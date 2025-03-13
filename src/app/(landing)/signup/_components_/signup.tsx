@@ -15,6 +15,7 @@ import {
   TextField,
   Stack,
 } from "@mui/material";
+import { useUserStore } from "@/store/userStore";
 
 interface SignUpProps {
   nextStep: () => void;
@@ -28,8 +29,10 @@ export default function SignUp({ nextStep }: SignUpProps) {
     formState: { errors },
   } = useFormContext<SignUpInputs>();
 
+  const setUserInfo = useUserStore((state) => state.setUserInfo);
+
   const onSubmit: SubmitHandler<SignUpInputs> = async (data: SignUpInputs) => {
-    const { email } = data;
+    const { email, password } = data;
 
     try {
       const otpResponse = await fetch("/api/otp", {
@@ -46,7 +49,10 @@ export default function SignUp({ nextStep }: SignUpProps) {
         return;
       }
 
-      // OTP request successful, redirect user to OTP verification page
+      // OTP request successful, update the user store with the user information
+      setUserInfo({ email, password });
+
+      // Redirect user to OTP verification page
       nextStep();
     } catch (error) {
       setError("An error occurred while requesting OTP");
