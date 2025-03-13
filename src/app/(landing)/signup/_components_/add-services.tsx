@@ -11,16 +11,7 @@ import BathtubIcon from "@mui/icons-material/Bathtub";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 
 export default function AddServices() {
-  const [services, setServices] = useState(() => [
-    "Cooking/Meal preparation",
-    "Pick-up/Drop-off",
-    "Light housekeeping",
-    "Activities (e.g swimming)",
-    "Putting kids to bed",
-    "Homework help",
-    "Bathing",
-    "Virtual Cart",
-  ]);
+  const [services, setServices] = useState<string[]>([]);
 
   const handleFormat = (
     event: React.MouseEvent<HTMLElement>,
@@ -48,9 +39,11 @@ export default function AddServices() {
               height: "24px",
               backgroundColor: "white",
               borderRadius: "50%",
+              marginRight: 1,
+              opacity: services.includes("Cooking/Meal preparation") ? 1 : 0,
             }}
           >
-            <OutdoorGrillIcon />
+            <OutdoorGrillIcon color="primary" />
           </Box>
           Cooking/Meal preparation
         </ToggleButton>
@@ -61,9 +54,11 @@ export default function AddServices() {
               height: "24px",
               backgroundColor: "white",
               borderRadius: "50%",
+              marginRight: 1,
+              opacity: services.includes("Pick-up/Drop-off") ? 1 : 0,
             }}
           >
-            <LocalTaxiIcon />
+            <LocalTaxiIcon color="primary" />
           </Box>
           Pick-up/Drop-off
         </ToggleButton>
@@ -74,9 +69,11 @@ export default function AddServices() {
               height: "24px",
               backgroundColor: "white",
               borderRadius: "50%",
+              marginRight: 1,
+              opacity: services.includes("Light housekeeping") ? 1 : 0,
             }}
           >
-            <HouseIcon />
+            <HouseIcon color="primary" />
           </Box>
           Light housekeeping
         </ToggleButton>
@@ -87,9 +84,11 @@ export default function AddServices() {
               height: "24px",
               backgroundColor: "white",
               borderRadius: "50%",
+              marginRight: 1,
+              opacity: services.includes("Activities (e.g swimming)") ? 1 : 0,
             }}
           >
-            <PoolIcon />
+            <PoolIcon color="primary" />
           </Box>
           Activities (e.g swimming)
         </ToggleButton>
@@ -100,9 +99,11 @@ export default function AddServices() {
               height: "24px",
               backgroundColor: "white",
               borderRadius: "50%",
+              marginRight: 1,
+              opacity: services.includes("Putting kids to bed") ? 1 : 0,
             }}
           >
-            <NightShelterIcon />
+            <NightShelterIcon color="primary" />
           </Box>
           Putting kids to bed
         </ToggleButton>
@@ -113,9 +114,11 @@ export default function AddServices() {
               height: "24px",
               backgroundColor: "white",
               borderRadius: "50%",
+              marginRight: 1,
+              opacity: services.includes("Homework help") ? 1 : 0,
             }}
           >
-            <BedroomParentIcon />
+            <BedroomParentIcon color="primary" />
           </Box>
           Homework help
         </ToggleButton>
@@ -126,9 +129,11 @@ export default function AddServices() {
               height: "24px",
               backgroundColor: "white",
               borderRadius: "50%",
+              marginRight: 1,
+              opacity: services.includes("Bathing") ? 1 : 0,
             }}
           >
-            <BathtubIcon />
+            <BathtubIcon color="primary" />
           </Box>
           Bathing
         </ToggleButton>
@@ -139,9 +144,11 @@ export default function AddServices() {
               height: "24px",
               backgroundColor: "white",
               borderRadius: "50%",
+              marginRight: 1,
+              opacity: services.includes("Virtual Cart") ? 1 : 0,
             }}
           >
-            <SupportAgentIcon />
+            <SupportAgentIcon color="primary" />
           </Box>
           Virtual Cart
         </ToggleButton>
