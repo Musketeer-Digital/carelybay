@@ -2,13 +2,13 @@ import { create } from "zustand";
 
 type Profile = {
   id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  phone: string;
-  identityVerified: boolean;
-  personalInfo: {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
+  phone?: string;
+  identityVerified?: boolean;
+  personalInfo?: {
     bio?: string;
     location?: string;
     languages?: string[];
@@ -28,22 +28,22 @@ type Profile = {
     rates?: Record<string, number>;
     availability?: string[];
   };
-  documents: {
+  documents?: {
     fileUrl: string;
     verified: boolean;
   }[];
-  createdAt: Date;
+  createdAt?: Date;
   updatedAt?: Date;
 };
 
 type ProfileState = {
-  profile: Profile | null;
-  setProfile: (profile: Profile) => void;
-  clearProfile: () => void;
+  userProfile: Profile | null;
+  setUserProfile: (userProfile: Profile) => void;
+  clearUserProfile: () => void;
 };
 
 export const useProfileStore = create<ProfileState>((set) => ({
-  profile: null,
-  setProfile: (profile) => set({ profile }),
-  clearProfile: () => set({ profile: null }),
+  userProfile: { id: "123" },
+  setUserProfile: (userProfile) => set({ userProfile }),
+  clearUserProfile: () => set({ userProfile: null }),
 }));

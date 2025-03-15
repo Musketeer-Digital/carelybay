@@ -50,9 +50,28 @@ const ProfileHeader = () => {
             maxWidth: 300,
             borderRadius: 2,
             marginTop: 2,
+            flexBasis: "fit-content",
           }}
         >
-          <ChildCareIcon />
+          <IconButton
+            sx={{
+              width: 40,
+              height: 40,
+              flexShrink: 0,
+              borderRadius: 2,
+              backgroundColor: "#FFF",
+              border: "1px solid #CDCDCD",
+              color: COLORS.BLACK_COLOR,
+              boxShadow: 0,
+              transition: "all 0.3s ease",
+              "&:hover": {
+                backgroundColor: "#F5F5F5",
+              },
+            }}
+          >
+            <ChildCareIcon />
+          </IconButton>
+
           <Typography
             sx={{
               flex: 1,

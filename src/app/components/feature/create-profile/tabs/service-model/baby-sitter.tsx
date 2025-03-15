@@ -53,10 +53,9 @@ const BabySitterModal: React.FC<BabySitterModalProps> = ({
           }}
         >
           <CustomButton
+            variant="contained"
             onClick={() => setIsBabysitterModalOpen(false)}
             sx={{
-              bgcolor: "#F3F3F3",
-              color: "#333",
               px: 3,
               borderRadius: 20,
               height: 40,

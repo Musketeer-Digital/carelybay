@@ -37,27 +37,62 @@ const themeOptions: ThemeOptions = {
     // * COMPONENT -- Button
     MuiButton: {
       styleOverrides: {
-        // Name of the slot
         root: {
-          // Some CSS
           borderRadius: 100,
           fontSize: "1rem",
           height: 48,
-          variants: [
-            {
-              props: { variant: "primary" },
-              style: {
-                background: "#FF6817",
-                borderColor: "#FF6817",
-                color: "#FFF",
-                fontSize: 16,
-                textTransform: "capitalize",
-              },
-            },
-          ],
         },
       },
+      variants: [
+        {
+          props: { variant: "primary" },
+          style: {
+            background: "#FF6817",
+            borderColor: "#FF6817",
+            color: "#FFF",
+            fontSize: 16,
+            textTransform: "capitalize",
+            transition: "background 0.2s ease-in-out, border 0.2s ease-in-out",
+            "&:hover": {
+              background: "#E55C15",
+              borderColor: "#E55C15",
+            },
+          },
+        },
+        {
+          props: { variant: "contained" },
+          style: {
+            background: "#F7F7F7",
+            color: "#6E6E6E",
+            fontWeight: "600",
+            textTransform: "capitalize",
+            boxShadow: "none",
+            transition: "background 0.2s ease-in-out, border 0.2s ease-in-out",
+            "&:hover": {
+              background: "#ECECEC",
+              boxShadow: "none",
+            },
+          },
+        },
+        {
+          props: { variant: "outlined" },
+          style: {
+            border: "1px solid #DADADA",
+            color: "#6E6E6E",
+            fontWeight: "600",
+            textTransform: "capitalize",
+            background: "transparent",
+            boxShadow: "none",
+            transition: "background 0.2s ease-in-out, border 0.2s ease-in-out",
+            "&:hover": {
+              background: "#F7F7F7",
+              boxShadow: "none",
+            },
+          },
+        },
+      ],
     },
+
     // * COMPONENT -- Checkbox
     MuiCheckbox: {
       styleOverrides: {

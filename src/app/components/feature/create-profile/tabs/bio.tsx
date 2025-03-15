@@ -12,6 +12,9 @@ import { CakeIcon } from "@/app/components/icons/cake-icon";
 import { MarkerIcon } from "@/app/components/icons/marker-icon";
 import { LanguageIcon } from "@/app/components/icons/language-icon";
 import { QualificationIcon } from "@/app/components/icons/qualification-icon";
+import { COLORS } from "@/constants/colors";
+import { updateProfile } from "@/utils/api/profile";
+import { useProfileStore } from "@/store/profileSlice";
 
 const ProfileBio: React.FC = () => {
   const [isQualificationModalOpen, setIsQualificationModalOpen] =
@@ -44,14 +47,16 @@ const ProfileBio: React.FC = () => {
 
   const profileDetails = [
     {
-      icon: <MarkerIcon color={selectedCity ? "#FF6817" : ""} />,
+      icon: <MarkerIcon color={selectedCity ? COLORS.PRIMARY_COLOR : ""} />,
       title: "Where I live",
       value: selectedCity || "Click to select",
       onClick: () => setIsCityModalOpen(true),
     },
     {
       icon: (
-        <LanguageIcon color={selectedLanguages.length > 0 ? "#FF6817" : ""} />
+        <LanguageIcon
+          color={selectedLanguages.length > 0 ? COLORS.PRIMARY_COLOR : ""}
+        />
       ),
       title: "Languages",
       value:
@@ -65,7 +70,7 @@ const ProfileBio: React.FC = () => {
         <CakeIcon
           color={
             selectedDOB.month && selectedDOB.day && selectedDOB.year
-              ? "#FF6817"
+              ? COLORS.PRIMARY_COLOR
               : ""
           }
         />
@@ -79,7 +84,9 @@ const ProfileBio: React.FC = () => {
     },
     {
       icon: (
-        <QualificationIcon color={selectedQualification ? "#FF6817" : ""} />
+        <QualificationIcon
+          color={selectedQualification ? COLORS.PRIMARY_COLOR : ""}
+        />
       ),
       title: "Qualification",
       value: selectedQualification
@@ -95,6 +102,29 @@ const ProfileBio: React.FC = () => {
 
   const handleSelectDOB = (key: string, value: string) => {
     setSelectedDOB((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const handleUpdateUserProfile = async (profileBioDescription: string) => {
+    try {
+      const { userProfile, setUserProfile } = useProfileStore.getState();
+
+      if (!userProfile?.id) {
+        console.error("Profile ID is missing");
+        return;
+      }
+
+      const updatedProfile = await updateProfile(userProfile.id, {
+        ...userProfile,
+        personalInfo: {
+          ...userProfile.personalInfo,
+          bio: profileBioDescription,
+        },
+      });
+
+      setUserProfile(updatedProfile);
+    } catch (error) {
+      console.error("Failed to update city:", error);
+    }
   };
 
   return (
@@ -143,6 +173,7 @@ const ProfileBio: React.FC = () => {
         setIsDescriptionBioModelOpen={setIsDescriptionBioModelOpen}
         profileBioDescription={profileBioDescription}
         setProfileBioDescription={setProfileBioDescription}
+        handleUpdateUserProfile={handleUpdateUserProfile}
       />
 
       <CityModal

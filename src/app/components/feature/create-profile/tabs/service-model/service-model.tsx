@@ -50,10 +50,9 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
 
           <Box sx={{ display: "flex", gap: 2 }}>
             <CustomButton
+              variant="contained"
               onClick={() => setIsModalOpen(false)}
               sx={{
-                bgcolor: "#F3F3F3",
-                color: "#333",
                 px: 3,
                 borderRadius: 20,
                 height: 40,
