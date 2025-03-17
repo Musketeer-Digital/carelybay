@@ -44,3 +44,37 @@ Please run:
 ```
 npx prisma generate
 ```
+
+## Running Storybook Locally
+
+To run Storybook locally, follow these steps:
+
+1. Install dependencies:
+
+```bash
+pnpm install
+```
+
+2. Run Storybook:
+
+```bash
+pnpm storybook
+```
+
+Open [http://localhost:6006](http://localhost:6006) with your browser to see the Storybook interface.
+
+## Building and Running Docker Container with Storybook
+
+To build and run the Docker container with Storybook, follow these steps:
+
+1. Build the Docker Image:
+
+```bash
+docker build -t carelybay-storybook .
+```
+
+2. Run the Docker Container:
+
+```bash
+docker run -p 3000:3000 carelybay-storybook
+```
