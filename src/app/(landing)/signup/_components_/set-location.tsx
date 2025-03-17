@@ -13,6 +13,7 @@ import InputGroup from "@/components/input-group";
 import TravelDistanceSlider from "./travel-distance-slider";
 import useSWR from "swr";
 import { fetcher } from "@/app/api/fetcher";
+import { useUserStore } from "@/store/userStore";
 
 interface PersonalInformationInputs {
   firstName: string;
@@ -32,8 +33,11 @@ export default function SetLocation() {
   const { data: res } = useSWR("/api/locations", fetcher);
   const locations = res?.data || [];
 
+  const setLocation = useUserStore((state) => state.setLocation);
+
   const onSubmit: SubmitHandler<PersonalInformationInputs> = (data) => {
     console.log(data);
+    setLocation(data.location);
   };
 
   return (

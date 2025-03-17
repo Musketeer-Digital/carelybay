@@ -10,8 +10,12 @@ import UserNotificationMessage from "./_components_/UserNotificationMessage";
 import LandingActions from "./LandingActions";
 import SetLocation from "./_components_/set-location";
 import SignupMarketingPanel from "@/app/components/signup-marketing-panel/signup-marketing-panel";
+import { useUserStore } from "@/store/userStore";
+import ChooseRole from "./_components_/choose-role";
+import ChooseService from "./_components_/choose-service";
+import AddServices from "./_components_/add-services";
 
-const MAX_STEPS = 4;
+const MAX_STEPS = 7;
 
 export type SignUpInputs = {
   email: string;
@@ -22,6 +26,8 @@ export type SignUpInputs = {
 export default function SignupPages() {
   const [step, setStep] = useState(1);
   const methods = useForm<SignUpInputs>();
+
+  const setCurrentStep = useUserStore((state) => state.setCurrentStep);
 
   let userMessageIcon = "";
   let userMessage = "";
@@ -34,6 +40,7 @@ export default function SignupPages() {
 
   const nextStep = () => {
     setStep(step === MAX_STEPS ? 0 : step + 1);
+    setCurrentStep(step + 1);
   };
 
   switch (step) {
@@ -60,6 +67,24 @@ export default function SignupPages() {
       userMessage = "Profile info added.";
       showSignInMessage = false;
       stepContent = <SetLocation />;
+      break;
+    case 5:
+      userMessageIcon = "👋";
+      userMessage = "Welcome to Carelybay";
+      showSignInMessage = false;
+      stepContent = <ChooseRole />;
+      break;
+    case 6:
+      userMessageIcon = "👋";
+      userMessage = "Account setup";
+      showSignInMessage = false;
+      stepContent = <ChooseService />;
+      break;
+    case 7:
+      userMessageIcon = "👋";
+      userMessage = "Account setup";
+      showSignInMessage = false;
+      stepContent = <AddServices />;
       break;
     default:
       userMessageIcon = "👋";
