@@ -4,9 +4,9 @@ import { useState } from "react";
 import { Box, Typography, Select, MenuItem } from "@mui/material";
 import { COLORS } from "@/constants/colors";
 import { InfoIcon } from "@/app/components/icons/info-icon";
-import DocumentFileList from "./document-fileList";
-import DocumentConfirmation from "./documen-confirmation";
-import DocumentUpload from "./document-upload";
+import DocumentFileList from "./documents/document-fileList";
+import DocumentConfirmation from "./documents/documen-confirmation";
+import DocumentUpload from "./documents/document-upload";
 import { UploadedFile } from "@/types/documentTypes";
 
 const Documents = () => {

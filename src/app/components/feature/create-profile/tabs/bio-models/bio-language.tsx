@@ -23,6 +23,7 @@ interface ProfileBioLanguageModalProps {
   setIsLanguageModalOpen: (open: boolean) => void;
   selectedLanguages: string[];
   setSelectedLanguages: (languages: string[]) => void;
+  handleUpdateProfileField: Function;
 }
 
 const LanguageModal: React.FC<ProfileBioLanguageModalProps> = ({
@@ -30,6 +31,7 @@ const LanguageModal: React.FC<ProfileBioLanguageModalProps> = ({
   setIsLanguageModalOpen,
   selectedLanguages,
   setSelectedLanguages,
+  handleUpdateProfileField,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -53,7 +55,10 @@ const LanguageModal: React.FC<ProfileBioLanguageModalProps> = ({
       footerButtons={
         <CustomButton
           variant="primary"
-          onClick={() => setIsLanguageModalOpen(false)}
+          onClick={() => {
+            setIsLanguageModalOpen(false);
+            handleUpdateProfileField("languages", selectedLanguages);
+          }}
           sx={{
             px: 3,
             borderRadius: 20,

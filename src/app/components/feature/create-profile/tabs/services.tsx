@@ -15,52 +15,27 @@ import { PlusIcon } from "@/app/components/icons/plus-icon";
 import { SPAIcon } from "@/app/components/icons/spa-icon";
 import { GreyDotIcon } from "@/app/components/icons/greydot-icon";
 import BabySitterModal from "./service-model/baby-sitter";
-interface IService {
-  label: string;
-  icon: JSX.Element;
-}
+import {
+  IService,
+  IServiceAge,
+  toggleAdditionalInfo,
+  toggleService,
+  toggleServiceAgeGroup,
+} from "@/utils/profileUtils";
 
-interface IAge {
-  ageValue: string;
-  children: number;
-}
 const Services = () => {
+  // model toggle states
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBabysitterModalOpen, setIsBabysitterModalOpen] = useState(false);
-  const [selectedServices, setSelectedServices] = useState<IService[]>([]);
   const [isAgeModalOpen, setIsAgeModalOpen] = useState(false);
   const [isAdditionalInfoModalOpen, setIsAdditionalInfoModalOpen] =
     useState(false);
+
+  // local states
+  const [selectedServices, setSelectedServices] = useState<IService[]>([]);
   const [selectedAdditionalInfo, setSelectedAdditionalInfo] = useState([]);
+  const [selectedAges, setSelectedAges] = useState<IServiceAge[]>([]);
 
-  const [selectedAges, setSelectedAges] = useState<IAge[]>([]);
-
-  const toggleAgeGroup = (ageObject: IAge) => {
-    setSelectedAges((prev: IAge[]) =>
-      prev.some((item: IAge) => item.ageValue === ageObject.ageValue)
-        ? prev.filter((item) => item.ageValue !== ageObject.ageValue)
-        : [...prev, { ...ageObject }],
-    );
-  };
-
-  const toggleService = (service: IService) => {
-    setSelectedServices((prev: IService[]) =>
-      prev.some((s) => s.label === service.label)
-        ? prev.filter((s) => s.label !== service.label)
-        : [...prev, service],
-    );
-  };
-
-  const toggleAdditionalInfo = (info: any) => {
-    setSelectedAdditionalInfo((prev: any) => {
-      if (prev.some((i: any) => i.label === info.label)) {
-        return prev.filter((i: any) => i.label !== info.label);
-      }
-      return [...prev, info];
-    });
-  };
-
-  console.log("selectedAges", selectedAges);
   return (
     <Box
       sx={{
@@ -134,7 +109,7 @@ const Services = () => {
             <CustomButton
               variant="outlined"
               key={service.label}
-              onClick={() => toggleService(service)}
+              onClick={() => toggleService(service, setSelectedServices)}
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -220,11 +195,11 @@ const Services = () => {
               Ex: “Newborn · up to 12 months”
             </Typography>
           ) : (
-            selectedAges.map((ageObjct: IAge) => (
+            selectedAges.map((ageObjct: IServiceAge) => (
               <Button
                 key={ageObjct.ageValue}
                 variant="outlined"
-                onClick={() => toggleAgeGroup(ageObjct)}
+                onClick={() => toggleServiceAgeGroup(ageObjct, setSelectedAges)}
                 sx={{
                   display: "flex",
                   alignItems: "center",
@@ -368,13 +343,15 @@ const Services = () => {
       <AgeModal
         isAgeModalOpen={isAgeModalOpen}
         setIsAgeModalOpen={setIsAgeModalOpen}
-        toggleAgeGroup={toggleAgeGroup}
+        toggleServiceAgeGroup={toggleServiceAgeGroup}
       />
       <AdditionalInfoModal
         isAdditionalInfoModalOpen={isAdditionalInfoModalOpen}
         setIsAdditionalInfoModalOpen={setIsAdditionalInfoModalOpen}
         selectedAdditionalInfo={selectedAdditionalInfo}
-        toggleAdditionalInfo={toggleAdditionalInfo}
+        toggleAdditionalInfo={(additionalInfoOption) =>
+          toggleAdditionalInfo(additionalInfoOption, setSelectedAdditionalInfo)
+        }
       />
     </Box>
   );

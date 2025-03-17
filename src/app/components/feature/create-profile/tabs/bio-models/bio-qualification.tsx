@@ -3,15 +3,8 @@
 import CustomButton from "@/app/components/CustomButton";
 import CustomDialog from "@/app/components/CustomDialog";
 import { COLORS } from "@/constants/colors";
-import {
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Radio,
-} from "@mui/material";
+import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { qualificationsList } from "../../profile-options";
-import { CheckIcon } from "@/app/components/icons/check-icon";
 import { CheckedIcon } from "@/app/components/icons/checked-icon";
 
 interface ProfileBioQualificationModalProps {
@@ -19,6 +12,7 @@ interface ProfileBioQualificationModalProps {
   setIsQualificationModalOpen: (open: boolean) => void;
   selectedQualification: string;
   setSelectedQualification: (qualification: string) => void;
+  handleUpdateProfileField: Function;
 }
 
 const QualificationModal: React.FC<ProfileBioQualificationModalProps> = ({
@@ -26,6 +20,7 @@ const QualificationModal: React.FC<ProfileBioQualificationModalProps> = ({
   setIsQualificationModalOpen,
   selectedQualification,
   setSelectedQualification,
+  handleUpdateProfileField,
 }) => {
   return (
     <CustomDialog
@@ -36,7 +31,10 @@ const QualificationModal: React.FC<ProfileBioQualificationModalProps> = ({
       footerButtons={
         <CustomButton
           variant="primary"
-          onClick={() => setIsQualificationModalOpen(false)}
+          onClick={() => {
+            setIsQualificationModalOpen(false);
+            handleUpdateProfileField("qualification", selectedQualification);
+          }}
           sx={{
             px: 3,
             borderRadius: 20,

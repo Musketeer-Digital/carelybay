@@ -12,13 +12,13 @@ import { Height } from "@mui/icons-material";
 interface ServiceAgeModalProps {
   isAgeModalOpen: boolean;
   setIsAgeModalOpen: (open: boolean) => void;
-  toggleAgeGroup: Function;
+  toggleServiceAgeGroup: Function;
 }
 
 const AgeModal: React.FC<ServiceAgeModalProps> = ({
   isAgeModalOpen,
   setIsAgeModalOpen,
-  toggleAgeGroup,
+  toggleServiceAgeGroup,
 }) => {
   const [ageValue, setAgeValue] = useState<number>(10);
   const [children, setChildren] = useState<number>(2);
@@ -33,7 +33,7 @@ const AgeModal: React.FC<ServiceAgeModalProps> = ({
         <CustomButton
           variant="primary"
           onClick={() => {
-            toggleAgeGroup({ ageValue, children });
+            toggleServiceAgeGroup({ ageValue, children });
             setIsAgeModalOpen(false);
           }}
           sx={{ px: 3, borderRadius: 20, height: 40 }}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -22,15 +22,19 @@ interface ProfileBioCityModalProps {
   isCityModalOpen: boolean;
   setIsCityModalOpen: (open: boolean) => void;
   handleSelectCity: (city: string) => void;
+  handleUpdateProfileField: Function;
 }
 
 const CityModal: React.FC<ProfileBioCityModalProps> = ({
   isCityModalOpen,
   setIsCityModalOpen,
   handleSelectCity,
+  handleUpdateProfileField,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
+
+  useEffect(() => {});
 
   // Filter citiesOptions based on search input
   const filteredCities = citiesOptions.filter((city) =>
@@ -47,6 +51,7 @@ const CityModal: React.FC<ProfileBioCityModalProps> = ({
           variant="primary"
           onClick={() => {
             if (selectedCity) {
+              handleUpdateProfileField("city", selectedCity);
               handleSelectCity(selectedCity);
               setIsCityModalOpen(false);
             }

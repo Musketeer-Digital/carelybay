@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Select, MenuItem, Divider } from "@mui/material";
+import { Box, Select, MenuItem } from "@mui/material";
 import { COLORS } from "@/constants/colors";
 import CustomDialog from "@/app/components/CustomDialog";
 import CustomButton from "@/app/components/CustomButton";
@@ -30,6 +30,7 @@ interface ProfileBioDOBSModalProps {
   setIsDOBModalOpen: (open: boolean) => void;
   selectedDOB: { month: string; day: string; year: string };
   handleSelectDOB: (key: string, value: string) => void;
+  handleUpdateProfileField: Function;
 }
 
 const DOBSModal: React.FC<ProfileBioDOBSModalProps> = ({
@@ -37,6 +38,7 @@ const DOBSModal: React.FC<ProfileBioDOBSModalProps> = ({
   setIsDOBModalOpen,
   selectedDOB,
   handleSelectDOB,
+  handleUpdateProfileField,
 }) => {
   return (
     <CustomDialog
@@ -47,7 +49,10 @@ const DOBSModal: React.FC<ProfileBioDOBSModalProps> = ({
       footerButtons={
         <CustomButton
           variant="primary"
-          onClick={() => setIsDOBModalOpen(false)}
+          onClick={() => {
+            setIsDOBModalOpen(false);
+            handleUpdateProfileField("dateOfBirth", selectedDOB);
+          }}
           sx={{
             px: 3,
             borderRadius: 20,

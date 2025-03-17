@@ -2,29 +2,20 @@
 
 import { Box, Grid, Link } from "@mui/material";
 import { Typography, Divider } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CityModal from "./bio-models/bio-city";
 import LanguageModel from "./bio-models/bio-language";
 import DOBSModal from "./bio-models/bio-dob";
 import QualificationModal from "./bio-models/bio-qualification";
 import ProfileBioDescription from "./bio-models/bio-description";
-import { CakeIcon } from "@/app/components/icons/cake-icon";
-import { MarkerIcon } from "@/app/components/icons/marker-icon";
-import { LanguageIcon } from "@/app/components/icons/language-icon";
-import { QualificationIcon } from "@/app/components/icons/qualification-icon";
-import { COLORS } from "@/constants/colors";
 import { updateProfile } from "@/utils/api/profile";
 import { useProfileStore } from "@/store/profileSlice";
+import { getProfileBioComponents } from "@/utils/profileUtils";
 
 const ProfileBio: React.FC = () => {
+  // model toggle state
   const [isQualificationModalOpen, setIsQualificationModalOpen] =
     useState<boolean>(false);
-  const [selectedQualification, setSelectedQualification] =
-    useState<string>("");
-
-  const [profileBioDescription, setProfileBioDescription] = useState<string>(
-    "Write something punchy ex: Experienced and Caring Nanny for Infants and Toddlers...",
-  );
   const [isBioDescriptionModelOpen, setIsDescriptionBioModelOpen] =
     useState<boolean>(false);
 
@@ -33,6 +24,10 @@ const ProfileBio: React.FC = () => {
     useState<boolean>(false);
   const [isDOBModalOpen, setIsDOBModalOpen] = useState<boolean>(false);
 
+  // local state
+  const [profileBioDescription, setProfileBioDescription] = useState<string>(
+    "Write something punchy ex: Experienced and Caring Nanny for Infants and Toddlers...",
+  );
   const [selectedCity, setSelectedCity] = useState<string>("");
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
   const [selectedDOB, setSelectedDOB] = useState<{
@@ -44,57 +39,35 @@ const ProfileBio: React.FC = () => {
     day: "",
     year: "",
   });
+  const [selectedQualification, setSelectedQualification] =
+    useState<string>("");
 
-  const profileDetails = [
-    {
-      icon: <MarkerIcon color={selectedCity ? COLORS.PRIMARY_COLOR : ""} />,
-      title: "Where I live",
-      value: selectedCity || "Click to select",
-      onClick: () => setIsCityModalOpen(true),
-    },
-    {
-      icon: (
-        <LanguageIcon
-          color={selectedLanguages.length > 0 ? COLORS.PRIMARY_COLOR : ""}
-        />
-      ),
-      title: "Languages",
-      value:
-        selectedLanguages.length > 0
-          ? selectedLanguages.join(", ")
-          : "Click to select",
-      onClick: () => setIsLanguageModalOpen(true),
-    },
-    {
-      icon: (
-        <CakeIcon
-          color={
-            selectedDOB.month && selectedDOB.day && selectedDOB.year
-              ? COLORS.PRIMARY_COLOR
-              : ""
-          }
-        />
-      ),
-      title: "Date of Birth",
-      value:
-        selectedDOB.month && selectedDOB.day && selectedDOB.year
-          ? `${selectedDOB.month} ${selectedDOB.day}, ${selectedDOB.year}`
-          : "Click to select",
-      onClick: () => setIsDOBModalOpen(true),
-    },
-    {
-      icon: (
-        <QualificationIcon
-          color={selectedQualification ? COLORS.PRIMARY_COLOR : ""}
-        />
-      ),
-      title: "Qualification",
-      value: selectedQualification
-        ? `${selectedQualification} `
-        : "Click to select",
-      onClick: () => setIsQualificationModalOpen(true),
-    },
-  ];
+  const { userProfile, setUserProfile } = useProfileStore();
+
+  useEffect(() => {
+    if (userProfile?.personalInfo) {
+      setProfileBioDescription(userProfile.personalInfo.bio || "");
+      setSelectedCity(userProfile.personalInfo.city || "");
+      setSelectedLanguages(userProfile.personalInfo.languages || []);
+      setSelectedQualification(userProfile.personalInfo.qualification || "");
+      setSelectedDOB({
+        month: userProfile.personalInfo.dateOfBirth
+          ? new Date(userProfile.personalInfo.dateOfBirth).toLocaleString(
+              "default",
+              { month: "long" },
+            )
+          : "",
+        day: userProfile.personalInfo.dateOfBirth
+          ? new Date(userProfile.personalInfo.dateOfBirth).getDate().toString()
+          : "",
+        year: userProfile.personalInfo.dateOfBirth
+          ? new Date(userProfile.personalInfo.dateOfBirth)
+              .getFullYear()
+              .toString()
+          : "",
+      });
+    }
+  }, [userProfile]);
 
   const handleSelectCity = (value: string) => {
     setSelectedCity(value);
@@ -104,29 +77,39 @@ const ProfileBio: React.FC = () => {
     setSelectedDOB((prev) => ({ ...prev, [key]: value }));
   };
 
-  const handleUpdateUserProfile = async (profileBioDescription: string) => {
+  const handleUpdateProfileField = async (
+    field: keyof typeof userProfile.personalInfo,
+    value: any,
+  ) => {
     try {
-      const { userProfile, setUserProfile } = useProfileStore.getState();
-
       if (!userProfile?.id) {
         console.error("Profile ID is missing");
         return;
       }
 
       const updatedProfile = await updateProfile(userProfile.id, {
-        ...userProfile,
         personalInfo: {
           ...userProfile.personalInfo,
-          bio: profileBioDescription,
+          [field]: value,
         },
       });
 
-      setUserProfile(updatedProfile);
+      setUserProfile(updatedProfile); // Update Zustand state
     } catch (error) {
-      console.error("Failed to update city:", error);
+      console.error(`Failed to update ${field}:`, error);
     }
   };
 
+  const profileBioList = getProfileBioComponents(
+    selectedCity,
+    selectedLanguages,
+    selectedDOB,
+    selectedQualification,
+    setIsCityModalOpen,
+    setIsLanguageModalOpen,
+    setIsDOBModalOpen,
+    setIsQualificationModalOpen,
+  );
   return (
     <div>
       <Box>
@@ -143,7 +126,7 @@ const ProfileBio: React.FC = () => {
           </Link>
         </Box>
         <Grid container spacing={2}>
-          {profileDetails.map((detail, index) => (
+          {profileBioList.map((detail, index) => (
             <Grid item xs={12} sm={6} key={index}>
               <Box
                 display="flex"
@@ -173,13 +156,14 @@ const ProfileBio: React.FC = () => {
         setIsDescriptionBioModelOpen={setIsDescriptionBioModelOpen}
         profileBioDescription={profileBioDescription}
         setProfileBioDescription={setProfileBioDescription}
-        handleUpdateUserProfile={handleUpdateUserProfile}
+        handleUpdateProfileField={handleUpdateProfileField}
       />
 
       <CityModal
         isCityModalOpen={isCityModalOpen}
         setIsCityModalOpen={setIsCityModalOpen}
         handleSelectCity={handleSelectCity}
+        handleUpdateProfileField={handleUpdateProfileField}
       />
 
       <LanguageModel
@@ -187,12 +171,15 @@ const ProfileBio: React.FC = () => {
         setIsLanguageModalOpen={setIsLanguageModalOpen}
         selectedLanguages={selectedLanguages}
         setSelectedLanguages={setSelectedLanguages}
+        handleUpdateProfileField={handleUpdateProfileField}
       />
+
       <DOBSModal
         isDOBModalOpen={isDOBModalOpen}
         setIsDOBModalOpen={setIsDOBModalOpen}
         selectedDOB={selectedDOB}
         handleSelectDOB={handleSelectDOB}
+        handleUpdateProfileField={handleUpdateProfileField}
       />
 
       <QualificationModal
@@ -200,6 +187,7 @@ const ProfileBio: React.FC = () => {
         setIsQualificationModalOpen={setIsQualificationModalOpen}
         selectedQualification={selectedQualification}
         setSelectedQualification={setSelectedQualification}
+        handleUpdateProfileField={handleUpdateProfileField}
       />
     </div>
   );

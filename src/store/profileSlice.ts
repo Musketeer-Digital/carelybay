@@ -37,7 +37,7 @@ type Profile = {
 };
 
 type ProfileState = {
-  userProfile: Profile | null;
+  userProfile: Profile;
   setUserProfile: (userProfile: Profile) => void;
   clearUserProfile: () => void;
 };
@@ -45,5 +45,5 @@ type ProfileState = {
 export const useProfileStore = create<ProfileState>((set) => ({
   userProfile: { id: "123" },
   setUserProfile: (userProfile) => set({ userProfile }),
-  clearUserProfile: () => set({ userProfile: null }),
+  clearUserProfile: () => set({ userProfile: undefined }),
 }));

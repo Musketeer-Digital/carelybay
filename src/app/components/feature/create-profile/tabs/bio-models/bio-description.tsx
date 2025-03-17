@@ -11,7 +11,7 @@ interface ProfileBioDescriptionProps {
   setIsDescriptionBioModelOpen: (open: boolean) => void;
   profileBioDescription: string;
   setProfileBioDescription: (description: string) => void;
-  handleUpdateUserProfile: (description: string) => void;
+  handleUpdateProfileField: Function;
 }
 
 const ProfileBioDescription: React.FC<ProfileBioDescriptionProps> = ({
@@ -19,7 +19,7 @@ const ProfileBioDescription: React.FC<ProfileBioDescriptionProps> = ({
   setIsDescriptionBioModelOpen,
   profileBioDescription,
   setProfileBioDescription,
-  handleUpdateUserProfile,
+  handleUpdateProfileField,
 }) => {
   return (
     <CustomDialog
@@ -31,7 +31,7 @@ const ProfileBioDescription: React.FC<ProfileBioDescriptionProps> = ({
           variant="primary"
           onClick={() => {
             setIsDescriptionBioModelOpen(false);
-            handleUpdateUserProfile(profileBioDescription);
+            handleUpdateProfileField("bio", profileBioDescription);
           }}
           sx={{
             px: 3,
