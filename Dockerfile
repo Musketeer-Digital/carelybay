@@ -28,7 +28,27 @@ RUN pnpm build
 # Install only production dependencies
 RUN pnpm install --frozen-lockfile --prod
 
-# Stage 2: Run the application (Only copy required files)
+# Stage 2: Build and run Storybook
+FROM node:18-alpine AS storybook-builder
+
+WORKDIR /app
+
+# Install pnpm globally
+RUN npm install -g pnpm
+
+# Copy package.json and pnpm-lock.yaml
+COPY package.json pnpm-lock.yaml ./
+
+# Install dependencies using pnpm
+RUN pnpm install --frozen-lockfile
+
+# Copy the rest of the application code
+COPY . .
+
+# Install Storybook dependencies and build the Storybook static files
+RUN pnpm build-storybook
+
+# Stage 3: Run the application (Only copy required files)
 FROM node:18-alpine
 
 WORKDIR /app
@@ -43,6 +63,9 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 # COPY --from=builder /app/prisma ./prisma # Prisma schema required for migrations
+
+# Copy Storybook static files from the storybook-builder stage
+COPY --from=storybook-builder /app/storybook-static ./storybook-static
 
 # Set environment variable for MongoDB connection (for runtime)
 ENV MONGODB_URL=$MONGODB_URL
