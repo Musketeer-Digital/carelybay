@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -15,10 +15,12 @@ import CustomButton from "@/app/components/CustomButton";
 import { BabySitterIcon } from "@/app/components/icons/babysitter-icon";
 import { ElderAgeIcon } from "@/app/components/icons/elderage-icon";
 import { COLORS } from "@/constants/colors";
+import { useProfileStore } from "@/store/profileSlice";
 
 interface BabySitterModalProps {
   isBabysitterModalOpen: boolean;
   setIsBabysitterModalOpen: (open: boolean) => void;
+  handleUpdateProfileField: Function;
 }
 
 const options = [
@@ -30,12 +32,23 @@ const options = [
 const BabySitterModal: React.FC<BabySitterModalProps> = ({
   isBabysitterModalOpen,
   setIsBabysitterModalOpen,
+  handleUpdateProfileField,
 }) => {
-  const [selected, setSelected] = useState<string>("Babysitter");
+  const [childCarerType, setChildCarerType] = useState<string>("Babysitter");
 
   const handleSelect = (option: string) => {
-    setSelected(option);
+    setChildCarerType(option);
   };
+
+  const { userProfile } = useProfileStore();
+
+  useEffect(() => {
+    if (userProfile?.servicesExperience) {
+      setChildCarerType(
+        userProfile.servicesExperience.childCarerType || childCarerType,
+      );
+    }
+  }, [userProfile]);
 
   return (
     <CustomDialog
@@ -54,7 +67,9 @@ const BabySitterModal: React.FC<BabySitterModalProps> = ({
         >
           <CustomButton
             variant="contained"
-            onClick={() => setIsBabysitterModalOpen(false)}
+            onClick={() => {
+              setIsBabysitterModalOpen(false);
+            }}
             sx={{
               px: 3,
               borderRadius: 20,
@@ -67,7 +82,10 @@ const BabySitterModal: React.FC<BabySitterModalProps> = ({
 
           <CustomButton
             variant="primary"
-            onClick={() => setIsBabysitterModalOpen(false)}
+            onClick={() => {
+              setIsBabysitterModalOpen(false);
+              handleUpdateProfileField("childCarerType", childCarerType);
+            }}
             sx={{
               px: 3,
               borderRadius: 20,
@@ -93,9 +111,10 @@ const BabySitterModal: React.FC<BabySitterModalProps> = ({
             sx={{
               mb: 1,
               borderRadius: "12px",
-              bgcolor: selected === option.label ? "#E0E8EF" : "transparent",
+              bgcolor:
+                childCarerType === option.label ? "#E0E8EF" : "transparent",
               border:
-                selected === option.label
+                childCarerType === option.label
                   ? "1px solid #E0E8EF"
                   : "1px solid transparent",
               display: "flex",
@@ -116,7 +135,7 @@ const BabySitterModal: React.FC<BabySitterModalProps> = ({
                 color: "#000",
               }}
             />
-            {selected === option.label && <Checkbox checked />}
+            {childCarerType === option.label && <Checkbox checked />}
           </ListItem>
         ))}
       </List>

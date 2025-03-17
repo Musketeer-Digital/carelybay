@@ -12,12 +12,14 @@ interface AvailabilityRatesModalProps {
   isRatesModalOpen: boolean;
   setIsRatesModalOpen: (open: boolean) => void;
   handleRatesSelection: Function;
+  handleUpdateProfileField: Function;
 }
 
 const AvailabilityRatesModal: React.FC<AvailabilityRatesModalProps> = ({
   isRatesModalOpen,
   setIsRatesModalOpen,
   handleRatesSelection,
+  handleUpdateProfileField,
 }) => {
   const [generalRate, setGeneralRate] = useState<number>(0);
   const [rates, setRates] = useState<any>({
@@ -42,6 +44,7 @@ const AvailabilityRatesModal: React.FC<AvailabilityRatesModalProps> = ({
           onClick={() => {
             setIsRatesModalOpen(false);
             handleRatesSelection({ generalRate, rates });
+            handleUpdateProfileField("rates", { generalRate, rates });
           }}
           sx={{ px: 3, borderRadius: 20, height: 40 }}
         >

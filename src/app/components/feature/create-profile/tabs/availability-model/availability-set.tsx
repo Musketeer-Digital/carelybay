@@ -22,12 +22,14 @@ interface AvailabilitySetModalProps {
   isAvailabilityModalOpen: boolean;
   setIsAvailabilityModalOpen: (open: boolean) => void;
   onSelectAvailabilitySet: Function;
+  handleUpdateProfileField: Function;
 }
 
 const AvailabilitySetModal: React.FC<AvailabilitySetModalProps> = ({
   isAvailabilityModalOpen,
   setIsAvailabilityModalOpen,
   onSelectAvailabilitySet,
+  handleUpdateProfileField,
 }) => {
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [selectedTimeSlots, setSelectedTimeSlots] = useState<string[]>([]);
@@ -71,7 +73,14 @@ const AvailabilitySetModal: React.FC<AvailabilitySetModalProps> = ({
       footerButtons={
         <CustomButton
           variant="primary"
-          onClick={handleDone}
+          onClick={() => {
+            handleDone();
+            handleUpdateProfileField("availability", {
+              days: selectedDays,
+              timeSlots: selectedTimeSlots,
+              additionalHours: additionalHours,
+            });
+          }}
           sx={{ px: 3, borderRadius: 20, height: 40 }}
         >
           Done

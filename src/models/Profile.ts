@@ -1,19 +1,63 @@
+import {
+  IAdditionalInfo,
+  IRates,
+  IService,
+  IServiceAge,
+} from "@/utils/profileUtils";
 import mongoose, { Schema, model, Document } from "mongoose";
 
-export interface IUserProfile extends Document {
-  userId: Schema.Types.ObjectId;
-  firstName: string;
-  lastName: string;
-  personalInfo: {
-    bio?: string;
-    location?: string;
-    languages?: string[];
-    dateOfBirth?: Date;
-    qualification?: string;
-    city?: string;
-    travelingDistance?: number;
+export interface IPersonalInfo {
+  bio?: string;
+  location?: string;
+  languages?: string[];
+  dateOfBirth?: Date;
+  qualification?: string;
+  city?: string;
+  travelingDistance?: number;
+}
+
+export interface IServicesExperience {
+  childCarerType?: string;
+  services?: IService[];
+  skills?: string[];
+  ageGroupExperience?: IServiceAge[];
+  additionalInfo?: IAdditionalInfo[];
+}
+
+export interface IAvailabilityRates {
+  availableFor?: {
+    availability?: string;
+    urgency?: string;
   };
-  createdAt: Date;
+  rates?: {
+    generalRate?: number;
+    rates?: IRates;
+  };
+  availability?: {
+    days: string[];
+    timeSlots: string[];
+    additionalHours: {
+      from: string;
+      to: string;
+    }[];
+  };
+}
+
+export interface IDocuments {
+  fileUrl?: string;
+  verified?: boolean;
+}
+
+// Main User Profile Interface
+export interface IUserProfile extends Document {
+  userId?: Schema.Types.ObjectId;
+  firstName?: string;
+  lastName?: string;
+  personalInfo?: IPersonalInfo;
+  servicesExperience?: IServicesExperience;
+  availabilityRates?: IAvailabilityRates;
+  documents?: IDocuments;
+  createdAt?: Date;
   updatedAt?: Date;
 }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Typography, Divider, Box, Link, Grid } from "@mui/material";
 import { CalendarMonth, Edit } from "@mui/icons-material";
 import ServiceModal from "./service-model/service-model";
@@ -16,12 +16,15 @@ import { SPAIcon } from "@/app/components/icons/spa-icon";
 import { GreyDotIcon } from "@/app/components/icons/greydot-icon";
 import BabySitterModal from "./service-model/baby-sitter";
 import {
+  IAdditionalInfo,
   IService,
   IServiceAge,
   toggleAdditionalInfo,
   toggleService,
   toggleServiceAgeGroup,
 } from "@/utils/profileUtils";
+import { useProfileStore } from "@/store/profileSlice";
+import { updateProfile } from "@/utils/api/profile";
 
 const Services = () => {
   // model toggle states
@@ -33,8 +36,46 @@ const Services = () => {
 
   // local states
   const [selectedServices, setSelectedServices] = useState<IService[]>([]);
-  const [selectedAdditionalInfo, setSelectedAdditionalInfo] = useState([]);
+  const [selectedAdditionalInfo, setSelectedAdditionalInfo] = useState<
+    IAdditionalInfo[]
+  >([]);
   const [selectedAges, setSelectedAges] = useState<IServiceAge[]>([]);
+
+  const { userProfile, setUserProfile } = useProfileStore();
+
+  useEffect(() => {
+    if (userProfile?.servicesExperience) {
+      setSelectedServices(userProfile.servicesExperience.services || []);
+      setSelectedAdditionalInfo(
+        userProfile.servicesExperience.additionalInfo || [],
+      );
+      setSelectedAges(userProfile.servicesExperience.ageGroupExperience || []);
+    }
+  }, [userProfile]);
+
+  const handleUpdateProfileField = async (
+    field: keyof typeof userProfile.servicesExperience,
+    value: any,
+  ) => {
+    try {
+      if (!userProfile?.id) {
+        console.error("Profile ID is missing");
+        return;
+      }
+
+      const updatedProfile = await updateProfile(userProfile.id, {
+        ...userProfile,
+        servicesExperience: {
+          ...userProfile.servicesExperience,
+          [field]: value,
+        },
+      });
+
+      setUserProfile(updatedProfile);
+    } catch (error) {
+      console.error(`Failed to update ${field}:`, error);
+    }
+  };
 
   return (
     <Box
@@ -108,7 +149,7 @@ const Services = () => {
           {selectedServices.map((service: IService) => (
             <CustomButton
               variant="outlined"
-              key={service.label}
+              key={service.id}
               onClick={() => toggleService(service, setSelectedServices)}
               sx={{
                 display: "flex",
@@ -246,10 +287,10 @@ const Services = () => {
       <Box sx={{ mt: 3, mb: 4, cursor: "pointer" }}>
         {selectedAdditionalInfo.length > 0 && (
           <Grid container spacing={3} alignItems="center" sx={{ mt: 2 }}>
-            {selectedAdditionalInfo.map(({ label, icon }) => (
+            {selectedAdditionalInfo.map(({ id, label, icon }) => (
               <Grid
                 item
-                key={label}
+                key={id}
                 sx={{
                   display: "flex",
                   flexDirection: "column",
@@ -325,25 +366,31 @@ const Services = () => {
               borderRadius: 4,
             }}
           >
-            <PlusIcon />
-            Add additional information
+            <PlusIcon /> Add additional information
           </CustomButton>
         )}
       </Box>
       <BabySitterModal
         isBabysitterModalOpen={isBabysitterModalOpen}
         setIsBabysitterModalOpen={setIsBabysitterModalOpen}
+        handleUpdateProfileField={handleUpdateProfileField}
       />
       <ServiceModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         selectedServices={selectedServices}
-        toggleService={toggleService}
+        toggleService={(service: IService) =>
+          toggleService(service, setSelectedServices)
+        }
+        handleUpdateProfileField={handleUpdateProfileField}
       />
       <AgeModal
         isAgeModalOpen={isAgeModalOpen}
         setIsAgeModalOpen={setIsAgeModalOpen}
-        toggleServiceAgeGroup={toggleServiceAgeGroup}
+        toggleServiceAgeGroup={(ageObject: IServiceAge) =>
+          toggleServiceAgeGroup(ageObject, setSelectedAges)
+        }
+        handleUpdateProfileField={handleUpdateProfileField}
       />
       <AdditionalInfoModal
         isAdditionalInfoModalOpen={isAdditionalInfoModalOpen}
@@ -352,6 +399,7 @@ const Services = () => {
         toggleAdditionalInfo={(additionalInfoOption) =>
           toggleAdditionalInfo(additionalInfoOption, setSelectedAdditionalInfo)
         }
+        handleUpdateProfileField={handleUpdateProfileField}
       />
     </Box>
   );

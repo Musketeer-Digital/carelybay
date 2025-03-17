@@ -11,12 +11,14 @@ interface AvailabilityForModalProps {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   handleAvailabilitySelection: Function;
+  handleUpdateProfileField: Function;
 }
 
 const AvailabilityForModal: React.FC<AvailabilityForModalProps> = ({
   isOpen,
   setIsOpen,
   handleAvailabilitySelection,
+  handleUpdateProfileField,
 }) => {
   const [selectedAvailability, setSelectedAvailability] = useState<
     string | null
@@ -37,6 +39,10 @@ const AvailabilityForModal: React.FC<AvailabilityForModalProps> = ({
             handleAvailabilitySelection({
               selectedAvailability,
               selectedUrgency,
+            });
+            handleUpdateProfileField("availableFor", {
+              availability: selectedAvailability,
+              urgency: selectedUrgency,
             });
           }}
           sx={{ px: 3, borderRadius: 20, height: 40 }}

@@ -13,12 +13,14 @@ interface ServiceAgeModalProps {
   isAgeModalOpen: boolean;
   setIsAgeModalOpen: (open: boolean) => void;
   toggleServiceAgeGroup: Function;
+  handleUpdateProfileField: Function;
 }
 
 const AgeModal: React.FC<ServiceAgeModalProps> = ({
   isAgeModalOpen,
   setIsAgeModalOpen,
   toggleServiceAgeGroup,
+  handleUpdateProfileField,
 }) => {
   const [ageValue, setAgeValue] = useState<number>(10);
   const [children, setChildren] = useState<number>(2);
@@ -35,6 +37,12 @@ const AgeModal: React.FC<ServiceAgeModalProps> = ({
           onClick={() => {
             toggleServiceAgeGroup({ ageValue, children });
             setIsAgeModalOpen(false);
+            handleUpdateProfileField("ageGroupExperience", [
+              {
+                ageValue,
+                children,
+              },
+            ]);
           }}
           sx={{ px: 3, borderRadius: 20, height: 40 }}
         >

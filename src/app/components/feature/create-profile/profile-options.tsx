@@ -1,3 +1,4 @@
+import { IAdditionalInfo, IService } from "@/utils/profileUtils";
 import { BabyChangingIcon } from "../../icons/baby-changing-icon";
 import { BathIcon } from "../../icons/bath-icon";
 import { BedroomIcon } from "../../icons/bedroom-icon";
@@ -14,7 +15,6 @@ import { SwimmingIcon } from "../../icons/swimming-icon";
 import { VaccineIcon } from "../../icons/vaccine-icon";
 import { VirtualCareIcon } from "../../icons/virtualcare-icon";
 import { YardIcon } from "../../icons/yard-icon";
-import { Service } from "./tabs/service-model/service-model";
 
 export const qualificationsList: string[] = [
   "High School",
@@ -42,49 +42,48 @@ export const languagesOptions = [
   "Hindi",
 ];
 
-export const additionalInfoOptions = [
-  { label: "Non-smoker", icon: <SmokeFreeIcon /> },
-  { label: "Own transport", icon: <CarDirectionIcon /> },
-  { label: "Comfortable with pets", icon: <PetIcon /> },
+export const additionalInfoOptions: IAdditionalInfo[] = [
+  { id: "info-1", label: "Non-smoker", icon: <SmokeFreeIcon /> },
+  { id: "info-2", label: "Own transport", icon: <CarDirectionIcon /> },
+  { id: "info-3", label: "Comfortable with pets", icon: <PetIcon /> },
+  { id: "info-4", label: "Willing to care for sick kids", icon: <SickIcon /> },
+  { id: "info-5", label: "Exp. with twins/multiples", icon: <ChildCareIcon /> },
   {
-    label: "Willing to care for sick kids",
-    icon: <SickIcon />,
-  },
-  {
-    label: "Exp. with twins/multiples",
-    icon: <ChildCareIcon />,
-  },
-  {
+    id: "info-6",
     label: "Exp. with special needs",
     icon: <BabyChangingIcon />,
   },
+  { id: "info-7", label: "Exp. with nursing", icon: <VaccineIcon /> },
   {
-    label: "Exp. with nursing",
-    icon: <VaccineIcon />,
-  },
-  {
+    id: "info-8",
     label: "Available for after-school care",
     icon: <HouseIcon />,
   },
   {
+    id: "info-9",
     label: "Interested in live-in jobs",
     icon: <HouseSidingIcon />,
   },
-  {
-    label: "Interested in live-out jobs",
-    icon: <YardIcon />,
-  },
+  { id: "info-10", label: "Interested in live-out jobs", icon: <YardIcon /> },
 ];
 
-export const servicesList: Service[] = [
-  { label: "Cooking/Meal preparation", icon: <OutDoorGrillIcon /> },
-  { label: "Pick-up/Drop off", icon: <CarDirectionIcon /> },
-  { label: "Light housekeeping", icon: <HouseIcon /> },
-  { label: "Activities (e.g swimming)", icon: <SwimmingIcon /> },
-  { label: "Putting kids to bed", icon: <NightShelterIcon /> },
-  { label: "Homework help", icon: <BedroomIcon /> },
-  { label: "Bathing", icon: <BathIcon /> },
-  { label: "Virtual Care", icon: <VirtualCareIcon /> },
+export const servicesList: IService[] = [
+  {
+    id: "service-1",
+    label: "Cooking/Meal preparation",
+    icon: <OutDoorGrillIcon />,
+  },
+  { id: "service-2", label: "Pick-up/Drop off", icon: <CarDirectionIcon /> },
+  { id: "service-3", label: "Light housekeeping", icon: <HouseIcon /> },
+  {
+    id: "service-4",
+    label: "Activities (e.g swimming)",
+    icon: <SwimmingIcon />,
+  },
+  { id: "service-5", label: "Putting kids to bed", icon: <NightShelterIcon /> },
+  { id: "service-6", label: "Homework help", icon: <BedroomIcon /> },
+  { id: "service-7", label: "Bathing", icon: <BathIcon /> },
+  { id: "service-8", label: "Virtual Care", icon: <VirtualCareIcon /> },
 ];
 
 export const availabilityOptions = ["Long term", "Short Term", "One time"];

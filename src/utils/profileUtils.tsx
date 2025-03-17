@@ -12,6 +12,7 @@ interface ProfileDetail {
 }
 
 export interface IService {
+  id: string;
   label: string;
   icon: JSX.Element;
 }
@@ -19,6 +20,17 @@ export interface IService {
 export interface IServiceAge {
   ageValue: string;
   children: number;
+}
+export interface IAdditionalInfo {
+  id: string;
+  label: string;
+  icon: JSX.Element;
+}
+
+export interface IRates {
+  nightRate: number;
+  holidayRate: number;
+  additionalChildRate: number;
 }
 
 export const getProfileBioComponents = (
@@ -95,8 +107,8 @@ export const toggleService = (
   setSelectedServices: Function,
 ) => {
   setSelectedServices((prev: IService[]) =>
-    prev.some((s) => s.label === service.label)
-      ? prev.filter((s) => s.label !== service.label)
+    prev.some((s) => s.id === service.id)
+      ? prev.filter((s) => s.id !== service.id)
       : [...prev, service],
   );
 };
@@ -106,8 +118,8 @@ export const toggleAdditionalInfo = (
   setSelectedAdditionalInfo: Function,
 ) => {
   setSelectedAdditionalInfo((prev: any) => {
-    if (prev.some((i: any) => i.label === info.label)) {
-      return prev.filter((i: any) => i.label !== info.label);
+    if (prev.some((i: any) => i.id === info.id)) {
+      return prev.filter((i: any) => i.id !== info.id);
     }
     return [...prev, info];
   });

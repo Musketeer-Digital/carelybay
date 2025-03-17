@@ -19,16 +19,17 @@ import { EditIcon } from "@/app/components/icons/edit-icon";
 import { ChildCareIcon } from "@/app/components/icons/childcare-icon";
 import { QuestionIcon } from "@/app/components/icons/question-icon";
 import CustomButton from "@/app/components/CustomButton";
-interface Rates {
-  nightRate: number;
-  holidayRate: number;
-  additionalChildRate: number;
-}
+import { useProfileStore } from "@/store/profileSlice";
+import { updateProfile } from "@/utils/api/profile";
+import { IRates } from "@/utils/profileUtils";
 
 const Availability = () => {
+  // model toggle states
   const [isOpen, setIsOpen] = useState(false);
   const [isRatesModalOpen, setIsRatesModalOpen] = useState(false);
   const [isAvailabilityModalOpen, setIsAvailabilityModalOpen] = useState(false);
+
+  // local states
   const [availabilityData, setAvailabilityData] = useState<{
     selectedAvailability: string | null;
     selectedUrgency: string | null;
@@ -38,7 +39,7 @@ const Availability = () => {
   });
   const [rateData, setRateData] = useState<{
     generalRate: number;
-    rates: Rates;
+    rates: IRates;
   }>({
     generalRate: 0,
     rates: { nightRate: 0, holidayRate: 0, additionalChildRate: 0 },
@@ -53,9 +54,35 @@ const Availability = () => {
     additionalHours: [],
   });
 
+  // zustand
+  const { userProfile, setUserProfile } = useProfileStore();
+
+  const handleUpdateProfileField = async (
+    field: keyof typeof userProfile.availabilityRates,
+    value: any,
+  ) => {
+    try {
+      if (!userProfile?.id) {
+        console.error("Profile ID is missing");
+        return;
+      }
+
+      const updatedProfile = await updateProfile(userProfile.id, {
+        availabilityRates: {
+          ...userProfile.availabilityRates,
+          [field]: value,
+        },
+      });
+
+      setUserProfile(updatedProfile); // Update Zustand state
+    } catch (error) {
+      console.error(`Failed to update ${field}:`, error);
+    }
+  };
+
   const handleRatesSelection = (data: {
     generalRate: number;
-    rates: Rates;
+    rates: IRates;
   }) => {
     setRateData(data);
   };
@@ -359,16 +386,19 @@ const Availability = () => {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         handleAvailabilitySelection={handleAvailabilitySelection}
+        handleUpdateProfileField={handleUpdateProfileField}
       />
       <AvailabilityRatesModal
         isRatesModalOpen={isRatesModalOpen}
         setIsRatesModalOpen={setIsRatesModalOpen}
         handleRatesSelection={handleRatesSelection}
+        handleUpdateProfileField={handleUpdateProfileField}
       />
       <AvailabilitySetModal
         isAvailabilityModalOpen={isAvailabilityModalOpen}
         setIsAvailabilityModalOpen={setIsAvailabilityModalOpen}
         onSelectAvailabilitySet={onSelectAvailabilitySet}
+        handleUpdateProfileField={handleUpdateProfileField}
       />
     </Box>
   );

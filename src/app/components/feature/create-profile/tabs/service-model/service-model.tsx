@@ -7,16 +7,12 @@ import CustomButton from "@/app/components/CustomButton";
 import { servicesList } from "../../profile-options";
 import React from "react";
 
-export interface Service {
-  label: string;
-  icon: JSX.Element;
-}
-
 interface ServiceModalProps {
   isModalOpen: boolean;
   setIsModalOpen: (open: boolean) => void;
   selectedServices: any[];
   toggleService: Function;
+  handleUpdateProfileField: Function;
 }
 
 const ServiceModal: React.FC<ServiceModalProps> = ({
@@ -24,6 +20,7 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
   setIsModalOpen,
   selectedServices,
   toggleService,
+  handleUpdateProfileField,
 }) => {
   return (
     <CustomDialog
@@ -51,7 +48,9 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
           <Box sx={{ display: "flex", gap: 2 }}>
             <CustomButton
               variant="contained"
-              onClick={() => setIsModalOpen(false)}
+              onClick={() => {
+                setIsModalOpen(false);
+              }}
               sx={{
                 px: 3,
                 borderRadius: 20,
@@ -63,7 +62,10 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
 
             <CustomButton
               variant="primary"
-              onClick={() => setIsModalOpen(false)}
+              onClick={() => {
+                setIsModalOpen(false);
+                handleUpdateProfileField("services", selectedServices);
+              }}
               sx={{
                 px: 3,
                 borderRadius: 20,
@@ -83,11 +85,9 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
 
       <Grid container spacing={1}>
         {servicesList.map((service) => {
-          const isSelected = selectedServices.some(
-            (s) => s.label === service.label,
-          );
+          const isSelected = selectedServices.some((s) => s.id === service.id);
           return (
-            <Grid item key={service.label}>
+            <Grid item key={service.id}>
               <Chip
                 label={service.label}
                 icon={
@@ -131,7 +131,7 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
                 }
                 onClick={() => toggleService(service)}
                 sx={{
-                  height: "7vh",
+                  height: "45px",
                   fontSize: "14px",
                   padding: "8px 12px",
                   borderRadius: "24px",

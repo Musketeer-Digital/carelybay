@@ -6,17 +6,14 @@ import CustomDialog from "@/app/components/CustomDialog";
 import CustomButton from "@/app/components/CustomButton";
 import { additionalInfoOptions } from "../../profile-options";
 import React from "react";
-
-interface AdditionalInfo {
-  label: string;
-  icon: JSX.Element;
-}
+import { IAdditionalInfo } from "@/utils/profileUtils";
 
 interface ServiceAdditionalInfoModalProps {
   isAdditionalInfoModalOpen: boolean;
   setIsAdditionalInfoModalOpen: (open: boolean) => void;
-  selectedAdditionalInfo: AdditionalInfo[];
-  toggleAdditionalInfo: (info: AdditionalInfo) => void;
+  selectedAdditionalInfo: IAdditionalInfo[];
+  toggleAdditionalInfo: (info: IAdditionalInfo) => void;
+  handleUpdateProfileField: Function;
 }
 
 const ServiceAdditionalInfoModal: React.FC<ServiceAdditionalInfoModalProps> = ({
@@ -24,6 +21,7 @@ const ServiceAdditionalInfoModal: React.FC<ServiceAdditionalInfoModalProps> = ({
   setIsAdditionalInfoModalOpen,
   selectedAdditionalInfo,
   toggleAdditionalInfo,
+  handleUpdateProfileField,
 }) => {
   return (
     <CustomDialog
@@ -52,7 +50,13 @@ const ServiceAdditionalInfoModal: React.FC<ServiceAdditionalInfoModalProps> = ({
           <Box sx={{ display: "flex", gap: 2 }}>
             <CustomButton
               variant="primary"
-              onClick={() => setIsAdditionalInfoModalOpen(false)}
+              onClick={() => {
+                setIsAdditionalInfoModalOpen(false);
+                handleUpdateProfileField(
+                  "additionalInfo",
+                  selectedAdditionalInfo,
+                );
+              }}
               sx={{ px: 3, borderRadius: 20, height: 40 }}
             >
               Save
@@ -68,12 +72,12 @@ const ServiceAdditionalInfoModal: React.FC<ServiceAdditionalInfoModalProps> = ({
       <Grid container spacing={2} justifyContent="center" sx={{ mt: 2 }}>
         {additionalInfoOptions.map((item) => {
           const isSelected = selectedAdditionalInfo.some(
-            (i) => i.label === item.label,
+            (i) => i.id === item.id,
           );
           return (
             <Grid
               item
-              key={item.label}
+              key={item.id}
               xs={6}
               sm={3}
               textAlign="center"
