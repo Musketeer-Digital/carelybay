@@ -13,15 +13,17 @@ export async function POST(req: NextRequest) {
     if (!email) {
       return NextResponse.json(
         { success: false, message: "Email is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
+
+    console.log("email", email);
 
     const user = await User.findOne({ email });
     if (!user) {
       return NextResponse.json(
         { success: false, message: "User not found" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -49,7 +51,55 @@ export async function POST(req: NextRequest) {
     console.error("Error:", error);
     return NextResponse.json(
       { success: false, error: "Something went wrong" },
-      { status: 500 }
+      { status: 500 },
+    );
+  }
+}
+
+export async function PUT(req: NextRequest) {
+  try {
+    await connectDB();
+    const { email, token, newPassword } = await req.json();
+
+    if (!email || !token || !newPassword) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Email, token, and new password are required",
+        },
+        { status: 400 },
+      );
+    }
+
+    const resetToken = await ResetToken.findOne({ email, token });
+    if (!resetToken) {
+      return NextResponse.json(
+        { success: false, message: "Invalid or expired token" },
+        { status: 400 },
+      );
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return NextResponse.json(
+        { success: false, message: "User not found" },
+        { status: 404 },
+      );
+    }
+
+    user.password = newPassword; // Ensure to hash the password before saving
+    await user.save();
+    await resetToken.delete();
+
+    return NextResponse.json({
+      success: true,
+      message: "Password reset successfully",
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    return NextResponse.json(
+      { success: false, error: "Something went wrong" },
+      { status: 500 },
     );
   }
 }
