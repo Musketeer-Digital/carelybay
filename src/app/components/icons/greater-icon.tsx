@@ -7,7 +7,7 @@ export const GreaterIcon = () => {
       viewBox="0 0 24 24"
       fill="none"
     >
-      <g clip-path="url(#clip0_1148_9249)">
+      <g clipPath="url(#clip0_1148_9249)">
         <path
           d="M10.0194 18L16.0194 12L10.0194 6L8.60938 7.41L13.1894 12L8.60938 16.59L10.0194 18Z"
           fill="#4D4D4D"

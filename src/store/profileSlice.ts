@@ -1,4 +1,4 @@
-import { IUserProfile } from "@/models/Profile";
+import { IUserProfile } from "@/models/ProfileModel";
 import { create } from "zustand";
 
 type ProfileState = {

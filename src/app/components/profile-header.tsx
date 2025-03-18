@@ -17,12 +17,13 @@ const ProfileHeader = () => {
         width: "100%",
         maxWidth: 400,
         marginX: "auto",
+        bgcolor: COLORS.WHITE_COLOR,
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
         <Avatar
           sx={{
-            bgcolor: COLORS.BG_LIGHT_ORANGE_COLOR,
+            bgcolor: "#FFF7E9",
             width: { xs: 70, md: 100 },
             height: { xs: 70, md: 100 },
             fontSize: { xs: 30, md: 50 },

@@ -6,7 +6,7 @@ export const HouseSidingIcon = () => (
     viewBox="0 0 24 24"
     fill="none"
   >
-    <g clip-path="url(#clip0_1148_16688)">
+    <g clipPath="url(#clip0_1148_16688)">
       <path
         opacity="0.3"
         d="M7.21 9.99994H16.79L17 10.1899V11.9999H7V10.1899L7.21 9.99994ZM14.57 7.99994H9.43L12 5.68994L14.57 7.99994ZM7 15.9999V13.9999H17V15.9999H7Z"

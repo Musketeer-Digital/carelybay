@@ -50,7 +50,7 @@ export interface IDocuments {
 
 // Main User Profile Interface
 export interface IUserProfile extends Document {
-  userId?: Schema.Types.ObjectId;
+  userId?: string;
   firstName?: string;
   lastName?: string;
   personalInfo?: IPersonalInfo;
@@ -70,9 +70,9 @@ const ProfileSchema = new Schema<IUserProfile>(
       bio: { type: String, default: "" },
       location: { type: String, default: "" },
       languages: { type: [String], default: [] },
-      dateOfBirth: { type: Date, required: true },
+      dateOfBirth: { type: Date },
       qualification: { type: String, default: "" },
-      city: { type: String, required: true },
+      city: { type: String },
       travelingDistance: { type: Number, default: 0 },
     },
   },

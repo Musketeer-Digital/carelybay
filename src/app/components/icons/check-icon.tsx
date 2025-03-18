@@ -7,7 +7,7 @@ export const CheckIcon = ({ color }: { color?: string }) => {
       viewBox="0 0 24 24"
       fill="none"
     >
-      <g clip-path="url(#clip0_1148_9340)">
+      <g clipPath="url(#clip0_1148_9340)">
         <path
           d="M8.99844 16.2016L4.79844 12.0016L3.39844 13.4016L8.99844 19.0016L20.9984 7.00156L19.5984 5.60156L8.99844 16.2016Z"
           fill={color ? color : "#5F6368"}

@@ -1,9 +1,9 @@
-import { IUserProfile } from "@/models/Profile";
+import { IUserProfile } from "@/models/ProfileModel";
 import { apiRequest } from "../apiRequest";
 
 const PROFILE_API = "/api/profile";
 
-export const createProfile = async (profileData: IUserProfile) => {
+export const createProfile = async (profileData: Partial<IUserProfile>) => {
   return apiRequest(`${PROFILE_API}/create`, "POST", profileData);
 };
 

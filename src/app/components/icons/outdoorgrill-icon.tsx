@@ -6,7 +6,7 @@ export const OutDoorGrillIcon = () => (
     viewBox="0 0 20 20"
     fill="none"
   >
-    <g clip-path="url(#clip0_1148_17603)">
+    <g clipPath="url(#clip0_1148_17603)">
       <path
         opacity="0.3"
         d="M13.8164 8.3335H6.18311C6.82477 9.80016 8.29977 10.8335 9.99977 10.8335C11.6998 10.8335 13.1748 9.80016 13.8164 8.3335Z"

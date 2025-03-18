@@ -7,7 +7,7 @@ export const QualificationIcon = ({ color }: { color?: string }) => {
       viewBox="0 0 23 24"
       fill="none"
     >
-      <g clip-path="url(#clip0_1148_9609)">
+      <g clipPath="url(#clip0_1148_9609)">
         <path
           opacity="0.3"
           d="M6.00018 12.27V15.99L11.0002 18.72L16.0002 15.99V12.27L11.0002 15L6.00018 12.27ZM4.18018 9.00003L11.0002 12.72L17.8202 9.00003L11.0002 5.28003L4.18018 9.00003Z"

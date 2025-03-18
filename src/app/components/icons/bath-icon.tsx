@@ -6,7 +6,7 @@ export const BathIcon = () => (
     viewBox="0 0 20 20"
     fill="none"
   >
-    <g clip-path="url(#clip0_1148_17671)">
+    <g clipPath="url(#clip0_1148_17671)">
       <path
         opacity="0.3"
         d="M16.6663 12.5H3.33301V15.8333H16.6663V12.5Z"

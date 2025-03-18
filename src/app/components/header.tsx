@@ -13,15 +13,12 @@ import {
   Box,
   Container,
   useTheme,
-  useMediaQuery,
 } from "@mui/material";
 import { Menu as MenuIcon } from "@mui/icons-material";
 import { getFirstLetter } from "@/utils/utils";
 import { COLORS } from "@/constants/colors";
 
 export default function Header() {
-  const theme = useTheme();
-
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const profileData = { firstName: "S" };
@@ -66,13 +63,22 @@ export default function Header() {
                 color: "#333",
               }}
             >
-              <Link href="/find-job" style={{ textDecoration: "none", color: "inherit" }}>
+              <Link
+                href="/find-job"
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
                 Find your job
               </Link>
-              <Link href="/job-status" style={{ textDecoration: "none", color: "inherit" }}>
+              <Link
+                href="/job-status"
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
                 Job status
               </Link>
-              <Link href="/messages" style={{ textDecoration: "none", color: "inherit" }}>
+              <Link
+                href="/messages"
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
                 Messages
               </Link>
             </Box>
@@ -86,7 +92,7 @@ export default function Header() {
               width: 40,
               height: 40,
               borderRadius: "50%",
-              display: { xs: "flex", sm: "none" }, // Show only on mobile
+              display: { xs: "flex", sm: "none" },
             }}
             edge="end"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -101,13 +107,13 @@ export default function Header() {
             sx={{
               backgroundColor: COLORS.BG_DARK_GREEN_COLOR,
               color: "white",
-              width: 40,
-              height: 40,
+              width: 52,
+              height: 52,
               borderRadius: "50%",
-              display: { xs: "none", sm: "flex" }, // Show only on larger screens
+              display: { xs: "none", sm: "flex" },
             }}
           >
-            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+            <Typography variant="h6" sx={{ fontSize: 28, fontWeight: "bold" }}>
               {getFirstLetter(profileData?.firstName)}
             </Typography>
           </IconButton>
@@ -123,7 +129,7 @@ export default function Header() {
                 backgroundColor: "white",
                 boxShadow: 3,
                 padding: 2,
-                display: { xs: "flex", sm: "none" }, // Show only on mobile
+                display: { xs: "flex", sm: "none" },
                 flexDirection: "column",
                 alignItems: "center",
                 gap: 2,
@@ -133,24 +139,60 @@ export default function Header() {
                 zIndex: 50,
               }}
             >
-              <Link href="/find-job" style={{ textDecoration: "none", color: "inherit", padding: "8px 0" }} onClick={() => setMenuOpen(false)}>
+              <Link
+                href="/find-job"
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                  padding: "8px 0",
+                }}
+                onClick={() => setMenuOpen(false)}
+              >
                 Find your job
               </Link>
-              <Link href="/job-status" style={{ textDecoration: "none", color: "inherit", padding: "8px 0" }} onClick={() => setMenuOpen(false)}>
+              <Link
+                href="/job-status"
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                  padding: "8px 0",
+                }}
+                onClick={() => setMenuOpen(false)}
+              >
                 Job status
               </Link>
-              <Link href="/messages" style={{ textDecoration: "none", color: "inherit", padding: "8px 0" }} onClick={() => setMenuOpen(false)}>
+              <Link
+                href="/messages"
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                  padding: "8px 0",
+                }}
+                onClick={() => setMenuOpen(false)}
+              >
                 Messages
               </Link>
             </Box>
           )}
 
           {/* Profile Dropdown Menu */}
-          <MuiMenu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
-            <MenuItem onClick={handleMenuClose} component={Link} href="/profile">
+          <MuiMenu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+          >
+            <MenuItem
+              onClick={handleMenuClose}
+              component={Link}
+              href="/profile"
+            >
               Profile
             </MenuItem>
-            <MenuItem onClick={handleMenuClose} component={Link} href="/settings">
+            <MenuItem
+              onClick={handleMenuClose}
+              component={Link}
+              href="/settings"
+            >
               Settings
             </MenuItem>
           </MuiMenu>

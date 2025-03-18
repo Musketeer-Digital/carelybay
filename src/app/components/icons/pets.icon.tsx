@@ -6,7 +6,7 @@ export const PetIcon = () => (
     viewBox="0 0 25 24"
     fill="none"
   >
-    <g clip-path="url(#clip0_1148_16620)">
+    <g clipPath="url(#clip0_1148_16620)">
       <path
         d="M5 12C6.38071 12 7.5 10.8807 7.5 9.5C7.5 8.11929 6.38071 7 5 7C3.61929 7 2.5 8.11929 2.5 9.5C2.5 10.8807 3.61929 12 5 12Z"
         fill="#222222"

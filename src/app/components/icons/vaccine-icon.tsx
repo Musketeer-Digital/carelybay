@@ -6,7 +6,7 @@ export const VaccineIcon = () => (
     viewBox="0 0 24 24"
     fill="none"
   >
-    <g clip-path="url(#clip0_1148_16665)">
+    <g clipPath="url(#clip0_1148_16665)">
       <path
         opacity="0.3"
         d="M19 17H15V15.5H19V17ZM9 7.5H5V15H9V13.5H7.25C6.84 13.5 6.5 13.16 6.5 12.75C6.5 12.34 6.84 12 7.25 12H9V10.5H7.25C6.84 10.5 6.5 10.16 6.5 9.75C6.5 9.34 6.84 9 7.25 9H9V7.5Z"

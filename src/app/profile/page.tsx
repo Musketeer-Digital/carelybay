@@ -4,8 +4,32 @@ import { Grid, Typography, Box } from "@mui/material";
 import ProfileHeader from "../components/profile-header";
 import CustomButton from "../components/CustomButton";
 import Link from "next/link";
+import { createProfile } from "@/utils/api/profile";
+import { useProfileStore } from "@/store/profileSlice";
+import { IUserProfile } from "@/models/ProfileModel";
+import { useRouter } from "next/navigation";
 
 const LandingScreen: React.FC = () => {
+  const { userProfile, setUserProfile } = useProfileStore();
+  const router = useRouter();
+
+  const onCreateProfile = async () => {
+    try {
+      const initialProfileDetails: Partial<IUserProfile> = {
+        userId: userProfile?.userId || "123",
+        firstName: userProfile?.firstName || "New User",
+        lastName: userProfile?.lastName || "Profile",
+      };
+
+      const updatedProfile = await createProfile(initialProfileDetails);
+      setUserProfile(updatedProfile);
+
+      router.push("/profile/create-profile");
+    } catch (error) {
+      console.error("Failed to create profile:", error);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -65,15 +89,14 @@ const LandingScreen: React.FC = () => {
               marginTop: 3,
             }}
           >
-            <Link href="/profile/create-profile" passHref>
-              <CustomButton
-                variant="primary"
-                size="large"
-                sx={{ borderRadius: 50, width: { xs: "100%", sm: "auto" } }}
-              >
-                Create Profile
-              </CustomButton>
-            </Link>
+            <CustomButton
+              variant="primary"
+              size="large"
+              sx={{ borderRadius: 50, width: { xs: "100%", sm: "auto" } }}
+              onClick={onCreateProfile}
+            >
+              Create Profile
+            </CustomButton>
             <Link href="/profile" passHref>
               <CustomButton
                 variant="contained"

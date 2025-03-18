@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid, Typography, Box, Link } from "@mui/material";
 import ProfileSidebar from "@/app/components/feature/create-profile/profile-sidebar";
 import ProfileTabs from "@/app/components/feature/create-profile/profile-tabs";
