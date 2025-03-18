@@ -100,7 +100,7 @@ export default function SignIn() {
             Forgot password?&nbsp;
             <Link
               component={NextLink}
-              href="/forgotpasword"
+              href="/forgotpassword"
               sx={{
                 textDecoration: "none",
                 pb: 0.25,
