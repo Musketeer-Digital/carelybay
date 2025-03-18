@@ -1,16 +1,29 @@
 import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 
-export default function Content1() {
+export default function SignupMarketingPanel() {
   return (
-    <Box>
-      <Image
-        src="/feature-content1-image.png"
-        alt="Child care worker"
-        height={293}
-        width={390}
-        unoptimized
-      />
+    <Box
+      sx={{
+        background: "#F0F0F0",
+        display: "flex",
+        flexGrow: 1,
+        flexDirection: "column",
+        justifyContent: "center",
+        gap: "20px",
+        padding: 10,
+      }}
+    >
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Image
+          src="/feature-content1-image.png"
+          alt="Child care worker"
+          height={293}
+          width={390}
+          unoptimized
+        />
+      </Box>
+
       <Typography
         variant="h6"
         fontWeight={"700"}
