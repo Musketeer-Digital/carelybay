@@ -71,6 +71,9 @@ importers:
       react-hook-form:
         specifier: ^7.54.2
         version: 7.54.2(react@18.3.1)
+      styled-jsx:
+        specifier: ^5.1.6
+        version: 5.1.6(@babel/core@7.26.10)(react@18.3.1)
       swr:
         specifier: ^2.3.2
         version: 2.3.3(react@18.3.1)
