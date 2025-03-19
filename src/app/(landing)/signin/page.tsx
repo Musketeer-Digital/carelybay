@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import PageHeader from "@/app/components/layout/page-header";
 import NextLink from "next/link";
@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import SocialLoginButton from "@/app/components/buttons/social-login-button";
 import UserNotificationMessage from "../signup/_components_/UserNotificationMessage";
+import { useUserSessionStore } from "@/store/session.store";
 
 interface SignInInputs {
   email: string;
@@ -47,7 +48,7 @@ export default function SignIn() {
     }
 
     if (res?.ok) {
-      return router.push("/dashboard");
+      return router.push("/profile");
     }
   };
 

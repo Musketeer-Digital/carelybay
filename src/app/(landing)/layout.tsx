@@ -1,6 +1,4 @@
-import { Container } from "@mui/material";
 import type { Metadata } from "next";
-import Banner from "../components/layout/banner";
 
 export const metadata: Metadata = {
   title: "Carelybay - Login/Signup",

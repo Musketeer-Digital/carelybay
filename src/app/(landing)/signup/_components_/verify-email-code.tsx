@@ -30,16 +30,22 @@ const OTPInput = ({
     error={!!error}
     helperText={error?.message}
     type="text"
-    inputProps={{ maxLength: 1 }}
-    margin="normal"
-    sx={{
-      width: {
-        xs: 50,
-        md: 48,
-      },
-      height: {
-        xs: 60,
-        md: 48,
+    slotProps={{
+      htmlInput: {
+        maxLength: 1,
+        sx: {
+          textAlign: "center",
+          justifyContent: "center",
+          padding: 0,
+          width: {
+            xs: 50,
+            md: 48,
+          },
+          height: {
+            xs: 60,
+            md: 48,
+          },
+        },
       },
     }}
   />

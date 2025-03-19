@@ -5,6 +5,10 @@ declare module "@mui/material/Button" {
   interface ButtonPropsVariantOverrides {
     primary: true;
   }
+
+  interface TextFieldPropsVariantOverrides {
+    number: true;
+  }
 }
 
 const themeOptions: ThemeOptions = {
@@ -132,6 +136,21 @@ const themeOptions: ThemeOptions = {
           borderStyle: "solid",
           borderRadius: "10px",
           borderColor: "#CCCCCC",
+          variants: [
+            {
+              props: { size: "small" },
+              style: {
+                width: {
+                  xs: 50,
+                  md: 48,
+                },
+                height: {
+                  xs: 60,
+                  md: 48,
+                },
+              },
+            },
+          ],
         },
       },
     },
