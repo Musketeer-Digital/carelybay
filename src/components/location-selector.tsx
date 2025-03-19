@@ -5,6 +5,7 @@ import {
   TextField,
   MenuItem,
   Stack,
+  Autocomplete,
 } from "@mui/material";
 import InputGroup from "./input-group"; // Import the new InputGroup component
 import { ChangeEvent, FormEvent } from "react";
@@ -34,23 +35,19 @@ export default function LocationSelector({
   };
 
   return (
-    <Stack>
-      <InputGroup heading={heading}>
+    <Autocomplete
+      options={locations}
+      getOptionLabel={(option) => option.name}
+      renderInput={(params) => (
         <TextField
-          select
+          {...params}
           label="Search for your city"
           {...register("location.id", { required: "Location is required" })}
-          onChange={handleChange}
           fullWidth
           margin="normal"
-        >
-          {locations.map((location) => (
-            <MenuItem key={location.id} value={location.id}>
-              {location.name}
-            </MenuItem>
-          ))}
-        </TextField>
-      </InputGroup>
-    </Stack>
+        />
+      )}
+      onChange={(e) => handleChange(e as any)}
+    />
   );
 }
