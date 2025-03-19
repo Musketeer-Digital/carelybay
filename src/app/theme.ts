@@ -136,21 +136,6 @@ const themeOptions: ThemeOptions = {
           borderStyle: "solid",
           borderRadius: "10px",
           borderColor: "#CCCCCC",
-          variants: [
-            {
-              props: { size: "small" },
-              style: {
-                width: {
-                  xs: 50,
-                  md: 48,
-                },
-                height: {
-                  xs: 60,
-                  md: 48,
-                },
-              },
-            },
-          ],
         },
       },
     },
