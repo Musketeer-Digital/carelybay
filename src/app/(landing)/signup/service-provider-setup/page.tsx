@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import { Box, Container } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import { useUserStore } from "@/store/userStore";
-import UserNotificationMessage from "./_components_/UserNotificationMessage";
-import LandingActions from "./LandingActions";
+import UserNotificationMessage from "../_components_/UserNotificationMessage";
+import LandingActions from "../LandingActions";
 import SignupMarketingPanel from "@/app/components/signup-marketing-panel/signup-marketing-panel";
 import SignInMessage from "@/app/components/SignInMessage";
-import { signupSteps as steps } from "./steps";
+import { serviceProviderSteps as steps } from "../steps";
 
 export type SignUpInputs = {
   email: string;
@@ -18,7 +18,7 @@ export type SignUpInputs = {
 const MAX_STEPS = 7;
 type StepKey = keyof typeof steps;
 
-export default function SignupPages() {
+export default function ServiceProviderSetup() {
   const [step, setStep] = useState<number>(1);
   const methods = useForm<SignUpInputs>();
 
@@ -87,18 +87,6 @@ export default function SignupPages() {
             step={step}
           />
         </Container>
-      </Box>
-
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          flex: 2,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <SignupMarketingPanel />
       </Box>
     </Container>
   );

@@ -34,7 +34,10 @@ const CustomizedSteppers: FC<CustomizedSteppersProps> = ({
     <Stack sx={{ width: "100%" }} spacing={4} {...rest}>
       <Box sx={{ display: "flex", justifyContent: "center", gap: 0.5 }}>
         {steps.map((_, index) => (
-          <ProgressBarSegment key={index} isactive={index <= activeStep} />
+          <ProgressBarSegment
+            key={index}
+            isactive={(index <= activeStep).toString()}
+          />
         ))}
       </Box>
     </Stack>

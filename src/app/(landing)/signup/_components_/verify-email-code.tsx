@@ -92,11 +92,7 @@ export default function VerifyEmailCode({
     <Container>
       <PageHeader
         heading="Check your email for a code"
-        subtitle={
-          <Typography>
-            We sent a code to {getValues("email")} to verify your email
-          </Typography>
-        }
+        subtitle={`We sent a code to ${getValues("email")} to verify your email`}
         sx={{ mb: 4 }}
       />
       <form onSubmit={handleSubmit(onSubmit)}>
