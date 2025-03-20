@@ -90,3 +90,30 @@ export const signupSteps = {
     stepContent: <SignUp nextStep={() => {}} />,
   },
 };
+
+export const serviceProviderSteps = {
+  1: {
+    userMessageIcon: "👋",
+    userMessage: "Welcome to Carelybay",
+    showSignInMessage: false,
+    stepContent: <ChooseRole />,
+  },
+  2: {
+    userMessageIcon: "👋",
+    userMessage: "Account setup",
+    showSignInMessage: false,
+    stepContent: <ChooseService />,
+  },
+  3: {
+    userMessageIcon: "👋",
+    userMessage: "Account setup",
+    showSignInMessage: false,
+    stepContent: <AddServices />,
+  },
+  default: {
+    userMessageIcon: "👋",
+    userMessage: "Welcome to Carelybay",
+    showSignInMessage: true,
+    stepContent: <ChooseRole />,
+  },
+};
