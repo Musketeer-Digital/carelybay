@@ -1,21 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import { Box, Typography, Container } from "@mui/material";
-import SignUp from "./_components_/signup";
-import VerifyEmailCode from "./_components_/verify-email-code";
-import SignInMessage from "@/app/components/SignInMessage";
-import PersonalInformation from "./_components_/personal-information";
+import { Box, Container } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
+import { useUserStore } from "@/store/userStore";
 import UserNotificationMessage from "./_components_/UserNotificationMessage";
 import LandingActions from "./LandingActions";
-import SetLocation from "./_components_/set-location";
 import SignupMarketingPanel from "@/app/components/signup-marketing-panel/signup-marketing-panel";
-import { useUserStore } from "@/store/userStore";
-import ChooseRole from "./_components_/choose-role";
-import ChooseService from "./_components_/choose-service";
-import AddServices from "./_components_/add-services";
-
-const MAX_STEPS = 7;
+import SignInMessage from "@/app/components/SignInMessage";
+import { allSteps as steps } from "./steps";
 
 export type SignUpInputs = {
   email: string;
@@ -23,19 +15,17 @@ export type SignUpInputs = {
   otp: string;
 };
 
+const MAX_STEPS = 7;
+type StepKey = keyof typeof steps;
+
 export default function SignupPages() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState<number>(1);
   const methods = useForm<SignUpInputs>();
 
   const setCurrentStep = useUserStore((state) => state.setCurrentStep);
 
-  let userMessageIcon = "";
-  let userMessage = "";
-  let showSignInMessage = true;
-  let stepContent;
-
   const prevStep = () => {
-    setStep(step === 1 ? MAX_STEPS : step - 1);
+    setStep(step === 1 ? 0 : step - 1);
   };
 
   const nextStep = () => {
@@ -43,56 +33,8 @@ export default function SignupPages() {
     setCurrentStep(step + 1);
   };
 
-  switch (step) {
-    case 1:
-      userMessageIcon = "👋";
-      userMessage = "Welcome to Carelybay";
-      showSignInMessage = true;
-      stepContent = <SignUp nextStep={nextStep} />;
-      break;
-    case 2:
-      userMessageIcon = "👋";
-      userMessage = "Email sent";
-      showSignInMessage = false;
-      stepContent = <VerifyEmailCode prevStep={prevStep} nextStep={nextStep} />;
-      break;
-    case 3:
-      userMessageIcon = "✅";
-      userMessage = "Verification completed successfully.";
-      showSignInMessage = true;
-      stepContent = <PersonalInformation />;
-      break;
-    case 4:
-      userMessageIcon = "✅";
-      userMessage = "Profile info added.";
-      showSignInMessage = false;
-      stepContent = <SetLocation />;
-      break;
-    case 5:
-      userMessageIcon = "👋";
-      userMessage = "Welcome to Carelybay";
-      showSignInMessage = false;
-      stepContent = <ChooseRole />;
-      break;
-    case 6:
-      userMessageIcon = "👋";
-      userMessage = "Account setup";
-      showSignInMessage = false;
-      stepContent = <ChooseService />;
-      break;
-    case 7:
-      userMessageIcon = "👋";
-      userMessage = "Account setup";
-      showSignInMessage = false;
-      stepContent = <AddServices />;
-      break;
-    default:
-      userMessageIcon = "👋";
-      userMessage = "Welcome to Carelybay";
-      showSignInMessage = true;
-      stepContent = <SignUp nextStep={nextStep} />;
-      break;
-  }
+  const { userMessageIcon, userMessage, showSignInMessage, stepContent } =
+    steps[step as StepKey] || steps.default;
 
   return (
     <Container
