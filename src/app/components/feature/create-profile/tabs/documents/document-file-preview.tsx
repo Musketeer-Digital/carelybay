@@ -52,7 +52,7 @@ const DocumentFilePreviewModal: React.FC<FilePreviewModalProps> = ({
             color: COLORS.WHITE_COLOR,
           }}
         >
-          Upload
+          Close
         </CustomButton>
       }
     >

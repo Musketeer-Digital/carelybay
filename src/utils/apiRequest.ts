@@ -1,22 +1,26 @@
 import axios from "axios";
-
 export const apiRequest = async (
   url: string,
   method: "GET" | "POST" | "PATCH" | "DELETE",
   data?: any,
 ) => {
   try {
+    const headers: any = {};
+
+    if (!(data instanceof FormData)) {
+      headers["Content-Type"] = "application/json";
+    }
+
     const response = await axios({
       url,
       method,
-      headers: { "Content-Type": "application/json" },
+      headers,
       data,
     });
 
     return response.data;
   } catch (error: any) {
     console.log(`API Error:`, error);
-
     throw error.response?.data?.error || "Something went wrong";
   }
 };

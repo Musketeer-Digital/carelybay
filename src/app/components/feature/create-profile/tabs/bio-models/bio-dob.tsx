@@ -51,7 +51,12 @@ const DOBSModal: React.FC<ProfileBioDOBSModalProps> = ({
           variant="primary"
           onClick={() => {
             setIsDOBModalOpen(false);
-            handleUpdateProfileField("dateOfBirth", selectedDOB);
+            handleUpdateProfileField(
+              "dateOfBirth",
+              new Date(
+                `${selectedDOB.month} ${selectedDOB.day}, ${selectedDOB.year}`,
+              ),
+            );
           }}
           sx={{
             px: 3,

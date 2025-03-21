@@ -7,9 +7,9 @@ export async function PATCH(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { id, ...updatedData } = body;
+    const { ...updatedData } = body;
 
-    if (!id) {
+    if (!updatedData._id) {
       return NextResponse.json(
         { error: "Profile ID is required" },
         { status: 400 },
@@ -17,7 +17,7 @@ export async function PATCH(req: NextRequest) {
     }
 
     const updatedProfile = await UserProfile.findByIdAndUpdate(
-      id,
+      updatedData._id,
       updatedData,
       {
         new: true,
@@ -29,9 +29,9 @@ export async function PATCH(req: NextRequest) {
     }
 
     return NextResponse.json(updatedProfile);
-  } catch (error) {
+  } catch (error: any) {
     return NextResponse.json(
-      { error: "Error updating profile" },
+      { error: "Error updating profile", msg: error },
       { status: 500 },
     );
   }

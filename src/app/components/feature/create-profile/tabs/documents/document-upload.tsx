@@ -4,20 +4,45 @@ import { UploadIcon } from "@/app/components/icons/upload-icon";
 import CustomButton from "@/app/components/CustomButton";
 import { COLORS } from "@/constants/colors";
 import { UploadedFile } from "@/types/documentTypes";
+import { uploadDocument } from "@/utils/api/documents";
+import { useProfileStore } from "@/store/profileSlice";
 
 interface DocumentUploadProps {
   fileList: UploadedFile[];
   setFileList: Function;
+
+  selectedDocument: string;
 }
 
 const DocumentUpload: React.FC<DocumentUploadProps> = ({
   fileList,
   setFileList,
+  selectedDocument,
 }) => {
   const [isDragging, setIsDragging] = useState(false);
+  const { userProfile } = useProfileStore();
+
+  const handleFileUploading = async (selectedFile: File) => {
+    try {
+      if (!selectedFile) {
+        console.error("No file selected.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+      //formData.append("userId", userProfile._id); // ✅ Added userId here
+
+      await uploadDocument(formData);
+    } catch (error) {
+      console.error(`Failed to upload document:`, error);
+    }
+  };
 
   // Function to handle file selection from input
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!selectedDocument) return;
+
     if (event.target.files && event.target.files.length > 0) {
       processFiles(Array.from(event.target.files));
     }
@@ -25,6 +50,7 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
 
   // Function to handle file drop
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    if (!selectedDocument) return;
     event.preventDefault();
     setIsDragging(false);
 
@@ -70,6 +96,7 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
       }}
       onClick={() => document.getElementById("file-input")?.click()}
       onDragOver={(e) => {
+        if (!selectedDocument) return;
         e.preventDefault();
         setIsDragging(true);
       }}

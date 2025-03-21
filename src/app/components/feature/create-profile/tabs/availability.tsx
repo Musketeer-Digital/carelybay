@@ -62,12 +62,12 @@ const Availability = () => {
     value: any,
   ) => {
     try {
-      if (!userProfile?.id) {
+      if (!userProfile?._id) {
         console.error("Profile ID is missing");
         return;
       }
 
-      const updatedProfile = await updateProfile(userProfile.id, {
+      const updatedProfile = await updateProfile({
         availabilityRates: {
           ...userProfile.availabilityRates,
           [field]: value,

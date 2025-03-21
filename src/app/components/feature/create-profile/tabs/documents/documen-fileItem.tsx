@@ -3,6 +3,7 @@ import { PDFIcon } from "@/app/components/icons/pdf-icon";
 import { CloseIcon } from "@/app/components/icons/close-icon";
 import { UploadedFile } from "@/types/documentTypes";
 import { RemoveRedEye } from "@mui/icons-material";
+import { DeleteIcon } from "@/app/components/icons/delete-icon";
 
 interface DocumentFileItemProps {
   file?: UploadedFile;
@@ -15,6 +16,7 @@ const DocumentFileItem: React.FC<DocumentFileItemProps> = ({
   onRemove,
   onPreview,
 }) => {
+  const fileInProgress = file?.progress !== undefined && file?.progress < 100;
   return (
     <Box
       sx={{
@@ -45,7 +47,7 @@ const DocumentFileItem: React.FC<DocumentFileItemProps> = ({
           <Typography variant="caption" color="textSecondary">
             {file?.size} KB
           </Typography>
-          {file?.progress !== undefined && file?.progress < 100 && (
+          {fileInProgress && (
             <LinearProgress
               variant="determinate"
               value={file?.progress}
@@ -62,13 +64,22 @@ const DocumentFileItem: React.FC<DocumentFileItemProps> = ({
               }}
             />
           )}
-          <IconButton onClick={onRemove} size="small">
-            <CloseIcon />
-          </IconButton>
 
-          <IconButton onClick={() => onPreview()} size="small">
-            <RemoveRedEye />
-          </IconButton>
+          {fileInProgress ? (
+            <IconButton onClick={onRemove} size="small">
+              <CloseIcon />
+            </IconButton>
+          ) : (
+            <IconButton onClick={onRemove} size="small">
+              <DeleteIcon />
+            </IconButton>
+          )}
+
+          {!fileInProgress && (
+            <IconButton onClick={() => onPreview()} size="small">
+              <RemoveRedEye />
+            </IconButton>
+          )}
         </Box>
       </Box>
     </Box>

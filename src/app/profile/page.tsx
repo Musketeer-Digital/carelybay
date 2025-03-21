@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Grid, Typography, Box } from "@mui/material";
 import ProfileHeader from "../components/profile-header";
 import CustomButton from "../components/CustomButton";
@@ -8,25 +8,30 @@ import { createProfile } from "@/utils/api/profile";
 import { useProfileStore } from "@/store/profileSlice";
 import { IUserProfile } from "@/models/ProfileModel";
 import { useRouter } from "next/navigation";
+import { FullscreenSpinner } from "../components/feature/CustomSpinner";
 
 const LandingScreen: React.FC = () => {
   const { userProfile, setUserProfile } = useProfileStore();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
   const onCreateProfile = async () => {
+    setIsLoading(true);
     try {
       const initialProfileDetails: Partial<IUserProfile> = {
-        userId: userProfile?.userId || "123",
+        userId: userProfile?.userId || "67ddd8d4226ba4f84adc4a74",
         firstName: userProfile?.firstName || "New User",
         lastName: userProfile?.lastName || "Profile",
       };
 
       const updatedProfile = await createProfile(initialProfileDetails);
       setUserProfile(updatedProfile);
+      setIsLoading(false);
 
       router.push("/profile/create-profile");
     } catch (error) {
-      router.push("/profile/create-profile"); // doing this becuase we are not getting success on profile creation
+      setIsLoading(false);
+      //  router.push("/profile/create-profile"); // doing this becuase we are not getting success on profile creation
       console.error("Failed to create profile:", error);
     }
   };
@@ -39,6 +44,7 @@ const LandingScreen: React.FC = () => {
         maxWidth: "1400px",
       }}
     >
+      {isLoading && <FullscreenSpinner />}
       <Grid
         container
         spacing={4}

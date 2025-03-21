@@ -74,7 +74,11 @@ const Documents = () => {
             <MenuItem value="Gov Proof">Gov. Proof</MenuItem>
           </Select>
 
-          <DocumentUpload fileList={fileList} setFileList={setFileList} />
+          <DocumentUpload
+            fileList={fileList}
+            setFileList={setFileList}
+            selectedDocument={selectedDocument}
+          />
         </Box>
 
         {fileList.length > 0 && (

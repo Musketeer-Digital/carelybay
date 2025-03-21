@@ -79,6 +79,50 @@ const ProfileSchema = new Schema<IUserProfile>(
       city: { type: String },
       travelingDistance: { type: Number, default: 0 },
     },
+
+    servicesExperience: {
+      childCarerType: { type: String },
+      services: { type: [Schema.Types.Mixed], default: [] },
+      skills: { type: [String], default: [] },
+      ageGroupExperience: { type: [Schema.Types.Mixed], default: [] },
+      additionalInfo: { type: [Schema.Types.Mixed], default: [] },
+    },
+
+    availabilityRates: {
+      availableFor: {
+        availability: { type: String },
+        urgency: { type: String },
+      },
+      rates: {
+        generalRate: { type: Number },
+        rates: { type: Schema.Types.Mixed },
+      },
+      availability: {
+        days: { type: [String], default: [] },
+        timeSlots: { type: [String], default: [] },
+        additionalHours: [
+          {
+            from: { type: String },
+            to: { type: String },
+          },
+        ],
+      },
+    },
+
+    documents: [
+      {
+        fileName: { type: String },
+        fileUrl: { type: String },
+        fileType: { type: String },
+        size: { type: Number },
+        status: {
+          type: String,
+          enum: ["pending", "verified", "rejected"],
+          default: "pending",
+        },
+        uploadedAt: { type: Date, default: Date.now },
+      },
+    ],
   },
   { timestamps: true },
 );

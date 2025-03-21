@@ -76,18 +76,19 @@ const ProfileBio: React.FC = () => {
   const handleSelectDOB = (key: string, value: string) => {
     setSelectedDOB((prev) => ({ ...prev, [key]: value }));
   };
-
+  console.log("userProfile", userProfile);
   const handleUpdateProfileField = async (
     field: keyof typeof userProfile.personalInfo,
     value: any,
   ) => {
     try {
-      if (!userProfile?.id) {
+      if (!userProfile?._id) {
         console.error("Profile ID is missing");
         return;
       }
 
-      const updatedProfile = await updateProfile(userProfile.id, {
+      const updatedProfile = await updateProfile({
+        ...userProfile,
         personalInfo: {
           ...userProfile.personalInfo,
           [field]: value,
