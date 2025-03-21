@@ -2,15 +2,18 @@ import { Box, Typography, IconButton, LinearProgress } from "@mui/material";
 import { PDFIcon } from "@/app/components/icons/pdf-icon";
 import { CloseIcon } from "@/app/components/icons/close-icon";
 import { UploadedFile } from "@/types/documentTypes";
+import { RemoveRedEye } from "@mui/icons-material";
 
 interface DocumentFileItemProps {
   file?: UploadedFile;
   onRemove: () => void;
+  onPreview: Function;
 }
 
 const DocumentFileItem: React.FC<DocumentFileItemProps> = ({
   file,
   onRemove,
+  onPreview,
 }) => {
   return (
     <Box
@@ -61,6 +64,10 @@ const DocumentFileItem: React.FC<DocumentFileItemProps> = ({
           )}
           <IconButton onClick={onRemove} size="small">
             <CloseIcon />
+          </IconButton>
+
+          <IconButton onClick={() => onPreview()} size="small">
+            <RemoveRedEye />
           </IconButton>
         </Box>
       </Box>

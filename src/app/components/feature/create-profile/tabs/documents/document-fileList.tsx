@@ -2,6 +2,8 @@ import { Box, Typography } from "@mui/material";
 import { COLORS } from "@/constants/colors";
 import DocumentFileItem from "./documen-fileItem";
 import { UploadedFile } from "@/types/documentTypes";
+import DocumentFilePreviewModal from "./document-file-preview";
+import { useState } from "react";
 
 interface DocumentFileListProps {
   fileList: UploadedFile[];
@@ -12,6 +14,9 @@ const DocumentFileList: React.FC<DocumentFileListProps> = ({
   fileList,
   setFileList,
 }) => {
+  const [toggleFilePreviewModel, setToggleFilePreviewModel] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<UploadedFile>();
+
   const handleRemoveFile = (index: number) => {
     setFileList(fileList.filter((_, i) => i !== index));
   };
@@ -44,9 +49,19 @@ const DocumentFileList: React.FC<DocumentFileListProps> = ({
             key={index}
             file={file}
             onRemove={() => handleRemoveFile(index)}
+            onPreview={() => {
+              setToggleFilePreviewModel(true);
+              setSelectedFile(file);
+            }}
           />
         ))}
       </Box>
+
+      <DocumentFilePreviewModal
+        isOpen={toggleFilePreviewModel}
+        onClose={setToggleFilePreviewModel}
+        selectedFile={selectedFile}
+      />
     </Box>
   );
 };

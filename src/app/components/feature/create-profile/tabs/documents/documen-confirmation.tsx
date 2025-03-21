@@ -2,9 +2,9 @@ import { Box, Typography, Checkbox } from "@mui/material";
 
 const DocumentConfirmation = () => {
   return (
-    <Box sx={{ mt: 3 }}>
+    <Box sx={{ mt: 3, mb: 3 }}>
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <Checkbox />
+        {/* <Checkbox /> */}
         <Typography variant="body2">
           I confirm that the documents I upload are true and accurate documents
           pertaining to me.

@@ -43,9 +43,13 @@ export interface IAvailabilityRates {
   };
 }
 
-export interface IDocuments {
-  fileUrl?: string;
-  verified?: boolean;
+export interface IDocument {
+  fileName: string;
+  fileUrl: string;
+  fileType: string;
+  size: number;
+  status: "pending" | "verified" | "rejected";
+  uploadedAt: Date;
 }
 
 // Main User Profile Interface
@@ -56,7 +60,7 @@ export interface IUserProfile extends Document {
   personalInfo?: IPersonalInfo;
   servicesExperience?: IServicesExperience;
   availabilityRates?: IAvailabilityRates;
-  documents?: IDocuments;
+  documents?: IDocument;
   createdAt?: Date;
   updatedAt?: Date;
 }

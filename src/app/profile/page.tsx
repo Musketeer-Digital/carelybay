@@ -26,6 +26,7 @@ const LandingScreen: React.FC = () => {
 
       router.push("/profile/create-profile");
     } catch (error) {
+      router.push("/profile/create-profile"); // doing this becuase we are not getting success on profile creation
       console.error("Failed to create profile:", error);
     }
   };

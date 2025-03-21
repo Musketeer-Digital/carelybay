@@ -36,8 +36,9 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
   const processFiles = (files: File[]) => {
     const newFiles: UploadedFile[] = files.map((file) => ({
       name: file.name,
-      size: Math.round(file.size / 1024), // Convert bytes to KB
-      progress: 0, // Initialize progress
+      size: Math.round(file.size / 1024),
+      progress: 0,
+      file: file,
     }));
 
     setFileList((prevFiles: UploadedFile[]) => [...prevFiles, ...newFiles]);
@@ -61,7 +62,7 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
     <Box
       sx={{
         border: `2px dashed ${isDragging ? COLORS.PRIMARY_COLOR : "#ccc"}`,
-        borderRadius: 2,
+        borderRadius: "20px",
         p: 3,
         cursor: "pointer",
         transition: "border 0.2s ease-in-out",

@@ -19,6 +19,7 @@ const Documents = () => {
         borderRadius: 2,
         mx: "auto",
         mt: 5,
+        mb: 5,
         display: "flex",
         flexDirection: "column",
         width: "100%",
@@ -33,6 +34,8 @@ const Documents = () => {
       >
         Upload Documents <InfoIcon />
       </Typography>
+
+      {fileList.length > 0 && <DocumentConfirmation />}
 
       <Box
         sx={{
@@ -86,8 +89,6 @@ const Documents = () => {
           </Box>
         )}
       </Box>
-
-      {fileList.length > 0 && <DocumentConfirmation />}
     </Box>
   );
 };
