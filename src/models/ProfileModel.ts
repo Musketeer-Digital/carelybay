@@ -48,7 +48,6 @@ export interface IDocument {
   fileUrl: string;
   fileType: string;
   size: number;
-  status: "pending" | "verified" | "rejected";
   uploadedAt: Date;
 }
 
@@ -60,7 +59,7 @@ export interface IUserProfile extends Document {
   personalInfo?: IPersonalInfo;
   servicesExperience?: IServicesExperience;
   availabilityRates?: IAvailabilityRates;
-  documents?: IDocument;
+  documents?: IDocument[];
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -115,11 +114,6 @@ const ProfileSchema = new Schema<IUserProfile>(
         fileUrl: { type: String },
         fileType: { type: String },
         size: { type: Number },
-        status: {
-          type: String,
-          enum: ["pending", "verified", "rejected"],
-          default: "pending",
-        },
         uploadedAt: { type: Date, default: Date.now },
       },
     ],

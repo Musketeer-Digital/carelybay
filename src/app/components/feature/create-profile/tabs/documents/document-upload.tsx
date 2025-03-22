@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Box, Button, Divider, Typography } from "@mui/material";
 import { UploadIcon } from "@/app/components/icons/upload-icon";
 import CustomButton from "@/app/components/CustomButton";
 import { COLORS } from "@/constants/colors";
 import { UploadedFile } from "@/types/documentTypes";
-import { uploadDocument } from "@/utils/api/documents";
 import { useProfileStore } from "@/store/profileSlice";
+import { updateProfile } from "@/utils/api/profile";
 
 interface DocumentUploadProps {
   fileList: UploadedFile[];
@@ -20,7 +20,8 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
   selectedDocument,
 }) => {
   const [isDragging, setIsDragging] = useState(false);
-  const { userProfile } = useProfileStore();
+  const { userProfile, setUserProfile } = useProfileStore();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileUploading = async (selectedFile: File) => {
     try {
@@ -31,11 +32,29 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
 
       const formData = new FormData();
       formData.append("file", selectedFile);
-      //formData.append("userId", userProfile._id); // ✅ Added userId here
 
-      await uploadDocument(formData);
+      // will call the GCP function here
+      const fileUrl = ""; // await uploadDocument(formData);
+
+      const newDocument = {
+        fileName: selectedFile.name,
+        fileUrl: fileUrl,
+        fileType: selectedFile.type,
+        size: selectedFile.size,
+        uploadedAt: new Date(),
+      };
+
+      const fileList = Array.isArray(userProfile.documents)
+        ? [...userProfile.documents, newDocument]
+        : [newDocument];
+
+      const updatedProfile = await updateProfile({
+        documents: fileList,
+      });
+
+      setUserProfile(updatedProfile);
     } catch (error) {
-      console.error(`Failed to upload document:`, error);
+      console.error("Failed to upload document:", error);
     }
   };
 
@@ -45,6 +64,10 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
 
     if (event.target.files && event.target.files.length > 0) {
       processFiles(Array.from(event.target.files));
+    }
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   };
 
@@ -79,7 +102,11 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
             prevFile.name === file.name ? { ...prevFile, progress } : prevFile,
           ),
         );
-        if (progress >= 100) clearInterval(interval);
+        if (progress >= 100) {
+          clearInterval(interval);
+
+          handleFileUploading(file.file);
+        }
       }, 300);
     });
   };
@@ -94,7 +121,7 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
         transition: "border 0.2s ease-in-out",
         backgroundColor: isDragging ? "#f9f9f9" : "transparent",
       }}
-      onClick={() => document.getElementById("file-input")?.click()}
+      onClick={() => fileInputRef.current?.click()}
       onDragOver={(e) => {
         if (!selectedDocument) return;
         e.preventDefault();
@@ -107,7 +134,7 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
         type="file"
         hidden
         id="file-input"
-        multiple
+        ref={fileInputRef}
         onChange={handleFileUpload}
       />
 

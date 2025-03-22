@@ -4,6 +4,7 @@ import DocumentFileItem from "./documen-fileItem";
 import { UploadedFile } from "@/types/documentTypes";
 import DocumentFilePreviewModal from "./document-file-preview";
 import { useState } from "react";
+import CustomConfirmationModal from "@/app/components/CustomConfirmationModal";
 
 interface DocumentFileListProps {
   fileList: UploadedFile[];
@@ -16,9 +17,22 @@ const DocumentFileList: React.FC<DocumentFileListProps> = ({
 }) => {
   const [toggleFilePreviewModel, setToggleFilePreviewModel] = useState(false);
   const [selectedFile, setSelectedFile] = useState<UploadedFile>();
+  const [open, setOpen] = useState(false);
+  const [deletedFileIndex, setDeletedFileIndex] = useState<number>();
 
-  const handleRemoveFile = (index: number) => {
-    setFileList(fileList.filter((_, i) => i !== index));
+  const handleRemoveFile = () => {
+    setFileList(fileList.filter((_, i) => i !== deletedFileIndex));
+    setOpen(false);
+  };
+
+  const onDeleteDocument = (index: number) => {
+    setOpen(true);
+    setDeletedFileIndex(index);
+  };
+
+  const onCloseDeleteModel = () => {
+    setOpen(false);
+    setDeletedFileIndex(undefined);
   };
 
   return (
@@ -46,9 +60,9 @@ const DocumentFileList: React.FC<DocumentFileListProps> = ({
       <Box>
         {fileList.map((file, index) => (
           <DocumentFileItem
-            key={index}
+            key={index + file.name}
             file={file}
-            onRemove={() => handleRemoveFile(index)}
+            onRemove={() => onDeleteDocument(index)}
             onPreview={() => {
               setToggleFilePreviewModel(true);
               setSelectedFile(file);
@@ -61,6 +75,16 @@ const DocumentFileList: React.FC<DocumentFileListProps> = ({
         isOpen={toggleFilePreviewModel}
         onClose={setToggleFilePreviewModel}
         selectedFile={selectedFile}
+      />
+
+      <CustomConfirmationModal
+        open={open}
+        onClose={onCloseDeleteModel}
+        onConfirm={handleRemoveFile}
+        title="Delete Document"
+        description="Are you sure you want to delete this document?"
+        confirmText="Yes"
+        cancelText="Cancel"
       />
     </Box>
   );

@@ -364,6 +364,7 @@ const Services = () => {
               borderColor: COLORS.BLACK_COLOR,
               height: 35,
               borderRadius: 4,
+              gap: 1,
             }}
           >
             <PlusIcon /> Add additional information
