@@ -1,12 +1,16 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { Grid, Typography, Box, Link } from "@mui/material";
+import React from "react";
+import { Grid, Typography, Box, Link, Divider } from "@mui/material";
 import ProfileSidebar from "@/app/components/feature/create-profile/profile-sidebar";
 import ProfileTabs from "@/app/components/feature/create-profile/profile-tabs";
 import { COLORS } from "@/constants/colors";
+import CustomButton from "@/app/components/CustomButton";
+import { useRouter } from "next/navigation";
 
 const Profile = () => {
+  const router = useRouter();
+
   return (
     <Box sx={{ p: 3 }}>
       <Grid container spacing={3}>
@@ -45,6 +49,24 @@ const Profile = () => {
           </Box>
         </Grid>
       </Grid>
+      <Divider sx={{ my: 4 }} />
+
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          pr: 3,
+          pb: 3,
+        }}
+      >
+        <CustomButton
+          variant="primary"
+          onClick={() => router.push("/job/posts")}
+          sx={{ px: 3, borderRadius: 20, height: 40 }}
+        >
+          Go to Job Posts
+        </CustomButton>
+      </Box>
     </Box>
   );
 };
