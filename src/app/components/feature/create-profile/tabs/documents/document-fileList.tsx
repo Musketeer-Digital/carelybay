@@ -84,7 +84,7 @@ const DocumentFileList: React.FC<DocumentFileListProps> = ({
         title="Delete Document"
         description="Are you sure you want to delete this document?"
         confirmText="Yes"
-        cancelText="Cancel"
+        cancelText="No"
       />
     </Box>
   );

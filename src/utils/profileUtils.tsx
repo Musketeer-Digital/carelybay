@@ -124,3 +124,26 @@ export const toggleAdditionalInfo = (
     return [...prev, info];
   });
 };
+
+export const validateFiles = (files: File[]): File[] => {
+  const ALLOWED_TYPES = ["application/pdf", "image/png", "image/jpeg"];
+  const MAX_FILE_SIZE = 25 * 1024 * 1024; // 25MB in bytes
+
+  const validFiles: File[] = [];
+
+  files.forEach((file) => {
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      alert("Please ensure the file format is in PDF, PNG, or JPEG only.");
+      return;
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      alert("Please ensure the file is smaller than 25MB.");
+      return;
+    }
+
+    validFiles.push(file);
+  });
+
+  return validFiles;
+};

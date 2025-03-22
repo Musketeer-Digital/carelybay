@@ -19,20 +19,6 @@ interface CustomConfirmationModalProps {
   description: string;
   confirmText?: string;
   cancelText?: string;
-  confirmColor?:
-    | "primary"
-    | "secondary"
-    | "error"
-    | "success"
-    | "info"
-    | "warning";
-  cancelColor?:
-    | "primary"
-    | "secondary"
-    | "error"
-    | "success"
-    | "info"
-    | "warning";
 }
 
 const CustomConfirmationModal: React.FC<CustomConfirmationModalProps> = ({

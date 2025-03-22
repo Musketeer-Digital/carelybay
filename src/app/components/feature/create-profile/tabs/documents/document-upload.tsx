@@ -6,6 +6,7 @@ import { COLORS } from "@/constants/colors";
 import { UploadedFile } from "@/types/documentTypes";
 import { useProfileStore } from "@/store/profileSlice";
 import { updateProfile } from "@/utils/api/profile";
+import { validateFiles } from "@/utils/profileUtils";
 
 interface DocumentUploadProps {
   fileList: UploadedFile[];
@@ -22,7 +23,7 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
   const [isDragging, setIsDragging] = useState(false);
   const { userProfile, setUserProfile } = useProfileStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
-
+  console.log("selectedDocument", selectedDocument);
   const handleFileUploading = async (selectedFile: File) => {
     try {
       if (!selectedFile) {
@@ -63,7 +64,12 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
     if (!selectedDocument) return;
 
     if (event.target.files && event.target.files.length > 0) {
-      processFiles(Array.from(event.target.files));
+      const files = Array.from(event.target.files);
+      const validFiles = validateFiles(files);
+
+      if (validFiles.length > 0) {
+        processFiles(validFiles);
+      }
     }
 
     if (fileInputRef.current) {
@@ -74,6 +80,7 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
   // Function to handle file drop
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     if (!selectedDocument) return;
+
     event.preventDefault();
     setIsDragging(false);
 
@@ -93,6 +100,7 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
     setFileList((prevFiles: UploadedFile[]) => [...prevFiles, ...newFiles]);
 
     // Simulate Upload Progress
+    // Will update it with uploading process once main is merged here
     newFiles.forEach((file) => {
       let progress = 0;
       const interval = setInterval(() => {
@@ -131,6 +139,7 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
       onDrop={handleDrop}
     >
       <input
+        disabled={!selectedDocument}
         type="file"
         hidden
         id="file-input"

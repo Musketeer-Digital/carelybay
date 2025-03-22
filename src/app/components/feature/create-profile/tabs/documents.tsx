@@ -35,7 +35,7 @@ const Documents = () => {
         Upload Documents <InfoIcon />
       </Typography>
 
-      {fileList.length > 0 && <DocumentConfirmation />}
+      <DocumentConfirmation />
 
       <Box
         sx={{
