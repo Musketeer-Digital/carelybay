@@ -31,9 +31,9 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       endIcon={endIcon}
       sx={{
         textTransform: "none",
-        borderRadius: 2,
         px: 3,
         py: 1.2,
+        borderRadius: 20,
         ...sx,
       }}
     >

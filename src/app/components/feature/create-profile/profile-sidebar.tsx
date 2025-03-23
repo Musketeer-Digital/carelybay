@@ -192,7 +192,7 @@ const ProfileSidebar = () => {
             color: "#4D4D4D",
             border: `1px solid #4D4D4D`,
             mt: 2,
-            borderRadius: 20,
+
             height: 40,
           }}
         >

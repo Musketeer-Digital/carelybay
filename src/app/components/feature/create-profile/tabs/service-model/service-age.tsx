@@ -44,7 +44,7 @@ const AgeModal: React.FC<ServiceAgeModalProps> = ({
               },
             ]);
           }}
-          sx={{ px: 3, borderRadius: 20, height: 40 }}
+          sx={{ px: 3, height: 40 }}
         >
           Save
         </CustomButton>

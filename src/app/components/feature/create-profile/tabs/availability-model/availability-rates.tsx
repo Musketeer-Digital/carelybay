@@ -46,7 +46,7 @@ const AvailabilityRatesModal: React.FC<AvailabilityRatesModalProps> = ({
             handleRatesSelection({ generalRate, rates });
             handleUpdateProfileField("rates", { generalRate, rates });
           }}
-          sx={{ px: 3, borderRadius: 20, height: 40 }}
+          sx={{ px: 3, height: 40 }}
         >
           Done
         </CustomButton>

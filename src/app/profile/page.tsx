@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Grid, Typography, Box } from "@mui/material";
-import ProfileHeader from "../components/profile-header";
+import ProfileHeader from "../components/ProfileHeader";
 import CustomButton from "../components/CustomButton";
 import Link from "next/link";
 import { createProfile } from "@/utils/api/profile";

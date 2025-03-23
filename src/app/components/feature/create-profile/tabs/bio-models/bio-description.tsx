@@ -35,7 +35,7 @@ const ProfileBioDescription: React.FC<ProfileBioDescriptionProps> = ({
           }}
           sx={{
             px: 3,
-            borderRadius: 20,
+
             height: 40,
             color: COLORS.WHITE_COLOR,
           }}

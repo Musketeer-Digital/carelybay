@@ -62,7 +62,7 @@ const Profile = () => {
         <CustomButton
           variant="primary"
           onClick={() => router.push("/job/posts")}
-          sx={{ px: 3, borderRadius: 20, height: 40 }}
+          sx={{ px: 3, height: 40 }}
         >
           Go to Job Posts
         </CustomButton>

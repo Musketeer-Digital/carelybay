@@ -64,7 +64,7 @@ const Documents = () => {
             sx={{
               mt: 1,
               mb: 3,
-              borderRadius: 20,
+
               bgcolor: COLORS.BG_LIGHT_GREY_COLOR,
             }}
           >
