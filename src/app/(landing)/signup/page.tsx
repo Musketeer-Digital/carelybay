@@ -13,8 +13,9 @@ import { useUserStore } from "@/store/userStore";
 import ChooseRole from "./_components_/choose-role";
 import ChooseService from "./_components_/choose-service";
 import AddServices from "./_components_/add-services";
+import AddAdditionalInfo from "./_components_/add-additional-info";
 
-const MAX_STEPS = 7;
+const MAX_STEPS = 8;
 
 export type SignUpInputs = {
   email: string;
@@ -84,6 +85,12 @@ export default function SignupPages() {
       userMessage = "Account setup";
       showSignInMessage = false;
       stepContent = <AddServices />;
+      break;
+    case 8:
+      userMessageIcon = "👋";
+      userMessage = "Account setup";
+      showSignInMessage = false;
+      stepContent = <AddAdditionalInfo />;
       break;
     default:
       userMessageIcon = "👋";
