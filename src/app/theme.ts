@@ -5,6 +5,10 @@ declare module "@mui/material/Button" {
   interface ButtonPropsVariantOverrides {
     primary: true;
   }
+
+  interface TextFieldPropsVariantOverrides {
+    number: true;
+  }
 }
 
 const themeOptions: ThemeOptions = {
