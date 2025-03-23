@@ -6,6 +6,7 @@ import SetLocation from "./_components_/set-location";
 import ChooseRole from "./_components_/choose-role";
 import ChooseService from "./_components_/choose-service";
 import AddServices from "./_components_/add-services";
+import AddAdditionalInfo from "./_components_/add-additional-info";
 
 export const allSteps = {
   1: {
@@ -49,6 +50,12 @@ export const allSteps = {
     userMessage: "Account setup",
     showSignInMessage: false,
     stepContent: <AddServices />,
+  },
+  8: {
+    userMessageIcon: "👋",
+    userMessage: "Account setup",
+    showSignInMessage: false,
+    stepContent: <AddAdditionalInfo />,
   },
   default: {
     userMessageIcon: "👋",
@@ -109,6 +116,12 @@ export const serviceProviderSteps = {
     userMessage: "Account setup",
     showSignInMessage: false,
     stepContent: <AddServices />,
+  },
+  4: {
+    userMessageIcon: "👋",
+    userMessage: "Account setup",
+    showSignInMessage: false,
+    stepContent: <AddAdditionalInfo />,
   },
   default: {
     userMessageIcon: "👋",
