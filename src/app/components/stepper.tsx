@@ -9,12 +9,12 @@ const steps = [
   "Sign up",
 ];
 
-const ProgressBarSegment = styled(Box)<{ isactive: boolean }>(
+const ProgressBarSegment = styled(Box)<{ isactive: string }>(
   ({ theme, isactive }) => ({
     width: 120,
     height: 8,
     borderRadius: 8,
-    backgroundColor: isactive
+    backgroundColor: !!isactive
       ? theme.palette.primary.main
       : theme.palette.divider,
     transition: "background-color 0.17s",
