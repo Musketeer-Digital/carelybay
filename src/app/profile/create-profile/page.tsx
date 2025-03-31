@@ -2,8 +2,8 @@
 
 import React from "react";
 import { Grid, Typography, Box, Link, Divider } from "@mui/material";
-import ProfileSidebar from "@/app/components/feature/create-profile/profile-sidebar";
-import ProfileTabs from "@/app/components/feature/create-profile/profile-tabs";
+import ProfileSidebar from "@/app/components/signup-marketing-panel/create-profile/profile-sidebar";
+import ProfileTabs from "@/app/components/signup-marketing-panel/create-profile/profile-tabs";
 import { COLORS } from "@/constants/colors";
 import CustomButton from "@/app/components/CustomButton";
 import { useRouter } from "next/navigation";

@@ -8,7 +8,7 @@ import { createProfile } from "@/utils/api/profile";
 import { useProfileStore } from "@/store/profileSlice";
 import { IUserProfile } from "@/models/ProfileModel";
 import { useRouter } from "next/navigation";
-import { FullscreenSpinner } from "../components/feature/CustomSpinner";
+import { FullscreenSpinner } from "@/app/components/signup-marketing-panel/CustomSpinner";
 
 const LandingScreen: React.FC = () => {
   const { userProfile, setUserProfile } = useProfileStore();
