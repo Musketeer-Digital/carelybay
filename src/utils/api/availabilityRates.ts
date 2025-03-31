@@ -1,4 +1,4 @@
-import { IRates } from "@/models/AvailabilityAndRates";
+import { IRates } from "@/utils/profileUtils";
 import { apiRequest } from "../apiRequest";
 
 const AVAILABILITY_API = "/api/availability-rates";
