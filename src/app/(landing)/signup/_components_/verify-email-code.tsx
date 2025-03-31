@@ -22,7 +22,7 @@ const OTPInput = ({
   register,
 }: {
   name: string;
-  error: FieldError | undefined;
+  error?: FieldError;
   register: any;
 }) => (
   <TextField
@@ -30,16 +30,22 @@ const OTPInput = ({
     error={!!error}
     helperText={error?.message}
     type="text"
-    inputProps={{ maxLength: 1 }}
-    margin="normal"
-    sx={{
-      width: {
-        xs: 50,
-        md: 48,
-      },
-      height: {
-        xs: 60,
-        md: 48,
+    slotProps={{
+      htmlInput: {
+        maxLength: 1,
+        sx: {
+          textAlign: "center",
+          justifyContent: "center",
+          padding: 0,
+          width: {
+            xs: 50,
+            md: 48,
+          },
+          height: {
+            xs: 60,
+            md: 48,
+          },
+        },
       },
     }}
   />
@@ -86,11 +92,7 @@ export default function VerifyEmailCode({
     <Container>
       <PageHeader
         heading="Check your email for a code"
-        subtitle={
-          <Typography>
-            We sent a code to {getValues("email")} to verify your email
-          </Typography>
-        }
+        subtitle={`We sent a code to ${getValues("email")} to verify your email`}
         sx={{ mb: 4 }}
       />
       <form onSubmit={handleSubmit(onSubmit)}>
