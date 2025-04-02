@@ -12,8 +12,8 @@ import {
 } from "@mui/material";
 
 interface VerifyEmailCodeProps {
-  prevStep: () => void;
-  nextStep: () => void;
+  prevStep?: () => void;
+  nextStep?: () => void;
 }
 
 const OTPInput = ({
@@ -52,8 +52,8 @@ const OTPInput = ({
 );
 
 export default function VerifyEmailCode({
-  prevStep,
-  nextStep,
+  prevStep = () => {},
+  nextStep = () => {},
 }: VerifyEmailCodeProps) {
   const [error, setError] = useState("");
   const {
@@ -66,7 +66,7 @@ export default function VerifyEmailCode({
 
   const onSubmit: SubmitHandler<SignUpInputs> = async (data: SignUpInputs) => {
     const { email, password } = getValues();
-    const otp = `${data.otp}`;
+    const otp = `${data.otp.join("")}`;
 
     try {
       const response = await fetch("/api/user", {
@@ -114,7 +114,7 @@ export default function VerifyEmailCode({
               <OTPInput
                 key={index}
                 name={`otp[${index}]`}
-                error={errors.otp}
+                error={errors.otp?.[index]}
                 register={register}
               />
             ))}

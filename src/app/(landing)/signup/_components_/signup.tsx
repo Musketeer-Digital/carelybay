@@ -18,10 +18,10 @@ import {
 import { useUserStore } from "@/store/userStore";
 
 interface SignUpProps {
-  nextStep: () => void;
+  nextStep?: () => void;
 }
 
-export default function SignUp({ nextStep }: SignUpProps) {
+export default function SignUp({ nextStep = () => {} }: SignUpProps) {
   const [error, setError] = useState<string>();
   const {
     register,

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Box, Container } from "@mui/material";
+import { Box, Container, StepContext } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import { useUserStore } from "@/store/userStore";
 import UserNotificationMessage from "./_components_/UserNotificationMessage";
@@ -12,7 +12,7 @@ import { signupSteps as steps } from "./steps";
 export type SignUpInputs = {
   email: string;
   password: string;
-  otp: string;
+  otp: string[];
 };
 
 const MAX_STEPS = 8;
@@ -35,6 +35,9 @@ export default function SignupPages() {
 
   const { userMessageIcon, userMessage, showSignInMessage, stepContent } =
     steps[step as StepKey] || steps.default;
+
+  const StepContentEl = ({ nextStep }: { nextStep: () => void }) =>
+    stepContent(nextStep);
 
   return (
     <Container
@@ -74,7 +77,9 @@ export default function SignupPages() {
 
           {/* Step Content */}
           <FormProvider {...methods}>
-            <Box sx={{ mb: 6 }}>{stepContent}</Box>
+            <Box sx={{ mb: 6 }}>
+              <StepContentEl nextStep={nextStep} />
+            </Box>
           </FormProvider>
 
           <SignInMessage sx={{ mb: { xs: 2, md: 5 } }} />
@@ -91,7 +96,10 @@ export default function SignupPages() {
 
       <Box
         sx={{
-          display: "flex",
+          display: {
+            xs: "none",
+            lg: "flex",
+          },
           flexDirection: "column",
           flex: 2,
           alignItems: "center",

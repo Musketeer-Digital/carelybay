@@ -20,7 +20,15 @@ interface PersonalInformationInputs {
   file: File;
 }
 
-export default function PersonalInformation() {
+export default function PersonalInformation({
+  nextStep = () => {},
+  prevStep = () => {},
+  userId,
+}: {
+  nextStep?: () => void;
+  prevStep?: () => void;
+  userId?: string;
+}) {
   const [isUploading, setIsUploading] = useState(false);
   const [profileImageSrc, setProfileImageSrc] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -53,8 +61,12 @@ export default function PersonalInformation() {
 
       const formData = new FormData();
       formData.append("file", file);
+      formData.append("firstName", data.firstName);
+      formData.append("lastName", data.lastName);
+      formData.append("dob", data.dob);
+      formData.append("phoneNumber", data.phoneNumber);
 
-      const response = await fetch("/api/users/new/profile-photo", {
+      const response = await fetch(`/api/users/profile`, {
         method: "POST",
         body: formData,
       });
@@ -63,6 +75,7 @@ export default function PersonalInformation() {
 
       // Update the user store with the profile photo
       setProfilePhoto(profileImageSrc);
+      nextStep();
     } catch (error) {
       console.error("Error uploading file:", error);
     } finally {
