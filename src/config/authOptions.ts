@@ -1,10 +1,18 @@
 import { connectDB } from "@/lib/mongodb";
 import User from "@/models/User";
-import type { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions, Session } from "next-auth";
 import credentials from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import bcrypt from "bcryptjs";
+import UserProfile from "@/models/UserProfile";
+import OTP from "@/models/OTP";
+
+export enum VerificationStatus {
+  NotVerified = 1,
+  MissingInfo = 2,
+  Verified = 3,
+}
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -41,13 +49,6 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
       allowDangerousEmailAccountLinking: true,
-      authorization: {
-        params: {
-          prompt: "consent",
-          access_type: "offline",
-          response_type: "code",
-        },
-      },
     }),
 
     // * Logging in (Facebook)
@@ -60,5 +61,57 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
+  callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      if (account?.provider === "google" || account?.provider === "facebook") {
+        await connectDB();
+        const matchingUser = await User.findOne({
+          email: user?.email,
+        });
+
+        return !!matchingUser;
+      } else if (account?.provider === "credentials") {
+        if (user) {
+          return true;
+        }
+      }
+
+      return false;
+    },
+    async session({ session }) {
+      const populatedSession: Session & {
+        status: VerificationStatus;
+      } = { ...session, status: VerificationStatus.NotVerified };
+
+      await connectDB();
+
+      const user = await User.findOne({
+        email: session?.user?.email,
+      });
+
+      // if (!user) {
+      //   // Find the most recent OTP for the email
+      //   const recentOTP = await OTP.findOne({ email: session?.user?.email });
+      //   if (!recentOTP) {
+      //     return session;
+      //   }
+      // }
+
+      populatedSession.user = user.toJSON();
+
+      const userProfile = await UserProfile.findOne({
+        userId: user._id,
+      });
+
+      if (!userProfile || !userProfile.firstName || !userProfile.dob) {
+        (populatedSession as any).status = VerificationStatus.MissingInfo;
+      } else {
+        (populatedSession as any).status = VerificationStatus.Verified;
+      }
+
+      return populatedSession;
+    },
+  },
+
   // TODO: Add callbacks signIn if GoogleProvider and FacebookProvider doesn't save to MongoDB
 };

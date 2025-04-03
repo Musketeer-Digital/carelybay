@@ -28,7 +28,13 @@ export default function SignupPages() {
     setStep(step === 1 ? 0 : step - 1);
   };
 
-  const nextStep = () => {
+  const nextStep = (newStep: number) => {
+    if (newStep && newStep <= MAX_STEPS) {
+      setStep(newStep);
+      setCurrentStep(newStep);
+      return;
+    }
+
     setStep(step === MAX_STEPS ? 0 : step + 1);
     setCurrentStep(step + 1);
   };

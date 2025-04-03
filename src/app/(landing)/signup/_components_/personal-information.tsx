@@ -11,6 +11,7 @@ import {
 import { useState } from "react";
 import Image from "next/image";
 import { useUserStore } from "@/store/userStore";
+import { useSession } from "next-auth/react";
 
 interface PersonalInformationInputs {
   firstName: string;
@@ -29,6 +30,8 @@ export default function PersonalInformation({
   prevStep?: () => void;
   userId?: string;
 }) {
+  const { data: session } = useSession();
+
   const [isUploading, setIsUploading] = useState(false);
   const [profileImageSrc, setProfileImageSrc] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);

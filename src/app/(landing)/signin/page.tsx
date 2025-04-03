@@ -132,7 +132,6 @@ export default function SignIn() {
           provider="google"
           displayText="Sign in with Google"
         />
-        {/* TODO: Replace provider with "facebook" when clientid/clientsecret is ready */}
         <SocialLoginButton
           provider="facebook"
           displayText="Sign in with Facebook"

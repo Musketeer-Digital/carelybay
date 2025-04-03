@@ -16,20 +16,38 @@ import {
   Stack,
 } from "@mui/material";
 import { useUserStore } from "@/store/userStore";
+import { useUserStatusStore } from "@/store/userStatusStore";
+
+import { VerificationStatus } from "@/config/authOptions";
+import { useSession } from "next-auth/react";
 
 interface SignUpProps {
-  nextStep?: () => void;
+  nextStep?: (step?: number) => void;
 }
 
 export default function SignUp({ nextStep = () => {} }: SignUpProps) {
+  const { data: session } = useSession();
   const [error, setError] = useState<string>();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useFormContext<SignUpInputs>();
-
   const setUserInfo = useUserStore((state) => state.setUserInfo);
+
+  switch (session?.status) {
+    case VerificationStatus.NotVerified:
+      nextStep(2); // Set step to 2 for OTP verification
+      break;
+    case VerificationStatus.MissingInfo:
+      nextStep(3); // Set step to 3 for additional user info
+      break;
+    case VerificationStatus.Verified:
+      nextStep(4); // Set step to 4 for completion
+      break;
+    default:
+      break;
+  }
 
   const onSubmit: SubmitHandler<SignUpInputs> = async (data: SignUpInputs) => {
     const { email, password } = data;
@@ -61,7 +79,7 @@ export default function SignUp({ nextStep = () => {} }: SignUpProps) {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={() => handleSubmit(onSubmit)}>
         {error && <Box>{error}</Box>}
         <PageHeader
           sx={{

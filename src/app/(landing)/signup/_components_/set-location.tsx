@@ -27,7 +27,11 @@ interface PersonalInformationInputs {
 const maxDistance = 100; // Maximum distance in kilometers
 const step = 5; // Step increments in kilometers
 
-export default function SetLocation() {
+export default function SetLocation({
+  nextStep = () => {},
+}: {
+  nextStep?: () => void;
+}) {
   const methods = useForm<PersonalInformationInputs>();
   const { control } = useFormContext<PersonalInformationInputs>();
   const { data: res } = useSWR("/api/locations", fetcher);
@@ -38,6 +42,7 @@ export default function SetLocation() {
   const onSubmit: SubmitHandler<PersonalInformationInputs> = (data) => {
     console.log(data);
     setLocation(data.location);
+    nextStep();
   };
 
   return (
