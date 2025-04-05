@@ -96,7 +96,11 @@ const ServiceAdditionalInfoModal: React.FC<ServiceAdditionalInfoModalProps> = ({
                   color: isSelected ? COLORS.WHITE_COLOR : COLORS.BLACK_COLOR,
                   boxShadow: isSelected ? 3 : 0,
                   transition: "all 0.3s ease",
-                  "&:hover": { backgroundColor: COLORS.PRIMARY_COLOR },
+                  "&:hover": {
+                    backgroundColor: COLORS.PRIMARY_COLOR,
+                    color: COLORS.WHITE_COLOR,
+                    "& svg": { filter: "invert(1)" },
+                  },
                   "& svg": { filter: isSelected ? "invert(1)" : "invert(0)" },
                 }}
               >

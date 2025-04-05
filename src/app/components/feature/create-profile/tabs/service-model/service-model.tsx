@@ -79,10 +79,6 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
         </Box>
       }
     >
-      <Typography variant="body2" sx={{ color: "text.secondary", mb: 5 }}>
-        Care for up to 2 children
-      </Typography>
-
       <Grid container spacing={1}>
         {servicesList.map((service) => {
           const isSelected = selectedServices.some((s) => s.id === service.id);

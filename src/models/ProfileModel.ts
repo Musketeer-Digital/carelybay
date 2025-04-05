@@ -30,7 +30,7 @@ export interface IAvailabilityRates {
     urgency?: string;
   };
   rates?: {
-    generalRate?: number;
+    generalRate?: any;
     rates?: IRates;
   };
   availability?: {

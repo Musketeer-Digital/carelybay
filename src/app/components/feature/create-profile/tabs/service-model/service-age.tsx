@@ -57,7 +57,7 @@ const AgeModal: React.FC<ServiceAgeModalProps> = ({
       <Box sx={{ padding: "16px 0" }}>
         <Slider
           min={0}
-          max={99}
+          max={18}
           value={ageValue}
           onChange={(_, newValue) => setAgeValue(newValue as number)}
           valueLabelDisplay="on"
@@ -74,7 +74,7 @@ const AgeModal: React.FC<ServiceAgeModalProps> = ({
           <Typography variant="body2" sx={{ fontWeight: "bold" }}>
             {ageValue} years
           </Typography>
-          <Typography variant="body2">99</Typography>
+          <Typography variant="body2">18</Typography>
         </Box>
       </Box>
 

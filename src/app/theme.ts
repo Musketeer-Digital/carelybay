@@ -57,6 +57,11 @@ const themeOptions: ThemeOptions = {
               background: "#E55C15",
               borderColor: "#E55C15",
             },
+            "&.Mui-disabled": {
+              background: "#F0F0F0",
+              color: "#BDBDBD",
+              opacity: 0.6,
+            },
           },
         },
         {
@@ -71,6 +76,10 @@ const themeOptions: ThemeOptions = {
             "&:hover": {
               background: "#ECECEC",
               boxShadow: "none",
+            },
+            "&.Mui-disabled": {
+              background: "#F0F0F0",
+              color: "#BDBDBD",
             },
           },
         },
@@ -88,11 +97,14 @@ const themeOptions: ThemeOptions = {
               background: "#F7F7F7",
               boxShadow: "none",
             },
+            "&.Mui-disabled": {
+              borderColor: "#E0E0E0",
+              color: "#BDBDBD",
+            },
           },
         },
       ],
     },
-
     // * COMPONENT -- Checkbox
     MuiCheckbox: {
       styleOverrides: {

@@ -82,39 +82,14 @@ const DOBSModal: React.FC<ProfileBioDOBSModalProps> = ({
         <Select
           fullWidth
           displayEmpty
-          value={selectedDOB.month || ""}
-          onChange={(event) =>
-            handleSelectDOB("month", event.target.value as string)
-          }
-          sx={{
-            borderRadius: "8px",
-            backgroundColor: COLORS.BG_LIGHT_GREY_COLOR,
-            textAlign: "center",
-            fontWeight: "bold",
-          }}
-        >
-          <MenuItem value="" disabled>
-            MM
-          </MenuItem>
-          {months.map((month) => (
-            <MenuItem key={month} value={month}>
-              {month}
-            </MenuItem>
-          ))}
-        </Select>
-
-        <Select
-          fullWidth
-          displayEmpty
           value={selectedDOB.day || ""}
           onChange={(event) =>
             handleSelectDOB("day", event.target.value as string)
           }
           sx={{
             borderRadius: "8px",
-            backgroundColor: COLORS.BG_LIGHT_GREY_COLOR,
+            border: "1px solid #ADAEAF",
             textAlign: "center",
-            fontWeight: "bold",
           }}
         >
           <MenuItem value="" disabled>
@@ -130,15 +105,37 @@ const DOBSModal: React.FC<ProfileBioDOBSModalProps> = ({
         <Select
           fullWidth
           displayEmpty
+          value={selectedDOB.month || ""}
+          onChange={(event) =>
+            handleSelectDOB("month", event.target.value as string)
+          }
+          sx={{
+            borderRadius: "8px",
+            border: "1px solid #ADAEAF",
+            textAlign: "center",
+          }}
+        >
+          <MenuItem value="" disabled>
+            MM
+          </MenuItem>
+          {months.map((month) => (
+            <MenuItem key={month} value={month}>
+              {month}
+            </MenuItem>
+          ))}
+        </Select>
+
+        <Select
+          fullWidth
+          displayEmpty
           value={selectedDOB.year || ""}
           onChange={(event) =>
             handleSelectDOB("year", event.target.value as string)
           }
           sx={{
             borderRadius: "8px",
-            backgroundColor: COLORS.BG_LIGHT_GREY_COLOR,
+            border: "1px solid #ADAEAF",
             textAlign: "center",
-            fontWeight: "bold",
           }}
         >
           <MenuItem value="" disabled>

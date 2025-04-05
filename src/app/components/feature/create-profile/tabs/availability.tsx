@@ -38,11 +38,11 @@ const Availability = () => {
     selectedUrgency: null,
   });
   const [rateData, setRateData] = useState<{
-    generalRate: number;
+    generalRate: any;
     rates: IRates;
   }>({
-    generalRate: 0,
-    rates: { nightRate: 0, holidayRate: 0, additionalChildRate: 0 },
+    generalRate: "",
+    rates: { nightRate: "", holidayRate: "", additionalChildRate: "" },
   });
   const [availabilityTimeData, setAvailabilityTimeData] = useState<{
     selectedDays: string[];
@@ -80,10 +80,7 @@ const Availability = () => {
     }
   };
 
-  const handleRatesSelection = (data: {
-    generalRate: number;
-    rates: IRates;
-  }) => {
+  const handleRatesSelection = (data: { generalRate: any; rates: IRates }) => {
     setRateData(data);
   };
 
@@ -119,7 +116,7 @@ const Availability = () => {
     },
     {
       title: "Set your availability",
-      description: "Ex: “Newborn · up to 12 months”",
+      description: "Ex: “Mon - Sat’’",
       onClick: () => setIsAvailabilityModalOpen(true),
     },
   ];
@@ -206,94 +203,83 @@ const Availability = () => {
                   </>
                 )}
 
-              {option.title === "Set your Rates" &&
-                rateData.generalRate > 0 && (
-                  <Box
-                    sx={{
-                      mt: 2,
-                      borderRadius: "8px",
-                      width: 400,
-                    }}
-                  >
-                    {[
-                      { label: "General Rate", key: "generalRate" },
-                      {
-                        label: "Night Rate",
-                        key: "nightRate",
-                        tooltip: "This applies for overnight stays",
-                      },
-                      {
-                        label: "Holiday Rate",
-                        key: "holidayRate",
-                        tooltip: "This applies for public holidays",
-                      },
-                      {
-                        label: "Additional Child Rate",
-                        key: "additionalChildRate",
-                        tooltip: "This applies for each extra child",
-                      },
-                    ].map(({ label, key, tooltip }) => (
-                      <Box
-                        key={key}
-                        sx={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          mb: 1,
-                        }}
-                      >
+              {option.title === "Set your Rates" && (
+                <Box
+                  sx={{
+                    mt: 2,
+                    borderRadius: "8px",
+                    width: 400,
+                  }}
+                >
+                  {[
+                    { label: "General Rate", key: "generalRate" },
+                    {
+                      label: "Night Rate",
+                      key: "nightRate",
+                      tooltip: "This applies for overnight stays",
+                    },
+                    {
+                      label: "Holiday Rate",
+                      key: "holidayRate",
+                      tooltip: "This applies for public holidays",
+                    },
+                    {
+                      label: "Additional Child Rate",
+                      key: "additionalChildRate",
+                      tooltip: "This applies for each extra child",
+                    },
+                  ]
+                    .filter(({ key }) => {
+                      const value =
+                        key in rateData
+                          ? (rateData as any)[key]
+                          : (rateData.rates as any)?.[key];
+                      return (
+                        value !== undefined && value !== null && value !== ""
+                      );
+                    })
+                    .map(({ label, key, tooltip }) => {
+                      const value =
+                        key in rateData
+                          ? (rateData as any)[key]
+                          : (rateData.rates as any)[key];
+
+                      return (
                         <Box
+                          key={key}
                           sx={{
                             display: "flex",
+                            justifyContent: "space-between",
                             alignItems: "center",
-                            gap: 0.5,
+                            mb: 1,
                           }}
                         >
-                          <Typography variant="body1">{label}</Typography>
-                          {tooltip && (
-                            <Tooltip title={tooltip}>
-                              <IconButton sx={{ p: 0, color: "grey.600" }}>
-                                <QuestionIcon />
-                              </IconButton>
-                            </Tooltip>
-                          )}
-                        </Box>
-                        <Typography variant="body1">
-                          <span style={{ fontWeight: "bold" }}>
-                            $
-                            {key in rateData
-                              ? (rateData as any)[key]
-                              : (rateData.rates as any)[key] || 0}
-                          </span>{" "}
-                          / hour
-                        </Typography>
-                      </Box>
-                    ))}
+                          <Box
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 0.5,
+                            }}
+                          >
+                            <Typography variant="body1">{label}</Typography>
+                            {tooltip && (
+                              <Tooltip title={tooltip} arrow>
+                                <span style={{ display: "inline-flex" }}>
+                                  <QuestionIcon />
+                                </span>
+                              </Tooltip>
+                            )}
+                          </Box>
 
-                    <Box
-                      sx={{
-                        display: "flex",
-                        mt: 3,
-                        gap: 1,
-                        flexWrap: "wrap",
-                        color: COLORS.BLACK_COLOR,
-                        alignItems: "center",
-                        cursor: "pointer",
-                      }}
-                    >
-                      <EditIcon />
-                      <Link
-                        href="#"
-                        sx={{
-                          color: COLORS.BLACK_COLOR,
-                          textDecoration: "underline",
-                        }}
-                      >
-                        Edit your availability
-                      </Link>
-                    </Box>
-                  </Box>
-                )}
+                          <Typography variant="body1">
+                            <span style={{ fontWeight: "bold" }}>${value}</span>{" "}
+                            / hour
+                          </Typography>
+                        </Box>
+                      );
+                    })}
+                </Box>
+              )}
 
               {option.title === "Set your availability" && (
                 <Box
@@ -312,8 +298,8 @@ const Availability = () => {
                             variant="contained"
                             sx={{
                               mr: 1,
-                              minWidth: "7vh",
-                              height: "7vh",
+                              width: "62px",
+                              height: "62px",
                               borderRadius: "50%",
                               backgroundColor: isSelected
                                 ? COLORS.PRIMARY_COLOR

@@ -28,9 +28,9 @@ export interface IAdditionalInfo {
 }
 
 export interface IRates {
-  nightRate: number;
-  holidayRate: number;
-  additionalChildRate: number;
+  nightRate: any;
+  holidayRate: any;
+  additionalChildRate: any;
 }
 
 export const getProfileBioComponents = (
@@ -46,7 +46,7 @@ export const getProfileBioComponents = (
   {
     icon: <MarkerIcon color={selectedCity ? COLORS.PRIMARY_COLOR : ""} />,
     title: "Where I live",
-    value: selectedCity || "Click to select",
+    value: selectedCity || "",
     onClick: () => setIsCityModalOpen(true),
   },
   {
@@ -56,10 +56,7 @@ export const getProfileBioComponents = (
       />
     ),
     title: "Languages",
-    value:
-      selectedLanguages.length > 0
-        ? selectedLanguages.join(", ")
-        : "Click to select",
+    value: selectedLanguages.length > 0 ? selectedLanguages.join(", ") : "",
     onClick: () => setIsLanguageModalOpen(true),
   },
   {
@@ -76,7 +73,7 @@ export const getProfileBioComponents = (
     value:
       selectedDOB.month && selectedDOB.day && selectedDOB.year
         ? `${selectedDOB.month} ${selectedDOB.day}, ${selectedDOB.year}`
-        : "Click to select",
+        : "",
     onClick: () => setIsDOBModalOpen(true),
   },
   {
@@ -86,7 +83,7 @@ export const getProfileBioComponents = (
       />
     ),
     title: "Qualification",
-    value: selectedQualification || "Click to select",
+    value: selectedQualification || "",
     onClick: () => setIsQualificationModalOpen(true),
   },
 ];

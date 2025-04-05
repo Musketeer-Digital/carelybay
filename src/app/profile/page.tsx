@@ -28,7 +28,7 @@ const LandingScreen: React.FC = () => {
       setUserProfile(updatedProfile);
       setIsLoading(false);
 
-      router.push("/profile/create-profile");
+      router.push("/profile/create-profile#personal-info");
     } catch (error) {
       setIsLoading(false);
       //  router.push("/profile/create-profile"); // doing this becuase we are not getting success on profile creation
@@ -94,25 +94,37 @@ const LandingScreen: React.FC = () => {
               alignItems: "center",
               gap: 2,
               marginTop: 3,
+              width: "100%",
             }}
           >
-            <CustomButton
-              variant="primary"
-              size="large"
-              sx={{ borderRadius: 50, width: { xs: "100%", sm: "auto" } }}
-              onClick={onCreateProfile}
-            >
-              Create Profile
-            </CustomButton>
-            <Link href="/profile" passHref>
+            <Box sx={{ width: { xs: "100%", sm: "auto" } }}>
               <CustomButton
-                variant="contained"
+                variant="primary"
                 size="large"
-                sx={{ borderRadius: 50, width: { xs: "100%", sm: "auto" } }}
+                fullWidth
+                onClick={onCreateProfile}
+                sx={{
+                  borderRadius: 50,
+                }}
               >
-                Complete Profile Later
+                Create Profile
               </CustomButton>
-            </Link>
+            </Box>
+
+            <Box sx={{ width: { xs: "100%", sm: "auto" } }}>
+              <Link href="/profile" passHref>
+                <CustomButton
+                  variant="contained"
+                  size="large"
+                  fullWidth
+                  sx={{
+                    borderRadius: 50,
+                  }}
+                >
+                  Complete Profile Later
+                </CustomButton>
+              </Link>
+            </Box>
           </Box>
         </Grid>
       </Grid>

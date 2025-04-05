@@ -132,6 +132,72 @@ const Services = () => {
         </Box>
       </Box>
       <Divider />
+      <Box
+        sx={{ mt: 3, mb: 4, cursor: "pointer" }}
+        onClick={() => setIsAgeModalOpen(true)}
+      >
+        <Typography
+          fontWeight="bold"
+          display="flex"
+          alignItems="center"
+          gap={1}
+        >
+          <CalendarMonth /> I am comfortable caring for children aged *
+        </Typography>
+        <Box sx={{ display: "flex", gap: 1, mt: 2, flexWrap: "wrap" }}>
+          {selectedAges.length === 0 ? (
+            <Typography sx={{ ml: 4 }} color="textSecondary">
+              Ex: “Newborn · up to 12 months”
+            </Typography>
+          ) : (
+            selectedAges.map((ageObjct: IServiceAge) => (
+              <Button
+                key={ageObjct.ageValue}
+                variant="outlined"
+                onClick={() => toggleServiceAgeGroup(ageObjct, setSelectedAges)}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  borderRadius: "24px",
+                  textTransform: "none",
+                  color: "black",
+                  borderColor: "black",
+                }}
+              >
+                0-{ageObjct.ageValue} Year · {ageObjct.children}
+                {ageObjct.children > 1 ? " children" : " child"}
+              </Button>
+            ))
+          )}
+        </Box>
+        {selectedAges.length > 0 && (
+          <Box
+            sx={{
+              display: "flex",
+              mt: 3,
+              gap: 1,
+              flexWrap: "wrap",
+              color: COLORS.BLACK_COLOR,
+              alignItems: "center",
+              cursor: "pointer",
+            }}
+            onClick={() => setIsAgeModalOpen(true)}
+          >
+            <EditIcon />
+            <Link
+              href="#"
+              sx={{
+                color: COLORS.BLACK_COLOR,
+                textDecoration: "none",
+              }}
+            >
+              Edit your experience
+            </Link>
+          </Box>
+        )}
+      </Box>
+      <Divider />
 
       <Box sx={{ mt: 3 }}>
         <Typography
@@ -218,72 +284,6 @@ const Services = () => {
         </Box>
       </Box>
       <Divider />
-      <Box
-        sx={{ mt: 3, mb: 4, cursor: "pointer" }}
-        onClick={() => setIsAgeModalOpen(true)}
-      >
-        <Typography
-          fontWeight="bold"
-          display="flex"
-          alignItems="center"
-          gap={1}
-        >
-          <CalendarMonth /> I am comfortable caring for children aged *
-        </Typography>
-        <Box sx={{ display: "flex", gap: 1, mt: 2, flexWrap: "wrap" }}>
-          {selectedAges.length === 0 ? (
-            <Typography sx={{ ml: 4 }} color="textSecondary">
-              Ex: “Newborn · up to 12 months”
-            </Typography>
-          ) : (
-            selectedAges.map((ageObjct: IServiceAge) => (
-              <Button
-                key={ageObjct.ageValue}
-                variant="outlined"
-                onClick={() => toggleServiceAgeGroup(ageObjct, setSelectedAges)}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1,
-                  borderRadius: "24px",
-                  textTransform: "none",
-                  color: "black",
-                  borderColor: "black",
-                }}
-              >
-                0-{ageObjct.ageValue} Year · {ageObjct.children}
-                {ageObjct.children > 1 ? " children" : " child"}
-              </Button>
-            ))
-          )}
-        </Box>
-        {selectedAges.length > 0 && (
-          <Box
-            sx={{
-              display: "flex",
-              mt: 3,
-              gap: 1,
-              flexWrap: "wrap",
-              color: COLORS.BLACK_COLOR,
-              alignItems: "center",
-              cursor: "pointer",
-            }}
-            onClick={() => setIsAgeModalOpen(true)}
-          >
-            <EditIcon />
-            <Link
-              href="#"
-              sx={{
-                color: COLORS.BLACK_COLOR,
-                textDecoration: "none",
-              }}
-            >
-              Edit your experience
-            </Link>
-          </Box>
-        )}
-      </Box>
-      <Divider />
       <Box sx={{ mt: 3, mb: 4, cursor: "pointer" }}>
         {selectedAdditionalInfo.length > 0 && (
           <Grid container spacing={3} alignItems="center" sx={{ mt: 2 }}>
@@ -320,6 +320,9 @@ const Services = () => {
                     mt: 1,
                     width: 100,
                     fontSize: "11px",
+                    lineHeight: "14px",
+                    height: "28px",
+                    textAlign: "center",
                     wordWrap: "break-word",
                   }}
                 >

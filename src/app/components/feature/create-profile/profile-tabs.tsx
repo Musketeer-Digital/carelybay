@@ -16,57 +16,59 @@ const tabLabels = [
 ];
 
 const sectionIds = ["personal-info", "services", "availability", "documents"];
+const tabComponents = [ProfileBio, Services, Availability, Documents];
 
 const ProfileTabs = () => {
   const [activeTab, setActiveTab] = useState(0);
-  const sectionRefs = sectionIds.map(() => useRef<HTMLDivElement>(null));
+  const sectionRefs = useRef(
+    sectionIds.map(() => React.createRef<HTMLDivElement>()),
+  );
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isScrolling, setIsScrolling] = useState(false);
+
+  const scrollToSection = (index: number) => {
+    const offset =
+      (sectionRefs.current[index].current?.offsetTop || 0) -
+      (containerRef.current?.offsetTop || 0);
+
+    containerRef.current?.scrollTo({ top: offset, behavior: "smooth" });
+  };
 
   const handleTabClick = (index: number) => {
     setActiveTab(index);
-    const sectionId = sectionIds[index];
+    setIsScrolling(true);
+    window.history.pushState(null, "", `#${sectionIds[index]}`);
+    scrollToSection(index);
+    setTimeout(() => setIsScrolling(false), 500);
+  };
 
-    window.history.pushState(null, "", `#${sectionId}`);
+  const handleScroll = () => {
+    if (isScrolling || !containerRef.current) return;
 
-    sectionRefs[index].current?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
+    const scrollTop = containerRef.current.scrollTop;
+    let currentTab = 0;
+
+    sectionRefs.current.forEach((ref, index) => {
+      if (ref.current && scrollTop >= ref.current.offsetTop - 100) {
+        currentTab = index;
+      }
     });
+
+    setActiveTab(currentTab);
+    window.history.replaceState(null, "", `#${sectionIds[currentTab]}`);
   };
 
   useEffect(() => {
-    const handleScroll = () => {
-      let currentTab = 0;
-      sectionRefs.forEach((ref, index) => {
-        if (ref.current) {
-          const { top } = ref.current.getBoundingClientRect();
-          if (top < 100) currentTab = index;
-        }
-      });
-      setActiveTab(currentTab);
-
-      window.history.replaceState(null, "", `#${sectionIds[currentTab]}`);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    if (typeof window !== "undefined" && window.location.hash) {
-      const sectionId = window.location.hash.replace("#", "");
-      const index = sectionIds.indexOf(sectionId);
-      if (index !== -1) {
-        setActiveTab(index);
-        sectionRefs[index].current?.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }
+    const hash = window.location.hash.replace("#", "");
+    const index = sectionIds.indexOf(hash);
+    if (index !== -1) {
+      setActiveTab(index);
+      scrollToSection(index);
     }
   }, []);
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", height: "100%" }}>
       <Tabs
         value={activeTab}
         onChange={(_, newValue) => handleTabClick(newValue)}
@@ -79,7 +81,6 @@ const ProfileTabs = () => {
             height: "3px",
           },
         }}
-        role="tablist"
       >
         {tabLabels.map((label, index) => (
           <Tab
@@ -98,39 +99,36 @@ const ProfileTabs = () => {
                 {label}
               </Typography>
             }
-            onClick={() => handleTabClick(index)}
             sx={{
               minWidth: "auto",
               padding: "12px 16px",
               "&:hover": { color: COLORS.PRIMARY_COLOR },
             }}
-            role="tab"
-            aria-selected={activeTab === index}
           />
         ))}
       </Tabs>
 
       <Box
+        ref={containerRef}
+        onScroll={handleScroll}
         sx={{
           mt: 3,
           backgroundColor: COLORS.WHITE_COLOR,
+          maxHeight: "calc(100vh - 300px)",
+          overflowY: "auto",
+          px: 2,
         }}
       >
-        <Box sx={{ backgroundColor: COLORS.WHITE_COLOR }}>
-          {sectionRefs.map((ref, index) => (
-            <React.Fragment key={index}>
-              <div ref={ref} id={sectionIds[index]}>
-                {index === 0 && <ProfileBio />}
-                {index === 1 && <Services />}
-                {index === 2 && <Availability />}
-                {index === 3 && <Documents />}
-              </div>
-              {index < sectionRefs.length - 1 && index !== 0 && (
-                <Divider sx={{ my: 3 }} />
-              )}
-            </React.Fragment>
-          ))}
-        </Box>
+        {tabComponents.map((Component, index) => (
+          <React.Fragment key={index}>
+            <div ref={sectionRefs.current[index]} id={sectionIds[index]}>
+              <Component />
+            </div>
+            {index > 0 && index < sectionRefs.current.length - 1 && (
+              <Divider sx={{ my: 3 }} />
+            )}
+          </React.Fragment>
+        ))}
       </Box>
     </Box>
   );

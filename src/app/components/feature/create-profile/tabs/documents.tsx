@@ -1,17 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { Box, Typography, Select, MenuItem } from "@mui/material";
+import { Box, Typography, Select, MenuItem, Divider } from "@mui/material";
 import { COLORS } from "@/constants/colors";
 import { InfoIcon } from "@/app/components/icons/info-icon";
 import DocumentFileList from "./documents/document-fileList";
 import DocumentConfirmation from "./documents/documen-confirmation";
 import DocumentUpload from "./documents/document-upload";
 import { UploadedFile } from "@/types/documentTypes";
+import CustomButton from "@/app/components/CustomButton";
+import { useRouter } from "next/navigation";
 
 const Documents = () => {
   const [selectedDocument, setSelectedDocument] = useState("");
   const [fileList, setFileList] = useState<UploadedFile[]>([]);
+  const router = useRouter();
 
   return (
     <Box
@@ -44,6 +47,7 @@ const Documents = () => {
           gap: 3,
           alignItems: "flex-start",
           flexWrap: "wrap",
+          mb: 3,
         }}
       >
         <Box
@@ -64,8 +68,8 @@ const Documents = () => {
             sx={{
               mt: 1,
               mb: 3,
-
-              bgcolor: COLORS.BG_LIGHT_GREY_COLOR,
+              borderRadius: "50px",
+              border: "1px solid #ADAEAF",
             }}
           >
             <MenuItem value="">Select document</MenuItem>
@@ -92,6 +96,23 @@ const Documents = () => {
             <DocumentFileList fileList={fileList} setFileList={setFileList} />
           </Box>
         )}
+      </Box>
+
+      <Divider sx={{ my: 4 }} />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+        }}
+      >
+        <CustomButton
+          variant="primary"
+          onClick={() => router.push("/job/posts")}
+          sx={{ px: 3, height: 40 }}
+          disabled={fileList.length === 0}
+        >
+          Go to Job Posts
+        </CustomButton>
       </Box>
     </Box>
   );

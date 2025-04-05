@@ -73,7 +73,7 @@ const DocumentFileList: React.FC<DocumentFileListProps> = ({
 
       <DocumentFilePreviewModal
         isOpen={toggleFilePreviewModel}
-        onClose={setToggleFilePreviewModel}
+        onClose={() => setToggleFilePreviewModel(false)}
         selectedFile={selectedFile}
       />
 

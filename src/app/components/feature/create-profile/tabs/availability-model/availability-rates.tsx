@@ -21,15 +21,15 @@ const AvailabilityRatesModal: React.FC<AvailabilityRatesModalProps> = ({
   handleRatesSelection,
   handleUpdateProfileField,
 }) => {
-  const [generalRate, setGeneralRate] = useState<number>(0);
+  const [generalRate, setGeneralRate] = useState<string>("");
   const [rates, setRates] = useState<any>({
-    nightRate: 0,
-    holidayRate: 0,
-    additionalChildRate: 0,
+    nightRate: "",
+    holidayRate: "",
+    additionalChildRate: "",
   });
 
   const handleRateChange = (key: string, value: string) => {
-    setRates((prev: any) => ({ ...prev, [key]: Number(value) }));
+    setRates((prev: any) => ({ ...prev, [key]: value }));
   };
 
   return (
@@ -81,9 +81,9 @@ const AvailabilityRatesModal: React.FC<AvailabilityRatesModalProps> = ({
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <Typography variant="body1">$</Typography>
             <TextField
-              type="number"
+              type="text"
               value={generalRate}
-              onChange={(e) => setGeneralRate(Number(e.target.value))}
+              onChange={(e) => setGeneralRate(e.target.value)}
               variant="outlined"
               size="small"
               sx={{ width: "80px" }}
@@ -107,9 +107,23 @@ const AvailabilityRatesModal: React.FC<AvailabilityRatesModalProps> = ({
         </Typography>
 
         {[
-          { key: "nightRate", label: "Night rate" },
-          { key: "holidayRate", label: "Holidays rate" },
-          { key: "additionalChildRate", label: "Additional child rate" },
+          {
+            key: "nightRate",
+            label: "Night rate",
+            tooltip: "Applies to hours worked outside of 9:00 AM – 5:00 PM.",
+          },
+          {
+            key: "holidayRate",
+            label: "Holidays rate",
+            tooltip:
+              "Applies to hours worked during Australian public holidays.",
+          },
+          {
+            key: "additionalChildRate",
+            label: "Additional child rate",
+            tooltip:
+              "The hourly rate that includes care for additional child(ren).",
+          },
         ].map((item) => (
           <Box
             key={item.key}
@@ -128,14 +142,16 @@ const AvailabilityRatesModal: React.FC<AvailabilityRatesModalProps> = ({
               <Typography variant="body2" color="textSecondary">
                 {item.label}
               </Typography>
-              <Tooltip title="Extra charge applies">
-                <InfoIcon />
+              <Tooltip title={item.tooltip} arrow>
+                <span style={{ display: "inline-flex", cursor: "pointer" }}>
+                  <InfoIcon />
+                </span>
               </Tooltip>
             </Box>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <Typography variant="body1">$</Typography>
               <TextField
-                type="number"
+                type="text"
                 value={rates[item.key]}
                 onChange={(e) => handleRateChange(item.key, e.target.value)}
                 variant="outlined"

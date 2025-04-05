@@ -183,6 +183,7 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
               color: COLORS.WHITE_COLOR,
             }}
             variant="primary"
+            disabled={!selectedDocument}
           >
             Upload
           </CustomButton>

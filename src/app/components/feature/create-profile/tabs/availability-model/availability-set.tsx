@@ -117,8 +117,8 @@ const AvailabilitySetModal: React.FC<AvailabilitySetModalProps> = ({
                   )
                 }
                 sx={{
-                  minWidth: "7vh",
-                  height: "7vh",
+                  width: "62px",
+                  height: "62px",
                   borderRadius: "50%",
                   backgroundColor: isSelected
                     ? COLORS.PRIMARY_COLOR

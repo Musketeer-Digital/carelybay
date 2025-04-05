@@ -10,8 +10,8 @@ import { UploadedFile } from "@/types/documentTypes";
 
 interface FilePreviewModalProps {
   isOpen: boolean;
-  onClose: Function;
-  selectedFile: UploadedFile | undefined;
+  onClose: () => void;
+  selectedFile?: UploadedFile;
 }
 
 const DocumentFilePreviewModal: React.FC<FilePreviewModalProps> = ({
@@ -21,43 +21,38 @@ const DocumentFilePreviewModal: React.FC<FilePreviewModalProps> = ({
 }) => {
   const [filePreviewUrl, setFilePreviewUrl] = useState<string | null>(null);
 
-  // Generate a preview URL when the file is selected
   useEffect(() => {
     if (selectedFile?.file) {
-      const previewUrl = URL.createObjectURL(selectedFile.file);
-      setFilePreviewUrl(previewUrl);
+      const url = URL.createObjectURL(selectedFile.file);
+      setFilePreviewUrl(url);
     }
 
     return () => {
-      if (filePreviewUrl) {
-        URL.revokeObjectURL(filePreviewUrl); // Cleanup when modal closes
-      }
+      if (filePreviewUrl) URL.revokeObjectURL(filePreviewUrl);
     };
   }, [selectedFile]);
+
+  const isPdf = selectedFile?.file?.type === "application/pdf";
+  const isImage = selectedFile?.file?.type?.startsWith("image");
 
   return (
     <CustomDialog
       open={isOpen}
-      onClose={() => onClose()}
-      title="Confirm and upload your file"
+      onClose={onClose}
+      title="Confirm and preview your file"
       maxWidth="lg"
       footerButtons={
         <CustomButton
           variant="primary"
-          onClick={() => onClose()}
-          sx={{
-            px: 3,
-
-            height: 40,
-            color: COLORS.WHITE_COLOR,
-          }}
+          onClick={onClose}
+          sx={{ px: 3, height: 40, color: COLORS.WHITE_COLOR }}
         >
           Close
         </CustomButton>
       }
     >
       <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
-        Please confirm before uploading your PDF
+        Please confirm before uploading your file
       </Typography>
 
       <Box
@@ -75,29 +70,46 @@ const DocumentFilePreviewModal: React.FC<FilePreviewModalProps> = ({
           position: "relative",
         }}
       >
-        {selectedFile && selectedFile.file.type ? (
-          <Box
-            sx={{
-              width: "100%",
-              height: "70vh",
-              maxHeight: "60vh",
-              borderRadius: "8px",
-              overflow: "hidden",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <iframe
-              src={filePreviewUrl!}
-              style={{
-                width: "100%",
-                height: "100%",
-                borderRadius: "8px",
-                border: "none",
-              }}
-            ></iframe>
-          </Box>
+        {selectedFile && filePreviewUrl ? (
+          <>
+            {isPdf && (
+              <Box
+                sx={{
+                  width: "100%",
+                  height: { xs: "50vh", md: "70vh" },
+                  borderRadius: "8px",
+                  overflow: "hidden",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <iframe
+                  src={filePreviewUrl}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    border: "none",
+                    borderRadius: "8px",
+                  }}
+                ></iframe>
+              </Box>
+            )}
+
+            {isImage && (
+              <Box
+                component="img"
+                src={filePreviewUrl}
+                alt="Uploaded preview"
+                sx={{
+                  maxWidth: "100%",
+                  maxHeight: "70vh",
+                  borderRadius: 2,
+                  objectFit: "contain",
+                }}
+              />
+            )}
+          </>
         ) : (
           <>
             <PictureAsPdfIcon
@@ -108,7 +120,7 @@ const DocumentFilePreviewModal: React.FC<FilePreviewModalProps> = ({
               sx={{ mt: 2, color: COLORS.GREY_COLOR, fontWeight: 500 }}
             >
               {selectedFile?.name} (
-              {selectedFile?.size ? Math.round(selectedFile?.size / 1024) : "0"}{" "}
+              {selectedFile?.size ? Math.round(selectedFile.size / 1024) : "0"}{" "}
               KB)
             </Typography>
           </>
