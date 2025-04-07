@@ -102,7 +102,13 @@ const CityModal: React.FC<ProfileBioCityModalProps> = ({
             <ListItem key={city} disablePadding>
               <ListItemButton
                 selected={selectedCity === city}
-                onClick={() => setSelectedCity(city)}
+                onClick={() => {
+                  if (city === selectedCity) {
+                    setSelectedCity("");
+                  } else {
+                    setSelectedCity(city);
+                  }
+                }}
                 sx={{
                   borderRadius: "8px",
                   padding: "12px",

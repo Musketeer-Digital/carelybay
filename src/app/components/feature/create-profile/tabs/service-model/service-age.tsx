@@ -83,10 +83,14 @@ const AgeModal: React.FC<ServiceAgeModalProps> = ({
           sx={{
             color: "#222",
             fontFamily: "Poppins",
-            fontSize: "24px",
             fontStyle: "normal",
             fontWeight: 600,
             lineHeight: "normal",
+            fontSize: {
+              xs: "18px",
+              sm: "20px",
+              md: "22px",
+            },
           }}
           variant="body1"
         >

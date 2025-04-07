@@ -48,7 +48,7 @@ const AvailabilityRatesModal: React.FC<AvailabilityRatesModalProps> = ({
           }}
           sx={{ px: 3, height: 40 }}
         >
-          Done
+          Save
         </CustomButton>
       }
     >
@@ -86,7 +86,13 @@ const AvailabilityRatesModal: React.FC<AvailabilityRatesModalProps> = ({
               onChange={(e) => setGeneralRate(e.target.value)}
               variant="outlined"
               size="small"
-              sx={{ width: "80px" }}
+              sx={{
+                width: {
+                  xs: 40,
+                  sm: 50,
+                  md: 62,
+                },
+              }}
             />
             <Typography variant="body2" color="textSecondary">
               / hour
@@ -136,10 +142,16 @@ const AvailabilityRatesModal: React.FC<AvailabilityRatesModalProps> = ({
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              <Typography variant="body1" fontWeight="bold">
-                <PlusIcon />
-              </Typography>
-              <Typography variant="body2" color="textSecondary">
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                sx={{
+                  fontSize: {
+                    xs: "12px",
+                    sm: "14px",
+                  },
+                }}
+              >
                 {item.label}
               </Typography>
               <Tooltip title={item.tooltip} arrow>
@@ -149,16 +161,41 @@ const AvailabilityRatesModal: React.FC<AvailabilityRatesModalProps> = ({
               </Tooltip>
             </Box>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              <Typography variant="body1">$</Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  fontSize: {
+                    xs: "12px",
+                    sm: "14px",
+                  },
+                }}
+              >
+                $
+              </Typography>
               <TextField
                 type="text"
                 value={rates[item.key]}
                 onChange={(e) => handleRateChange(item.key, e.target.value)}
                 variant="outlined"
                 size="small"
-                sx={{ width: "80px" }}
+                sx={{
+                  width: {
+                    xs: 40,
+                    sm: 50,
+                    md: 62,
+                  },
+                }}
               />
-              <Typography variant="body2" color="textSecondary">
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                sx={{
+                  fontSize: {
+                    xs: "12px",
+                    sm: "14px",
+                  },
+                }}
+              >
                 / hour
               </Typography>
             </Box>

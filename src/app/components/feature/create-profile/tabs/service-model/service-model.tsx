@@ -32,9 +32,6 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
         <Box
           sx={{
             width: "100%",
-            display: "flex",
-            justifyContent: "space-between",
-            mt: 2,
           }}
         >
           <Typography variant="body2" color="textSecondary">
@@ -44,37 +41,45 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
             <br />
             Your selection will appear here
           </Typography>
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "end",
+              mt: 2,
+            }}
+          >
+            <Box sx={{ display: "flex", gap: 2 }}>
+              <CustomButton
+                variant="contained"
+                onClick={() => {
+                  setIsModalOpen(false);
+                }}
+                sx={{
+                  px: 3,
 
-          <Box sx={{ display: "flex", gap: 2 }}>
-            <CustomButton
-              variant="contained"
-              onClick={() => {
-                setIsModalOpen(false);
-              }}
-              sx={{
-                px: 3,
+                  height: 40,
+                }}
+              >
+                Cancel
+              </CustomButton>
 
-                height: 40,
-              }}
-            >
-              Cancel
-            </CustomButton>
+              <CustomButton
+                variant="primary"
+                onClick={() => {
+                  setIsModalOpen(false);
+                  handleUpdateProfileField("services", selectedServices);
+                }}
+                sx={{
+                  px: 3,
 
-            <CustomButton
-              variant="primary"
-              onClick={() => {
-                setIsModalOpen(false);
-                handleUpdateProfileField("services", selectedServices);
-              }}
-              sx={{
-                px: 3,
-
-                height: 40,
-                color: COLORS.WHITE_COLOR,
-              }}
-            >
-              Save
-            </CustomButton>
+                  height: 40,
+                  color: COLORS.WHITE_COLOR,
+                }}
+              >
+                Save
+              </CustomButton>
+            </Box>
           </Box>
         </Box>
       }

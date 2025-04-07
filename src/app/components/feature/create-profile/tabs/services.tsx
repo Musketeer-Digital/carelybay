@@ -163,6 +163,11 @@ const Services = () => {
                   textTransform: "none",
                   color: "black",
                   borderColor: "black",
+                  fontSize: {
+                    xs: "12px",
+                    sm: "13px",
+                    md: "14px",
+                  },
                 }}
               >
                 0-{ageObjct.ageValue} Year · {ageObjct.children}
@@ -224,6 +229,11 @@ const Services = () => {
                 borderRadius: "30px",
                 color: "black",
                 border: "1px solid black",
+                fontSize: {
+                  xs: "12px",
+                  sm: "13px",
+                  md: "14px",
+                },
               }}
             >
               <GreyDotIcon />

@@ -38,11 +38,25 @@ const DocumentFileItem: React.FC<DocumentFileItemProps> = ({
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1, flex: 1 }}>
           <PDFIcon />
-          <Typography variant="body2" fontWeight="500">
+          <Typography
+            variant="body2"
+            fontWeight="500"
+            noWrap
+            sx={{
+              maxWidth: {
+                xs: 150,
+                sm: 200,
+                md: 450,
+              },
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+            title={file?.name}
+          >
             {file?.name}
           </Typography>
         </Box>
-
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <Typography variant="caption" color="textSecondary">
             {file?.size} KB

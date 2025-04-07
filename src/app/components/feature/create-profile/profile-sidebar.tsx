@@ -80,7 +80,6 @@ const ProfileSidebar = () => {
           p: 2,
           mt: 2,
           borderRadius: 4,
-          boxShadow: 1,
           bgcolor: COLORS.WHITE_COLOR,
         }}
       >
@@ -157,7 +156,7 @@ const ProfileSidebar = () => {
           mt: 3,
           p: 3,
           borderRadius: 4,
-          boxShadow: 1,
+          boxShadow: "none",
           bgcolor: COLORS.WHITE_COLOR,
         }}
       >

@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Grid, Link } from "@mui/material";
+import { Box, Grid, IconButton, Link } from "@mui/material";
 import { Typography, Divider } from "@mui/material";
 import { useEffect, useState } from "react";
 import CityModal from "./bio-models/bio-city";
@@ -11,6 +11,7 @@ import ProfileBioDescription from "./bio-models/bio-description";
 import { updateProfile } from "@/utils/api/profile";
 import { useProfileStore } from "@/store/profileSlice";
 import { getProfileBioComponents } from "@/utils/profileUtils";
+import { GreaterIcon } from "@/app/components/icons/greater-icon";
 
 const ProfileBio: React.FC = () => {
   // model toggle state
@@ -123,7 +124,7 @@ const ProfileBio: React.FC = () => {
             sx={{ marginTop: 3, cursor: "pointer" }}
             onClick={() => setIsDescriptionBioModelOpen(true)}
           >
-            Add Intro
+            {profileBioDescription ? "Edit" : "Add Intro"}
           </Link>
         </Box>
         <Grid container spacing={2}>
@@ -139,11 +140,22 @@ const ProfileBio: React.FC = () => {
                 {detail.icon}
                 <Typography variant="body1">{detail.title}</Typography>
                 <Typography
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
                   variant="body2"
                   fontWeight="bold"
                   color="textSecondary"
                 >
-                  {detail.value}
+                  {detail.value}{" "}
+                  {detail.value && (
+                    <IconButton sx={{ ml: 0 }}>
+                      {" "}
+                      <GreaterIcon />
+                    </IconButton>
+                  )}
                 </Typography>
               </Box>
               <Divider />

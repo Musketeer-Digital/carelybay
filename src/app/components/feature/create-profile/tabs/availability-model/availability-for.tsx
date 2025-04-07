@@ -47,7 +47,7 @@ const AvailabilityForModal: React.FC<AvailabilityForModalProps> = ({
           }}
           sx={{ px: 3, height: 40 }}
         >
-          Done
+          Save
         </CustomButton>
       }
     >
@@ -82,7 +82,7 @@ const AvailabilityForModal: React.FC<AvailabilityForModalProps> = ({
                 px: 2,
                 "&:hover": {
                   backgroundColor: isSelected
-                    ? `${COLORS.PRIMARY_COLOR} !important`
+                    ? `${COLORS.BG_LIGHT_ORANGE_COLOR} !important`
                     : COLORS.BG_LIGHT_GREY_COLOR,
                 },
               }}
@@ -124,7 +124,7 @@ const AvailabilityForModal: React.FC<AvailabilityForModalProps> = ({
                 px: 2,
                 "&:hover": {
                   backgroundColor: isSelected
-                    ? `${COLORS.PRIMARY_COLOR} !important`
+                    ? `${COLORS.BG_LIGHT_ORANGE_COLOR} !important`
                     : COLORS.BG_LIGHT_GREY_COLOR,
                 },
               }}

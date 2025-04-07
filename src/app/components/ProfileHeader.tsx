@@ -9,7 +9,7 @@ const ProfileHeader = () => {
   return (
     <Card
       sx={{
-        boxShadow: 2,
+        boxShadow: 1,
         borderRadius: 2,
         textAlign: "center",
         padding: { xs: 3, md: 5 },

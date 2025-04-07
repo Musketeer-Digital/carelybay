@@ -34,19 +34,26 @@ const BabySitterModal: React.FC<BabySitterModalProps> = ({
   setIsBabysitterModalOpen,
   handleUpdateProfileField,
 }) => {
-  const [childCarerType, setChildCarerType] = useState<string>("Babysitter");
+  const [childCarerTypes, setChildCarerTypes] = useState<string[]>([]);
 
   const handleSelect = (option: string) => {
-    setChildCarerType(option);
+    setChildCarerTypes((prev) =>
+      prev.includes(option)
+        ? prev.filter((item) => item !== option)
+        : [...prev, option],
+    );
   };
 
   const { userProfile } = useProfileStore();
 
   useEffect(() => {
     if (userProfile?.servicesExperience) {
-      setChildCarerType(
-        userProfile.servicesExperience.childCarerType || childCarerType,
-      );
+      const savedTypes = userProfile.servicesExperience.childCarerType;
+      if (Array.isArray(savedTypes)) {
+        setChildCarerTypes(savedTypes);
+      } else if (typeof savedTypes === "string") {
+        setChildCarerTypes([savedTypes]);
+      }
     }
   }, [userProfile]);
 
@@ -67,15 +74,8 @@ const BabySitterModal: React.FC<BabySitterModalProps> = ({
         >
           <CustomButton
             variant="contained"
-            onClick={() => {
-              setIsBabysitterModalOpen(false);
-            }}
-            sx={{
-              px: 3,
-
-              height: 40,
-              mr: 2,
-            }}
+            onClick={() => setIsBabysitterModalOpen(false)}
+            sx={{ px: 3, height: 40, mr: 2 }}
           >
             Cancel
           </CustomButton>
@@ -84,14 +84,9 @@ const BabySitterModal: React.FC<BabySitterModalProps> = ({
             variant="primary"
             onClick={() => {
               setIsBabysitterModalOpen(false);
-              handleUpdateProfileField("childCarerType", childCarerType);
+              handleUpdateProfileField("childCarerType", childCarerTypes);
             }}
-            sx={{
-              px: 3,
-
-              height: 40,
-              color: COLORS.WHITE_COLOR,
-            }}
+            sx={{ px: 3, height: 40, color: COLORS.WHITE_COLOR }}
           >
             Save
           </CustomButton>
@@ -103,41 +98,46 @@ const BabySitterModal: React.FC<BabySitterModalProps> = ({
           Add your child care
         </Typography>
       </Box>
+
       <List sx={{ width: "100%", mt: 1, p: 2 }}>
-        {options.map((option) => (
-          <ListItem
-            key={option.label}
-            disablePadding
-            sx={{
-              mb: 1,
-              borderRadius: "12px",
-              bgcolor:
-                childCarerType === option.label ? "#E0E8EF" : "transparent",
-              border:
-                childCarerType === option.label
+        {options.map((option) => {
+          const isSelected = childCarerTypes.includes(option.label);
+
+          return (
+            <ListItem
+              key={option.label}
+              disablePadding
+              sx={{
+                mb: 1,
+                borderRadius: "12px",
+                bgcolor: isSelected ? "#E0E8EF" : "transparent",
+                border: isSelected
                   ? "1px solid #E0E8EF"
                   : "1px solid transparent",
-              display: "flex",
-              alignItems: "center",
-              px: 2,
-              height: "60px",
-              transition: "all 0.2s ease",
-              cursor: "pointer",
-            }}
-            onClick={() => handleSelect(option.label)}
-          >
-            <ListItemIcon sx={{ minWidth: "40px" }}>{option.icon}</ListItemIcon>
-            <ListItemText
-              primary={option.label}
-              primaryTypographyProps={{
-                fontSize: "16px",
-                fontWeight: 500,
-                color: "#000",
+                display: "flex",
+                alignItems: "center",
+                px: 2,
+                height: "60px",
+                transition: "all 0.2s ease",
+                cursor: "pointer",
               }}
-            />
-            {childCarerType === option.label && <Checkbox checked />}
-          </ListItem>
-        ))}
+              onClick={() => handleSelect(option.label)}
+            >
+              <ListItemIcon sx={{ minWidth: "40px" }}>
+                {option.icon}
+              </ListItemIcon>
+              <ListItemText
+                primary={option.label}
+                primaryTypographyProps={{
+                  fontSize: "16px",
+                  fontWeight: 500,
+                  color: "#000",
+                }}
+              />
+              <Checkbox checked={isSelected} />
+            </ListItem>
+          );
+        })}
       </List>
     </CustomDialog>
   );

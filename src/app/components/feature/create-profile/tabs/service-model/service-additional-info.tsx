@@ -33,9 +33,6 @@ const ServiceAdditionalInfoModal: React.FC<ServiceAdditionalInfoModalProps> = ({
         <Box
           sx={{
             width: "100%",
-            display: "flex",
-            justifyContent: "space-between",
-            mt: 2,
           }}
         >
           <Typography variant="body2" color="textSecondary">
@@ -46,21 +43,29 @@ const ServiceAdditionalInfoModal: React.FC<ServiceAdditionalInfoModalProps> = ({
             <br />
             Your selection will appear here
           </Typography>
-
-          <Box sx={{ display: "flex", gap: 2 }}>
-            <CustomButton
-              variant="primary"
-              onClick={() => {
-                setIsAdditionalInfoModalOpen(false);
-                handleUpdateProfileField(
-                  "additionalInfo",
-                  selectedAdditionalInfo,
-                );
-              }}
-              sx={{ px: 3, height: 40 }}
-            >
-              Save
-            </CustomButton>
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "end",
+              mt: 2,
+            }}
+          >
+            <Box sx={{ display: "flex", gap: 2 }}>
+              <CustomButton
+                variant="primary"
+                onClick={() => {
+                  setIsAdditionalInfoModalOpen(false);
+                  handleUpdateProfileField(
+                    "additionalInfo",
+                    selectedAdditionalInfo,
+                  );
+                }}
+                sx={{ px: 3, height: 40 }}
+              >
+                Save
+              </CustomButton>
+            </Box>
           </Box>
         </Box>
       }

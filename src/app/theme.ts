@@ -58,8 +58,8 @@ const themeOptions: ThemeOptions = {
               borderColor: "#E55C15",
             },
             "&.Mui-disabled": {
-              background: "#F0F0F0",
-              color: "#BDBDBD",
+              background: "#EFEFF0",
+              color: "#5F636880",
               opacity: 0.6,
             },
           },
@@ -172,6 +172,25 @@ const themeOptions: ThemeOptions = {
           borderStyle: "solid",
           borderRadius: "10px",
           borderColor: "#CCCCCC",
+        },
+      },
+    },
+    // * COMPONENT -- MuiPaper
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          boxShadow: "none",
+          border: "1px solid #DDD",
+          borderRadius: 16,
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          border: "1px solid #E6E6E6",
+          boxShadow: "none",
+          borderRadius: 16,
         },
       },
     },

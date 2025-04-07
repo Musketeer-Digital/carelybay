@@ -57,7 +57,13 @@ const DocumentFileList: React.FC<DocumentFileListProps> = ({
         </Typography>
       </Box>
 
-      <Box>
+      <Box
+        sx={{
+          display: "flex",
+          overflowX: "auto",
+          gap: 2,
+        }}
+      >
         {fileList.map((file, index) => (
           <DocumentFileItem
             key={index + file.name}

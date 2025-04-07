@@ -24,11 +24,7 @@ const Profile = () => {
           md={8}
           lg={9}
         >
-          <Box
-            sx={{
-              pl: 3,
-            }}
-          >
+          <Box>
             <Box sx={{ mb: 3 }}>
               <Typography variant="h4" fontWeight="bold">
                 Your Profile

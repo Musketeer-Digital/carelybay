@@ -167,11 +167,24 @@ const Availability = () => {
                       sx={{
                         display: "flex",
                         alignItems: "center",
+                        justifyContent: "center",
                         mt: 2,
+                        px: 2,
+                        py: 1.5,
                         borderRadius: "24px",
                         textTransform: "none",
                         color: "#171717",
                         border: "1px solid #171717",
+                        textAlign: "center",
+                        flexDirection: {
+                          xs: "column",
+                          sm: "row",
+                        },
+                        fontSize: {
+                          xs: "12px",
+                          sm: "14px",
+                        },
+                        gap: 0.5,
                       }}
                     >
                       {availabilityData.selectedAvailability}
@@ -208,7 +221,11 @@ const Availability = () => {
                   sx={{
                     mt: 2,
                     borderRadius: "8px",
-                    width: 400,
+                    maxWidth: {
+                      xs: 290,
+                      sm: 330,
+                      md: 450,
+                    },
                   }}
                 >
                   {[
@@ -293,13 +310,22 @@ const Availability = () => {
                         const isSelected =
                           availabilityTimeData.selectedDays.includes(day);
                         return (
-                          <Button
+                          <CustomButton
                             key={day}
                             variant="contained"
                             sx={{
+                              minWidth: "0 !important",
                               mr: 1,
-                              width: "62px",
-                              height: "62px",
+                              width: {
+                                xs: 30,
+                                sm: 50,
+                                md: 62,
+                              },
+                              height: {
+                                xs: 50,
+                                sm: 50,
+                                md: 62,
+                              },
                               borderRadius: "50%",
                               backgroundColor: isSelected
                                 ? COLORS.PRIMARY_COLOR
@@ -307,14 +333,20 @@ const Availability = () => {
                               color: isSelected
                                 ? COLORS.WHITE_COLOR
                                 : COLORS.BLACK_COLOR,
-                              border: `1px solid ${isSelected ? COLORS.PRIMARY_COLOR : "#E0E0E0"}`,
-                              fontSize: "14px",
-                              fontWeight: "500",
+                              border: `1px solid ${
+                                isSelected ? COLORS.PRIMARY_COLOR : "#E0E0E0"
+                              }`,
+                              fontSize: {
+                                xs: "12px",
+                                sm: "13px",
+                                md: "14px",
+                              },
+                              fontWeight: 500,
                               textTransform: "none",
                             }}
                           >
                             {day}
-                          </Button>
+                          </CustomButton>
                         );
                       },
                     )}
@@ -328,6 +360,11 @@ const Availability = () => {
                         mt: 2,
                         borderRadius: "24px",
                         textTransform: "none",
+                        fontSize: {
+                          xs: "12px",
+                          sm: "13px",
+                          md: "14px",
+                        },
                       }}
                     >
                       {availabilityTimeData.selectedTimeSlots[0]}s{" "}
