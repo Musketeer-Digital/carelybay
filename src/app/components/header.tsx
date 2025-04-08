@@ -18,7 +18,7 @@ import { getFirstLetter } from "@/utils/utils";
 import { COLORS } from "@/constants/colors";
 import { HamBurgerMenuIcon } from "./icons/HamBurgerMenuIcon";
 
-export const Header = () => {
+const Header = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const profileData = { firstName: "S" };
@@ -214,3 +214,4 @@ export const Header = () => {
     </AppBar>
   );
 };
+export default Header;
