@@ -1,6 +1,5 @@
 import { IUserProfile } from "@/models/ProfileModel";
 import { apiRequest } from "../apiRequest";
-import { Types } from "mongoose";
 
 const PROFILE_API = "/api/profile";
 
