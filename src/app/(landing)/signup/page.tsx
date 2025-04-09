@@ -15,7 +15,7 @@ export type SignUpInputs = {
   otp: string;
 };
 
-const MAX_STEPS = 7;
+const MAX_STEPS = 8;
 type StepKey = keyof typeof steps;
 
 export default function SignupPages() {
