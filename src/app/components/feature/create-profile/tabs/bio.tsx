@@ -115,7 +115,7 @@ const ProfileBio: React.FC = () => {
   return (
     <div>
       <Box>
-        <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>
+        <Typography variant="h6" fontWeight="bold" sx={{ mb: 2, mt: 2 }}>
           Profile Bio
         </Typography>
         <Box sx={{ border: "1px dashed #ccc", p: 2, borderRadius: 2, mb: 3 }}>

@@ -116,6 +116,7 @@ const ProfileTabs = () => {
           backgroundColor: COLORS.WHITE_COLOR,
           maxHeight: "calc(100vh - 300px)",
           overflowY: "auto",
+          overflowX: "hidden",
           px: 2,
         }}
       >

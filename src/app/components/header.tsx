@@ -38,6 +38,7 @@ const Header = () => {
         width: "100%",
         boxShadow: "none",
         borderBottom: "1px solid #f0f0f0",
+        borderRadius: "unset",
       }}
     >
       <Container maxWidth={false} sx={{ px: 0 }}>
