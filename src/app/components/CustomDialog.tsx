@@ -7,6 +7,9 @@ import {
   DialogContent,
   DialogActions,
   IconButton,
+  useMediaQuery,
+  useTheme,
+  Box,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
@@ -23,13 +26,21 @@ interface CustomDialogProps {
 
 const StyledDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiPaper-root": {
-    borderRadius: "15px",
+    borderRadius: 16,
+    display: "flex",
+    flexDirection: "column",
+    maxHeight: "100dvh",
+    width: "100%", // Ensure full width on mobile
+    margin: 0, // Remove default MUI margin
+  },
+  "& .MuiDialogTitle-root": {
+    padding: theme.spacing(2),
+    fontWeight: "bold",
   },
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
-  },
-  "& .MuiDialogActions-root": {
-    padding: theme.spacing(3),
+    flex: 1,
+    overflowY: "auto",
   },
 }));
 
@@ -42,15 +53,32 @@ const CustomDialog: React.FC<CustomDialogProps> = ({
   maxWidth = "sm",
   fullWidth = true,
 }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <StyledDialog
       open={open}
       onClose={onClose}
       maxWidth={maxWidth}
       fullWidth={fullWidth}
+      PaperProps={{
+        sx: {
+          position: isMobile ? "fixed" : "relative",
+          bottom: isMobile ? 0 : "auto",
+          left: isMobile ? 0 : "auto",
+          right: isMobile ? 0 : "auto",
+          mx: isMobile ? "auto" : undefined,
+          width: isMobile ? "100%" : undefined,
+          borderRadius: isMobile ? "16px 16px 0 0" : "15px",
+          boxShadow: isMobile ? "0 -4px 16px rgba(0,0,0,0.1)" : undefined,
+          maxHeight: isMobile ? "85vh" : "calc(100vh - 64px)",
+          mt: isMobile ? "auto" : undefined,
+        },
+      }}
     >
       {title && (
-        <DialogTitle sx={{ m: 0, p: 2, fontWeight: "bold" }}>
+        <DialogTitle>
           {title}
           <IconButton
             aria-label="close"
