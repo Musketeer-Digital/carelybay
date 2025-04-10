@@ -1,71 +1,49 @@
-import PageHeader from "@/app/components/layout/page-header";
+"use client";
 import { useState } from "react";
-import { useFormContext, SubmitHandler, FieldError } from "react-hook-form";
-import { SignUpInputs } from "../page";
+import { useRouter } from "next/navigation";
+import PageHeader from "@/app/components/layout/page-header";
+import { useFormContext, SubmitHandler } from "react-hook-form";
+import { VerificationInputs } from "./page";
+import { useUserStore } from "@/store/userStore";
 import {
-  Container,
+  Box,
   Typography,
-  Link,
   Button,
   TextField,
-  Box,
+  Stack,
+  Container,
+  Link,
 } from "@mui/material";
+import { OTPInput } from "@/app/components/forms/otp-input";
+import { useSession } from "next-auth/react";
 
-interface VerifyEmailCodeProps {
-  prevStep?: () => void;
-  nextStep?: () => void;
-}
+export default function VerifyEmailCode() {
+  const router = useRouter();
+  const [error, setError] = useState<string>("");
+  const [isVerifying, setIsVerifying] = useState(false);
+  const userInfo = useUserStore((state) => state.userInfo);
 
-const OTPInput = ({
-  name,
-  error,
-  register,
-}: {
-  name: string;
-  error?: FieldError;
-  register: any;
-}) => (
-  <TextField
-    {...register(name, { required: "OTP is required" })}
-    error={!!error}
-    helperText={error?.message}
-    type="text"
-    slotProps={{
-      htmlInput: {
-        maxLength: 1,
-        sx: {
-          textAlign: "center",
-          justifyContent: "center",
-          padding: 0,
-          width: {
-            xs: 50,
-            md: 48,
-          },
-          height: {
-            xs: 60,
-            md: 48,
-          },
-        },
-      },
-    }}
-  />
-);
+  const { data: session } = useSession();
 
-export default function VerifyEmailCode({
-  prevStep = () => {},
-  nextStep = () => {},
-}: VerifyEmailCodeProps) {
-  const [error, setError] = useState("");
   const {
-    getValues,
-    register,
     handleSubmit,
-    reset,
+    watch,
     formState: { errors },
-  } = useFormContext<SignUpInputs>();
+    control,
+    register,
+    getValues,
+  } = useFormContext<VerificationInputs>();
 
-  const onSubmit: SubmitHandler<SignUpInputs> = async (data: SignUpInputs) => {
-    const { email, password } = getValues();
+  const email = userInfo?.email;
+
+  if (!email) {
+    console.warn("Verify Page - email not found, redirecting to signup");
+    router.replace("/signup");
+  }
+
+  const onSubmit: SubmitHandler<VerificationInputs> = async (
+    data: VerificationInputs,
+  ) => {
     const otp = `${data.otp.join("")}`;
 
     try {
@@ -74,12 +52,11 @@ export default function VerifyEmailCode({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password, otp }),
+        body: JSON.stringify({ email, otp }),
       });
 
       if (response.ok) {
-        reset();
-        return nextStep();
+        router.push("/signup/personal-information");
       }
     } catch (error) {
       setError(
@@ -92,7 +69,7 @@ export default function VerifyEmailCode({
     <Container>
       <PageHeader
         heading="Check your email for a code"
-        subtitle={`We sent a code to ${getValues("email")} to verify your email`}
+        subtitle={`We sent a code to ${email} to verify your email`}
         sx={{ mb: 4 }}
       />
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -133,7 +110,12 @@ export default function VerifyEmailCode({
         }}
       >
         Can't find the email? Check your spam folder, or{" "}
-        <Link onClick={prevStep} sx={{ cursor: "pointer" }}>
+        <Link
+          onClick={() => {
+            router.push("/signup");
+          }}
+          sx={{ cursor: "pointer" }}
+        >
           re-enter your email and try again
         </Link>
       </Typography>
