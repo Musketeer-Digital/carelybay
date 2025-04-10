@@ -1,16 +1,15 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
-import bcrypt from "bcryptjs";
 import User from "@/models/User";
 import OTP from "@/models/OTP";
 
 export async function POST(req: Request) {
   try {
     await connectDB();
-    const { email, password, otp } = await req.json();
+    const { email, otp } = await req.json();
 
     // Check if all required fields are provided
-    if (!email || !password || !otp) {
+    if (!email || !otp) {
       return NextResponse.json(
         { success: false, message: "All fields are required" },
         { status: 403 },
@@ -36,11 +35,10 @@ export async function POST(req: Request) {
       );
     }
 
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const { password } = recentOTP;
 
     // Create new user
-    const newUser = await User.create({ email, password: hashedPassword });
+    const newUser = await User.create({ email, password });
 
     return NextResponse.json(
       { success: true, message: "User registered successfully", user: newUser },

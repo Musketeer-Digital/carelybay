@@ -4,7 +4,15 @@ import { mailSender } from "@/lib/mailSender";
 const otpSchema = new mongoose.Schema({
   email: {
     type: String,
-    required: true,
+    unique: true,
+    required: [true, "Email is required"],
+    match: [
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      "Email is invalid",
+    ],
+  },
+  password: {
+    type: String,
   },
   otp: {
     type: String,

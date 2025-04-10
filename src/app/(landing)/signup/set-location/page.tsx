@@ -1,23 +1,14 @@
 "use client";
-import React, { useState } from "react";
-import { Box, Container, StepContext } from "@mui/material";
+import React from "react";
+import { Box, Container } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
-import { useUserStore } from "@/store/userStore";
-import UserNotificationMessage from "./_components_/UserNotificationMessage";
+import UserNotificationMessage from "../_components_/UserNotificationMessage";
 import SignupMarketingPanel from "@/app/components/signup-marketing-panel/signup-marketing-panel";
 import SignInMessage from "@/app/components/SignInMessage";
-import { signupSteps as steps } from "./steps";
-import SignUp from "./_components_/signup";
-import SessionControls from "@/app/components/session-controls";
+import SetLocation, { SetLocationInputs } from "../_components_/set-location";
 
-export type SignUpInputs = {
-  email: string;
-  password: string;
-  otp: string[];
-};
-
-export default function SignupPages() {
-  const methods = useForm<SignUpInputs>();
+export default function SetLocationPage() {
+  const methods = useForm<SetLocationInputs>();
 
   return (
     <Container
@@ -50,22 +41,18 @@ export default function SignupPages() {
           }}
         >
           <UserNotificationMessage
-            icon={"👋"}
-            message={"Welcome to Carelybay"}
+            icon="✅"
+            message="Verification completed successfully."
             sx={{ mb: 4 }}
           />
 
-          {/* Step Content */}
           <FormProvider {...methods}>
             <Box sx={{ mb: 6 }}>
-              <SignUp />
+              <SetLocation />
             </Box>
           </FormProvider>
 
           <SignInMessage sx={{ mb: { xs: 2, md: 5 } }} />
-
-          {/* TODO: Remove after debugging */}
-          <SessionControls />
         </Container>
       </Box>
 
