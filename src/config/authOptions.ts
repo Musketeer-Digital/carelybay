@@ -23,23 +23,38 @@ export const authOptions: NextAuthOptions = {
       credentials: {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
+        otp: { label: "OTP", type: "otp" },
       },
       async authorize(credentials) {
         await connectDB();
 
+        const { email, password, otp } = credentials || {};
+
+        if (otp) {
+          // Find the most recent OTP for the email
+          const recentOTP = await OTP.findOne({ email }).sort({
+            createdAt: -1,
+          });
+
+          if (!recentOTP || otp !== recentOTP.otp) {
+            throw new Error("Invalid OTP");
+          }
+        }
+
         const user = await User.findOne({
-          email: credentials?.email,
+          email,
         }).select("+password");
 
         if (!user) throw new Error("Wrong Email");
 
-        const passwordMatch = await bcrypt.compare(
-          credentials!.password,
-          user.password,
-        );
+        if (password) {
+          const passwordMatch = await bcrypt.compare(
+            credentials!.password,
+            user.password,
+          );
 
-        if (!passwordMatch) throw new Error("Wrong Password");
-
+          if (!passwordMatch) throw new Error("Wrong Password");
+        }
         return user;
       },
     }),

@@ -15,7 +15,7 @@ import {
   Link,
 } from "@mui/material";
 import { OTPInput } from "@/app/components/forms/otp-input";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 export default function VerifyEmailCode() {
   const router = useRouter();
@@ -56,7 +56,12 @@ export default function VerifyEmailCode() {
       });
 
       if (response.ok) {
-        router.push("/signup/personal-information");
+        await signIn("credentials", {
+          email,
+          otp,
+          redirect: true,
+          callbackUrl: "/signup/personal-information",
+        });
       }
     } catch (error) {
       setError(
