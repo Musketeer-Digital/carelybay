@@ -39,6 +39,50 @@ const conversationSet1 = [
   },
 ];
 
+const messageSet: Record<string, Message[]> = {
+  conv1: [
+    {
+      id: "msg1",
+      senderId: "me",
+      recipientId: "user_123",
+      content: "Hi Jane, thanks for applying!",
+      timestamp: "2025-04-11T10:00:00Z",
+    },
+    {
+      id: "msg2",
+      senderId: "user_123",
+      recipientId: "me",
+      content: "Looking forward to the interview!",
+      timestamp: "2025-04-11T10:05:00Z",
+    },
+  ],
+  conv2: [
+    {
+      id: "msg3",
+      senderId: "me",
+      recipientId: "user_456",
+      content: "Hi John!",
+      timestamp: "2025-04-11T09:00:00Z",
+    },
+    {
+      id: "msg4",
+      senderId: "user_456",
+      recipientId: "me",
+      content: "Thanks for applying!",
+      timestamp: "2025-04-11T09:01:00Z",
+    },
+  ],
+  conv3: [
+    {
+      id: "msg5",
+      senderId: "user_789",
+      recipientId: "me",
+      content: "Can you start next week?",
+      timestamp: "2025-04-10T08:00:00Z",
+    },
+  ],
+};
+
 export default function Messages() {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [messages, setMessages] = useState([]);
