@@ -101,8 +101,8 @@ const LanguageModal: React.FC<ProfileBioLanguageModalProps> = ({
 
       <List sx={{ width: "100%", maxHeight: "350px", overflowY: "auto" }}>
         {filteredLanguages.length > 0 ? (
-          filteredLanguages.map((language) => (
-            <ListItem key={language} disablePadding>
+          filteredLanguages.map((language, index) => (
+            <ListItem key={language + index} disablePadding>
               <ListItemButton
                 onClick={() => handleSelectLanguage(language)}
                 sx={{

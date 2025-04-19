@@ -25,6 +25,8 @@ import {
 } from "@/utils/profileUtils";
 import { useProfileStore } from "@/store/profileSlice";
 import { updateProfile } from "@/utils/api/profile";
+import { getIconByLabel } from "@/utils/utils";
+import { additionalInfoOptions } from "../profile-options";
 
 const Services = () => {
   // model toggle states
@@ -35,6 +37,7 @@ const Services = () => {
     useState(false);
 
   // local states
+  const [childCarerTypes, setChildCarTypes] = useState<string[]>([]);
   const [selectedServices, setSelectedServices] = useState<IService[]>([]);
   const [selectedAdditionalInfo, setSelectedAdditionalInfo] = useState<
     IAdditionalInfo[]
@@ -49,6 +52,7 @@ const Services = () => {
       setSelectedAdditionalInfo(
         userProfile.servicesExperience.additionalInfo || [],
       );
+      setChildCarTypes(userProfile.servicesExperience.childCarerType || []);
       setSelectedAges(userProfile.servicesExperience.ageGroupExperience || []);
     }
   }, [userProfile]);
@@ -97,39 +101,80 @@ const Services = () => {
         >
           <ChildCareIcon /> What kind of child carer are you?
         </Typography>
-        <Box
-          sx={{
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-            bgcolor: "#E0E8EF",
-            borderRadius: 4,
-            px: 1,
-            p: 3,
-            py: 1.2,
-            width: "fit-content",
-            mb: 3,
-            mt: 2,
-            height: 65,
-          }}
-          onClick={() => setIsBabysitterModalOpen(true)}
-        >
+        <Box sx={{ display: "flex", gap: 1 }}>
+          {childCarerTypes.map((childCare) => {
+            return (
+              <Box
+                sx={{
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  bgcolor: "#E0E8EF",
+                  borderRadius: 4,
+                  px: 1,
+                  p: 3,
+                  py: 1.2,
+                  width: "fit-content",
+                  mb: 3,
+                  mt: 2,
+                  height: 65,
+                }}
+                onClick={() => setIsBabysitterModalOpen(true)}
+              >
+                <Box
+                  sx={{
+                    bgcolor: "white",
+                    borderRadius: "8px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: 30,
+                    height: 30,
+                  }}
+                >
+                  <BabySitterIcon />
+                </Box>
+                <Typography fontSize="1rem">{childCare}</Typography>
+              </Box>
+            );
+          })}
+        </Box>
+        {!childCarerTypes.length && (
           <Box
             sx={{
-              bgcolor: "white",
-              borderRadius: "8px",
+              cursor: "pointer",
               display: "flex",
               alignItems: "center",
-              justifyContent: "center",
-              width: 30,
-              height: 30,
+              gap: 1,
+              bgcolor: "#E0E8EF",
+              borderRadius: 4,
+              px: 1,
+              p: 3,
+              py: 1.2,
+              width: "fit-content",
+              mb: 3,
+              mt: 2,
+              height: 65,
             }}
+            onClick={() => setIsBabysitterModalOpen(true)}
           >
-            <BabySitterIcon />
+            <Box
+              sx={{
+                bgcolor: "white",
+                borderRadius: "8px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: 30,
+                height: 30,
+              }}
+            >
+              <BabySitterIcon />
+            </Box>
+            <Typography fontSize="1rem">Babysitter</Typography>
           </Box>
-          <Typography fontSize="1rem">Babysitter</Typography>
-        </Box>
+        )}
       </Box>
       <Divider />
       <Box
@@ -320,7 +365,7 @@ const Services = () => {
                     justifyContent: "center",
                   }}
                 >
-                  {icon}
+                  {getIconByLabel(label, additionalInfoOptions)}
                 </Box>
 
                 {/* Label */}

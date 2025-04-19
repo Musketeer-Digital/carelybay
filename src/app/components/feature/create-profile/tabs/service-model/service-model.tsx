@@ -6,6 +6,7 @@ import CustomDialog from "@/app/components/CustomDialog";
 import CustomButton from "@/app/components/CustomButton";
 import { servicesList } from "../../profile-options";
 import React from "react";
+import { getIconByLabel } from "@/utils/utils";
 
 interface ServiceModalProps {
   isModalOpen: boolean;
@@ -110,7 +111,7 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
                         },
                       }}
                     >
-                      {service.icon}
+                      {getIconByLabel(service.label, servicesList)}
                     </IconButton>
                   ) : (
                     <IconButton
@@ -125,7 +126,7 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
                           color: COLORS.BLACK_COLOR,
                         }}
                       >
-                        {service.icon}
+                        {getIconByLabel(service.label, servicesList)}
                       </span>
                     </IconButton>
                   )

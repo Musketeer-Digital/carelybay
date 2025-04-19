@@ -7,7 +7,7 @@ export const createProfile = async (profileData: Partial<IUserProfile>) => {
   return apiRequest(`${PROFILE_API}/create`, "POST", profileData);
 };
 
-export const getProfile = async (id: string) => {
+export const getProfileByUserId = async (id: string) => {
   return apiRequest(`${PROFILE_API}/${id}`, "GET");
 };
 

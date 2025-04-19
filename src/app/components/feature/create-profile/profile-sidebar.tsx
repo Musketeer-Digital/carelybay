@@ -166,7 +166,7 @@ const ProfileSidebar = () => {
         <List>
           {confirmedInfo.map((item, index) => (
             <ListItem
-              key={index}
+              key={index + item.title}
               sx={{ display: "flex", alignItems: "center" }}
             >
               <CheckIcon />

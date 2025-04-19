@@ -98,8 +98,8 @@ const CityModal: React.FC<ProfileBioCityModalProps> = ({
 
       {filteredCities.length > 0 ? (
         <List sx={{ width: "100%", maxHeight: "350px", overflowY: "auto" }}>
-          {filteredCities.map((city) => (
-            <ListItem key={city} disablePadding>
+          {filteredCities.map((city, index) => (
+            <ListItem key={city + index} disablePadding>
               <ListItemButton
                 selected={selectedCity === city}
                 onClick={() => {

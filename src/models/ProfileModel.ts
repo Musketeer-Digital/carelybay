@@ -17,7 +17,7 @@ export interface IPersonalInfo {
 }
 
 export interface IServicesExperience {
-  childCarerType?: string;
+  childCarerType?: string[];
   services?: IService[];
   skills?: string[];
   ageGroupExperience?: IServiceAge[];
@@ -80,7 +80,7 @@ const ProfileSchema = new Schema<IUserProfile>(
     },
 
     servicesExperience: {
-      childCarerType: { type: String },
+      childCarerType: { type: [String], default: [] },
       services: { type: [Schema.Types.Mixed], default: [] },
       skills: { type: [String], default: [] },
       ageGroupExperience: { type: [Schema.Types.Mixed], default: [] },

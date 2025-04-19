@@ -1,25 +1,62 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, Typography, Box } from "@mui/material";
 import ProfileHeader from "../components/ProfileHeader";
 import CustomButton from "../components/CustomButton";
 import Link from "next/link";
-import { createProfile } from "@/utils/api/profile";
+import { createProfile, getProfileByUserId } from "@/utils/api/profile";
 import { useProfileStore } from "@/store/profileSlice";
 import { IUserProfile } from "@/models/ProfileModel";
 import { useRouter } from "next/navigation";
 import { FullscreenSpinner } from "../components/feature/CustomSpinner";
+import { getUser } from "@/utils/api/user";
+import { useUserStore } from "@/store/userSlice";
 
 const LandingScreen: React.FC = () => {
   const { userProfile, setUserProfile } = useProfileStore();
+  const { user, setUser } = useUserStore();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  useEffect(() => {
+    if (user?._id) {
+      fetchUserProfile(user._id);
+    }
+  }, [user]);
+
+  const fetchUser = async () => {
+    setIsLoading(true);
+    try {
+      const userId = "67ddd8d4226ba4f84adc4a74";
+      const user = await getUser(userId);
+      setUser(user);
+    } catch (error) {
+      console.error("Failed to fetch user:", error);
+      setIsLoading(false);
+    }
+  };
+
+  const fetchUserProfile = async (userId: string) => {
+    try {
+      const profile = await getProfileByUserId(userId);
+      setUserProfile(profile);
+      router.push("/profile/create-profile#personal-info");
+    } catch (error) {
+      console.error("Failed to fetch user profile:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const onCreateProfile = async () => {
     setIsLoading(true);
     try {
       const initialProfileDetails: Partial<IUserProfile> = {
-        userId: userProfile?.userId || "67ddd8d4226ba4f84adc4a74",
+        userId: user?._id,
         firstName: userProfile?.firstName || "New User",
         lastName: userProfile?.lastName || "Profile",
       };

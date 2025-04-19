@@ -68,6 +68,7 @@ const Availability = () => {
       }
 
       const updatedProfile = await updateProfile({
+        ...userProfile,
         availabilityRates: {
           ...userProfile.availabilityRates,
           [field]: value,

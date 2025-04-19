@@ -1,19 +1,14 @@
+import { UserDocument } from "@/models/User";
 import { create } from "zustand";
 
-type User = {
-  id: string;
-  name: string;
-  email: string;
-};
-
 type UserState = {
-  users: User[];
-  addUser: (user: User) => void;
-  setUsers: (users: User[]) => void;
+  user: Partial<UserDocument> | undefined;
+  setUser: (user: Partial<UserDocument>) => void;
+  clearUser: () => void;
 };
 
 export const useUserStore = create<UserState>((set) => ({
-  users: [],
-  addUser: (user) => set((state) => ({ users: [...state.users, user] })),
-  setUsers: (users) => set({ users }),
+  user: { _id: undefined }, // or leave empty: user: undefined,
+  setUser: (user) => set({ user }),
+  clearUser: () => set({ user: undefined }),
 }));

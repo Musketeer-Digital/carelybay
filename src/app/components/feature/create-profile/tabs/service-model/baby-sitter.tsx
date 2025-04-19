@@ -100,12 +100,12 @@ const BabySitterModal: React.FC<BabySitterModalProps> = ({
       </Box>
 
       <List sx={{ width: "100%", mt: 1, p: 2 }}>
-        {options.map((option) => {
+        {options.map((option, index) => {
           const isSelected = childCarerTypes.includes(option.label);
 
           return (
             <ListItem
-              key={option.label}
+              key={option.label + index}
               disablePadding
               sx={{
                 mb: 1,

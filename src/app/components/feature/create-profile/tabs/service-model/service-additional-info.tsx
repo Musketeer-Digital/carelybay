@@ -7,6 +7,7 @@ import CustomButton from "@/app/components/CustomButton";
 import { additionalInfoOptions } from "../../profile-options";
 import React from "react";
 import { IAdditionalInfo } from "@/utils/profileUtils";
+import { getIconByLabel } from "@/utils/utils";
 
 interface ServiceAdditionalInfoModalProps {
   isAdditionalInfoModalOpen: boolean;
@@ -75,14 +76,14 @@ const ServiceAdditionalInfoModal: React.FC<ServiceAdditionalInfoModalProps> = ({
       </Typography>
 
       <Grid container spacing={2} justifyContent="center" sx={{ mt: 2 }}>
-        {additionalInfoOptions.map((item) => {
+        {additionalInfoOptions.map((item, index) => {
           const isSelected = selectedAdditionalInfo.some(
             (i) => i.id === item.id,
           );
           return (
             <Grid
               item
-              key={item.id}
+              key={item.id + index}
               xs={6}
               sm={3}
               textAlign="center"
@@ -109,7 +110,7 @@ const ServiceAdditionalInfoModal: React.FC<ServiceAdditionalInfoModalProps> = ({
                   "& svg": { filter: isSelected ? "invert(1)" : "invert(0)" },
                 }}
               >
-                {item.icon}
+                {getIconByLabel(item.label, additionalInfoOptions)}
               </IconButton>
 
               <Typography

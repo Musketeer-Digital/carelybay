@@ -55,8 +55,8 @@ const QualificationModal: React.FC<ProfileBioQualificationModalProps> = ({
           p: 3,
         }}
       >
-        {qualificationsList.map((qualification) => (
-          <ListItem key={qualification} disablePadding>
+        {qualificationsList.map((qualification, index) => (
+          <ListItem key={qualification + index} disablePadding>
             <ListItemButton
               selected={selectedQualification === qualification}
               onClick={() => setSelectedQualification(qualification)}
