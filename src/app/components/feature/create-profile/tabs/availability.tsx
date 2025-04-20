@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Typography,
   Box,
@@ -54,8 +54,34 @@ const Availability = () => {
     additionalHours: [],
   });
 
-  // zustand
+  // Zustand store
   const { userProfile, setUserProfile } = useProfileStore();
+
+  useEffect(() => {
+    const profileRates = userProfile.availabilityRates;
+
+    if (profileRates) {
+      setAvailabilityData({
+        selectedAvailability: profileRates.availableFor?.availability || null,
+        selectedUrgency: profileRates.availableFor?.urgency || null,
+      });
+
+      setAvailabilityTimeData({
+        selectedDays: profileRates.availability?.days || [],
+        selectedTimeSlots: profileRates.availability?.timeSlots || [],
+        additionalHours: profileRates.availability?.additionalHours || [],
+      });
+
+      setRateData({
+        generalRate: profileRates.rates?.generalRate ?? "",
+        rates: profileRates.rates?.rates || {
+          nightRate: "",
+          holidayRate: "",
+          additionalChildRate: "",
+        },
+      });
+    }
+  }, [userProfile.availabilityRates]);
 
   const handleUpdateProfileField = async (
     field: keyof typeof userProfile.availabilityRates,

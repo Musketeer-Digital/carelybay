@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
-import UserProfile from "@/models/ProfileModel";
+import User from "@/models/User";
 
-// GET /api/profile/[id]
+// GET /api/user/[id]
 export async function GET(
   req: NextRequest,
   { params }: { params: { id: string } },
@@ -10,16 +10,13 @@ export async function GET(
   await connectDB();
 
   try {
-    const profile = await UserProfile.findOne({ userId: params.id });
-    if (!profile) {
-      return NextResponse.json({ error: "Profile not found" }, { status: 404 });
+    const user = await User.findById(params.id);
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
-    return NextResponse.json(profile);
+    return NextResponse.json(user);
   } catch (error) {
-    console.error("Error fetching profile:", error);
-    return NextResponse.json(
-      { error: "Error fetching profile" },
-      { status: 500 },
-    );
+    console.error("Error fetching user:", error);
+    return NextResponse.json({ error: "Error fetching user" }, { status: 500 });
   }
 }
