@@ -1,7 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { Box, Typography, Select, MenuItem, Divider } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Select,
+  MenuItem,
+  Divider,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import { COLORS } from "@/constants/colors";
 import { InfoIcon } from "@/app/components/icons/info-icon";
 import DocumentFileList from "./documents/document-fileList";
@@ -15,14 +23,15 @@ const Documents = () => {
   const [selectedDocument, setSelectedDocument] = useState("");
   const [fileList, setFileList] = useState<UploadedFile[]>([]);
   const router = useRouter();
-
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   return (
     <Box
       sx={{
         borderRadius: 2,
         mx: "auto",
         mt: 5,
-        mb: 5,
+        mb: "100px",
         display: "flex",
         flexDirection: "column",
         width: "100%",

@@ -114,13 +114,7 @@ const ProfileTabs = () => {
         sx={{
           mt: 3,
           backgroundColor: COLORS.WHITE_COLOR,
-          height: {
-            xs: "calc(100dvh - 200px)",
-            sm: "calc(100dvh - 220px)",
-            md: "calc(100dvh - 240px)",
-            lg: "calc(100dvh - 260px)",
-            xl: "calc(100dvh - 280px)",
-          },
+          height: "100%",
           overflowY: "auto",
           overflowX: "hidden",
           px: 2,

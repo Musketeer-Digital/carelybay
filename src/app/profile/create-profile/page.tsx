@@ -1,16 +1,33 @@
 "use client";
 
 import React from "react";
-import { Grid, Typography, Box, Link, Divider } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  Box,
+  Link,
+  Divider,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import ProfileSidebar from "@/app/components/feature/create-profile/profile-sidebar";
 import ProfileTabs from "@/app/components/feature/create-profile/profile-tabs";
 import { COLORS } from "@/constants/colors";
 
 const Profile = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
-    <Box sx={{ height: "100%", overflow: "hidden" }}>
+    <Box sx={{ height: isMobile ? "100%" : "90vh", overflow: "hidden" }}>
       <Grid container sx={{ height: "100%" }}>
-        <Grid item xs={12} md={4} lg={3}>
+        <Grid
+          item
+          xs={12}
+          md={4}
+          lg={3}
+          sx={{ height: "100%", overflowY: "auto" }}
+        >
           <ProfileSidebar />
         </Grid>
 
@@ -22,14 +39,12 @@ const Profile = () => {
           sx={{
             display: "flex",
             flexDirection: "column",
-            height: "90dvh",
-            overflow: "hidden",
+            height: "90vh",
             borderLeft: "1px solid #E4E4E4",
             pl: 3,
-            mt: 2,
           }}
         >
-          <Box sx={{ mb: 3, flexShrink: 0 }}>
+          <Box sx={{ mb: 3, flexShrink: 0, pt: 2 }}>
             <Typography variant="h4" fontWeight="bold">
               Your Profile
             </Typography>
