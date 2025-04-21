@@ -21,7 +21,9 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
   selectedDocument,
 }) => {
   const [isDragging, setIsDragging] = useState(false);
+
   const { userProfile, setUserProfile } = useProfileStore();
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   console.log("selectedDocument", selectedDocument);
   const handleFileUploading = async (selectedFile: File) => {
@@ -50,6 +52,7 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
         : [newDocument];
 
       const updatedProfile = await updateProfile({
+        ...userProfile,
         documents: fileList,
       });
 

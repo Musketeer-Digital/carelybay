@@ -13,19 +13,20 @@ import { getUser } from "@/utils/api/user";
 import { useUserStore } from "@/store/userSlice";
 
 const LandingScreen: React.FC = () => {
-  const { userProfile, setUserProfile } = useProfileStore();
-  const { user, setUser } = useUserStore();
+  const { setUserProfile, clearUserProfile } = useProfileStore();
+  const { user, setUser, clearUser } = useUserStore();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
-    fetchUser();
-  }, []);
-
-  useEffect(() => {
-    if (user?._id) {
-      fetchUserProfile(user._id);
+    if (!user || !user._id) {
+      fetchUser();
     }
+
+    // return () => {
+    //   clearUserProfile();
+    //   clearUser();
+    // };
   }, [user]);
 
   const fetchUser = async () => {
@@ -34,42 +35,42 @@ const LandingScreen: React.FC = () => {
       const userId = "67ddd8d4226ba4f84adc4a74";
       const user = await getUser(userId);
       setUser(user);
+      setIsLoading(false);
     } catch (error) {
       console.error("Failed to fetch user:", error);
       setIsLoading(false);
     }
   };
 
-  const fetchUserProfile = async (userId: string) => {
+  const onCreateProfile = async () => {
+    if (!user?._id) return;
+
+    setIsLoading(true);
+
     try {
-      const profile = await getProfileByUserId(userId);
-      setUserProfile(profile);
-      router.push("/profile/create-profile#personal-info");
+      // Try fetching profile
+      const profile = await getProfileByUserId(user._id);
+
+      if (profile?._id) {
+        // Profile already exists
+        setUserProfile(profile);
+        router.push("/profile/create-profile#personal-info");
+      } else {
+        // Profile doesn't exist, create one
+        const initialProfileDetails: Partial<IUserProfile> = {
+          userId: user._id,
+          firstName: "New User",
+          lastName: "Profile",
+        };
+
+        const newProfile = await createProfile(initialProfileDetails);
+        setUserProfile(newProfile);
+        router.push("/profile/create-profile#personal-info");
+      }
     } catch (error) {
-      console.error("Failed to fetch user profile:", error);
+      console.error("Failed to fetch/create profile:", error);
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const onCreateProfile = async () => {
-    setIsLoading(true);
-    try {
-      const initialProfileDetails: Partial<IUserProfile> = {
-        userId: user?._id,
-        firstName: userProfile?.firstName || "New User",
-        lastName: userProfile?.lastName || "Profile",
-      };
-
-      const updatedProfile = await createProfile(initialProfileDetails);
-      setUserProfile(updatedProfile);
-      setIsLoading(false);
-
-      router.push("/profile/create-profile#personal-info");
-    } catch (error) {
-      setIsLoading(false);
-      //  router.push("/profile/create-profile"); // doing this becuase we are not getting success on profile creation
-      console.error("Failed to create profile:", error);
     }
   };
 

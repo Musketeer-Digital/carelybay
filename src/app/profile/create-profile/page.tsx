@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
   Typography,
@@ -13,13 +13,53 @@ import {
 import ProfileSidebar from "@/app/components/feature/create-profile/profile-sidebar";
 import ProfileTabs from "@/app/components/feature/create-profile/profile-tabs";
 import { COLORS } from "@/constants/colors";
+import { getUser } from "@/utils/api/user";
+import { getProfileByUserId } from "@/utils/api/profile";
+import { useProfileStore } from "@/store/profileSlice";
+import { useUserStore } from "@/store/userSlice";
+import { FullscreenSpinner } from "@/app/components/feature/CustomSpinner";
 
 const Profile = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const { setUserProfile, clearUserProfile } = useProfileStore();
+  const { setUser, clearUser } = useUserStore();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    initUserAndProfile();
+
+    // return () => {
+    //   clearUserProfile();
+    //   clearUser();
+    // };
+  }, []);
+
+  const initUserAndProfile = async () => {
+    setIsLoading(true);
+
+    try {
+      const userId = "67ddd8d4226ba4f84adc4a74";
+      const user = await getUser(userId);
+      setUser(user);
+
+      if (!user?._id) return;
+
+      const profile = await getProfileByUserId(user._id);
+      if (profile?._id) {
+        setUserProfile(profile);
+      }
+    } catch (error) {
+      console.error("Failed to fetch user/profile:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Box sx={{ height: isMobile ? "100%" : "90vh", overflow: "hidden" }}>
+      {isLoading && <FullscreenSpinner />}
+
       <Grid container sx={{ height: "100%" }}>
         <Grid
           item
