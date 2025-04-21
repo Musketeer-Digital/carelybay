@@ -19,16 +19,15 @@ import { GreaterIcon } from "../../icons/greater-icon";
 import { ElderAgeIcon } from "../../icons/elderage-icon";
 import { InfoIcon } from "../../icons/info-icon";
 import { CheckIcon } from "../../icons/check-icon";
+import { useUserStore } from "@/store/userSlice";
 
 const ProfileSidebar = () => {
+  const { user } = useUserStore();
+
   const confirmedInfo = [
     { title: "Email address", verified: true },
     { title: "Phone number", verified: true },
   ];
-  const profileData = {
-    firstName: "John",
-    lastName: "Doe",
-  };
 
   return (
     <Box sx={{ p: 3 }}>
@@ -50,7 +49,7 @@ const ProfileSidebar = () => {
             color: "black",
           }}
         >
-          {profileData.firstName.charAt(0)}
+          {user?.name?.charAt(0)}
         </Avatar>
         <CustomButton
           variant="outlined"
@@ -72,7 +71,7 @@ const ProfileSidebar = () => {
           variant="h4"
           fontWeight="bold"
           sx={{ mt: 2 }}
-        >{`${profileData.firstName} ${profileData.lastName}`}</Typography>
+        >{`${user?.name}`}</Typography>
       </Box>
 
       <Card
@@ -161,7 +160,7 @@ const ProfileSidebar = () => {
         }}
       >
         <Typography variant="h6" fontWeight="bold">
-          {`${profileData.firstName} ${profileData.lastName}`} confirmed info
+          {`${user?.name}`} confirmed info
         </Typography>
         <List>
           {confirmedInfo.map((item, index) => (

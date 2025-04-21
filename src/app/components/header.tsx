@@ -17,14 +17,16 @@ import {
 import { getFirstLetter } from "@/utils/utils";
 import { COLORS } from "@/constants/colors";
 import { HamBurgerMenuIcon } from "./icons/HamBurgerMenuIcon";
+import { useUserStore } from "@/store/userSlice";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const profileData = { firstName: "S" };
   const handleMenuOpen = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const { user } = useUserStore();
 
   const handleMenuClose = () => {
     setAnchorEl(null);
@@ -136,7 +138,7 @@ const Header = () => {
             }}
           >
             <Typography variant="h6" sx={{ fontSize: 28, fontWeight: "bold" }}>
-              {getFirstLetter(profileData?.firstName)}
+              {getFirstLetter(user?.name ?? "S")}
             </Typography>
           </IconButton>
         </Toolbar>
