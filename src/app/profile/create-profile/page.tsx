@@ -25,7 +25,7 @@ const Profile = () => {
             height: "90dvh",
             overflow: "hidden",
             borderLeft: "1px solid #E4E4E4",
-            pl: 5,
+            pl: 3,
             mt: 2,
           }}
         >
