@@ -4,8 +4,12 @@ import { Avatar, Card, Box, Typography, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { COLORS } from "@/constants/colors";
 import { ChildCareIcon } from "./icons/childcare-icon";
+import { useUserStore } from "@/store/userSlice";
+import { getFirstLetter } from "@/utils/utils";
 
 const ProfileHeader = () => {
+  const { user } = useUserStore();
+
   return (
     <Card
       sx={{
@@ -31,11 +35,11 @@ const ProfileHeader = () => {
             color: COLORS.BLACK_COLOR,
           }}
         >
-          S
+          {getFirstLetter(user?.name ?? "S")}
         </Avatar>
       </Box>
       <Typography variant="h5" sx={{ fontWeight: "bold", marginTop: 2 }}>
-        Swan
+        {user?.name ?? ""}
       </Typography>
       <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
         <Box

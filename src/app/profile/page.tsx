@@ -48,27 +48,30 @@ const LandingScreen: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // Try fetching profile
-      const profile = await getProfileByUserId(user._id);
+      let profile: IUserProfile | null = null;
 
-      if (profile?._id) {
-        // Profile already exists
+      try {
+        profile = await getProfileByUserId(user._id);
+      } catch (error: any) {
+        if (error === "Profile not found") {
+          const initialProfileDetails: Partial<IUserProfile> = {
+            userId: user._id,
+            firstName: "New User",
+            lastName: "Profile",
+          };
+
+          profile = await createProfile(initialProfileDetails);
+        } else {
+          throw error;
+        }
+      }
+
+      if (profile) {
         setUserProfile(profile);
-        router.push("/profile/create-profile#personal-info");
-      } else {
-        // Profile doesn't exist, create one
-        const initialProfileDetails: Partial<IUserProfile> = {
-          userId: user._id,
-          firstName: "New User",
-          lastName: "Profile",
-        };
-
-        const newProfile = await createProfile(initialProfileDetails);
-        setUserProfile(newProfile);
         router.push("/profile/create-profile#personal-info");
       }
     } catch (error) {
-      console.error("Failed to fetch/create profile:", error);
+      console.error("Failed to fetch or create profile:", error);
     } finally {
       setIsLoading(false);
     }
