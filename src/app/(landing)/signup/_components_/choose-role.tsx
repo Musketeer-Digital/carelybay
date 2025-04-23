@@ -22,7 +22,7 @@ export default function ChooseRole() {
             ? "Choose your main service"
             : "Create your Carelybay account"
         }
-        subtitle="Choose your role"
+        subtitle="A message will be shown indicating that the user will have the opportunity to customize service."
       />
       <ChooseRoleCards />
     </Box>

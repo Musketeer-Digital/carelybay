@@ -5,6 +5,10 @@ declare module "@mui/material/Button" {
   interface ButtonPropsVariantOverrides {
     primary: true;
   }
+
+  interface TextFieldPropsVariantOverrides {
+    number: true;
+  }
 }
 
 const themeOptions: ThemeOptions = {
@@ -172,6 +176,23 @@ const themeOptions: ThemeOptions = {
           borderStyle: "solid",
           borderRadius: "10px",
           borderColor: "#CCCCCC",
+        },
+      },
+    },
+    // * COMPONENT -- ToggleButton
+    MuiToggleButton: {
+      styleOverrides: {
+        root: {
+          border: "1px solid #CDCDCD !important",
+          borderRadius: "50px !important",
+          color: "#171717",
+          fontWeight: "400",
+          fontSize: "16px",
+          textTransform: "none",
+
+          "&.Mui-selected": {
+            background: "#E0E8EF",
+          },
         },
       },
     },

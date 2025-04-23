@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - production
       - dev
       - gha
 env:
@@ -45,6 +46,9 @@ jobs:
           if [[ "$GITHUB_REF" == "refs/heads/main" ]]; then
             echo "TAG=latest" >> $GITHUB_OUTPUT
             echo "CLOUD_RUN_SERVICE=carelybay-frontend-test" >> $GITHUB_OUTPUT
+          elif [[ "$GITHUB_REF" == "refs/heads/production" ]]; then
+            echo "TAG=prod" >> $GITHUB_OUTPUT
+            echo "CLOUD_RUN_SERVICE=carelybay-frontend-prod" >> $GITHUB_OUTPUT
           elif [[ "$GITHUB_REF" == "refs/heads/dev" || "$GITHUB_REF" == "refs/heads/gha" ]]; then
             echo "TAG=dev" >> $GITHUB_OUTPUT
             echo "CLOUD_RUN_SERVICE=carelybay-frontend-dev" >> $GITHUB_OUTPUT

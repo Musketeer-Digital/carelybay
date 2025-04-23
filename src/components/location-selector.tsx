@@ -1,13 +1,6 @@
 import { useFormContext } from "react-hook-form";
-import {
-  Container,
-  Typography,
-  TextField,
-  MenuItem,
-  Stack,
-} from "@mui/material";
-import InputGroup from "./input-group"; // Import the new InputGroup component
-import { ChangeEvent, FormEvent } from "react";
+import { TextField, Autocomplete } from "@mui/material";
+import { ChangeEvent } from "react";
 
 interface Location {
   id: number;
@@ -33,23 +26,19 @@ export default function LocationSelector({
   };
 
   return (
-    <Stack>
-      <InputGroup heading={heading}>
+    <Autocomplete
+      options={locations}
+      getOptionLabel={(option) => option.name}
+      renderInput={(params) => (
         <TextField
-          select
+          {...params}
           label="Search for your city"
-          {...register("location.id", { required: "Location is required" })}
-          onChange={handleChange}
+          {...register("location", { required: "Location is required" })}
           fullWidth
           margin="normal"
-        >
-          {locations.map((location) => (
-            <MenuItem key={location.id} value={location.id}>
-              {location.name}
-            </MenuItem>
-          ))}
-        </TextField>
-      </InputGroup>
-    </Stack>
+        />
+      )}
+      onChange={(e) => handleChange(e as any)}
+    />
   );
 }

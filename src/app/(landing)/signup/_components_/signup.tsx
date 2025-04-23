@@ -15,29 +15,54 @@ import {
   TextField,
   Stack,
 } from "@mui/material";
+import { useUserStore } from "@/store/userStore";
+import { useUserStatusStore } from "@/store/userStatusStore";
+
+import { VerificationStatus } from "@/config/authOptions";
+import { useSession } from "next-auth/react";
+import { Router } from "next/router";
+import { useRouter } from "next/navigation";
 
 interface SignUpProps {
-  nextStep: () => void;
+  nextStep?: (step?: number) => void;
 }
 
-export default function SignUp({ nextStep }: SignUpProps) {
+export default function SignUp({ nextStep = () => {} }: SignUpProps) {
+  const router = useRouter();
+  const { data: session } = useSession();
   const [error, setError] = useState<string>();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useFormContext<SignUpInputs>();
+  const setUserInfo = useUserStore((state) => state.setUserInfo);
+
+  // switch (session?.status) {
+  //   case VerificationStatus.NotVerified:
+  //     nextStep(2); // Set step to 2 for OTP verification
+  //     break;
+  //   case VerificationStatus.MissingInfo:
+  //     nextStep(3); // Set step to 3 for additional user info
+  //     break;
+  //   case VerificationStatus.Verified:
+  //     nextStep(4); // Set step to 4 for completion
+  //     break;
+  //   default:
+  //     break;
+  // }
 
   const onSubmit: SubmitHandler<SignUpInputs> = async (data: SignUpInputs) => {
-    const { email } = data;
+    const { email, password } = data;
 
     try {
+      // * Generate OTP
       const otpResponse = await fetch("/api/otp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email }), // Send email to generate OTP
+        body: JSON.stringify({ email, password }), // Send email to generate OTP
       });
       const otpData = await otpResponse.json();
 
@@ -46,8 +71,11 @@ export default function SignUp({ nextStep }: SignUpProps) {
         return;
       }
 
-      // OTP request successful, redirect user to OTP verification page
-      nextStep();
+      // Generate OTP request successful, update the user store with the user information
+      setUserInfo({ email });
+
+      // Redirect user to OTP verification page
+      router.push("/signup/verify");
     } catch (error) {
       setError("An error occurred while requesting OTP");
     }
