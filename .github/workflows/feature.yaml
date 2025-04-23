@@ -3,11 +3,12 @@ name: Deploy Feature Branch
 on:
   workflow_dispatch:
 env:
-  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }} # Your GCP project ID
-  REGION: australia-southeast1 # Region for Cloud Run
-  ARTIFACT_REGISTRY_REPO: carelybay-app # Artifact Registry repository name
-  IMAGE_NAME: carelybay-frontend # Name of the container image
+  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}  # Your GCP project ID
+  REGION: australia-southeast1                 # Region for Cloud Run
+  ARTIFACT_REGISTRY_REPO: carelybay-app              # Artifact Registry repository name
+  IMAGE_NAME: carelybay-frontend                               # Name of the container image
   # CLOUD_RUN_SERVICE: carelybay-frontend       # Name of the Cloud Run service
+
 
 jobs:
   deploy:
@@ -22,15 +23,15 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-    environment: dev # Define your environment name here
+    environment: dev  # Define your environment name here
     if: startsWith(github.ref, 'refs/heads/feature/')
     steps:
       - uses: actions/checkout@v3
 
-      - id: "auth"
-        uses: "google-github-actions/auth@v1"
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v1'
         with:
-          credentials_json: "${{ secrets.GCP_SA_KEY }}"
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
