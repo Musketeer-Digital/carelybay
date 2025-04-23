@@ -55,9 +55,9 @@ jobs:
       # Build the Docker image with the appropriate tag
       - name: Build Docker image
         env:
-          MONGODB_URL: mongodb+srv://arbazqureshi2310:jaxCvVQDr7DsgFlu@cluster0.9klt9il.mongodb.net/test?retryWrites=true&w=majority
+          MONGODB_URL: mongodb://localhost:27017/carelybay-frontend
         run: |
-          docker build --network host --build-arg MONGODB_URL="mongodb+srv://arbazqureshi2310:jaxCvVQDr7DsgFlu@cluster0.9klt9il.mongodb.net/test?retryWrites=true&w=majority" -t ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO }}/${{ env.IMAGE_NAME }}:${{ steps.determine_tag.outputs.TAG }} .
+          docker build --network host --build-arg MONGODB_URL="mongodb://localhost:27017/carelybay-frontend" -t ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO }}/${{ env.IMAGE_NAME }}:${{ steps.determine_tag.outputs.TAG }} .
 
       # Push the Docker image to Google Artifact Registry
       - name: Push Docker image
@@ -71,5 +71,4 @@ jobs:
             --image ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO }}/${{ env.IMAGE_NAME }}:${{ steps.determine_tag.outputs.TAG }} \
             --region ${{ env.REGION }} \
             --platform managed \
-            --set-env-vars=DATABASE_URL=${{ secrets.DATABASE_URL }} \
             --allow-unauthenticated
