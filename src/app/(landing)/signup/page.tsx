@@ -1,12 +1,10 @@
 "use client";
-import React, { useState } from "react";
-import { Box, Container, StepContext } from "@mui/material";
+import React from "react";
+import { Box, Container } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
-import { useUserStore } from "@/store/userStore";
 import UserNotificationMessage from "./_components_/UserNotificationMessage";
 import SignupMarketingPanel from "@/app/components/signup-marketing-panel/signup-marketing-panel";
 import SignInMessage from "@/app/components/SignInMessage";
-import { signupSteps as steps } from "./steps";
 import SignUp from "./_components_/signup";
 import SessionControls from "@/app/components/session-controls";
 
