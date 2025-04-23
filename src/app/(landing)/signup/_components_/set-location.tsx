@@ -41,13 +41,21 @@ export default function SetLocation({}: {}) {
     setLocation(data.location);
 
     const response = await fetch(`/api/users/profile`, {
-      method: "POST",
-      body: {
-        location: data.location,
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        location: data.location,
+        locationDistancePreference: data.travelDistanceKm,
+      }),
     });
 
-    router.push("/profile");
+    if (response.ok) {
+      router.push("/profile");
+    } else {
+      console.error("Failed to update profile:", await response.json());
+    }
   };
 
   return (

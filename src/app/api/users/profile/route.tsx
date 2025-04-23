@@ -1,12 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Storage } from "@google-cloud/storage";
+import type { UserProfileDocument } from "@/models/UserProfile";
 import UserProfile from "@/models/UserProfile";
 import { getToken } from "next-auth/jwt";
 import { connectDB } from "@/lib/mongodb";
+import { ObjectId } from "mongodb";
 
 export async function POST(req: NextRequest) {
   try {
-    const token = await getToken({ req });
+    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
     if (!token || !token.sub) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -42,6 +44,46 @@ export async function POST(req: NextRequest) {
         image: imageUrl,
       },
       { new: true, upsert: true },
+    );
+
+    return NextResponse.json(updatedProfile);
+  } catch (error) {
+    console.error("Error:", error);
+    return NextResponse.json(
+      { error: "Error updating profile" },
+      { status: 500 },
+    );
+  }
+}
+
+export async function PATCH(req: NextRequest) {
+  try {
+    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+    if (!token || !token.sub) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const userId = token.sub;
+    const data = await req.json();
+
+    // Create update object with only the provided fields
+    const updateData: Partial<UserProfileDocument> = {
+      ...data,
+    };
+
+    // Don't proceed if no fields to update
+    if (Object.keys(updateData).length === 0) {
+      return NextResponse.json(
+        { error: "No valid fields provided for update" },
+        { status: 400 },
+      );
+    }
+
+    await connectDB();
+
+    const updatedProfile = await UserProfile.findOneAndUpdate(
+      { userId: new ObjectId(userId) },
+      updateData,
     );
 
     return NextResponse.json(updatedProfile);

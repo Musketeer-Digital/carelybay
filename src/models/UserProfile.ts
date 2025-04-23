@@ -8,6 +8,8 @@ export interface UserProfileDocument {
   phone: string;
   image: string;
   dateOfBirth?: Date;
+  location?: string;
+  locationDistancePreference?: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -41,6 +43,14 @@ const UserProfileSchema = new Schema<UserProfileDocument>(
     },
     dateOfBirth: {
       type: Date,
+      required: false,
+    },
+    location: {
+      type: String,
+      required: false,
+    },
+    locationDistancePreference: {
+      type: Number,
       required: false,
     },
   },
