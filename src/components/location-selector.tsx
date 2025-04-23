@@ -1,15 +1,6 @@
 import { useFormContext } from "react-hook-form";
-import {
-  Container,
-  Typography,
-  TextField,
-  MenuItem,
-  Stack,
-  Autocomplete,
-} from "@mui/material";
-import InputGroup from "./input-group"; // Import the new InputGroup component
-import { ChangeEvent, FormEvent } from "react";
-import useSWR from "swr";
+import { TextField, Autocomplete } from "@mui/material";
+import { ChangeEvent } from "react";
 
 interface Location {
   id: number;
@@ -42,7 +33,7 @@ export default function LocationSelector({
         <TextField
           {...params}
           label="Search for your city"
-          {...register("location.id", { required: "Location is required" })}
+          {...register("location", { required: "Location is required" })}
           fullWidth
           margin="normal"
         />
