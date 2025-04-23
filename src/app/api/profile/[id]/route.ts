@@ -9,7 +9,7 @@ export async function GET(
   await connectDB();
 
   try {
-    // Find by userId, not _id
+    // Find by userId
     const profile = await UserProfile.findOne({ userId: params.id });
     if (!profile) {
       return NextResponse.json({ error: "Profile not found" }, { status: 404 });

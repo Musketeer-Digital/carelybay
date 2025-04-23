@@ -8,9 +8,9 @@ import { createProfile, getProfileByUserId } from "@/utils/api/profile";
 import { useProfileStore } from "@/store/profileSlice";
 import { IUserProfile } from "@/models/ProfileModel";
 import { useRouter } from "next/navigation";
-import { FullscreenSpinner } from "../components/feature/CustomSpinner";
 import { getUser } from "@/utils/api/user";
 import { useUserStore } from "@/store/userSlice";
+import { FullscreenSpinner } from "../components/signup-marketing-panel/CustomSpinner";
 
 const LandingScreen: React.FC = () => {
   const { setUserProfile, clearUserProfile } = useProfileStore();

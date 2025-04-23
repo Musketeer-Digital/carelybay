@@ -49,7 +49,7 @@ const ProfileSidebar = () => {
             color: "black",
           }}
         >
-          {user?.name?.charAt(0)}
+          {user?.name?.charAt(0) ?? ""}
         </Avatar>
         <CustomButton
           variant="outlined"
@@ -71,7 +71,7 @@ const ProfileSidebar = () => {
           variant="h4"
           fontWeight="bold"
           sx={{ mt: 2 }}
-        >{`${user?.name}`}</Typography>
+        >{`${user?.name ?? ""}`}</Typography>
       </Box>
 
       <Card

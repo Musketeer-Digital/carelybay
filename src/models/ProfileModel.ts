@@ -67,8 +67,8 @@ export interface IUserProfile extends Document {
 const ProfileSchema = new Schema<IUserProfile>(
   {
     userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
+    firstName: { type: String, required: false },
+    lastName: { type: String, required: false },
     personalInfo: {
       bio: { type: String, default: "" },
       location: { type: String, default: "" },
