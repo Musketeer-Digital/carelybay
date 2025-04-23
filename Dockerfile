@@ -18,6 +18,7 @@ COPY . .
 # Set environment variable for MongoDB connection (for build stage)
 ARG MONGODB_URL
 ENV MONGODB_URL=$MONGODB_URL
+ENV DATABASE_URL=$MONGODB_URL
 
 # Generate Prisma Client
 RUN pnpm prisma generate
@@ -46,6 +47,7 @@ COPY --from=builder /app/public ./public
 
 # Set environment variable for MongoDB connection (for runtime)
 ENV MONGODB_URL=$MONGODB_URL
+ENV DATABASE_URL=$MONGODB_URL
 
 EXPOSE 3000
 

@@ -66,4 +66,5 @@ jobs:
             --image ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO }}/${{ env.IMAGE_NAME }}:${{ steps.determine_tag.outputs.TAG }} \
             --region ${{ env.REGION }} \
             --platform managed \
+            --set-env-vars=DATABASE_URL=${{ secrets.DATABASE_URL }} \
             --allow-unauthenticated
