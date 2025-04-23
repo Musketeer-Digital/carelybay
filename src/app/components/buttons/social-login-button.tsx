@@ -17,7 +17,7 @@ const providerIcons = {
 
 export default function SocialLoginButton({
   provider,
-  callbackUrl = "/dashboard",
+  callbackUrl,
   displayText,
   ...buttonProps
 }: SocialLoginButtonProps) {
