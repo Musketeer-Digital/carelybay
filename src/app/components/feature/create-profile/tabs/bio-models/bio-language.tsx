@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -21,19 +21,25 @@ import { languagesOptions } from "../../profile-options";
 interface ProfileBioLanguageModalProps {
   isLanguageModalOpen: boolean;
   setIsLanguageModalOpen: (open: boolean) => void;
-  selectedLanguages: string[];
-  setSelectedLanguages: (languages: string[]) => void;
+
+  storedLanguages: string[];
   handleUpdateProfileField: Function;
 }
 
 const LanguageModal: React.FC<ProfileBioLanguageModalProps> = ({
   isLanguageModalOpen,
   setIsLanguageModalOpen,
-  selectedLanguages,
-  setSelectedLanguages,
+  storedLanguages,
   handleUpdateProfileField,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (storedLanguages.length) {
+      setSelectedLanguages(storedLanguages);
+    }
+  }, [isLanguageModalOpen]);
 
   const filteredLanguages = languagesOptions.filter((lang) =>
     lang.toLowerCase().includes(searchTerm.toLowerCase()),

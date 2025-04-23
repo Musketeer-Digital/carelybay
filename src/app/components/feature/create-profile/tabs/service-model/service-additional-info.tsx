@@ -5,25 +5,33 @@ import { COLORS } from "@/constants/colors";
 import CustomDialog from "@/app/components/CustomDialog";
 import CustomButton from "@/app/components/CustomButton";
 import { additionalInfoOptions } from "../../profile-options";
-import React from "react";
-import { IAdditionalInfo } from "@/utils/profileUtils";
+import React, { useEffect, useState } from "react";
+import { IAdditionalInfo, toggleAdditionalInfo } from "@/utils/profileUtils";
 import { getIconByLabel } from "@/utils/utils";
 
 interface ServiceAdditionalInfoModalProps {
   isAdditionalInfoModalOpen: boolean;
   setIsAdditionalInfoModalOpen: (open: boolean) => void;
-  selectedAdditionalInfo: IAdditionalInfo[];
-  toggleAdditionalInfo: (info: IAdditionalInfo) => void;
+  storedAdditionalInfo: IAdditionalInfo[];
   handleUpdateProfileField: Function;
 }
 
 const ServiceAdditionalInfoModal: React.FC<ServiceAdditionalInfoModalProps> = ({
   isAdditionalInfoModalOpen,
   setIsAdditionalInfoModalOpen,
-  selectedAdditionalInfo,
-  toggleAdditionalInfo,
+  storedAdditionalInfo,
   handleUpdateProfileField,
 }) => {
+  const [selectedAdditionalInfo, setSelectedAdditionalInfo] = useState<
+    IAdditionalInfo[]
+  >([]);
+
+  useEffect(() => {
+    if (storedAdditionalInfo.length) {
+      setSelectedAdditionalInfo(storedAdditionalInfo);
+    }
+  }, [isAdditionalInfoModalOpen]);
+
   return (
     <CustomDialog
       open={isAdditionalInfoModalOpen}
@@ -88,7 +96,9 @@ const ServiceAdditionalInfoModal: React.FC<ServiceAdditionalInfoModalProps> = ({
               sm={3}
               textAlign="center"
               sx={{ cursor: "pointer" }}
-              onClick={() => toggleAdditionalInfo(item)}
+              onClick={() => {
+                toggleAdditionalInfo(item, setSelectedAdditionalInfo);
+              }}
             >
               <IconButton
                 sx={{

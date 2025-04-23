@@ -6,22 +6,30 @@ import { COLORS } from "@/constants/colors";
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { qualificationsList } from "../../profile-options";
 import { CheckedIcon } from "@/app/components/icons/checked-icon";
+import { useEffect, useState } from "react";
 
 interface ProfileBioQualificationModalProps {
   isQualificationModalOpen: boolean;
   setIsQualificationModalOpen: (open: boolean) => void;
-  selectedQualification: string;
-  setSelectedQualification: (qualification: string) => void;
+  storedQualification: string;
   handleUpdateProfileField: Function;
 }
 
 const QualificationModal: React.FC<ProfileBioQualificationModalProps> = ({
   isQualificationModalOpen,
   setIsQualificationModalOpen,
-  selectedQualification,
-  setSelectedQualification,
+  storedQualification,
   handleUpdateProfileField,
 }) => {
+  const [selectedQualification, setSelectedQualification] =
+    useState<string>("");
+
+  useEffect(() => {
+    if (storedQualification) {
+      setSelectedQualification(storedQualification);
+    }
+  }, [isQualificationModalOpen]);
+
   return (
     <CustomDialog
       open={isQualificationModalOpen}

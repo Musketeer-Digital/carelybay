@@ -5,24 +5,31 @@ import { COLORS } from "@/constants/colors";
 import CustomDialog from "@/app/components/CustomDialog";
 import CustomButton from "@/app/components/CustomButton";
 import { servicesList } from "../../profile-options";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { getIconByLabel } from "@/utils/utils";
+import { IService, toggleService } from "@/utils/profileUtils";
 
 interface ServiceModalProps {
   isModalOpen: boolean;
   setIsModalOpen: (open: boolean) => void;
-  selectedServices: any[];
-  toggleService: Function;
+  storedServices: any[];
   handleUpdateProfileField: Function;
 }
 
 const ServiceModal: React.FC<ServiceModalProps> = ({
   isModalOpen,
   setIsModalOpen,
-  selectedServices,
-  toggleService,
+  storedServices,
   handleUpdateProfileField,
 }) => {
+  const [selectedServices, setSelectedServices] = useState<IService[]>([]);
+
+  useEffect(() => {
+    if (storedServices.length) {
+      setSelectedServices(storedServices);
+    }
+  }, [isModalOpen]);
+
   return (
     <CustomDialog
       open={isModalOpen}
@@ -131,7 +138,9 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
                     </IconButton>
                   )
                 }
-                onClick={() => toggleService(service)}
+                onClick={() => {
+                  toggleService(service, setSelectedServices);
+                }}
                 sx={{
                   height: "45px",
                   fontSize: "14px",

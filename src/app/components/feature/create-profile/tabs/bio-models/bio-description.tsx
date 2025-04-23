@@ -9,18 +9,27 @@ import { COLORS } from "@/constants/colors";
 interface ProfileBioDescriptionProps {
   isBioDescriptionModelOpen: boolean;
   setIsDescriptionBioModelOpen: (open: boolean) => void;
-  profileBioDescription: string;
-  setProfileBioDescription: (description: string) => void;
+  storedProfileBio: string;
   handleUpdateProfileField: Function;
 }
 
 const ProfileBioDescription: React.FC<ProfileBioDescriptionProps> = ({
   isBioDescriptionModelOpen,
   setIsDescriptionBioModelOpen,
-  profileBioDescription,
-  setProfileBioDescription,
+  storedProfileBio,
   handleUpdateProfileField,
 }) => {
+  const [profileBioDescription, setProfileBioDescription] =
+    React.useState<string>(
+      "Write something punchy ex: Experienced and Caring Nanny for Infants and Toddlers...",
+    );
+
+  React.useEffect(() => {
+    if (storedProfileBio) {
+      setProfileBioDescription(storedProfileBio);
+    }
+  }, [isBioDescriptionModelOpen]);
+
   return (
     <CustomDialog
       open={isBioDescriptionModelOpen}

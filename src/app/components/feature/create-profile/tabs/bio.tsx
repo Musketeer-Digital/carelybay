@@ -19,19 +19,18 @@ const ProfileBio: React.FC = () => {
     useState<boolean>(false);
   const [isBioDescriptionModelOpen, setIsDescriptionBioModelOpen] =
     useState<boolean>(false);
-
   const [isCityModalOpen, setIsCityModalOpen] = useState<boolean>(false);
   const [isLanguageModalOpen, setIsLanguageModalOpen] =
     useState<boolean>(false);
   const [isDOBModalOpen, setIsDOBModalOpen] = useState<boolean>(false);
 
   // local state
-  const [profileBioDescription, setProfileBioDescription] = useState<string>(
+  const [storedProfileBio, setStoredProfileBio] = useState<string>(
     "Write something punchy ex: Experienced and Caring Nanny for Infants and Toddlers...",
   );
-  const [selectedCity, setSelectedCity] = useState<string>("");
-  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
-  const [selectedDOB, setSelectedDOB] = useState<{
+  const [storedCity, setStoredCity] = useState<string>("");
+  const [storedLanguages, setStoredLanguages] = useState<string[]>([]);
+  const [storedDOB, setStoredDOB] = useState<{
     month: string;
     day: string;
     year: string;
@@ -40,18 +39,17 @@ const ProfileBio: React.FC = () => {
     day: "",
     year: "",
   });
-  const [selectedQualification, setSelectedQualification] =
-    useState<string>("");
+  const [storedQualification, setStoredQualification] = useState<string>("");
 
   const { userProfile, setUserProfile } = useProfileStore();
 
   useEffect(() => {
     if (userProfile?.personalInfo) {
-      setProfileBioDescription(userProfile.personalInfo.bio || "");
-      setSelectedCity(userProfile.personalInfo.city || "");
-      setSelectedLanguages(userProfile.personalInfo.languages || []);
-      setSelectedQualification(userProfile.personalInfo.qualification || "");
-      setSelectedDOB({
+      setStoredProfileBio(userProfile.personalInfo.bio || "");
+      setStoredCity(userProfile.personalInfo.city || "");
+      setStoredLanguages(userProfile.personalInfo.languages || []);
+      setStoredQualification(userProfile.personalInfo.qualification || "");
+      setStoredDOB({
         month: userProfile.personalInfo.dateOfBirth
           ? new Date(userProfile.personalInfo.dateOfBirth).toLocaleString(
               "default",
@@ -71,12 +69,9 @@ const ProfileBio: React.FC = () => {
   }, [userProfile]);
 
   const handleSelectCity = (value: string) => {
-    setSelectedCity(value);
+    setStoredCity(value);
   };
 
-  const handleSelectDOB = (key: string, value: string) => {
-    setSelectedDOB((prev) => ({ ...prev, [key]: value }));
-  };
   console.log("userProfile", userProfile);
   const handleUpdateProfileField = async (
     field: keyof typeof userProfile.personalInfo,
@@ -103,10 +98,10 @@ const ProfileBio: React.FC = () => {
   };
 
   const profileBioList = getProfileBioComponents(
-    selectedCity,
-    selectedLanguages,
-    selectedDOB,
-    selectedQualification,
+    storedCity,
+    storedLanguages,
+    storedDOB,
+    storedQualification,
     setIsCityModalOpen,
     setIsLanguageModalOpen,
     setIsDOBModalOpen,
@@ -119,12 +114,12 @@ const ProfileBio: React.FC = () => {
           Profile Bio
         </Typography>
         <Box sx={{ border: "1px dashed #ccc", p: 2, borderRadius: 2, mb: 3 }}>
-          <Typography color="textSecondary">{profileBioDescription}</Typography>
+          <Typography color="textSecondary">{storedProfileBio}</Typography>
           <Link
             sx={{ marginTop: 3, cursor: "pointer" }}
             onClick={() => setIsDescriptionBioModelOpen(true)}
           >
-            {profileBioDescription ? "Edit" : "Add Intro"}
+            {storedProfileBio ? "Edit" : "Add Intro"}
           </Link>
         </Box>
         <Grid container spacing={2}>
@@ -151,8 +146,14 @@ const ProfileBio: React.FC = () => {
                 >
                   {detail.value}{" "}
                   {detail.value && (
-                    <IconButton sx={{ ml: 0 }}>
-                      {" "}
+                    <IconButton
+                      sx={{
+                        ml: 0,
+                        width: 24,
+                        height: 24,
+                        visibility: detail.value ? "visible" : "hidden",
+                      }}
+                    >
                       <GreaterIcon />
                     </IconButton>
                   )}
@@ -167,8 +168,7 @@ const ProfileBio: React.FC = () => {
       <ProfileBioDescription
         isBioDescriptionModelOpen={isBioDescriptionModelOpen}
         setIsDescriptionBioModelOpen={setIsDescriptionBioModelOpen}
-        profileBioDescription={profileBioDescription}
-        setProfileBioDescription={setProfileBioDescription}
+        storedProfileBio={storedProfileBio}
         handleUpdateProfileField={handleUpdateProfileField}
       />
 
@@ -182,24 +182,21 @@ const ProfileBio: React.FC = () => {
       <LanguageModel
         isLanguageModalOpen={isLanguageModalOpen}
         setIsLanguageModalOpen={setIsLanguageModalOpen}
-        selectedLanguages={selectedLanguages}
-        setSelectedLanguages={setSelectedLanguages}
+        storedLanguages={storedLanguages}
         handleUpdateProfileField={handleUpdateProfileField}
       />
 
       <DOBSModal
         isDOBModalOpen={isDOBModalOpen}
         setIsDOBModalOpen={setIsDOBModalOpen}
-        selectedDOB={selectedDOB}
-        handleSelectDOB={handleSelectDOB}
+        storedDOB={storedDOB}
         handleUpdateProfileField={handleUpdateProfileField}
       />
 
       <QualificationModal
         isQualificationModalOpen={isQualificationModalOpen}
         setIsQualificationModalOpen={setIsQualificationModalOpen}
-        selectedQualification={selectedQualification}
-        setSelectedQualification={setSelectedQualification}
+        storedQualification={storedQualification}
         handleUpdateProfileField={handleUpdateProfileField}
       />
     </div>

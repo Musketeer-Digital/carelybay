@@ -4,6 +4,7 @@ import { Box, Select, MenuItem } from "@mui/material";
 import { COLORS } from "@/constants/colors";
 import CustomDialog from "@/app/components/CustomDialog";
 import CustomButton from "@/app/components/CustomButton";
+import { useEffect, useState } from "react";
 
 const months = [
   "January",
@@ -28,18 +29,36 @@ const years = Array.from(
 interface ProfileBioDOBSModalProps {
   isDOBModalOpen: boolean;
   setIsDOBModalOpen: (open: boolean) => void;
-  selectedDOB: { month: string; day: string; year: string };
-  handleSelectDOB: (key: string, value: string) => void;
+  storedDOB: { month: string; day: string; year: string };
   handleUpdateProfileField: Function;
 }
 
 const DOBSModal: React.FC<ProfileBioDOBSModalProps> = ({
   isDOBModalOpen,
   setIsDOBModalOpen,
-  selectedDOB,
-  handleSelectDOB,
+  storedDOB,
   handleUpdateProfileField,
 }) => {
+  const [selectedDOB, setSelectedDOB] = useState<{
+    month: string;
+    day: string;
+    year: string;
+  }>({
+    month: "",
+    day: "",
+    year: "",
+  });
+
+  useEffect(() => {
+    if (storedDOB) {
+      setSelectedDOB(storedDOB);
+    }
+  }, [isDOBModalOpen]);
+
+  const handleSelectDOB = (key: string, value: string) => {
+    setSelectedDOB((prev) => ({ ...prev, [key]: value }));
+  };
+
   return (
     <CustomDialog
       open={isDOBModalOpen}

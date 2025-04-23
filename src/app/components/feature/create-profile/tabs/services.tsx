@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Button, Typography, Divider, Box, Link, Grid } from "@mui/material";
-import { CalendarMonth, Edit } from "@mui/icons-material";
+import { CalendarMonth } from "@mui/icons-material";
 import ServiceModal from "./service-model/service-model";
 import AgeModal from "./service-model/service-age";
 import AdditionalInfoModal from "./service-model/service-additional-info";
@@ -19,7 +19,6 @@ import {
   IAdditionalInfo,
   IService,
   IServiceAge,
-  toggleAdditionalInfo,
   toggleService,
   toggleServiceAgeGroup,
 } from "@/utils/profileUtils";
@@ -38,8 +37,8 @@ const Services = () => {
 
   // local states
   const [childCarerTypes, setChildCarTypes] = useState<string[]>([]);
-  const [selectedServices, setSelectedServices] = useState<IService[]>([]);
-  const [selectedAdditionalInfo, setSelectedAdditionalInfo] = useState<
+  const [storedServices, setStoredServices] = useState<IService[]>([]);
+  const [storedAdditionalInfo, setStoredAdditionalInfo] = useState<
     IAdditionalInfo[]
   >([]);
   const [selectedAges, setSelectedAges] = useState<IServiceAge[]>([]);
@@ -48,8 +47,8 @@ const Services = () => {
 
   useEffect(() => {
     if (userProfile?.servicesExperience) {
-      setSelectedServices(userProfile.servicesExperience.services || []);
-      setSelectedAdditionalInfo(
+      setStoredServices(userProfile.servicesExperience.services || []);
+      setStoredAdditionalInfo(
         userProfile.servicesExperience.additionalInfo || [],
       );
       setChildCarTypes(userProfile.servicesExperience.childCarerType || []);
@@ -262,11 +261,11 @@ const Services = () => {
           Skills Ex: Cooking/Meal preparation
         </Typography>
         <Box sx={{ display: "flex", gap: 1, mt: 2, flexWrap: "wrap" }}>
-          {selectedServices.map((service: IService) => (
+          {storedServices.map((service: IService) => (
             <CustomButton
               variant="outlined"
               key={service.id}
-              onClick={() => toggleService(service, setSelectedServices)}
+              onClick={() => toggleService(service, setStoredServices)}
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -288,7 +287,7 @@ const Services = () => {
         </Box>
 
         <Box sx={{ display: "flex", gap: 1, mb: 3, flexWrap: "wrap" }}>
-          {selectedServices.length === 0 ? (
+          {storedServices.length === 0 ? (
             <Box sx={{ display: "flex", gap: 1 }}>
               {[...Array(3)].map((_, index) => (
                 <CustomButton
@@ -340,9 +339,9 @@ const Services = () => {
       </Box>
       <Divider />
       <Box sx={{ mt: 3, mb: 4, cursor: "pointer" }}>
-        {selectedAdditionalInfo.length > 0 && (
+        {storedAdditionalInfo.length > 0 && (
           <Grid container spacing={3} alignItems="center" sx={{ mt: 2 }}>
-            {selectedAdditionalInfo.map(({ id, label, icon }) => (
+            {storedAdditionalInfo.map(({ id, label, icon }) => (
               <Grid
                 item
                 key={id}
@@ -388,7 +387,7 @@ const Services = () => {
           </Grid>
         )}
 
-        {selectedAdditionalInfo.length > 0 ? (
+        {storedAdditionalInfo.length > 0 ? (
           <Box
             sx={{
               display: "flex",
@@ -437,10 +436,7 @@ const Services = () => {
       <ServiceModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-        selectedServices={selectedServices}
-        toggleService={(service: IService) =>
-          toggleService(service, setSelectedServices)
-        }
+        storedServices={storedServices}
         handleUpdateProfileField={handleUpdateProfileField}
       />
       <AgeModal
@@ -454,10 +450,7 @@ const Services = () => {
       <AdditionalInfoModal
         isAdditionalInfoModalOpen={isAdditionalInfoModalOpen}
         setIsAdditionalInfoModalOpen={setIsAdditionalInfoModalOpen}
-        selectedAdditionalInfo={selectedAdditionalInfo}
-        toggleAdditionalInfo={(additionalInfoOption) =>
-          toggleAdditionalInfo(additionalInfoOption, setSelectedAdditionalInfo)
-        }
+        storedAdditionalInfo={storedAdditionalInfo}
         handleUpdateProfileField={handleUpdateProfileField}
       />
     </Box>
