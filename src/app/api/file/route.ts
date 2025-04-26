@@ -15,7 +15,7 @@ export async function PUT(req: NextRequest) {
 
     // TODO: Pass in userid
     await storage
-      .bucket(process.env.GCP_BUCKET_NAME || "")
+      .bucket(process.env.PUBLIC_BUCKET_NAME || "default-public")
       .upload(file.name, { destination: "file" });
 
     return NextResponse.json({ message: "File uploaded successfully" });
