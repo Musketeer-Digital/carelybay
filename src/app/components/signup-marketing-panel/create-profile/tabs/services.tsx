@@ -26,6 +26,7 @@ import { useProfileStore } from "@/store/profileSlice";
 import { updateProfile } from "@/utils/api/profile";
 import { getIconByLabel } from "@/utils/utils";
 import { additionalInfoOptions } from "../profile-options";
+import { FullscreenSpinner } from "../../CustomSpinner";
 
 const Services = () => {
   // model toggle states
@@ -42,6 +43,7 @@ const Services = () => {
     IAdditionalInfo[]
   >([]);
   const [selectedAges, setSelectedAges] = useState<IServiceAge[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { userProfile, setUserProfile } = useProfileStore();
 
@@ -60,6 +62,8 @@ const Services = () => {
     field: keyof typeof userProfile.servicesExperience,
     value: any,
   ) => {
+    setIsLoading(true);
+
     try {
       if (!userProfile?._id) {
         console.error("Profile ID is missing");
@@ -73,9 +77,10 @@ const Services = () => {
           [field]: value,
         },
       });
-
+      setIsLoading(false);
       setUserProfile(updatedProfile);
     } catch (error) {
+      setIsLoading(false);
       console.error(`Failed to update ${field}:`, error);
     }
   };
@@ -88,6 +93,8 @@ const Services = () => {
         mt: 5,
       }}
     >
+      {isLoading && <FullscreenSpinner />}
+
       <Typography variant="h6" fontWeight="bold">
         Services & Experience
       </Typography>

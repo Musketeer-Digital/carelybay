@@ -12,6 +12,7 @@ import { updateProfile } from "@/utils/api/profile";
 import { useProfileStore } from "@/store/profileSlice";
 import { getProfileBioComponents } from "@/utils/profileUtils";
 import { GreaterIcon } from "@/app/components/icons/greater-icon";
+import { FullscreenSpinner } from "../../CustomSpinner";
 
 const ProfileBio: React.FC = () => {
   // model toggle state
@@ -40,6 +41,7 @@ const ProfileBio: React.FC = () => {
     year: "",
   });
   const [storedQualification, setStoredQualification] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const { userProfile, setUserProfile } = useProfileStore();
 
@@ -72,11 +74,11 @@ const ProfileBio: React.FC = () => {
     setStoredCity(value);
   };
 
-  console.log("userProfile", userProfile);
   const handleUpdateProfileField = async (
     field: keyof typeof userProfile.personalInfo,
     value: any,
   ) => {
+    setIsLoading(true);
     try {
       if (!userProfile?._id) {
         console.error("Profile ID is missing");
@@ -90,9 +92,10 @@ const ProfileBio: React.FC = () => {
           [field]: value,
         },
       });
-
+      setIsLoading(false);
       setUserProfile(updatedProfile); // Update Zustand state
     } catch (error) {
+      setIsLoading(false);
       console.error(`Failed to update ${field}:`, error);
     }
   };
@@ -109,6 +112,7 @@ const ProfileBio: React.FC = () => {
   );
   return (
     <div>
+      {isLoading && <FullscreenSpinner />}
       <Box>
         <Typography variant="h6" fontWeight="bold" sx={{ mb: 2, mt: 2 }}>
           Profile Bio

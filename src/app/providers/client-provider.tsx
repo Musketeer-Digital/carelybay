@@ -4,7 +4,6 @@ import * as React from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "../theme";
 import { CssBaseline } from "@mui/material";
-import Header from "../components/header";
 
 export default function ClientProvider({
   children,
@@ -12,7 +11,6 @@ export default function ClientProvider({
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Header />
         <CssBaseline />
         {children}
       </ThemeProvider>

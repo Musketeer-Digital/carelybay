@@ -7,6 +7,7 @@ import { UploadedFile } from "@/types/documentTypes";
 import { useProfileStore } from "@/store/profileSlice";
 import { updateProfile } from "@/utils/api/profile";
 import { validateFiles } from "@/utils/profileUtils";
+import { FullscreenSpinner } from "../../../CustomSpinner";
 
 interface DocumentUploadProps {
   fileList: UploadedFile[];
@@ -23,10 +24,12 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
   const [isDragging, setIsDragging] = useState(false);
 
   const { userProfile, setUserProfile } = useProfileStore();
+  const [isLoading, setIsLoading] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   console.log("selectedDocument", selectedDocument);
   const handleFileUploading = async (selectedFile: File) => {
+    setIsLoading(true);
     try {
       if (!selectedFile) {
         console.error("No file selected.");
@@ -55,9 +58,10 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
         ...userProfile,
         documents: fileList,
       });
-
+      setIsLoading(false);
       setUserProfile(updatedProfile);
     } catch (error) {
+      setIsLoading(false);
       console.error("Failed to upload document:", error);
     }
   };
@@ -192,6 +196,7 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
           </CustomButton>
         </Box>
       </Box>
+      {isLoading && <FullscreenSpinner />}
     </Box>
   );
 };

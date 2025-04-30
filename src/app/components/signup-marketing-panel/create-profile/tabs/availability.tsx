@@ -22,6 +22,7 @@ import CustomButton from "@/app/components/CustomButton";
 import { useProfileStore } from "@/store/profileSlice";
 import { updateProfile } from "@/utils/api/profile";
 import { IRates } from "@/utils/profileUtils";
+import { FullscreenSpinner } from "../../CustomSpinner";
 
 const Availability = () => {
   // model toggle states
@@ -53,6 +54,7 @@ const Availability = () => {
     selectedTimeSlots: [],
     additionalHours: [],
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   // Zustand store
   const { userProfile, setUserProfile } = useProfileStore();
@@ -87,6 +89,7 @@ const Availability = () => {
     field: keyof typeof userProfile.availabilityRates,
     value: any,
   ) => {
+    setIsLoading(true);
     try {
       if (!userProfile?._id) {
         console.error("Profile ID is missing");
@@ -100,9 +103,10 @@ const Availability = () => {
           [field]: value,
         },
       });
-
+      setIsLoading(false);
       setUserProfile(updatedProfile); // Update Zustand state
     } catch (error) {
+      setIsLoading(false);
       console.error(`Failed to update ${field}:`, error);
     }
   };
@@ -156,6 +160,8 @@ const Availability = () => {
         mt: 5,
       }}
     >
+      {isLoading && <FullscreenSpinner />}
+
       <Typography variant="h6" fontWeight="bold">
         Availability & Rates
       </Typography>
