@@ -7,10 +7,8 @@ import {
   Box,
   TextField,
   IconButton,
-  Divider,
   Button,
 } from "@mui/material";
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { COLORS } from "@/constants/colors";
 import { PlusIcon } from "@/app/components/icons/plus-icon";
 import { CalendarIcon } from "@/app/components/icons/calendar-icon";
