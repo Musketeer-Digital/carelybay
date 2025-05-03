@@ -18,6 +18,7 @@ import { getFirstLetter } from "@/utils/utils";
 import { COLORS } from "@/constants/colors";
 import { HamBurgerMenuIcon } from "./icons/HamBurgerMenuIcon";
 import { useUserStore } from "@/store/userSlice";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
@@ -25,6 +26,7 @@ const Header = () => {
   const handleMenuOpen = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+  const pathname = usePathname();
 
   const { user } = useUserStore();
 
@@ -103,19 +105,33 @@ const Header = () => {
             <Box sx={{ display: "flex", gap: 3, ml: 5 }}>
               <Link
                 href="/find-job"
-                style={{ textDecoration: "none", color: "inherit" }}
+                style={{
+                  textDecoration: "none",
+                  color:
+                    pathname === "/find-job" ? COLORS.PRIMARY_COLOR : "inherit",
+                }}
               >
                 Find your job
               </Link>
               <Link
                 href="/job-status"
-                style={{ textDecoration: "none", color: "inherit" }}
+                style={{
+                  textDecoration: "none",
+                  color:
+                    pathname === "/job-status"
+                      ? COLORS.PRIMARY_COLOR
+                      : "inherit",
+                }}
               >
                 Job status
               </Link>
               <Link
                 href="/messages"
-                style={{ textDecoration: "none", color: "inherit" }}
+                style={{
+                  textDecoration: "none",
+                  color:
+                    pathname === "/messages" ? COLORS.PRIMARY_COLOR : "inherit",
+                }}
               >
                 Messages
               </Link>
