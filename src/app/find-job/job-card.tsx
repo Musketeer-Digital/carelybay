@@ -34,6 +34,7 @@ const JobCard = () => {
         display: "flex",
         flexDirection: "column",
         gap: 2,
+        cursor: "pointer",
       }}
     >
       <Stack
