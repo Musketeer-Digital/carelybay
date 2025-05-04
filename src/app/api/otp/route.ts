@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import bcrypt from "bcryptjs";
 import { connectDB } from "@/lib/mongodb";
 import User from "@/models/User";
 import OTP from "@/models/OTP";
@@ -9,7 +10,7 @@ const generateOTP = () =>
 export async function POST(req: Request) {
   try {
     await connectDB();
-    const { email } = await req.json();
+    const { email, password } = await req.json();
 
     // Check if user is already registered
     const existingUser = await User.findOne({ email });
@@ -30,8 +31,17 @@ export async function POST(req: Request) {
       existingOTP = await OTP.findOne({ otp });
     }
 
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     // Save OTP to database
-    const otpRecord = await OTP.create({ email, otp });
+    const otpRecord = await OTP.create({
+      email,
+      password: hashedPassword,
+      otp,
+    });
+
+    console.log("Generated OTP:", otp);
 
     return NextResponse.json({
       success: true,

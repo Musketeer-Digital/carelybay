@@ -11,8 +11,11 @@ import {
 import { useState } from "react";
 import Image from "next/image";
 import { useUserStore } from "@/store/userStore";
+import { useSession } from "next-auth/react";
+import { Router } from "next/router";
+import { useRouter } from "next/navigation";
 
-interface PersonalInformationInputs {
+export interface PersonalInformationInputs {
   firstName: string;
   lastName: string;
   dob: string;
@@ -21,6 +24,19 @@ interface PersonalInformationInputs {
 }
 
 export default function PersonalInformation() {
+  const router = useRouter();
+  const userInfo = useUserStore((state) => state.userInfo);
+  const setUserInfo = useUserStore((state) => state.setUserInfo);
+  const setProfilePhoto = useUserStore((state) => state.setProfilePhoto);
+
+  console.log(" User info ", userInfo);
+
+  if (!userInfo?.email) {
+    console.warn(
+      "Personal Information Page - email not found, redirecting to signup",
+    );
+  }
+
   const [isUploading, setIsUploading] = useState(false);
   const [profileImageSrc, setProfileImageSrc] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -30,8 +46,6 @@ export default function PersonalInformation() {
     setValue,
     formState: { errors },
   } = useForm<PersonalInformationInputs>();
-
-  const setProfilePhoto = useUserStore((state) => state.setProfilePhoto);
 
   const handleUploadedFile = (data: InputEvent) => {
     const target = data.target as HTMLInputElement;
@@ -52,9 +66,16 @@ export default function PersonalInformation() {
       const file = data.file;
 
       const formData = new FormData();
-      formData.append("file", file);
 
-      const response = await fetch("/api/users/new/profile-photo", {
+      const { firstName, lastName, dob, phoneNumber } = data;
+
+      formData.append("file", file);
+      formData.append("firstName", firstName);
+      formData.append("lastName", lastName);
+      formData.append("dob", dob);
+      formData.append("phoneNumber", phoneNumber);
+
+      const response = await fetch(`/api/users/profile`, {
         method: "POST",
         body: formData,
       });
@@ -63,6 +84,15 @@ export default function PersonalInformation() {
 
       // Update the user store with the profile photo
       setProfilePhoto(profileImageSrc);
+
+      setUserInfo({
+        firstName,
+        lastName,
+        dob,
+        phoneNumber,
+      });
+
+      router.push("/signup/set-location");
     } catch (error) {
       console.error("Error uploading file:", error);
     } finally {

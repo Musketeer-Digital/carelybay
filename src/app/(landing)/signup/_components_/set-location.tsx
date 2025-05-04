@@ -14,8 +14,9 @@ import TravelDistanceSlider from "./travel-distance-slider";
 import useSWR from "swr";
 import { fetcher } from "@/app/api/fetcher";
 import { useUserStore } from "@/store/userStore";
+import { useRouter } from "next/navigation";
 
-interface PersonalInformationInputs {
+export interface SetLocationInputs {
   firstName: string;
   lastName: string;
   dob: string;
@@ -27,17 +28,34 @@ interface PersonalInformationInputs {
 const maxDistance = 100; // Maximum distance in kilometers
 const step = 5; // Step increments in kilometers
 
-export default function SetLocation() {
-  const methods = useForm<PersonalInformationInputs>();
-  const { control } = useFormContext<PersonalInformationInputs>();
+export default function SetLocation({}: {}) {
+  const router = useRouter();
+  const methods = useForm<SetLocationInputs>();
+  const { control } = useFormContext<SetLocationInputs>();
   const { data: res } = useSWR("/api/locations", fetcher);
   const locations = res?.data || [];
 
   const setLocation = useUserStore((state) => state.setLocation);
 
-  const onSubmit: SubmitHandler<PersonalInformationInputs> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<SetLocationInputs> = async (data) => {
     setLocation(data.location);
+
+    const response = await fetch(`/api/users/profile`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        location: data.location,
+        locationDistancePreference: data.travelDistanceKm,
+      }),
+    });
+
+    if (response.ok) {
+      router.push("/profile");
+    } else {
+      console.error("Failed to update profile:", await response.json());
+    }
   };
 
   return (

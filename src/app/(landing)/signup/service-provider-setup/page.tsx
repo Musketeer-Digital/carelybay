@@ -5,7 +5,6 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useUserStore } from "@/store/userStore";
 import UserNotificationMessage from "../_components_/UserNotificationMessage";
 import LandingActions from "../LandingActions";
-import SignupMarketingPanel from "@/app/components/signup-marketing-panel/signup-marketing-panel";
 import SignInMessage from "@/app/components/SignInMessage";
 import { serviceProviderSteps as steps } from "../steps";
 
@@ -71,11 +70,6 @@ export default function ServiceProviderSetup() {
             message={userMessage}
             sx={{ mb: 4 }}
           />
-
-          {/* Step Content */}
-          <FormProvider {...methods}>
-            <Box sx={{ mb: 6 }}>{stepContent}</Box>
-          </FormProvider>
 
           <SignInMessage sx={{ mb: { xs: 2, md: 5 } }} />
 
