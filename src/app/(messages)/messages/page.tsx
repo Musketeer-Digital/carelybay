@@ -1,41 +1,57 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Container, Box, TextField, Typography } from "@mui/material";
+import {
+  Container,
+  Box,
+  TextField,
+  Typography,
+  InputAdornment,
+  Avatar,
+  Button,
+} from "@mui/material";
+import Image, { StaticImageData } from "next/image";
 import SessionControls from "@/app/components/session-controls";
+import Spooderman from "/public/spooderman.webp";
+import NorthEastIcon from "@mui/icons-material/NorthEast";
 
 interface Conversation {
   id: string;
-  title: string;
+  participantName: string;
   lastMessage: string;
   participantId: string;
+  avatarUrl: string | undefined;
 }
 
 interface Message {
   id: string;
-  title: string;
-  lastMessage: string;
-  participantId: string;
+  senderId: string;
+  recipientId: string;
+  content: string;
+  timestamp: string;
 }
 
 const conversationSet1 = [
   {
     id: "conv1",
-    title: "Jane Doe",
+    participantName: "Jane Doe",
     lastMessage: "Looking forward to the interview!",
     participantId: "user_123",
+    avatarUrl: "spooderman.webp",
   },
   {
     id: "conv2",
-    title: "John Smith",
+    participantName: "John Smith",
     lastMessage: "Thanks for applying!",
     participantId: "user_456",
+    avatarUrl: "spooderman.webp",
   },
   {
     id: "conv3",
-    title: "Emma Johnson",
+    participantName: "Emma Johnson",
     lastMessage: "Can you start next week?",
     participantId: "user_789",
+    avatarUrl: "spooderman.webp",
   },
 ];
 
@@ -84,37 +100,264 @@ const messageSet: Record<string, Message[]> = {
 };
 
 export default function Messages() {
+  const [searchTerm, setSearchTerm] = useState("");
   const [conversations, setConversations] = useState<Conversation[]>([]);
-  const [messages, setMessages] = useState([]);
+  const [activeConversation, setActiveConversation] =
+    useState<Conversation | null>();
+  const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
     setConversations(conversationSet1);
   }, []);
 
   return (
-    <Container sx={{ display: "flex", flexDirection: "row", gap: 4 }}>
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        <Typography>Messages</Typography>
-        <TextField />
-        {conversations.map((conversation) => (
-          <Box
-            key={conversation.id}
-            sx={{ cursor: "pointer" }}
-            onClick={() => {}}
+    <Container sx={{ display: "flex", flexDirection: "row" }}>
+      {/* LEFT */}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          padding: 4,
+          backgroundColor: "rgba(224, 232, 239, 0.1)",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Typography
+            sx={{ fontWeight: "700", fontSize: "24px", lineHeight: "36px" }}
           >
-            <Typography>{conversation.title}</Typography>
-          </Box>
-        ))}
+            Messages
+          </Typography>
+          <Typography sx={{ fontWeight: "700", fontSize: "18px" }}>
+            Filter
+          </Typography>
+        </Box>
+
+        {/* SEARCH BAR */}
+        <TextField
+          id="search"
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">🔍</InputAdornment>
+              ),
+            },
+          }}
+          sx={{
+            border: "1px solid #EAEAEA",
+            borderRadius: "8px",
+            backgroundColor: " #FFFFFF",
+          }}
+        />
+
+        {/* CONVERSATIONS */}
+        {conversations
+          .filter((conversation) =>
+            conversation.participantName
+              .toLowerCase()
+              .includes(searchTerm.toLowerCase()),
+          )
+          .map((conversation) => (
+            <Box
+              key={conversation.id}
+              sx={{
+                cursor: "pointer",
+                backgroundColor:
+                  conversation.id === activeConversation?.id
+                    ? "#E0E8EF"
+                    : "#FFFFFF",
+                borderRadius: "16px",
+                paddingY: "16px",
+                paddingRight: "20px",
+                paddingLeft: "16px",
+                gap: "20px",
+                display: "flex",
+                flexDirection: "row",
+              }}
+              onClick={() => {
+                setActiveConversation(conversation);
+                setMessages(messageSet[conversation.id] || []);
+              }}
+            >
+              <Avatar
+                src={conversation.avatarUrl}
+                alt={conversation.participantName}
+              />
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <Typography
+                  sx={{
+                    fontWeight: "600",
+                    fontSize: "15px",
+                    lineHeight: "26px",
+                  }}
+                >
+                  {conversation.participantName}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontWeight: "400",
+                    fontSize: "14px",
+                    lineHeight: "22px",
+                  }}
+                >
+                  {conversation.lastMessage}
+                </Typography>
+              </Box>
+            </Box>
+          ))}
+
         <SessionControls />
       </Box>
 
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        <Typography>Test Recipient</Typography>
-        {messages.map((message) => (
-          <Box key={message.id}>
-            <Typography>{message.message}</Typography>
+      {/* RIGHT */}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          flex: 1,
+          padding: 4,
+        }}
+      >
+        {activeConversation ? (
+          <Box sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
+            <Avatar
+              src={activeConversation?.avatarUrl}
+              alt={activeConversation?.participantName}
+              sx={{ width: "66px", height: "66px" }}
+            />
+            <Box
+              sx={{ flex: 1, display: "flex", justifyContent: "space-between" }}
+            >
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <Typography
+                  sx={{
+                    fontWeight: "700",
+                    fontSize: "24px",
+                    lineHeight: "36px",
+                  }}
+                >
+                  {activeConversation?.participantName}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontWeight: "600",
+                    fontSize: "16px",
+                    lineHeight: "26px",
+                    color: "#5E5E5E",
+                    textDecoration: "underline",
+                  }}
+                >
+                  (Job/Contract name goes here)
+                </Typography>
+              </Box>
+              <Button variant="primary">
+                View Application <NorthEastIcon />
+              </Button>
+            </Box>
           </Box>
-        ))}
+        ) : (
+          <Typography>Select a conversation</Typography>
+        )}
+
+        {messages.map((message, index) => {
+          const isMe = message.senderId === "me";
+
+          const prevMessage = messages[index - 1];
+          const currentDate = new Date(message.timestamp).toDateString();
+          const prevDate = prevMessage
+            ? new Date(prevMessage.timestamp).toDateString()
+            : null;
+
+          return (
+            <Box key={message.id}>
+              {/* Insert date separator if day changed */}
+              {currentDate !== prevDate && (
+                <Typography
+                  sx={{
+                    textAlign: "center",
+                    color: "gray",
+                    fontSize: "14px",
+                    marginBottom: "10px",
+                  }}
+                >
+                  {currentDate}
+                </Typography>
+              )}
+
+              {/* Message bubble */}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: isMe ? "flex-end" : "flex-start",
+                  mb: 1,
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: isMe ? "row-reverse" : "row",
+                    alignItems: "center",
+                  }}
+                >
+                  <Avatar
+                    src={
+                      isMe
+                        ? activeConversation?.avatarUrl // TODO: replace later
+                        : activeConversation?.avatarUrl
+                    }
+                    alt={isMe ? "You" : activeConversation?.participantName}
+                    sx={{ width: 32, height: 32, mx: 1 }}
+                  />
+                  <Box
+                    sx={{
+                      maxWidth: "60%",
+                      backgroundColor: "#FBFBFB",
+                      padding: "8px 12px",
+                      borderRadius: "12px",
+                      boxShadow: "0 1px 2px rgba(0,0,0,0.1)",
+                    }}
+                  >
+                    <Typography>{message.content}</Typography>
+                  </Box>
+                </Box>
+
+                <Typography
+                  sx={{
+                    fontSize: "10px",
+                    color: "gray",
+                    textAlign: isMe ? "right" : "left",
+                    px: 5,
+                  }}
+                >
+                  {new Date(message.timestamp).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </Typography>
+              </Box>
+            </Box>
+          );
+        })}
+        <TextField
+          placeholder="Write your message..."
+          slotProps={{
+            input: {
+              endAdornment: <InputAdornment position="end">🔍</InputAdornment>,
+            },
+          }}
+          sx={{ marginTop: "auto" }}
+        />
       </Box>
       {/* (A conversation is started when a user applies for a job) */}
       {/* (A conversation is between a job poster and an applicant) */}
