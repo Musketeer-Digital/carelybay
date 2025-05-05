@@ -16,6 +16,7 @@ import CustomDialog from "@/app/components/CustomDialog";
 import CustomButton from "@/app/components/CustomButton";
 import { days, timeSlots } from "../../profile-options";
 import { DeleteIcon } from "@/app/components/icons/delete-icon";
+import DaySelector from "@/app/components/DaySelector";
 
 interface AvailabilitySetModalProps {
   isAvailabilityModalOpen: boolean;
@@ -104,48 +105,7 @@ const AvailabilitySetModal: React.FC<AvailabilitySetModalProps> = ({
         </Typography>
 
         <Box sx={{ display: "flex", justifyContent: "center", gap: 1 }}>
-          {days.map((day) => {
-            const isSelected = selectedDays.includes(day);
-            return (
-              <Button
-                key={day}
-                variant="contained"
-                onClick={() =>
-                  setSelectedDays((prev) =>
-                    isSelected ? prev.filter((d) => d !== day) : [...prev, day],
-                  )
-                }
-                sx={{
-                  minWidth: "0 !important",
-                  width: {
-                    xs: 30,
-                    sm: 50,
-                    md: 62,
-                  },
-                  height: {
-                    xs: 40,
-                    sm: 50,
-                    md: 62,
-                  },
-                  fontSize: {
-                    xs: "12px",
-                    sm: "13px",
-                    md: "14px",
-                  },
-                  borderRadius: "50%",
-                  backgroundColor: isSelected
-                    ? COLORS.PRIMARY_COLOR
-                    : COLORS.WHITE_COLOR,
-                  color: isSelected ? COLORS.WHITE_COLOR : COLORS.BLACK_COLOR,
-                  border: `1px solid ${isSelected ? COLORS.PRIMARY_COLOR : "#E0E0E0"}`,
-                  fontWeight: "500",
-                  textTransform: "none",
-                }}
-              >
-                {day}
-              </Button>
-            );
-          })}
+          <DaySelector selectedDays={selectedDays} onChange={setSelectedDays} />
         </Box>
       </Box>
 

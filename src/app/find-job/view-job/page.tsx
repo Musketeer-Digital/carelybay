@@ -32,6 +32,7 @@ import { IAdditionalInfo, IService } from "@/utils/profileUtils";
 import JobSidebar from "./find-job-sidebar";
 import { useMediaQuery, useTheme } from "@mui/material";
 import ApplyJob from "../apply-job/apply-job";
+import DaySelector from "@/app/components/DaySelector";
 
 const ViewJob = () => {
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
@@ -190,54 +191,10 @@ const ViewJob = () => {
               Availability
             </Typography>
             <Stack direction="row" spacing={1} mb={1}>
-              <Box sx={{ display: "flex", justifyContent: "center", gap: 1 }}>
-                {days.map((day) => {
-                  const isSelected = selectedDays.includes(day);
-                  return (
-                    <Button
-                      key={day}
-                      variant="contained"
-                      onClick={() =>
-                        setSelectedDays((prev) =>
-                          isSelected
-                            ? prev.filter((d) => d !== day)
-                            : [...prev, day],
-                        )
-                      }
-                      sx={{
-                        minWidth: "0 !important",
-                        width: {
-                          xs: 30,
-                          sm: 50,
-                          md: 62,
-                        },
-                        height: {
-                          xs: 40,
-                          sm: 50,
-                          md: 62,
-                        },
-                        fontSize: {
-                          xs: "12px",
-                          sm: "13px",
-                          md: "14px",
-                        },
-                        borderRadius: "50%",
-                        backgroundColor: isSelected
-                          ? COLORS.PRIMARY_COLOR
-                          : COLORS.WHITE_COLOR,
-                        color: isSelected
-                          ? COLORS.WHITE_COLOR
-                          : COLORS.BLACK_COLOR,
-                        border: `1px solid ${isSelected ? COLORS.PRIMARY_COLOR : "#E0E0E0"}`,
-                        fontWeight: "500",
-                        textTransform: "none",
-                      }}
-                    >
-                      {day}
-                    </Button>
-                  );
-                })}
-              </Box>
+              <DaySelector
+                selectedDays={selectedDays}
+                onChange={setSelectedDays}
+              />
             </Stack>
             <Stack direction="row" spacing={1} mb={3} mt={2}>
               <Box

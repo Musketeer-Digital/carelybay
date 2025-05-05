@@ -23,6 +23,7 @@ import { useProfileStore } from "@/store/profileSlice";
 import { updateProfile } from "@/utils/api/profile";
 import { IRates } from "@/utils/profileUtils";
 import { FullscreenSpinner } from "../../CustomSpinner";
+import DaySelector from "@/app/components/DaySelector";
 
 const Availability = () => {
   // model toggle states
@@ -337,53 +338,13 @@ const Availability = () => {
                     mt: 2,
                   }}
                 >
-                  {availabilityTimeData.selectedDays.length > 0 &&
-                    ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(
-                      (day) => {
-                        const isSelected =
-                          availabilityTimeData.selectedDays.includes(day);
-                        return (
-                          <CustomButton
-                            key={day}
-                            variant="contained"
-                            sx={{
-                              minWidth: "0 !important",
-                              mr: 1,
-                              width: {
-                                xs: 30,
-                                sm: 50,
-                                md: 62,
-                              },
-                              height: {
-                                xs: 50,
-                                sm: 50,
-                                md: 62,
-                              },
-                              borderRadius: "50%",
-                              backgroundColor: isSelected
-                                ? COLORS.PRIMARY_COLOR
-                                : COLORS.WHITE_COLOR,
-                              color: isSelected
-                                ? COLORS.WHITE_COLOR
-                                : COLORS.BLACK_COLOR,
-                              border: `1px solid ${
-                                isSelected ? COLORS.PRIMARY_COLOR : "#E0E0E0"
-                              }`,
-                              fontSize: {
-                                xs: "12px",
-                                sm: "13px",
-                                md: "14px",
-                              },
-                              fontWeight: 500,
-                              textTransform: "none",
-                            }}
-                          >
-                            {day}
-                          </CustomButton>
-                        );
-                      },
-                    )}
-
+                  {availabilityTimeData.selectedDays.length > 0 && (
+                    <DaySelector
+                      selectedDays={availabilityTimeData.selectedDays}
+                      onChange={() => null}
+                      justifyContent="left"
+                    />
+                  )}
                   {availabilityTimeData.selectedTimeSlots.length > 0 && (
                     <Button
                       variant="outlined"
