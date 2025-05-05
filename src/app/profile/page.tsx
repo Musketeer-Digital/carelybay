@@ -1,19 +1,91 @@
 "use client";
-
-import { Box, Grid, Typography } from "@mui/material";
-import Link from "next/link";
-import ProfileHeader from "../components/profile-header";
+import React, { useEffect, useState } from "react";
+import { Grid, Typography, Box } from "@mui/material";
+import ProfileHeader from "../components/ProfileHeader";
 import CustomButton from "../components/CustomButton";
+import Link from "next/link";
+import { createProfile, getProfileByUserId } from "@/utils/api/profile";
+import { useProfileStore } from "@/store/profileSlice";
+import { IUserProfile } from "@/models/ProfileModel";
+import { useRouter } from "next/navigation";
+import { getUser } from "@/utils/api/user";
+import { useUserStore } from "@/store/userSlice";
+import { FullscreenSpinner } from "../components/CustomSpinner";
 
 const LandingScreen: React.FC = () => {
+  const { setUserProfile, clearUserProfile } = useProfileStore();
+  const { user, setUser, clearUser } = useUserStore();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user || !user._id) {
+      fetchUser();
+    }
+
+    // return () => {
+    //   clearUserProfile();
+    //   clearUser();
+    // };
+  }, [user]);
+
+  const fetchUser = async () => {
+    setIsLoading(true);
+    try {
+      const userId = "67ddd8d4226ba4f84adc4a74";
+      const user = await getUser(userId);
+      setUser(user);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Failed to fetch user:", error);
+      setIsLoading(false);
+    }
+  };
+
+  const onCreateProfile = async () => {
+    if (!user?._id) return;
+
+    setIsLoading(true);
+
+    try {
+      let profile: IUserProfile | null = null;
+
+      try {
+        profile = await getProfileByUserId(user._id);
+      } catch (error: any) {
+        if (error === "Profile not found") {
+          const initialProfileDetails: Partial<IUserProfile> = {
+            userId: user._id,
+            firstName: "New User",
+            lastName: "Profile",
+          };
+
+          profile = await createProfile(initialProfileDetails);
+        } else {
+          throw error;
+        }
+      }
+
+      if (profile) {
+        setUserProfile(profile);
+        router.push("/profile/create-profile#personal-info");
+      }
+    } catch (error) {
+      console.error("Failed to fetch or create profile:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <Box
       sx={{
-        padding: { xs: 3, sm: 6, md: 10 }, 
+        padding: { xs: 3, sm: 6, md: 10 },
         width: "100%",
         maxWidth: "1400px",
       }}
     >
+      {isLoading && <FullscreenSpinner />}
       <Grid
         container
         spacing={4}
@@ -28,7 +100,10 @@ const LandingScreen: React.FC = () => {
             You can easily update or customize your profile anytime in the
             settings section.
           </Typography>
-          <Box display="flex" justifyContent={{ xs: "center", sm: "flex-start" }}>
+          <Box
+            display="flex"
+            justifyContent={{ xs: "center", sm: "flex-start" }}
+          >
             <ProfileHeader />
           </Box>
         </Grid>
@@ -41,7 +116,7 @@ const LandingScreen: React.FC = () => {
           lg={6}
           sx={{
             textAlign: { xs: "center", sm: "left" },
-            paddingLeft: { md: 5, sm: 3, xs: 0 }, 
+            ml: { md: 20, sm: 10, xs: 0 },
           }}
         >
           <Typography variant="h5" sx={{ fontWeight: "bold" }}>
@@ -60,27 +135,37 @@ const LandingScreen: React.FC = () => {
               alignItems: "center",
               gap: 2,
               marginTop: 3,
+              width: "100%",
             }}
           >
-            <Link href="/profile/create-profile" passHref>
+            <Box sx={{ width: { xs: "100%", sm: "auto" } }}>
               <CustomButton
-                variant="contained"
-                color="primary"
+                variant="primary"
                 size="large"
-                sx={{ borderRadius: 50, width: { xs: "100%", sm: "auto" } }}
+                fullWidth
+                onClick={onCreateProfile}
+                sx={{
+                  borderRadius: 50,
+                }}
               >
                 Create Profile
               </CustomButton>
-            </Link>
-            <Link href="/profile/update-profile" passHref>
-              <CustomButton
-                variant="outlined"
-                size="large"
-                sx={{ borderRadius: 50, width: { xs: "100%", sm: "auto" } }}
-              >
-                Complete Profile Later
-              </CustomButton>
-            </Link>
+            </Box>
+
+            <Box sx={{ width: { xs: "100%", sm: "auto" } }}>
+              <Link href="/profile" passHref>
+                <CustomButton
+                  variant="contained"
+                  size="large"
+                  fullWidth
+                  sx={{
+                    borderRadius: 50,
+                  }}
+                >
+                  Complete Profile Later
+                </CustomButton>
+              </Link>
+            </Box>
           </Box>
         </Grid>
       </Grid>
