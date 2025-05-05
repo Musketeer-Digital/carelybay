@@ -2,7 +2,7 @@
 
 import { Button, Box } from "@mui/material";
 import { COLORS } from "@/constants/colors";
-import { days } from "./signup-marketing-panel/create-profile/profile-options";
+import { days } from "../profile/create-profile/profile-options";
 
 interface DaySelectorProps {
   selectedDays: string[];

@@ -12,7 +12,7 @@ import { updateProfile } from "@/utils/api/profile";
 import { useProfileStore } from "@/store/profileSlice";
 import { getProfileBioComponents } from "@/utils/profileUtils";
 import { GreaterIcon } from "@/app/components/icons/greater-icon";
-import { FullscreenSpinner } from "../../CustomSpinner";
+import { FullscreenSpinner } from "@/app/components/signup-marketing-panel/CustomSpinner";
 
 const ProfileBio: React.FC = () => {
   // model toggle state
