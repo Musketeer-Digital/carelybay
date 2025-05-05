@@ -19,10 +19,12 @@ import { ChildCareIcon } from "../components/icons/childcare-icon";
 import CustomButton from "../components/CustomButton";
 import { FavIcon } from "../components/icons/fav-icon";
 import { CheckCircle, LocationOn } from "@mui/icons-material";
+import { useRouter } from "next/navigation";
 
 const JobCard = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const router = useRouter();
 
   return (
     <Box
@@ -35,6 +37,9 @@ const JobCard = () => {
         flexDirection: "column",
         gap: 2,
         cursor: "pointer",
+      }}
+      onClick={() => {
+        router.push("/find-job/view-job");
       }}
     >
       <Stack

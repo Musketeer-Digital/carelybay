@@ -31,11 +31,13 @@ import { getIconByLabel } from "@/utils/utils";
 import { IAdditionalInfo, IService } from "@/utils/profileUtils";
 import JobSidebar from "./find-job-sidebar";
 import { useMediaQuery, useTheme } from "@mui/material";
+import ApplyJob from "../apply-job/apply-job";
 
 const ViewJob = () => {
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [selectedTimeSlots, setSelectedTimeSlots] = useState<string[]>([]);
   const [selectedServices, setSelectedServices] = useState<IService[]>([]);
+  const [applyClicked, setApplyClicked] = useState<boolean>(false);
   const [selectedAdditionalInfo, setSelectedAdditionalInfo] = useState<
     IAdditionalInfo[]
   >([]);
@@ -46,12 +48,13 @@ const ViewJob = () => {
     <Box sx={{ px: { xs: 2, sm: 3, md: 5 }, py: 3 }}>
       <Typography
         component="a"
-        href="#"
+        href="/find-job"
         sx={{
           fontSize: 14,
           display: "flex",
           color: "black",
           alignItems: "center",
+          cursor: "pointer",
         }}
       >
         <IconButton sx={{ width: 30, height: 30 }}>
@@ -86,16 +89,19 @@ const ViewJob = () => {
                 mb={2}
               >
                 <Avatar src="/avatar.jpg" sx={{ width: 60, height: 60 }} />
-                <CustomButton
-                  variant="primary"
-                  sx={{
-                    height: 40,
-                    borderRadius: 999,
-                    width: { xs: "100%", sm: "auto" },
-                  }}
-                >
-                  Apply
-                </CustomButton>
+                {!applyClicked && (
+                  <CustomButton
+                    variant="primary"
+                    sx={{
+                      height: 40,
+                      borderRadius: 999,
+                      width: { xs: "100%", sm: "auto" },
+                    }}
+                    onClick={() => setApplyClicked(true)}
+                  >
+                    Apply
+                  </CustomButton>
+                )}
               </Stack>
 
               <Box mb={2}>
@@ -157,7 +163,12 @@ const ViewJob = () => {
                 ))}
               </Grid>
             </Box>
-            <Typography variant="h6" mb={1}>
+            {applyClicked && <ApplyJob setApplyClicked={setApplyClicked} />}
+            <Typography
+              variant="h6"
+              mb={1}
+              sx={{ fontSize: "24px", fontWeight: 600, mb: 1 }}
+            >
               Job Description
             </Typography>
             <Typography mb={3}>
@@ -170,7 +181,12 @@ const ViewJob = () => {
               role model.
             </Typography>
             <Divider />
-            <Typography variant="h6" mb={2} mt={4}>
+            <Typography
+              variant="h6"
+              mb={2}
+              mt={4}
+              sx={{ fontSize: "24px", fontWeight: 600, mb: 1 }}
+            >
               Availability
             </Typography>
             <Stack direction="row" spacing={1} mb={1}>
@@ -261,7 +277,12 @@ const ViewJob = () => {
               </Box>
             </Stack>
             <Divider />
-            <Typography variant="h6" mb={2} mt={4}>
+            <Typography
+              variant="h6"
+              mb={2}
+              mt={4}
+              sx={{ fontSize: "24px", fontWeight: 600, mb: 1 }}
+            >
               Must have skills
             </Typography>
             <Stack direction="row" spacing={1} flexWrap="wrap" mb={3}>
@@ -339,7 +360,11 @@ const ViewJob = () => {
                 })}
               </Grid>
             </Stack>
-            <Typography variant="h6" mb={1}>
+            <Typography
+              variant="h6"
+              mb={1}
+              sx={{ fontSize: "24px", fontWeight: 600, mb: 1 }}
+            >
               Additional requirements
             </Typography>
             <Grid container justifyContent="left" spacing={2} sx={{ mt: 2 }}>
