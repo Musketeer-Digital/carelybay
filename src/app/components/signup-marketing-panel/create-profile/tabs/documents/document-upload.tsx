@@ -27,7 +27,6 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  console.log("selectedDocument", selectedDocument);
   const handleFileUploading = async (selectedFile: File) => {
     setIsLoading(true);
     try {

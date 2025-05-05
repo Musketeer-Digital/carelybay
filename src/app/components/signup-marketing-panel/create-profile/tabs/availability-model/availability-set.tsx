@@ -17,6 +17,7 @@ import CustomButton from "@/app/components/CustomButton";
 import { days, timeSlots } from "../../profile-options";
 import { DeleteIcon } from "@/app/components/icons/delete-icon";
 import DaySelector from "@/app/components/DaySelector";
+import TimeSlotSelector from "@/app/components/TimeSlotSelector";
 
 interface AvailabilitySetModalProps {
   isAvailabilityModalOpen: boolean;
@@ -110,39 +111,11 @@ const AvailabilitySetModal: React.FC<AvailabilitySetModalProps> = ({
       </Box>
 
       <Box sx={{ mt: 3 }}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            flexWrap: "wrap",
-            gap: 1,
-            mt: 1,
-          }}
-        >
-          {timeSlots.map((slot) => (
-            <Chip
-              key={slot}
-              label={slot}
-              onClick={() =>
-                setSelectedTimeSlots((prev) =>
-                  prev.includes(slot)
-                    ? prev.filter((s) => s !== slot)
-                    : [...prev, slot],
-                )
-              }
-              sx={{
-                borderRadius: "24px",
-                backgroundColor: selectedTimeSlots.includes(slot)
-                  ? COLORS.BG_LIGHT_ORANGE_COLOR
-                  : COLORS.WHITE_COLOR,
-
-                border: `1px solid ${
-                  selectedTimeSlots.includes(slot) ? COLORS.PRIMARY_COLOR : ""
-                }`,
-              }}
-            />
-          ))}
-        </Box>
+        <TimeSlotSelector
+          slots={timeSlots}
+          selected={selectedTimeSlots}
+          onChange={setSelectedTimeSlots}
+        />
       </Box>
 
       {additionalHours.length > 0 && (

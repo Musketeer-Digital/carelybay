@@ -24,7 +24,6 @@ const DaySelector = ({
       : [...selectedDays, day];
     onChange(updated);
   };
-  console.log("selectedDays", selectedDays);
   return (
     <Box
       sx={{

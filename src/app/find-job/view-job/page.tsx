@@ -33,6 +33,7 @@ import JobSidebar from "./find-job-sidebar";
 import { useMediaQuery, useTheme } from "@mui/material";
 import ApplyJob from "../apply-job/apply-job";
 import DaySelector from "@/app/components/DaySelector";
+import TimeSlotSelector from "@/app/components/TimeSlotSelector";
 
 const ViewJob = () => {
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
@@ -197,41 +198,11 @@ const ViewJob = () => {
               />
             </Stack>
             <Stack direction="row" spacing={1} mb={3} mt={2}>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  flexWrap: "wrap",
-                  gap: 1,
-                  mt: 1,
-                }}
-              >
-                {timeSlots.map((slot) => (
-                  <Chip
-                    key={slot}
-                    label={slot}
-                    onClick={() =>
-                      setSelectedTimeSlots((prev) =>
-                        prev.includes(slot)
-                          ? prev.filter((s) => s !== slot)
-                          : [...prev, slot],
-                      )
-                    }
-                    sx={{
-                      borderRadius: "24px",
-                      backgroundColor: selectedTimeSlots.includes(slot)
-                        ? COLORS.BG_LIGHT_ORANGE_COLOR
-                        : COLORS.WHITE_COLOR,
-
-                      border: `1px solid ${
-                        selectedTimeSlots.includes(slot)
-                          ? COLORS.PRIMARY_COLOR
-                          : ""
-                      }`,
-                    }}
-                  />
-                ))}
-              </Box>
+              <TimeSlotSelector
+                slots={timeSlots}
+                selected={selectedTimeSlots}
+                onChange={setSelectedTimeSlots}
+              />
             </Stack>
             <Divider />
             <Typography
