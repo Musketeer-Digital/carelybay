@@ -1,20 +1,20 @@
 import { IAdditionalInfo, IService } from "@/utils/profileUtils";
-import { BabyChangingIcon } from "../../icons/baby-changing-icon";
-import { BathIcon } from "../../icons/bath-icon";
-import { BedroomIcon } from "../../icons/bedroom-icon";
-import { CarDirectionIcon } from "../../icons/car-direction-icon";
-import { ChildCareIcon } from "../../icons/childcare-icon";
-import { HouseIcon } from "../../icons/house-icon";
-import { HouseSidingIcon } from "../../icons/house-siding-icon";
-import { NightShelterIcon } from "../../icons/night-shelter-icon";
-import { OutDoorGrillIcon } from "../../icons/outdoorgrill-icon";
-import { PetIcon } from "../../icons/pets.icon";
-import { SickIcon } from "../../icons/sick-icon";
-import { SmokeFreeIcon } from "../../icons/smoke-free-icon";
-import { SwimmingIcon } from "../../icons/swimming-icon";
-import { VaccineIcon } from "../../icons/vaccine-icon";
-import { VirtualCareIcon } from "../../icons/virtualcare-icon";
-import { YardIcon } from "../../icons/yard-icon";
+import { BabyChangingIcon } from "./icons/baby-changing-icon";
+import { BathIcon } from "./icons/bath-icon";
+import { BedroomIcon } from "./icons/bedroom-icon";
+import { CarDirectionIcon } from "./icons/car-direction-icon";
+import { ChildCareIcon } from "./icons/childcare-icon";
+import { HouseIcon } from "./icons/house-icon";
+import { HouseSidingIcon } from "./icons/house-siding-icon";
+import { NightShelterIcon } from "./icons/night-shelter-icon";
+import { OutDoorGrillIcon } from "./icons/outdoorgrill-icon";
+import { PetIcon } from "./icons/pets.icon";
+import { SickIcon } from "./icons/sick-icon";
+import { SmokeFreeIcon } from "./icons/smoke-free-icon";
+import { SwimmingIcon } from "./icons/swimming-icon";
+import { VaccineIcon } from "./icons/vaccine-icon";
+import { VirtualCareIcon } from "./icons/virtualcare-icon";
+import { YardIcon } from "./icons/yard-icon";
 
 export const qualificationsList: string[] = [
   "High School",

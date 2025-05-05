@@ -10,7 +10,7 @@ import { IUserProfile } from "@/models/ProfileModel";
 import { useRouter } from "next/navigation";
 import { getUser } from "@/utils/api/user";
 import { useUserStore } from "@/store/userSlice";
-import { FullscreenSpinner } from "../components/signup-marketing-panel/CustomSpinner";
+import { FullscreenSpinner } from "../components/CustomSpinner";
 
 const LandingScreen: React.FC = () => {
   const { setUserProfile, clearUserProfile } = useProfileStore();

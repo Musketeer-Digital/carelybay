@@ -5,7 +5,10 @@ import { Typography, ToggleButton, Box, Divider } from "@mui/material";
 import { COLORS } from "@/constants/colors";
 import CustomDialog from "@/app/components/CustomDialog";
 import CustomButton from "@/app/components/CustomButton";
-import { availabilityOptions, urgencyOptions } from "../../profile-options";
+import {
+  availabilityOptions,
+  urgencyOptions,
+} from "../../../../components/profile-options";
 
 interface AvailabilityForModalProps {
   isOpen: boolean;

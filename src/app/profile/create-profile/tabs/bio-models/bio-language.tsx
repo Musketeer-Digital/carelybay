@@ -16,7 +16,7 @@ import { COLORS } from "@/constants/colors";
 import CustomDialog from "@/app/components/CustomDialog";
 import CustomButton from "@/app/components/CustomButton";
 import { SearchIcon } from "@/app/components/icons/search-icon";
-import { languagesOptions } from "../../profile-options";
+import { languagesOptions } from "../../../../components/profile-options";
 
 interface ProfileBioLanguageModalProps {
   isLanguageModalOpen: boolean;

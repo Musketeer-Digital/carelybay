@@ -11,15 +11,15 @@ import {
   IconButton,
 } from "@mui/material";
 import { COLORS } from "@/constants/colors";
-import CustomButton from "../../CustomButton";
-import { PlusIcon } from "../../icons/plus-icon";
-import { ChildCareIcon } from "../../icons/childcare-icon";
-import { EditIcon } from "../../icons/edit-icon";
-import { GreaterIcon } from "../../icons/greater-icon";
-import { ElderAgeIcon } from "../../icons/elderage-icon";
-import { InfoIcon } from "../../icons/info-icon";
-import { CheckIcon } from "../../icons/check-icon";
+import { PlusIcon } from "../../components/icons/plus-icon";
+import { ChildCareIcon } from "../../components/icons/childcare-icon";
+import { EditIcon } from "../../components/icons/edit-icon";
+import { GreaterIcon } from "../../components/icons/greater-icon";
+import { ElderAgeIcon } from "../../components/icons/elderage-icon";
+import { InfoIcon } from "../../components/icons/info-icon";
+import { CheckIcon } from "../../components/icons/check-icon";
 import { useUserStore } from "@/store/userSlice";
+import CustomButton from "@/app/components/CustomButton";
 
 const ProfileSidebar = () => {
   const { user } = useUserStore();

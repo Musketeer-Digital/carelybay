@@ -16,7 +16,7 @@ import CustomButton from "@/app/components/CustomButton";
 import { COLORS } from "@/constants/colors";
 import { CheckIcon } from "@/app/components/icons/check-icon";
 import { SearchIcon } from "@/app/components/icons/search-icon";
-import { citiesOptions } from "../../profile-options";
+import { citiesOptions } from "../../../../components/profile-options";
 
 interface ProfileBioCityModalProps {
   isCityModalOpen: boolean;

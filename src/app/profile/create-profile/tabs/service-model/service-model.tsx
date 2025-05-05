@@ -4,7 +4,7 @@ import { Box, Typography, Grid, Chip, IconButton } from "@mui/material";
 import { COLORS } from "@/constants/colors";
 import CustomDialog from "@/app/components/CustomDialog";
 import CustomButton from "@/app/components/CustomButton";
-import { servicesList } from "../../profile-options";
+import { servicesList } from "../../../../components/profile-options";
 import React, { useEffect, useState } from "react";
 import { getIconByLabel } from "@/utils/utils";
 import { IService, toggleService } from "@/utils/profileUtils";

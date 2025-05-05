@@ -14,7 +14,7 @@ import { PlusIcon } from "@/app/components/icons/plus-icon";
 import { CalendarIcon } from "@/app/components/icons/calendar-icon";
 import CustomDialog from "@/app/components/CustomDialog";
 import CustomButton from "@/app/components/CustomButton";
-import { days, timeSlots } from "../../profile-options";
+import { days, timeSlots } from "../../../../components/profile-options";
 import { DeleteIcon } from "@/app/components/icons/delete-icon";
 import DaySelector from "@/app/components/DaySelector";
 import TimeSlotSelector from "@/app/components/TimeSlotSelector";

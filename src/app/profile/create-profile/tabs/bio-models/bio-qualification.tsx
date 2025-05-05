@@ -4,7 +4,7 @@ import CustomButton from "@/app/components/CustomButton";
 import CustomDialog from "@/app/components/CustomDialog";
 import { COLORS } from "@/constants/colors";
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
-import { qualificationsList } from "../../profile-options";
+import { qualificationsList } from "../../../../components/profile-options";
 import { CheckedIcon } from "@/app/components/icons/checked-icon";
 import { useEffect, useState } from "react";
 

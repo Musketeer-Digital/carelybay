@@ -4,7 +4,7 @@ import { Typography, Grid, IconButton, Divider, Box } from "@mui/material";
 import { COLORS } from "@/constants/colors";
 import CustomDialog from "@/app/components/CustomDialog";
 import CustomButton from "@/app/components/CustomButton";
-import { additionalInfoOptions } from "../../profile-options";
+import { additionalInfoOptions } from "../../../../components/profile-options";
 import React, { useEffect, useState } from "react";
 import { IAdditionalInfo, toggleAdditionalInfo } from "@/utils/profileUtils";
 import { getIconByLabel } from "@/utils/utils";

@@ -18,13 +18,8 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PersonIcon from "@mui/icons-material/Person";
 import PaymentIcon from "@mui/icons-material/AttachMoney";
 import DurationIcon from "@mui/icons-material/WorkOutline"; // optional custom icon
-import InformationCard from "@/app/components/signup-marketing-panel/InformationCard";
-import {
-  additionalInfoOptions,
-  days,
-  servicesList,
-  timeSlots,
-} from "@/app/components/signup-marketing-panel/create-profile/profile-options";
+import InformationCard from "@/app/components/InformationCard";
+
 import { useState } from "react";
 import { COLORS } from "@/constants/colors";
 import { getIconByLabel } from "@/utils/utils";
@@ -34,6 +29,11 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import ApplyJob from "../apply-job/apply-job";
 import DaySelector from "@/app/components/DaySelector";
 import TimeSlotSelector from "@/app/components/TimeSlotSelector";
+import {
+  additionalInfoOptions,
+  servicesList,
+  timeSlots,
+} from "@/app/components/profile-options";
 
 const ViewJob = () => {
   const [selectedDays, setSelectedDays] = useState<string[]>([]);

@@ -7,7 +7,7 @@ import { UploadedFile } from "@/types/documentTypes";
 import { useProfileStore } from "@/store/profileSlice";
 import { updateProfile } from "@/utils/api/profile";
 import { validateFiles } from "@/utils/profileUtils";
-import { FullscreenSpinner } from "../../../CustomSpinner";
+import { FullscreenSpinner } from "@/app/components/CustomSpinner";
 
 interface DocumentUploadProps {
   fileList: UploadedFile[];

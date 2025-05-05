@@ -25,8 +25,8 @@ import {
 import { useProfileStore } from "@/store/profileSlice";
 import { updateProfile } from "@/utils/api/profile";
 import { getIconByLabel } from "@/utils/utils";
-import { additionalInfoOptions } from "../profile-options";
-import { FullscreenSpinner } from "@/app/components/signup-marketing-panel/CustomSpinner";
+import { additionalInfoOptions } from "../../../components/profile-options";
+import { FullscreenSpinner } from "@/app/components/CustomSpinner";
 
 const Services = () => {
   // model toggle states

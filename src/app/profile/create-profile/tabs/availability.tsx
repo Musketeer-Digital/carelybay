@@ -1,15 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  Typography,
-  Box,
-  Divider,
-  IconButton,
-  Button,
-  Link,
-  Tooltip,
-} from "@mui/material";
+import { Typography, Box, Divider, Button, Link, Tooltip } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import AvailabilityRatesModal from "./availability-model/availability-rates";
 import AvailabilityForModal from "./availability-model/availability-for";
@@ -22,8 +14,8 @@ import CustomButton from "@/app/components/CustomButton";
 import { useProfileStore } from "@/store/profileSlice";
 import { updateProfile } from "@/utils/api/profile";
 import { IRates } from "@/utils/profileUtils";
-import { FullscreenSpinner } from "../../CustomSpinner";
 import DaySelector from "@/app/components/DaySelector";
+import { FullscreenSpinner } from "@/app/components/CustomSpinner";
 
 const Availability = () => {
   // model toggle states

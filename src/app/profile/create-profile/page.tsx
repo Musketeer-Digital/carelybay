@@ -1,23 +1,15 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import {
-  Grid,
-  Typography,
-  Box,
-  Link,
-  Divider,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Grid, Typography, Box, useMediaQuery, useTheme } from "@mui/material";
 import { COLORS } from "@/constants/colors";
 import { getUser } from "@/utils/api/user";
 import { getProfileByUserId } from "@/utils/api/profile";
 import { useProfileStore } from "@/store/profileSlice";
 import { useUserStore } from "@/store/userSlice";
-import { FullscreenSpinner } from "@/app/components/signup-marketing-panel/CustomSpinner";
-import ProfileSidebar from "@/app/components/signup-marketing-panel/create-profile/profile-sidebar";
-import ProfileTabs from "@/app/components/signup-marketing-panel/create-profile/profile-tabs";
+import { FullscreenSpinner } from "@/app/components/CustomSpinner";
+import ProfileSidebar from "./profile-sidebar";
+import ProfileTabs from "./profile-tabs";
 
 const Profile = () => {
   const theme = useTheme();
