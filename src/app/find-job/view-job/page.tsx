@@ -360,9 +360,11 @@ const ViewJob = () => {
                 })}
               </Grid>
             </Stack>
+            <Divider />
             <Typography
               variant="h6"
               mb={1}
+              mt={4}
               sx={{ fontSize: "24px", fontWeight: 600, mb: 1 }}
             >
               Additional requirements

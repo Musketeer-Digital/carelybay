@@ -6,7 +6,6 @@ import {
   Avatar,
   Stack,
   IconButton,
-  useMediaQuery,
   useTheme,
 } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -22,8 +21,6 @@ import { CheckCircle, LocationOn } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 
 const JobCard = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const router = useRouter();
 
   return (
@@ -104,16 +101,13 @@ const JobCard = () => {
         </Stack>
       </Stack>
 
-      {/* Description */}
       <Typography fontSize="14px" color="text.secondary">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua.
       </Typography>
 
-      {/* Divider */}
       <Box sx={{ borderBottom: "1px solid #E5E7EB" }} />
 
-      {/* Bottom Icons and Actions */}
       <Stack
         direction={{ xs: "column", sm: "row" }}
         justifyContent="space-between"
