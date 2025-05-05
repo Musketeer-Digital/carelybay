@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     }
 
     const uploadResult = await uploadFileToGCP(file as File);
-    const imageUrl = `https://storage.googleapis.com/${process.env.GCP_BUCKET_NAME}/users/${userId}/${process.env.GCP_BUCKET_PROFILE_PHOTOS_DIRECTORY || "profile-photos"}/image`;
+    const imageUrl = `https://storage.googleapis.com/${process.env.PUBLIC_BUCKET_NAME || "default-public"}/users/${userId}/${process.env.GCP_BUCKET_PROFILE_PHOTOS_DIRECTORY || "profile-photos"}/image`;
 
     await connectDB();
 
@@ -104,13 +104,11 @@ async function uploadFileToGCP(file: File) {
       private_key: process.env.GCP_PRIVATE_KEY,
     },
   });
-  const bucketName =
-    process.env.GCP_BUCKET_NAME || "musketeer-dev-image-assets";
 
   try {
     const buffer = await file.arrayBuffer();
     return await storage
-      .bucket(bucketName)
+      .bucket(process.env.PUBLIC_BUCKET_NAME || "default-public")
       .file(
         `${process.env.GCP_BUCKET_PROFILE_PHOTOS_DIRECTORY || "profile-photos"}/${file.name}`,
       )
