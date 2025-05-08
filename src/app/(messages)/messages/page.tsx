@@ -13,7 +13,7 @@ import {
 import Image, { StaticImageData } from "next/image";
 import SessionControls from "@/app/components/session-controls";
 import Spooderman from "/public/spooderman.webp";
-import NorthEastIcon from "@mui/icons-material/NorthEast";
+import { NorthEast, AttachFile, Send, Search } from "@mui/icons-material";
 
 interface Conversation {
   id: string;
@@ -157,7 +157,9 @@ export default function Messages() {
           slotProps={{
             input: {
               startAdornment: (
-                <InputAdornment position="start">🔍</InputAdornment>
+                <InputAdornment position="start">
+                  <Search sx={{ color: "#171717" }} />
+                </InputAdornment>
               ),
             },
           }}
@@ -325,7 +327,7 @@ export default function Messages() {
                 </Typography>
               </Box>
               <Button variant="primary">
-                View Application <NorthEastIcon />
+                View Application <NorthEast />
               </Button>
             </Box>
           </Box>
@@ -433,7 +435,25 @@ export default function Messages() {
           placeholder="Write your message..."
           slotProps={{
             input: {
-              endAdornment: <InputAdornment position="end">🔍</InputAdornment>,
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Box
+                    sx={{ display: "flex", gap: "16px", alignItems: "center" }}
+                  >
+                    <AttachFile sx={{ color: "#171717" }} />
+                    <Send
+                      sx={{
+                        color: "white",
+                        backgroundColor: "#171717",
+                        borderRadius: "8px",
+                        width: "40px",
+                        height: "40px",
+                        padding: "10px",
+                      }}
+                    />
+                  </Box>
+                </InputAdornment>
+              ),
             },
           }}
           sx={{ marginTop: "auto" }}
