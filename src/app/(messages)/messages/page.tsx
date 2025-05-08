@@ -280,7 +280,9 @@ export default function Messages() {
             </Box>
           ))}
 
-        <SessionControls />
+        <Box sx={{ marginTop: "auto" }}>
+          <SessionControls />
+        </Box>
       </Box>
 
       {/* RIGHT */}
@@ -295,169 +297,198 @@ export default function Messages() {
         }}
       >
         {activeConversation ? (
-          <Box sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
-            <Avatar
-              src={activeConversation?.avatarUrl}
-              alt={activeConversation?.participantName}
-              sx={{ width: "66px", height: "66px" }}
-            />
-            <Box
-              sx={{ flex: 1, display: "flex", justifyContent: "space-between" }}
-            >
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <Typography
-                  sx={{
-                    fontWeight: "700",
-                    fontSize: "24px",
-                    lineHeight: "36px",
-                  }}
-                >
-                  {activeConversation?.participantName}
-                </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: "600",
-                    fontSize: "16px",
-                    lineHeight: "26px",
-                    color: "#5E5E5E",
-                    textDecoration: "underline",
-                  }}
-                >
-                  (Job/Contract name goes here)
-                </Typography>
-              </Box>
-              <Button variant="primary">
-                View Application <NorthEast />
-              </Button>
-            </Box>
-          </Box>
-        ) : (
-          <Typography>Select a conversation</Typography>
-        )}
-
-        {/* MESSAGES */}
-        {messages.map((message, index) => {
-          const isMe = message.senderId === "me";
-
-          const prevMessage = messages[index - 1];
-          const currentDate = new Date(message.timestamp).toDateString();
-          const prevDate = prevMessage
-            ? new Date(prevMessage.timestamp).toDateString()
-            : null;
-
-          return (
-            <Box key={message.id}>
-              {/* Insert date separator if day changed */}
-              {currentDate !== prevDate && (
-                <Typography
-                  sx={{
-                    textAlign: "center",
-                    color: "gray",
-                    fontSize: "14px",
-                    marginBottom: "10px",
-                  }}
-                >
-                  {currentDate}
-                </Typography>
-              )}
-
-              {/* MESSAGE */}
+          <Box
+            sx={{ display: "flex", flexDirection: "column", gap: 2, flex: 1 }}
+          >
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
+              <Avatar
+                src={activeConversation?.avatarUrl}
+                alt={activeConversation?.participantName}
+                sx={{ width: "66px", height: "66px" }}
+              />
               <Box
                 sx={{
+                  flex: 1,
                   display: "flex",
-                  flexDirection: "column",
-                  alignItems: isMe ? "flex-end" : "flex-start",
-                  mb: 1,
+                  justifyContent: "space-between",
                 }}
               >
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: isMe ? "row-reverse" : "row",
-                    alignItems: "flex-start",
-                    maxWidth: "75%",
-                    gap: "20px",
-                  }}
-                >
-                  <Avatar
-                    src={
-                      isMe
-                        ? activeConversation?.avatarUrl // TODO: replace later
-                        : activeConversation?.avatarUrl
-                    }
-                    alt={isMe ? "You" : activeConversation?.participantName}
-                    sx={{ width: 32, height: 32, mx: 1 }}
-                  />
-
-                  {/* BUBBLE AND TIMESTAMP */}
-                  <Box
+                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                  <Typography
                     sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "15px",
+                      fontWeight: "700",
+                      fontSize: "24px",
+                      lineHeight: "36px",
                     }}
                   >
-                    {/* BUBBLE */}
+                    {activeConversation?.participantName}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontWeight: "600",
+                      fontSize: "16px",
+                      lineHeight: "26px",
+                      color: "#5E5E5E",
+                      textDecoration: "underline",
+                    }}
+                  >
+                    (Job/Contract name goes here)
+                  </Typography>
+                </Box>
+                <Button variant="primary">
+                  View Application <NorthEast />
+                </Button>
+              </Box>
+              <Typography>test</Typography>
+            </Box>
+
+            <Box
+              sx={{
+                flex: 1,
+                overflow: "auto",
+                maxHeight: "400px",
+              }}
+            >
+              {/* MESSAGES */}
+              {messages.map((message, index) => {
+                const isMe = message.senderId === "me";
+
+                const prevMessage = messages[index - 1];
+                const currentDate = new Date(message.timestamp).toDateString();
+                const prevDate = prevMessage
+                  ? new Date(prevMessage.timestamp).toDateString()
+                  : null;
+
+                return (
+                  <Box key={message.id}>
+                    {/* Insert date separator if day changed */}
+                    {currentDate !== prevDate && (
+                      <Typography
+                        sx={{
+                          textAlign: "center",
+                          color: "gray",
+                          fontSize: "14px",
+                          marginBottom: "10px",
+                        }}
+                      >
+                        {currentDate}
+                      </Typography>
+                    )}
+
+                    {/* MESSAGE */}
                     <Box
                       sx={{
-                        width: "fit-content",
-                        backgroundColor: "#FBFBFB",
-                        padding: "8px 12px",
-                        borderRadius: "12px",
-                        boxShadow: "0 1px 2px rgba(0,0,0,0.1)",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: isMe ? "flex-end" : "flex-start",
+                        mb: 1,
                       }}
                     >
-                      <Typography sx={{ wordBreak: "break-word" }}>
-                        {message.content}
-                      </Typography>
-                    </Box>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: isMe ? "row-reverse" : "row",
+                          alignItems: "flex-start",
+                          maxWidth: "75%",
+                          gap: "20px",
+                        }}
+                      >
+                        <Avatar
+                          src={
+                            isMe
+                              ? activeConversation?.avatarUrl // TODO: replace later
+                              : activeConversation?.avatarUrl
+                          }
+                          alt={
+                            isMe ? "You" : activeConversation?.participantName
+                          }
+                          sx={{ width: 32, height: 32, mx: 1 }}
+                        />
 
-                    {/* TIMESTAMP */}
-                    <Typography
-                      sx={{
-                        fontSize: "10px",
-                        color: "gray",
-                        textAlign: isMe ? "right" : "left",
-                      }}
-                    >
-                      {new Date(message.timestamp).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </Typography>
+                        {/* BUBBLE AND TIMESTAMP */}
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "15px",
+                          }}
+                        >
+                          {/* BUBBLE */}
+                          <Box
+                            sx={{
+                              width: "fit-content",
+                              backgroundColor: "#FBFBFB",
+                              padding: "8px 12px",
+                              borderRadius: "12px",
+                              boxShadow: "0 1px 2px rgba(0,0,0,0.1)",
+                            }}
+                          >
+                            <Typography sx={{ wordBreak: "break-word" }}>
+                              {message.content}
+                            </Typography>
+                          </Box>
+
+                          {/* TIMESTAMP */}
+                          <Typography
+                            sx={{
+                              fontSize: "10px",
+                              color: "gray",
+                              textAlign: isMe ? "right" : "left",
+                            }}
+                          >
+                            {new Date(message.timestamp).toLocaleTimeString(
+                              [],
+                              {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              },
+                            )}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Box>
                   </Box>
-                </Box>
-              </Box>
+                );
+              })}
             </Box>
-          );
-        })}
-        <TextField
-          placeholder="Write your message..."
-          slotProps={{
-            input: {
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Box
-                    sx={{ display: "flex", gap: "16px", alignItems: "center" }}
-                  >
-                    <AttachFile sx={{ color: "#171717" }} />
-                    <Send
-                      sx={{
-                        color: "white",
-                        backgroundColor: "#171717",
-                        borderRadius: "8px",
-                        width: "40px",
-                        height: "40px",
-                        padding: "10px",
-                      }}
-                    />
-                  </Box>
-                </InputAdornment>
-              ),
-            },
-          }}
-          sx={{ marginTop: "auto" }}
-        />
+
+            <TextField
+              placeholder="Write your message..."
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Box
+                        sx={{
+                          display: "flex",
+                          gap: "16px",
+                          alignItems: "center",
+                        }}
+                      >
+                        <AttachFile sx={{ color: "#171717" }} />
+                        <Send
+                          sx={{
+                            color: "white",
+                            backgroundColor: "#171717",
+                            borderRadius: "8px",
+                            width: "40px",
+                            height: "40px",
+                            padding: "10px",
+                          }}
+                        />
+                      </Box>
+                    </InputAdornment>
+                  ),
+                },
+              }}
+              sx={{ marginTop: "auto" }}
+            />
+          </Box>
+        ) : (
+          <Typography>
+            Select a conversation from the list on the left.
+          </Typography>
+        )}
       </Box>
       {/* (A conversation is started when a user applies for a job) */}
       {/* (A conversation is between a job poster and an applicant) */}
