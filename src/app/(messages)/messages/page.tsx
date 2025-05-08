@@ -19,6 +19,7 @@ interface Conversation {
   id: string;
   participantName: string;
   lastMessage: string;
+  lastMessageTimestamp: string;
   participantId: string;
   avatarUrl: string | undefined;
 }
@@ -36,6 +37,7 @@ const conversationSet1 = [
     id: "conv1",
     participantName: "Jane Doe",
     lastMessage: "Looking forward to the interview!",
+    lastMessageTimestamp: "2023-06-01T10:00:00Z",
     participantId: "user_123",
     avatarUrl: "spooderman.webp",
   },
@@ -44,6 +46,7 @@ const conversationSet1 = [
     participantName: "John Smith",
     lastMessage:
       "Thanks for applying! longtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtext",
+    lastMessageTimestamp: "2023-06-01T10:00:00Z",
     participantId: "user_456",
     avatarUrl: "spooderman.webp",
   },
@@ -51,6 +54,7 @@ const conversationSet1 = [
     id: "conv3",
     participantName: "Emma Johnson",
     lastMessage: "Can you start next week?",
+    lastMessageTimestamp: "2023-06-01T10:00:00Z",
     participantId: "user_789",
     avatarUrl: "spooderman.webp",
   },
@@ -199,17 +203,43 @@ export default function Messages() {
                 alt={conversation.participantName}
               />
               <Box
-                sx={{ display: "flex", flexDirection: "column", gap: "6px" }}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "6px",
+                  flex: 1,
+                }}
               >
-                <Typography
+                <Box
                   sx={{
-                    fontWeight: "600",
-                    fontSize: "15px",
-                    lineHeight: "26px",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
                   }}
                 >
-                  {conversation.participantName}
-                </Typography>
+                  <Typography
+                    sx={{
+                      fontWeight: "600",
+                      fontSize: "15px",
+                      lineHeight: "26px",
+                    }}
+                  >
+                    {conversation.participantName}
+                  </Typography>
+
+                  <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
+                    <Typography sx={{ fontWeight: "400", fontSize: "12px" }}>
+                      (STATUS)
+                    </Typography>
+                    <Typography sx={{ fontWeight: "400", fontSize: "12px" }}>
+                      {new Date(
+                        conversation.lastMessageTimestamp,
+                      ).toLocaleDateString()}
+                    </Typography>
+                  </Box>
+                </Box>
+
                 <Typography
                   sx={{
                     fontWeight: "400",
