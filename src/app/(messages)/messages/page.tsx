@@ -42,7 +42,8 @@ const conversationSet1 = [
   {
     id: "conv2",
     participantName: "John Smith",
-    lastMessage: "Thanks for applying!",
+    lastMessage:
+      "Thanks for applying! longtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtext",
     participantId: "user_456",
     avatarUrl: "spooderman.webp",
   },
@@ -77,14 +78,16 @@ const messageSet: Record<string, Message[]> = {
       id: "msg3",
       senderId: "me",
       recipientId: "user_456",
-      content: "Hi John!",
+      content:
+        "Hi John! longtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtext",
       timestamp: "2025-04-11T09:00:00Z",
     },
     {
       id: "msg4",
       senderId: "user_456",
       recipientId: "me",
-      content: "Thanks for applying!",
+      content:
+        "Thanks for applying! longtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtext",
       timestamp: "2025-04-11T09:01:00Z",
     },
   ],
@@ -118,8 +121,10 @@ export default function Messages() {
           display: "flex",
           flexDirection: "column",
           gap: 2,
+          flex: 1,
           padding: 4,
           backgroundColor: "rgba(224, 232, 239, 0.1)",
+          maxWidth: "546px",
         }}
       >
         <Box
@@ -182,6 +187,7 @@ export default function Messages() {
                 gap: "20px",
                 display: "flex",
                 flexDirection: "row",
+                maxHeight: "108px",
               }}
               onClick={() => {
                 setActiveConversation(conversation);
@@ -192,7 +198,9 @@ export default function Messages() {
                 src={conversation.avatarUrl}
                 alt={conversation.participantName}
               />
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <Box
+                sx={{ display: "flex", flexDirection: "column", gap: "6px" }}
+              >
                 <Typography
                   sx={{
                     fontWeight: "600",
@@ -207,6 +215,11 @@ export default function Messages() {
                     fontWeight: "400",
                     fontSize: "14px",
                     lineHeight: "22px",
+                    maxWidth: "270px",
+                    wordBreak: "break-word",
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
                   }}
                 >
                   {conversation.lastMessage}
@@ -224,8 +237,9 @@ export default function Messages() {
           display: "flex",
           flexDirection: "column",
           gap: 2,
-          flex: 1,
+          flex: 2,
           padding: 4,
+          maxWidth: "1154px",
         }}
       >
         {activeConversation ? (
@@ -269,6 +283,7 @@ export default function Messages() {
           <Typography>Select a conversation</Typography>
         )}
 
+        {/* MESSAGES */}
         {messages.map((message, index) => {
           const isMe = message.senderId === "me";
 
@@ -294,7 +309,7 @@ export default function Messages() {
                 </Typography>
               )}
 
-              {/* Message bubble */}
+              {/* MESSAGE */}
               <Box
                 sx={{
                   display: "flex",
@@ -307,7 +322,9 @@ export default function Messages() {
                   sx={{
                     display: "flex",
                     flexDirection: isMe ? "row-reverse" : "row",
-                    alignItems: "center",
+                    alignItems: "flex-start",
+                    maxWidth: "75%",
+                    gap: "20px",
                   }}
                 >
                   <Avatar
@@ -319,32 +336,45 @@ export default function Messages() {
                     alt={isMe ? "You" : activeConversation?.participantName}
                     sx={{ width: 32, height: 32, mx: 1 }}
                   />
+
+                  {/* BUBBLE AND TIMESTAMP */}
                   <Box
                     sx={{
-                      maxWidth: "60%",
-                      backgroundColor: "#FBFBFB",
-                      padding: "8px 12px",
-                      borderRadius: "12px",
-                      boxShadow: "0 1px 2px rgba(0,0,0,0.1)",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "15px",
                     }}
                   >
-                    <Typography>{message.content}</Typography>
+                    {/* BUBBLE */}
+                    <Box
+                      sx={{
+                        width: "fit-content",
+                        backgroundColor: "#FBFBFB",
+                        padding: "8px 12px",
+                        borderRadius: "12px",
+                        boxShadow: "0 1px 2px rgba(0,0,0,0.1)",
+                      }}
+                    >
+                      <Typography sx={{ wordBreak: "break-word" }}>
+                        {message.content}
+                      </Typography>
+                    </Box>
+
+                    {/* TIMESTAMP */}
+                    <Typography
+                      sx={{
+                        fontSize: "10px",
+                        color: "gray",
+                        textAlign: isMe ? "right" : "left",
+                      }}
+                    >
+                      {new Date(message.timestamp).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </Typography>
                   </Box>
                 </Box>
-
-                <Typography
-                  sx={{
-                    fontSize: "10px",
-                    color: "gray",
-                    textAlign: isMe ? "right" : "left",
-                    px: 5,
-                  }}
-                >
-                  {new Date(message.timestamp).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </Typography>
               </Box>
             </Box>
           );
