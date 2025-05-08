@@ -228,11 +228,31 @@ export default function Messages() {
                     {conversation.participantName}
                   </Typography>
 
-                  <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
-                    <Typography sx={{ fontWeight: "400", fontSize: "12px" }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: 1,
+                      alignItems: "center",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontWeight: "400",
+                        fontSize: "12px",
+                        lineHeight: "15px",
+                      }}
+                    >
+                      {/* TODO: Add colour based on status */}
                       (STATUS)
                     </Typography>
-                    <Typography sx={{ fontWeight: "400", fontSize: "12px" }}>
+                    <Typography
+                      sx={{
+                        fontWeight: "400",
+                        fontSize: "14px",
+                        lineHeight: "22px",
+                      }}
+                    >
                       {new Date(
                         conversation.lastMessageTimestamp,
                       ).toLocaleDateString()}
