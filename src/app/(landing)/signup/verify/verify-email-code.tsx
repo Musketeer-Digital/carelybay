@@ -22,6 +22,7 @@ export default function VerifyEmailCode() {
   const [error, setError] = useState<string>("");
   const [isVerifying, setIsVerifying] = useState(false);
   const userInfo = useUserStore((state) => state.userInfo);
+  const [OTPFocusIndex, setOTPFocusIndex] = useState<number>(0)
 
   const { data: session } = useSession();
 
@@ -70,6 +71,18 @@ export default function VerifyEmailCode() {
     }
   };
 
+  const OPTInputArray = Array(6).fill(0).map((_, index) => (
+    <OTPInput
+      key={index}
+      name={`otp[${index}]`}
+      error={errors.otp?.[index]}
+      register={register}
+      focus={OTPFocusIndex}
+    />)
+  )
+
+  // if 
+
   return (
     <Container>
       <PageHeader
@@ -90,16 +103,7 @@ export default function VerifyEmailCode() {
             },
           }}
         >
-          {Array(6)
-            .fill(0)
-            .map((_, index) => (
-              <OTPInput
-                key={index}
-                name={`otp[${index}]`}
-                error={errors.otp?.[index]}
-                register={register}
-              />
-            ))}
+          {OPTInputArray}
         </Box>
         <Button variant="primary" type="submit" fullWidth sx={{ mb: 4 }}>
           Confirm

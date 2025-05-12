@@ -1,5 +1,6 @@
 import { Box, Button, ButtonProps, Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
+// import { signIn } from "@/lib/auth";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import SocialIcon from "../icons/social-icon";
@@ -25,7 +26,7 @@ export default function SocialLoginButton({
     <Button
       {...buttonProps}
       fullWidth
-      onClick={() => signIn(provider, { callbackUrl })}
+      onClick={() => signIn(provider)}
       sx={{
         border: "1px solid rgba(77, 73, 87, 0.6)",
         color: "#000000",

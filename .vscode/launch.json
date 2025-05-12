@@ -7,11 +7,54 @@
     {
       "name": "pnpm dev",
       "request": "launch",
-      "runtimeArgs": ["dev"],
+      "runtimeArgs": [
+        "dev"
+      ],
       "runtimeExecutable": "pnpm",
       "runtimeVersion": "21.6.2",
-      "skipFiles": ["<node_internals>/**"],
-      "type": "node"
+      "skipFiles": [
+        "<node_internals>/**",
+        "node_modules/**"
+      ],
+      "type": "node",
+    },
+    {
+      "name": "Next.js debug server-side",
+      "port": 9230,
+      "request": "attach",
+      "skipFiles": [
+        "<node_internals>/**",
+        "node_modules/**",
+        "${workspaceFolder}/node_modules/**"
+      ],
+      "type": "node",
+      "sourceMapPathOverrides": {
+        "/turbopack/[project]/*": "${webRoot}/*"
+      }
+    },
+    {
+      "name": "Next.js debug client-side",
+      "request": "launch",
+      "type": "chrome",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}",
+      "skipFiles": [
+        "<node_internals>/**",
+        "node_modules/**"
+      ],
+      "sourceMapPathOverrides": {
+        "/turbopack/[project]/*": "${webRoot}/*"
+      }
+    },
+  ],
+  "compounds": [
+    {
+      "name": "Next.js: debug full stack",
+      "configurations": [
+        "Next.js debug client-side",
+        "Next.js debug server-side"
+      ],
+      "stopAll": true
     }
   ]
 }

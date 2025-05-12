@@ -5,16 +5,19 @@ export const OTPInput = ({
   name,
   error,
   register,
+  focus,
 }: {
   name: string;
   error?: FieldError;
   register: any;
+  focus: number;
 }) => (
   <TextField
     {...register(name, { required: "OTP is required" })}
     error={!!error}
     helperText={error?.message}
     type="text"
+    focused={focus}
     slotProps={{
       htmlInput: {
         maxLength: 1,

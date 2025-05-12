@@ -28,6 +28,7 @@ export default function SignIn() {
   const [error, setError] = useState("");
   const router = useRouter();
 
+  // console.log(process.env)
   const {
     register,
     handleSubmit,

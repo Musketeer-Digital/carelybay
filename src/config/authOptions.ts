@@ -15,6 +15,7 @@ export enum VerificationStatus {
 }
 
 export const authOptions: NextAuthOptions = {
+  debug: true,
   providers: [
     // * Logging in
     credentials({
@@ -78,12 +79,12 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
+      console.log('hi')
       if (account?.provider === "google" || account?.provider === "facebook") {
         await connectDB();
         const matchingUser = await User.findOne({
           email: user?.email,
         });
-
         return !!matchingUser;
       } else if (account?.provider === "credentials") {
         if (user) {
