@@ -2,30 +2,75 @@
 
 import { Box, Typography, Chip, Stack } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { StaticDateRangePicker } from "@mui/x-date-pickers-pro/StaticDateRangePicker";
-import { DateRange } from "@mui/x-date-pickers-pro/models";
-import dayjs, { Dayjs } from "dayjs";
 import CustomButton from "../components/CustomButton";
+import { DateRange } from "@mui/x-date-pickers-pro/models";
+import { Dayjs } from "dayjs";
+import { TextField } from "@mui/material";
 
-const FilterSidebar = () => {
-  const [dateRange, setDateRange] = useState<DateRange<Dayjs>>([
-    dayjs("2025-01-19"),
-    dayjs("2025-01-22"),
-  ]);
+interface FilterSidebarProps {
+  filters: {
+    location: string;
+    dateRange: any;
+    selectedServices: string[];
+  };
+  setFilters: (val: any) => void;
+}
+
+const allServices = ["All", "Nanny", "Babysitter", "School Pickups"];
+
+const FilterSidebar = ({ filters, setFilters }: FilterSidebarProps) => {
   const [showCalendar, setShowCalendar] = useState(true);
   const [showServices, setShowServices] = useState(true);
 
-  const services = [
-    { label: "All (100)", selected: false },
-    { label: "Nanny (10)", selected: false },
-    { label: "Babysitter (20)", selected: true },
-    { label: "School Pickups (70)", selected: false },
-  ];
+  const [localDateRange, setLocalDateRange] = useState<DateRange<Dayjs>>([
+    null,
+    null,
+  ]);
+  const [localServices, setLocalServices] = useState<string[]>([]);
+  const [localLocation, setLocalLocation] = useState(filters.location);
 
-  const currentMonthLabel = dateRange[0]?.format("MMM YYYY") || "Date Range";
+  useEffect(() => {
+    setLocalDateRange(filters.dateRange);
+    setLocalServices(filters.selectedServices);
+    setLocalLocation(filters.location);
+  }, [filters]);
+
+  const currentMonthLabel =
+    localDateRange?.[0]?.format("MMM YYYY") || "Date Range";
+
+  const toggleService = (service: string) => {
+    setLocalServices((prev) =>
+      prev.includes(service)
+        ? prev.filter((s) => s !== service)
+        : [...prev, service],
+    );
+  };
+
+  const applyFilters = () => {
+    setFilters((prev: any) => ({
+      ...prev,
+      location: localLocation,
+      dateRange: localDateRange,
+      selectedServices: localServices,
+    }));
+  };
+
+  const resetFilters = () => {
+    const defaultFilters = {
+      location: "",
+      dateRange: [null, null] as DateRange<Dayjs>,
+      selectedServices: [],
+    };
+
+    setLocalLocation(defaultFilters.location);
+    setLocalDateRange(defaultFilters.dateRange);
+    setLocalServices(defaultFilters.selectedServices);
+    setFilters(defaultFilters);
+  };
 
   return (
     <Box sx={{ pt: 3 }}>
@@ -44,21 +89,23 @@ const FilterSidebar = () => {
         <Typography variant="subtitle2" fontWeight={600} mb={0.5}>
           Location
         </Typography>
-        <Box
-          sx={{
-            border: "1px solid #ccc",
-            borderRadius: "6px",
-            px: 2,
-            py: 1.2,
-            mb: 2,
-            fontSize: 14,
-            fontWeight: 500,
-            color: "#333",
-          }}
-        >
-          MELBOURNE, VIC 3000
-        </Box>
 
+        <TextField
+          fullWidth
+          variant="outlined"
+          value={localLocation}
+          onChange={(e) => setLocalLocation(e.target.value)}
+          sx={{
+            mb: 2,
+            "& .MuiOutlinedInput-root": {
+              fontSize: 14,
+              fontWeight: 500,
+              borderRadius: "6px",
+            },
+          }}
+        />
+
+        {/* Date Range */}
         <Typography variant="subtitle2" fontWeight={600} mb={1}>
           Date Range
         </Typography>
@@ -87,8 +134,8 @@ const FilterSidebar = () => {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <StaticDateRangePicker
                 displayStaticWrapperAs="desktop"
-                value={dateRange}
-                onChange={(newValue) => setDateRange(newValue)}
+                value={localDateRange}
+                onChange={(newValue) => setLocalDateRange(newValue)}
                 calendars={1}
                 slotProps={{
                   actionBar: { actions: [] },
@@ -103,6 +150,7 @@ const FilterSidebar = () => {
           </Box>
         )}
 
+        {/* Services */}
         <Typography variant="subtitle2" fontWeight={600} mb={1}>
           Services
         </Typography>
@@ -128,29 +176,39 @@ const FilterSidebar = () => {
 
         {showServices && (
           <Stack direction="row" gap={1} flexWrap="wrap" mb={3}>
-            {services.map((item) => (
-              <Chip
-                key={item.label}
-                label={item.label}
-                variant={item.selected ? "filled" : "outlined"}
-                sx={
-                  item.selected
-                    ? {
-                        backgroundColor: "#FF6B00",
-                        color: "#fff",
-                        fontWeight: 500,
-                      }
-                    : undefined
-                }
-              />
-            ))}
+            {allServices.map((service) => {
+              const isSelected = localServices.includes(service);
+              return (
+                <Chip
+                  key={service}
+                  label={service}
+                  variant={isSelected ? "filled" : "outlined"}
+                  onClick={() => toggleService(service)}
+                  sx={
+                    isSelected
+                      ? {
+                          backgroundColor: "#FF6B00",
+                          color: "#fff",
+                          fontWeight: 500,
+                        }
+                      : undefined
+                  }
+                />
+              );
+            })}
           </Stack>
         )}
 
-        <CustomButton fullWidth variant="primary" sx={{ mb: 1 }}>
+        {/* Buttons */}
+        <CustomButton
+          fullWidth
+          variant="primary"
+          sx={{ mb: 1 }}
+          onClick={applyFilters}
+        >
           Apply filter
         </CustomButton>
-        <CustomButton fullWidth variant="outlined">
+        <CustomButton fullWidth variant="outlined" onClick={resetFilters}>
           Reset filter
         </CustomButton>
       </Box>

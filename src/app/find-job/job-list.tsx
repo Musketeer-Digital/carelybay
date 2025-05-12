@@ -4,8 +4,18 @@ import JobCard from "./job-card";
 import { useEffect, useState } from "react";
 import { getJobs } from "@/utils/api/findJob";
 import { FullscreenSpinner } from "../components/CustomSpinner";
+import { Dayjs } from "dayjs";
+import { DateRange } from "@mui/x-date-pickers-pro/models";
 
-const JobList = () => {
+interface IJobListProps {
+  filters: {
+    location: string;
+    dateRange: any;
+    selectedServices: string[];
+  };
+}
+
+const JobList = ({ filters }: IJobListProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [jobPosts, setJobPosts] = useState([]);
 

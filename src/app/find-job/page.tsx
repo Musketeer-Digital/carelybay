@@ -5,11 +5,18 @@ import JobList from "./job-list";
 import FilterSidebar from "./filter-sidebar";
 import FindJobTabs from "./find-job-tabs";
 import { useState } from "react";
+import dayjs from "dayjs";
 
 const FindJob = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [tab, setTab] = useState(0);
+
+  const [filters, setFilters] = useState({
+    location: "",
+    dateRange: [null, null],
+    selectedServices: [],
+  });
 
   return (
     <Box
@@ -29,38 +36,14 @@ const FindJob = () => {
           overflow: "hidden",
         }}
       >
-        {tab === 0 && (
+        {[0, 1, 2].includes(tab) && (
           <>
             <Box sx={{ flex: 3 }}>
-              <JobList />
+              <JobList filters={filters} />
             </Box>
             {!isMobile && (
               <Box sx={{ flex: 1 }}>
-                <FilterSidebar />
-              </Box>
-            )}
-          </>
-        )}
-        {tab === 1 && (
-          <>
-            <Box sx={{ flex: 3 }}>
-              <JobList />
-            </Box>
-            {!isMobile && (
-              <Box sx={{ flex: 1 }}>
-                <FilterSidebar />
-              </Box>
-            )}
-          </>
-        )}
-        {tab === 2 && (
-          <>
-            <Box sx={{ flex: 3 }}>
-              <JobList />
-            </Box>
-            {!isMobile && (
-              <Box sx={{ flex: 1 }}>
-                <FilterSidebar />
+                <FilterSidebar filters={filters} setFilters={setFilters} />
               </Box>
             )}
           </>
