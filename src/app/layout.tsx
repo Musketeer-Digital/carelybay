@@ -21,10 +21,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" style={{ height: "100%" }}>
-      <body
-        style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
-      >
+    <html lang="en">
+      <body>
         <ClientProvider>
           <SessionProvider>{children}</SessionProvider>
         </ClientProvider>
