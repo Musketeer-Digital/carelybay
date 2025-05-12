@@ -20,7 +20,7 @@ import PaymentIcon from "@mui/icons-material/AttachMoney";
 import DurationIcon from "@mui/icons-material/WorkOutline"; // optional custom icon
 import InformationCard from "@/app/components/InformationCard";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { COLORS } from "@/constants/colors";
 import { getIconByLabel } from "@/utils/utils";
 import { IAdditionalInfo, IService } from "@/utils/profileUtils";
@@ -34,6 +34,10 @@ import {
   servicesList,
   timeSlots,
 } from "@/app/components/profile-options";
+import { useSearchParams } from "next/navigation";
+import { JobPostDocument } from "@/models/JobModel";
+import { getJobById } from "@/utils/api/findJob";
+import { FullscreenSpinner } from "@/app/components/CustomSpinner";
 
 const ViewJob = () => {
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
@@ -46,8 +50,32 @@ const ViewJob = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [jobPost, setJobPost] = useState<JobPostDocument | null>(null);
+  const searchParams = useSearchParams();
+  const jobId = searchParams.get("jobId") ?? "";
+
+  useEffect(() => {
+    if (!jobId) return;
+    fetchJobPost();
+  }, [jobId]);
+
+  const fetchJobPost = async () => {
+    setIsLoading(true);
+    try {
+      const job = await getJobById(jobId);
+      setJobPost(job);
+    } catch (error) {
+      console.error("Failed to fetch:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <Box sx={{ px: { xs: 2, sm: 3, md: 5 }, py: 3 }}>
+      {isLoading && <FullscreenSpinner />}
+
       <Typography
         component="a"
         href="/find-job"
@@ -109,7 +137,7 @@ const ViewJob = () => {
               <Box mb={2}>
                 <Typography fontWeight={600}>Alanna Doe</Typography>
                 <Typography fontWeight={700} fontSize="20px" mt={0.5}>
-                  Need a Trustworth Babysitter
+                  {jobPost?.title}
                 </Typography>
               </Box>
 
@@ -128,7 +156,8 @@ const ViewJob = () => {
                   mr={1}
                 >
                   <CheckCircle sx={{ fontSize: 16, mr: 0.5 }} />
-                  98% match · Posted 16 Dec · Job starts 16 Jan
+                  98% match · Posted {jobPost?.postedAt} · Job starts{" "}
+                  {jobPost?.startDate}
                 </Box>
               </Typography>
 
@@ -173,15 +202,7 @@ const ViewJob = () => {
             >
               Job Description
             </Typography>
-            <Typography mb={3}>
-              We are a family of three looking for a responsible and energetic
-              after-school nanny for our 9-year-old child. The ideal candidate
-              should be able to help with homework, engage in fun and
-              educational activities, and oversee after-school routines. Our
-              child enjoys reading, sports, and creative activities, so we’re
-              seeking someone who can nurture these interests and be a positive
-              role model.
-            </Typography>
+            <Typography mb={3}>{jobPost?.description}</Typography>
             <Divider />
             <Typography
               variant="h6"
@@ -298,58 +319,52 @@ const ViewJob = () => {
               Additional requirements
             </Typography>
             <Grid container justifyContent="left" spacing={2} sx={{ mt: 2 }}>
-              {additionalInfoOptions.slice(0, 5).map((item, index) => {
-                const isSelected = selectedAdditionalInfo.some(
-                  (i) => i.id === item.id,
-                );
-                return (
-                  <Grid
-                    item
-                    key={item.id + index}
-                    xs={6}
-                    sm={1.5}
-                    textAlign="center"
-                    sx={{ cursor: "pointer" }}
-                    onClick={() => null}
-                  >
-                    <IconButton
-                      sx={{
-                        width: 48,
-                        height: 48,
-                        border: `1px solid #CDCDCD`,
-                        borderRadius: "50%",
-                        bgcolor: isSelected
-                          ? COLORS.PRIMARY_COLOR
-                          : COLORS.WHITE_COLOR,
-                        color: isSelected
-                          ? COLORS.WHITE_COLOR
-                          : COLORS.BLACK_COLOR,
-                        boxShadow: isSelected ? 3 : 0,
-                        transition: "all 0.3s ease",
-                        "&:hover": {
-                          backgroundColor: COLORS.PRIMARY_COLOR,
-                          color: COLORS.WHITE_COLOR,
-                          "& svg": { filter: "invert(1)" },
-                        },
-                        "& svg": {
-                          filter: isSelected ? "invert(1)" : "invert(0)",
-                        },
-                      }}
+              {additionalInfoOptions
+                .filter((item) =>
+                  jobPost?.serviceTags?.some(
+                    (tag: any) => tag.label === item.label,
+                  ),
+                )
+                .map((item, index) => {
+                  return (
+                    <Grid
+                      item
+                      key={item.id + index}
+                      xs={6}
+                      sm={1.5}
+                      textAlign="center"
+                      sx={{ cursor: "default" }}
                     >
-                      {getIconByLabel(item.label, additionalInfoOptions)}
-                    </IconButton>
+                      <IconButton
+                        sx={{
+                          width: 48,
+                          height: 48,
+                          border: `1px solid #CDCDCD`,
+                          borderRadius: "50%",
+                          bgcolor: COLORS.WHITE_COLOR,
+                          color: COLORS.BLACK_COLOR,
+                          boxShadow: 0,
+                          transition: "all 0.3s ease",
 
-                    <Typography
-                      variant="caption"
-                      fontWeight={500}
-                      display="block"
-                      sx={{ mt: 1 }}
-                    >
-                      {item.label}
-                    </Typography>
-                  </Grid>
-                );
-              })}
+                          "& svg": {
+                            filter: "invert(0)",
+                          },
+                        }}
+                      >
+                        {getIconByLabel(item.label, additionalInfoOptions)}
+                      </IconButton>
+
+                      <Typography
+                        variant="caption"
+                        fontWeight={500}
+                        display="block"
+                        sx={{ mt: 1 }}
+                      >
+                        {item.label}
+                      </Typography>
+                    </Grid>
+                  );
+                })}
             </Grid>
           </Box>
         </Grid>

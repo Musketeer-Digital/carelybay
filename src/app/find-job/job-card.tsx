@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Box,
-  Typography,
-  Avatar,
-  Stack,
-  IconButton,
-  useTheme,
-} from "@mui/material";
+import { Box, Typography, Avatar, Stack, IconButton } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PersonIcon from "@mui/icons-material/Person";
 import { SmokeFreeIcon } from "../components/icons/smoke-free-icon";
@@ -19,8 +12,20 @@ import CustomButton from "../components/CustomButton";
 import { FavIcon } from "../components/icons/fav-icon";
 import { CheckCircle, LocationOn } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
+import { ReactElement, useEffect, useState } from "react";
+import { getJobById } from "@/utils/api/findJob";
+import { FullscreenSpinner } from "../components/CustomSpinner";
+import { additionalInfoOptions } from "../components/profile-options";
 
-const JobCard = () => {
+const iconMap = {
+  smokeFree: SmokeFreeIcon,
+  carDirection: CarDirectionIcon,
+  pet: PetIcon,
+  sick: SickIcon,
+  childCare: ChildCareIcon,
+};
+
+const JobCard = ({ job }: any) => {
   const router = useRouter();
 
   return (
@@ -33,10 +38,6 @@ const JobCard = () => {
         display: "flex",
         flexDirection: "column",
         gap: 2,
-        cursor: "pointer",
-      }}
-      onClick={() => {
-        router.push("/find-job/view-job");
       }}
     >
       <Stack
@@ -45,7 +46,7 @@ const JobCard = () => {
         alignItems="flex-start"
         flexWrap="wrap"
       >
-        <Avatar src="/avatar.jpg" sx={{ width: 48, height: 48 }} />
+        <Avatar src={job.avatar} sx={{ width: 48, height: 48 }} />
 
         <Box sx={{ flexGrow: 1, minWidth: 0 }}>
           <Stack
@@ -55,21 +56,21 @@ const JobCard = () => {
             flexWrap="wrap"
           >
             <Typography fontWeight={600} fontSize="14px">
-              Alanna Doe
+              {job.name}
             </Typography>
             <Typography fontSize="12px" color="text.secondary">
-              Posted 16 Dec · Job starts 16 Jan
+              Posted {job.postedDate} · Job starts {job.startDate}
             </Typography>
           </Stack>
 
           <Typography fontWeight={700} fontSize="16px" sx={{ mt: 0.5 }}>
-            Need a Trustworthy Babysitter
+            {job.title}
           </Typography>
 
           <Stack direction="row" alignItems="center" spacing={0.5} mt={0.5}>
             <LocationOn sx={{ fontSize: 16, color: "#777" }} />
             <Typography fontSize="13px" color="text.secondary">
-              Melbourne · 11km
+              {job.location} · {job.distance}
             </Typography>
           </Stack>
         </Box>
@@ -83,27 +84,26 @@ const JobCard = () => {
       >
         <Stack direction="row" spacing={0.5} alignItems="center">
           <PersonIcon sx={{ fontSize: 16 }} />
-          <Typography fontSize="14px">1 Child</Typography>
+          <Typography fontSize="14px">{job.children} Child</Typography>
         </Stack>
 
         <Stack direction="row" spacing={0.5} alignItems="center">
           <AccessTimeIcon sx={{ fontSize: 16 }} />
-          <Typography fontSize="14px">8h./Day, ASAP</Typography>
+          <Typography fontSize="14px">{job.time}</Typography>
         </Stack>
 
         <Typography fontSize="14px" fontWeight={500}>
-          $32/h
+          {job.rate}
         </Typography>
 
         <Stack direction="row" spacing={0.5} alignItems="center">
           <CheckCircle sx={{ fontSize: 16 }} />
-          <Typography fontSize="14px">98% match</Typography>
+          <Typography fontSize="14px">{job.match} match</Typography>
         </Stack>
       </Stack>
 
       <Typography fontSize="14px" color="text.secondary">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.
+        {job.description}
       </Typography>
 
       <Box sx={{ borderBottom: "1px solid #E5E7EB" }} />
@@ -115,25 +115,27 @@ const JobCard = () => {
         spacing={2}
       >
         <Stack direction="row" spacing={1}>
-          {[
-            SmokeFreeIcon,
-            CarDirectionIcon,
-            PetIcon,
-            SickIcon,
-            ChildCareIcon,
-          ].map((IconComp, index) => (
-            <IconButton
-              key={index}
-              sx={{
-                border: "1px solid #eee",
-                borderRadius: "50%",
-                width: 40,
-                height: 40,
-              }}
-            >
-              <IconComp />
-            </IconButton>
-          ))}
+          {additionalInfoOptions.map((additionalInfo, index) => {
+            const isIncluded = job.serviceTags?.some(
+              (tag: any) => tag.label === additionalInfo.label,
+            );
+
+            if (!isIncluded) return null;
+
+            return (
+              <IconButton
+                key={index}
+                sx={{
+                  border: "1px solid #eee",
+                  borderRadius: "50%",
+                  width: 40,
+                  height: 40,
+                }}
+              >
+                {additionalInfo.icon}
+              </IconButton>
+            );
+          })}
         </Stack>
 
         <Stack
@@ -145,7 +147,13 @@ const JobCard = () => {
             justifyContent: { xs: "space-between", sm: "flex-end" },
           }}
         >
-          <CustomButton variant="outlined" sx={{ flexShrink: 0 }}>
+          <CustomButton
+            variant="outlined"
+            sx={{ flexShrink: 0 }}
+            onClick={() => {
+              router.push("/find-job/view-job?jobId=1233");
+            }}
+          >
             View job and apply
           </CustomButton>
           <IconButton
