@@ -10,7 +10,7 @@ RUN npm install -g pnpm
 COPY package.json pnpm-lock.yaml ./
 
 # Install dependencies using pnpm
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --no-frozen-lockfile
 
 # Copy the rest of the application code
 COPY . .
@@ -26,7 +26,7 @@ RUN pnpm prisma generate
 RUN pnpm build
 
 # Install only production dependencies
-RUN pnpm install --frozen-lockfile --prod
+RUN pnpm install --no-frozen-lockfile --prod
 
 # Stage 2: Run the application (Only copy required files)
 FROM node:18-alpine
