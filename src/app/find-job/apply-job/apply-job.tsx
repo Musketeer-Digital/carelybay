@@ -8,7 +8,7 @@ interface IApplyJob {
   setApplyClicked: Function;
 }
 const ApplyJob = ({ setApplyClicked }: IApplyJob) => {
-  const [message, setMessage] = useState("Type your message...");
+  const [message, setMessage] = useState("");
 
   return (
     <Box mt={4} mb={5}>
@@ -23,6 +23,7 @@ const ApplyJob = ({ setApplyClicked }: IApplyJob) => {
       </Typography>
 
       <TextField
+        placeholder="Type your message..."
         fullWidth
         multiline
         minRows={6}

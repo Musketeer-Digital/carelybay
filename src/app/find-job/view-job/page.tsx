@@ -23,7 +23,7 @@ import { useEffect, useState } from "react";
 import { COLORS } from "@/constants/colors";
 import { getIconByLabel } from "@/utils/utils";
 import { IService } from "@/utils/profileUtils";
-import JobSidebar from "./find-job-sidebar";
+import JobReviews from "./job-reviews";
 import { useMediaQuery, useTheme } from "@mui/material";
 import ApplyJob from "../apply-job/apply-job";
 import DaySelector from "@/app/components/DaySelector";
@@ -167,7 +167,15 @@ const ViewJob = () => {
                     icon: <PaymentIcon fontSize="small" />,
                   },
                 ].map((item, index) => (
-                  <Grid item xs={6} sm={6} md={isMobile ? 3 : 2} key={index}>
+                  <Grid
+                    item
+                    md={isMobile ? 3 : 2}
+                    xs={12}
+                    sm={6}
+                    lg={3}
+                    xl={2}
+                    key={index}
+                  >
                     <InformationCard
                       label={item.label}
                       value={item.value}
@@ -352,7 +360,7 @@ const ViewJob = () => {
           </Box>
         </Grid>
         <Grid item xs={12} md={3}>
-          <JobSidebar />
+          <JobReviews jobId={selectedJob?._id} />
         </Grid>
       </Grid>
     </Box>

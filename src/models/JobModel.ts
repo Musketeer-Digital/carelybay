@@ -12,7 +12,12 @@ export interface JobPostDocument {
   hourlyRate: string;
   matchPercentage: string;
   description: string;
-  serviceTags: string[];
+  serviceTags: [
+    {
+      key: { type: String; required: true };
+      label: { type: String; required: true };
+    },
+  ];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -30,7 +35,12 @@ const JobSchema = new Schema<JobPostDocument>(
     hourlyRate: { type: String, required: true },
     matchPercentage: { type: String, required: true },
     description: { type: String, required: true },
-    serviceTags: [{ type: String, required: true }],
+    serviceTags: [
+      {
+        key: { type: String, required: true },
+        label: { type: String, required: true },
+      },
+    ],
   },
   {
     timestamps: true,
