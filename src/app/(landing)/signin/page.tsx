@@ -25,9 +25,16 @@ interface SignInInputs {
 }
 
 export default function SignIn() {
+  const { data: session, update } = useSession()
+  // const session = useSession()
   const [error, setError] = useState("");
   const router = useRouter();
 
+  // if (session) {
+  //   router.push('/profile')
+  // }
+
+  console.log(session)
   // console.log(process.env)
   const {
     register,
@@ -71,7 +78,7 @@ export default function SignIn() {
         }}
       />
 
-      <form
+      {/* <form
         onSubmit={handleSubmit(onSubmit)}
         style={{
           display: "flex",
@@ -117,8 +124,8 @@ export default function SignIn() {
         <Button variant="primary" type="submit" fullWidth>
           Sign in
         </Button>
-      </form>
-      <Divider>Or</Divider>
+      </form> 
+      <Divider>Or</Divider> */}
       <Stack
         spacing={2}
         sx={{

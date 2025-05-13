@@ -10,54 +10,20 @@ import User from "@/models/User";
 // --- imports for other social provider ---
 import Google from "next-auth/providers/google";
 import Facebook from "next-auth/providers/facebook";
+import { AuthError } from "next-auth";
+import { CredentialsSignin, Account } from "next-auth";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
+  debug: true,
   providers: [
     Google,
     Facebook,
-    // Credentials({
-    //   name: "Credentials",
-    //   id: "credentials",
-    //   credentials: {
-    //     email: { label: "Email", type: "text" },
-    //     password: { label: "Password", type: "password" },
-    //     otp: { label: "OTP", type: "otp" },
-    //   },
-    //   async authorize(credentials) {
-    //     await connectDB();
-
-    //     const { email, password, otp } = credentials;
-
-    //     if (otp) {
-    //       // Find the most recent OTP for the email
-    //       const recentOTP = await OTP.findOne({ email }).sort({
-    //         createdAt: -1,
-    //       });
-
-    //       if (!recentOTP || otp !== recentOTP.otp) {
-    //         throw new Error("Invalid OTP");
-    //       }
-    //     }
-
-    //     const user = await User.findOne({
-    //       email,
-    //     }).select("+password");
-
-    //     if (!user) throw new Error("Wrong Email");
-
-    //     if (password && typeof password === "string") {
-    //       const passwordMatch = await bcrypt.compare(
-    //         password,
-    //         user.password,
-    //       );
-
-    //       if (!passwordMatch) throw new Error("Wrong Password");
-    //     } else {
-    //       throw new Error("password is not a string")
-    //     }
-    //     return user;
-    //   },
-    // }),
   ],
-  adapter: PrismaAdapter(prisma)
+  adapter: PrismaAdapter(prisma),
+  callbacks: {
+    async signIn(params) {
+      console.log(params)
+      return true
+    },
+  }
 });

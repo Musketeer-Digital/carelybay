@@ -4,13 +4,9 @@ generator client {
 
 datasource db {
   provider = "mongodb"
-  url      = env("MONGODB_URL")
+  url      = env("TESTADR_MONGODB_URL")
 }
-
-model users {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-}
-
+ 
 model User {
   id            String          @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
@@ -19,6 +15,10 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  location      String?
+  // Optional for WebAuthn support
+  // Authenticator Authenticator[]
+ 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -44,7 +44,7 @@ model Account {
  
   @@unique([provider, providerAccountId])
 }
-
+ 
 model Session {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   sessionToken String   @unique
@@ -64,15 +64,101 @@ model VerificationToken {
  
   @@unique([identifier, token])
 }
+ 
+// Optional for WebAuthn support
+// model Authenticator {
+//   credentialID         String  @id @map("_id")
+//   userId               String  @db.ObjectId
+//   providerAccountId    String
+//   credentialPublicKey  String
+//   counter              Int
+//   credentialDeviceType String
+//   credentialBackedUp   Boolean
+//   transports           String?
+ 
+//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+//   @@unique([userId, credentialID])
+// }
 
+model otps {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  /// Field referred in an index, but found no data to define the type.
+  createdAt Json?
+  /// Field referred in an index, but found no data to define the type.
+  email     Json?  @unique(map: "email_1")
 
-// model User {
+  @@index([createdAt], map: "createdAt_1")
+}
+
+model userprofilemodels {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  /// Field referred in an index, but found no data to define the type.
+  userId Json?  @unique(map: "userId_1")
+}
+
+model userprofiles {
+  id                         String   @id @default(auto()) @map("_id") @db.ObjectId
+  v                          Int      @map("__v")
+  createdAt                  DateTime @db.Date
+  firstName                  String
+  image                      String
+  lastName                   String
+  location                   String?
+  locationDistancePreference Int?
+  name                       String
+  phone                      String
+  updatedAt                  DateTime @db.Date
+  userId                     String   @unique(map: "userId_1")
+}
+
+model users {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  v         Int      @map("__v")
+  createdAt DateTime @db.Date
+  email     String   @unique(map: "email_1")
+  updatedAt DateTime @db.Date
+}
+
+//======================================================================================//
+
+// prisma db pull --force
+
+// model otps {
+//   id        String @id @default(auto()) @map("_id") @db.ObjectId
+//   /// Field referred in an index, but found no data to define the type.
+//   createdAt Json?
+//   /// Field referred in an index, but found no data to define the type.
+//   email     Json?  @unique(map: "email_1")
+
+//   @@index([createdAt], map: "createdAt_1")
+// }
+
+// model userprofilemodels {
+//   id     String @id @default(auto()) @map("_id") @db.ObjectId
+//   /// Field referred in an index, but found no data to define the type.
+//   userId Json?  @unique(map: "userId_1")
+// }
+
+// model userprofiles {
+//   id                         String   @id @default(auto()) @map("_id") @db.ObjectId
+//   v                          Int      @map("__v")
+//   createdAt                  DateTime @db.Date
+//   firstName                  String
+//   image                      String
+//   lastName                   String
+//   location                   String?
+//   locationDistancePreference Int?
+//   name                       String
+//   phone                      String
+//   updatedAt                  DateTime @db.Date
+//   userId                     String   @unique(map: "userId_1")
+// }
+
+// model users {
 //   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-//   email     String   @unique
-//   password  String
-//   name      String?
-//   phone     String?
-//   image     String?
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
+//   v         Int      @map("__v")
+//   createdAt DateTime @db.Date
+//   email     String   @unique(map: "email_1")
+//   updatedAt DateTime @db.Date
 // }
