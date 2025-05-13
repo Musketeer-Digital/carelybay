@@ -6,7 +6,6 @@ import {
   Stack,
   Avatar,
   Chip,
-  Button,
   IconButton,
   Divider,
   Grid,
@@ -23,7 +22,7 @@ import InformationCard from "@/app/components/InformationCard";
 import { useEffect, useState } from "react";
 import { COLORS } from "@/constants/colors";
 import { getIconByLabel } from "@/utils/utils";
-import { IAdditionalInfo, IService } from "@/utils/profileUtils";
+import { IService } from "@/utils/profileUtils";
 import JobSidebar from "./find-job-sidebar";
 import { useMediaQuery, useTheme } from "@mui/material";
 import ApplyJob from "../apply-job/apply-job";
@@ -34,43 +33,27 @@ import {
   servicesList,
   timeSlots,
 } from "@/app/components/profile-options";
-import { useSearchParams } from "next/navigation";
 import { JobPostDocument } from "@/models/JobModel";
-import { getJobById } from "@/utils/api/findJob";
 import { FullscreenSpinner } from "@/app/components/CustomSpinner";
+import { useJobStore } from "@/store/jobSlice";
 
 const ViewJob = () => {
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [selectedTimeSlots, setSelectedTimeSlots] = useState<string[]>([]);
   const [selectedServices, setSelectedServices] = useState<IService[]>([]);
   const [applyClicked, setApplyClicked] = useState<boolean>(false);
-  const [selectedAdditionalInfo, setSelectedAdditionalInfo] = useState<
-    IAdditionalInfo[]
-  >([]);
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [jobPost, setJobPost] = useState<JobPostDocument | null>(null);
-  const searchParams = useSearchParams();
-  const jobId = searchParams.get("jobId") ?? "";
+  const { selectedJob } = useJobStore();
 
   useEffect(() => {
-    if (!jobId) return;
-    fetchJobPost();
-  }, [jobId]);
-
-  const fetchJobPost = async () => {
-    setIsLoading(true);
-    try {
-      const job = await getJobById(jobId);
-      setJobPost(job);
-    } catch (error) {
-      console.error("Failed to fetch:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    if (!selectedJob) return;
+    setJobPost(selectedJob);
+  }, [selectedJob]);
 
   return (
     <Box sx={{ px: { xs: 2, sm: 3, md: 5 }, py: 3 }}>

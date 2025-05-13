@@ -16,6 +16,7 @@ import { ReactElement, useEffect, useState } from "react";
 import { getJobById } from "@/utils/api/findJob";
 import { FullscreenSpinner } from "../components/CustomSpinner";
 import { additionalInfoOptions } from "../components/profile-options";
+import { useJobStore } from "@/store/jobSlice";
 
 const iconMap = {
   smokeFree: SmokeFreeIcon,
@@ -27,7 +28,12 @@ const iconMap = {
 
 const JobCard = ({ job }: any) => {
   const router = useRouter();
+  const { setSelectedJob } = useJobStore();
 
+  const handleViewJob = () => {
+    setSelectedJob(job);
+    router.push("/find-job/view-job");
+  };
   return (
     <Box
       sx={{
@@ -150,9 +156,7 @@ const JobCard = ({ job }: any) => {
           <CustomButton
             variant="outlined"
             sx={{ flexShrink: 0 }}
-            onClick={() => {
-              router.push("/find-job/view-job?jobId=1233");
-            }}
+            onClick={() => handleViewJob()}
           >
             View job and apply
           </CustomButton>
