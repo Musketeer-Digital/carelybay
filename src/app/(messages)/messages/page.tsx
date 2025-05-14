@@ -379,7 +379,7 @@ export default function Messages() {
                 container
                 sx={{
                   padding: "16px",
-                  border: "1px solid #EAEAEA",
+                  borderTop: "1px solid #EAEAEA",
                   alignItems: "center",
                 }}
               >
