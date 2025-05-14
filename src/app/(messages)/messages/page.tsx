@@ -340,7 +340,6 @@ export default function Messages() {
                   View Application <NorthEast />
                 </Button>
               </Box>
-              <Typography>test</Typography>
             </Box>
 
             <Box
