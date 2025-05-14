@@ -9,7 +9,7 @@ const LandingScreen: React.FC = () => {
   return (
     <Box
       sx={{
-        padding: { xs: 3, sm: 6, md: 10 }, 
+        padding: { xs: 3, sm: 6, md: 10 },
         width: "100%",
         maxWidth: "1400px",
       }}
@@ -20,7 +20,7 @@ const LandingScreen: React.FC = () => {
         alignItems="center"
         justifyContent="space-between"
       >
-        <Grid item xs={12} sm={6} md={6} lg={4}>
+        <Grid size={{ xs: 12, sm: 6, md: 6, lg: 4 }}>
           <Typography variant="h4" sx={{ fontWeight: "bold" }}>
             Your Profile
           </Typography>
@@ -28,20 +28,19 @@ const LandingScreen: React.FC = () => {
             You can easily update or customize your profile anytime in the
             settings section.
           </Typography>
-          <Box display="flex" justifyContent={{ xs: "center", sm: "flex-start" }}>
+          <Box
+            display="flex"
+            justifyContent={{ xs: "center", sm: "flex-start" }}
+          >
             <ProfileHeader />
           </Box>
         </Grid>
 
         <Grid
-          item
-          xs={12}
-          sm={8}
-          md={8}
-          lg={6}
+          size={{ xs: 12, sm: 8, md: 8, lg: 6 }}
           sx={{
             textAlign: { xs: "center", sm: "left" },
-            paddingLeft: { md: 5, sm: 3, xs: 0 }, 
+            paddingLeft: { md: 5, sm: 3, xs: 0 },
           }}
         >
           <Typography variant="h5" sx={{ fontWeight: "bold" }}>

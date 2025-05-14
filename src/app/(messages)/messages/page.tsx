@@ -344,6 +344,17 @@ export default function Messages() {
 
             <Box
               sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <Typography>Contract with you</Typography>
+              <Typography>Total (##)</Typography>
+            </Box>
+
+            <Box
+              sx={{
                 flex: 1,
                 overflow: "auto",
                 maxHeight: "400px",
