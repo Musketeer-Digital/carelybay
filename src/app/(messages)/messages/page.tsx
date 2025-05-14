@@ -9,6 +9,7 @@ import {
   InputAdornment,
   Avatar,
   Button,
+  Grid,
 } from "@mui/material";
 import Image, { StaticImageData } from "next/image";
 import SessionControls from "@/app/components/session-controls";
@@ -343,14 +344,86 @@ export default function Messages() {
             </Box>
 
             <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
+              sx={{ border: "1px solid #EAEAEA", backgroundColor: "#FBFBFB" }}
             >
-              <Typography>Contract with you</Typography>
-              <Typography>Total (##)</Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  paddingY: "8px",
+                  paddingX: "4px",
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontWeight: "700",
+                    fontSize: "16px",
+                    lineHeight: "26px",
+                  }}
+                >
+                  Contract with you
+                </Typography>
+                <Typography
+                  sx={{
+                    fontWeight: "700",
+                    fontSize: "16px",
+                    lineHeight: "26px",
+                  }}
+                >
+                  Total (##)
+                </Typography>
+              </Box>
+
+              <Grid
+                container
+                sx={{
+                  padding: "16px",
+                  border: "1px solid #EAEAEA",
+                  alignItems: "center",
+                }}
+              >
+                <Grid size={5}>
+                  <Typography
+                    sx={{
+                      fontWeight: "600",
+                      fontSize: "15px",
+                      lineHeight: "26px",
+                      textDecoration: "underline",
+                      color: "#171717",
+                    }}
+                  >
+                    Contract name goes here
+                  </Typography>
+                </Grid>
+                <Grid size={4}>
+                  <Typography
+                    sx={{
+                      fontWeight: "400",
+                      fontSize: "14px",
+                      lineHeight: "22px",
+                      color: "#5E5E5E",
+                    }}
+                  >
+                    $##/Hourly
+                  </Typography>
+                </Grid>
+                <Grid size={2}>
+                  <Typography
+                    sx={{
+                      fontWeight: "400",
+                      fontSize: "14px",
+                      lineHeight: "22px",
+                      color: "#5E5E5E",
+                    }}
+                  >
+                    Date
+                  </Typography>
+                </Grid>
+                <Grid size={1}>
+                  <Typography>Status</Typography>
+                </Grid>
+              </Grid>
             </Box>
 
             <Box
