@@ -16,7 +16,7 @@ import { LeftArrowIcon } from "@/app/components/icons/left-arrow-icon";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PersonIcon from "@mui/icons-material/Person";
 import PaymentIcon from "@mui/icons-material/AttachMoney";
-import DurationIcon from "@mui/icons-material/WorkOutline"; // optional custom icon
+import DurationIcon from "@mui/icons-material/WorkOutline";
 import InformationCard from "@/app/components/InformationCard";
 
 import { useEffect, useState } from "react";
@@ -36,12 +36,18 @@ import {
 import { JobPostDocument } from "@/models/JobModel";
 import { FullscreenSpinner } from "@/app/components/CustomSpinner";
 import { useJobStore } from "@/store/jobSlice";
+import { useRouter } from "next/navigation";
+import { checkJobApplication } from "@/utils/api/appliedJob";
+import { useUserStore } from "@/store/userSlice";
+import { showToast } from "@/utils/toast";
 
 const ViewJob = () => {
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [selectedTimeSlots, setSelectedTimeSlots] = useState<string[]>([]);
   const [selectedServices, setSelectedServices] = useState<IService[]>([]);
   const [applyClicked, setApplyClicked] = useState<boolean>(false);
+  const [isApplied, setIsApplied] = useState(false);
+  const [existingMessage, setExistingMessage] = useState("");
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -49,11 +55,32 @@ const ViewJob = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [jobPost, setJobPost] = useState<JobPostDocument | null>(null);
   const { selectedJob } = useJobStore();
+  const { user } = useUserStore();
+  const router = useRouter();
 
   useEffect(() => {
-    if (!selectedJob) return;
+    if (!selectedJob) {
+      router.push("/find-job");
+      return;
+    }
     setJobPost(selectedJob);
-  }, [selectedJob]);
+
+    checkExistingApplication();
+  }, [selectedJob, user?._id, router]);
+
+  const checkExistingApplication = async () => {
+    if (!selectedJob?._id || !user?._id) return;
+
+    try {
+      const response = await checkJobApplication(selectedJob._id, user._id);
+      if (response) {
+        setIsApplied(true);
+        setExistingMessage(response.message);
+      }
+    } catch (error) {
+      showToast("Error checking application status", "error");
+    }
+  };
 
   return (
     <Box sx={{ px: { xs: 2, sm: 3, md: 5 }, py: 3 }}>
@@ -102,7 +129,7 @@ const ViewJob = () => {
                 mb={2}
               >
                 <Avatar src="/avatar.jpg" sx={{ width: 60, height: 60 }} />
-                {!applyClicked && (
+                {!isApplied && (
                   <CustomButton
                     variant="primary"
                     sx={{
@@ -185,7 +212,12 @@ const ViewJob = () => {
                 ))}
               </Grid>
             </Box>
-            {applyClicked && <ApplyJob setApplyClicked={setApplyClicked} />}
+            <ApplyJob
+              setApplyClicked={setApplyClicked}
+              isApplied={isApplied}
+              existingMessage={existingMessage}
+              checkExistingApplication={checkExistingApplication}
+            />
             <Typography
               variant="h6"
               mb={1}

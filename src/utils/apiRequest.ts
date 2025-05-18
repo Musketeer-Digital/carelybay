@@ -1,7 +1,7 @@
 import axios from "axios";
 export const apiRequest = async (
   url: string,
-  method: "GET" | "POST" | "PATCH" | "DELETE",
+  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" = "GET",
   data?: any,
 ) => {
   try {

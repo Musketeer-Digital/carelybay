@@ -18,6 +18,7 @@ export interface JobPostDocument {
       label: { type: String; required: true };
     },
   ];
+  isFavorite: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -41,6 +42,7 @@ const JobSchema = new Schema<JobPostDocument>(
         label: { type: String, required: true },
       },
     ],
+    isFavorite: { type: Boolean, default: false },
   },
   {
     timestamps: true,

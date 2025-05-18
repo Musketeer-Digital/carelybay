@@ -12,11 +12,13 @@ import CustomButton from "../components/CustomButton";
 import { FavIcon } from "../components/icons/fav-icon";
 import { CheckCircle, LocationOn } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
-import { ReactElement, useEffect, useState } from "react";
-import { getJobById } from "@/utils/api/findJob";
-import { FullscreenSpinner } from "../components/CustomSpinner";
+import { useState, useEffect } from "react";
 import { additionalInfoOptions } from "../components/profile-options";
 import { useJobStore } from "@/store/jobSlice";
+import { useUserStore } from "@/store/userSlice";
+import { toggleFavorite, checkFavoriteStatus } from "@/utils/api/favorite";
+import { showToast } from "@/utils/toast";
+import { COLORS } from "@/constants/colors";
 
 const iconMap = {
   smokeFree: SmokeFreeIcon,
@@ -29,9 +31,66 @@ const iconMap = {
 const JobCard = ({ job }: any) => {
   const router = useRouter();
   const { setSelectedJob } = useJobStore();
+  const { user } = useUserStore();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isFavorited, setIsFavorited] = useState(false);
+
+  // Check favorite status when component mounts
+  useEffect(() => {
+    const checkFavorite = async () => {
+      if (!job?._id || !user?._id) return;
+      try {
+        const response = await checkFavoriteStatus(job._id, user._id);
+        setIsFavorited(response.isFavorite);
+      } catch (error) {
+        console.error("Error checking favorite status:", error);
+      }
+    };
+
+    checkFavorite();
+  }, [job?._id, user?._id]);
+
+  const handleFavorite = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!job?._id || !user?._id || isLoading) return;
+
+    setIsLoading(true);
+    const currentState = isFavorited;
+
+    try {
+      console.log("Current favorite state:", currentState);
+
+      const response = await toggleFavorite(job._id, user._id);
+      console.log("Server response:", response);
+
+      if (!response.success) {
+        throw new Error(response.error || "Failed to update favorite status");
+      }
+
+      setIsFavorited(response.isFavorite);
+      showToast(response.message);
+
+      // Update the job in the store if needed
+      if (setSelectedJob) {
+        setSelectedJob({
+          ...job,
+          isFavorite: response.isFavorite,
+        });
+      }
+    } catch (error: any) {
+      console.error("Error in handleFavorite:", error);
+      showToast(error.message || "Failed to update favorite status", "error");
+      setIsFavorited(currentState);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleViewJob = () => {
-    setSelectedJob(job);
+    setSelectedJob({
+      ...job,
+      isFavorite: isFavorited,
+    });
     router.push("/find-job/view-job");
   };
   return (
@@ -161,14 +220,21 @@ const JobCard = ({ job }: any) => {
             View job and apply
           </CustomButton>
           <IconButton
+            onClick={handleFavorite}
+            disabled={isLoading}
             sx={{
               border: "1px solid #00000033",
               borderRadius: "50%",
               width: 40,
               height: 40,
+              backgroundColor: isFavorited ? "#FFF0ED" : "transparent",
+              "&:hover": {
+                backgroundColor: isFavorited ? "#FFE4E0" : "#f5f5f5",
+              },
+              transition: "all 0.2s ease-in-out",
             }}
           >
-            <FavIcon />
+            <FavIcon fill={isFavorited ? COLORS.PRIMARY_COLOR : "none"} />
           </IconButton>
         </Stack>
       </Stack>
