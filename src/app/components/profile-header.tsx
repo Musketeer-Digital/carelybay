@@ -4,8 +4,13 @@ import { Avatar, Card, Box, Typography, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import ChildCareIcon from "@mui/icons-material/ChildCare";
 import { COLORS } from "@/constants/colors";
+import { Session } from "next-auth";
 
-const ProfileHeader = () => {
+interface ProfileHeaderProps {
+  session: Session
+}
+
+const ProfileHeader = ({session}: ProfileHeaderProps) => {
   return (
     <Card
       sx={{
@@ -34,7 +39,7 @@ const ProfileHeader = () => {
         </Avatar>
       </Box>
       <Typography variant="h5" sx={{ fontWeight: "bold", marginTop: 2 }}>
-        Swan
+        {session.user?.name}
       </Typography>
       <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
         <Box

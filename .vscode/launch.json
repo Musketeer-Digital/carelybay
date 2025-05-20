@@ -19,42 +19,58 @@
       "type": "node",
     },
     {
-      "name": "Next.js debug server-side",
-      "port": 9230,
-      "request": "attach",
-      "skipFiles": [
-        "<node_internals>/**",
-        "node_modules/**",
-        "${workspaceFolder}/node_modules/**"
-      ],
-      "type": "node",
-      "sourceMapPathOverrides": {
-        "/turbopack/[project]/*": "${webRoot}/*"
-      }
-    },
-    {
-      "name": "Next.js debug client-side",
+      "name": "Next.js: debug client-side",
       "request": "launch",
       "type": "chrome",
       "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}",
-      "skipFiles": [
-        "<node_internals>/**",
-        "node_modules/**"
-      ],
-      "sourceMapPathOverrides": {
-        "/turbopack/[project]/*": "${webRoot}/*"
-      }
+      "webRoot": "${workspaceFolder}"
     },
-  ],
-  "compounds": [
     {
-      "name": "Next.js: debug full stack",
-      "configurations": [
-        "Next.js debug client-side",
-        "Next.js debug server-side"
+      "name": "Next.js: debug server-side",
+      "request": "launch",
+      "type": "node-terminal",
+      "command": "pnpm run dev",
+      "skipFiles": [
+        "<node_internals>/**"
       ],
-      "stopAll": true
-    }
-  ]
+    }]
+    // {
+    //   "name": "Next.js debug server-side",
+    //   "port": 9230,
+    //   "request": "attach",
+    //   "skipFiles": [
+    //     "<node_internals>/**",
+    //     "node_modules/**",
+    //     "${workspaceFolder}/node_modules/**"
+    //   ],
+    //   "type": "node",
+    //   "sourceMapPathOverrides": {
+    //     "/turbopack/[project]/*": "${webRoot}/*"
+    //   }
+    // },
+  //   {
+  //     "name": "Next.js debug client-side",
+  //     "request": "launch",
+  //     "type": "chrome",
+  //     "url": "http://localhost:3000",
+  //     "webRoot": "${workspaceFolder}",
+  //     "skipFiles": [
+  //       "<node_internals>/**",
+  //       "node_modules/**"
+  //     ],
+  //     "sourceMapPathOverrides": {
+  //       "/turbopack/[project]/*": "${webRoot}/*"
+  //     }
+  //   },
+  // ],
+  // "compounds": [
+  //   {
+  //     "name": "Next.js: debug full stack",
+  //     "configurations": [
+  //       "Next.js debug client-side",
+  //       "Next.js debug server-side"
+  //     ],
+  //     "stopAll": true
+  //   }
+  // ]
 }

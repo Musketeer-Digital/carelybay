@@ -4,8 +4,14 @@ import { Box, Grid, Typography } from "@mui/material";
 import Link from "next/link";
 import ProfileHeader from "../components/profile-header";
 import CustomButton from "../components/CustomButton";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const LandingScreen: React.FC = () => {
+  const { data: session } = useSession()
+  const router = useRouter()
+  if (!session) router.push('/signin')
+  
   return (
     <Box
       sx={{
@@ -29,7 +35,7 @@ const LandingScreen: React.FC = () => {
             settings section.
           </Typography>
           <Box display="flex" justifyContent={{ xs: "center", sm: "flex-start" }}>
-            <ProfileHeader />
+            <ProfileHeader session={session}/>
           </Box>
         </Grid>
 

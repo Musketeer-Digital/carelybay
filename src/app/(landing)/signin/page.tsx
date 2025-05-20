@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -25,14 +26,14 @@ interface SignInInputs {
 }
 
 export default function SignIn() {
-  const { data: session, update } = useSession()
+  const { data: session } = useSession()
   // const session = useSession()
   const [error, setError] = useState("");
   const router = useRouter();
 
-  // if (session) {
-  //   router.push('/profile')
-  // }
+  if (session) {
+    router.push('/profile')
+  }
 
   console.log(session)
   // console.log(process.env)
