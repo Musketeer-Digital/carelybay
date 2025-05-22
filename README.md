@@ -38,9 +38,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ## Troubleshooting
 
 ### ⨯ Error: Cannot find module '.prisma/client/default'
-
-Please run:
-
-```
-npx prisma generate
-```
+Please run: `pnpx prisma generate`
+Fix reference: [https://github.com/prisma/prisma/issues/25833#issuecomment-2703514440]

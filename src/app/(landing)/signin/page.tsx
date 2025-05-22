@@ -26,40 +26,32 @@ interface SignInInputs {
 }
 
 export default function SignIn() {
-  const { data: session } = useSession()
-  // const session = useSession()
   const [error, setError] = useState("");
   const router = useRouter();
 
-  if (session) {
-    router.push('/profile')
-  }
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm<SignInInputs>();
 
-  console.log(session)
-  // console.log(process.env)
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<SignInInputs>();
+  // const onSubmit: SubmitHandler<SignInInputs> = async (data: SignInInputs) => {
+  //   const { email, password } = data;
 
-  const onSubmit: SubmitHandler<SignInInputs> = async (data: SignInInputs) => {
-    const { email, password } = data;
+  //   const res = await signIn("credentials", {
+  //     email: email,
+  //     password: password,
+  //     redirect: false,
+  //   });
 
-    const res = await signIn("credentials", {
-      email: email,
-      password: password,
-      redirect: false,
-    });
+  //   if (res?.error) {
+  //     setError(res.error as string);
+  //   }
 
-    if (res?.error) {
-      setError(res.error as string);
-    }
-
-    if (res?.ok) {
-      return router.push("/profile");
-    }
-  };
+  //   if (res?.ok) {
+  //     return router.push("/profile");
+  //   }
+  // };
 
   return (
     <Container
