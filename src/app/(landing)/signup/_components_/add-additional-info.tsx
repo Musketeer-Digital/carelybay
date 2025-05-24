@@ -6,7 +6,7 @@ import {
   ToggleButton,
   Typography,
 } from "@mui/material";
-import PageHeader from "@/app/components/layout/page-header";
+import PageHeader from "@/components/layout/page-header";
 import {
   SmokeFree,
   DirectionsCar,

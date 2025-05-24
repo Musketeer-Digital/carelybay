@@ -5,8 +5,8 @@ import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import EscalatorWarningIcon from "@mui/icons-material/EscalatorWarning";
 import ElderlyIcon from "@mui/icons-material/Elderly";
 import OtherHousesIcon from "@mui/icons-material/OtherHouses";
-import CardDisplay from "@/app/components/checkbox-card/card-display/card-display";
-import type { DisplayCardInfo } from "@/app/components/checkbox-card/checkbox-card";
+import CardDisplay from "@/components/checkbox-card/card-display/card-display";
+import type { DisplayCardInfo } from "@/components/checkbox-card/checkbox-card";
 
 const cards: DisplayCardInfo[] = [
   {

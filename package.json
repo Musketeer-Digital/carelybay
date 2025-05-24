@@ -24,7 +24,6 @@
     "@mui/material-nextjs": "^7.1.0",
     "@mui/types": "^7.2.21",
     "@prisma/client": "^6.7.0",
-    "@toolpad/core": "^0.15.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/nodemailer": "^6.4.17",
     "bcryptjs": "^2.4.3",

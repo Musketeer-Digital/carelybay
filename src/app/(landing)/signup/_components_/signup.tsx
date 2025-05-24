@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import PageHeader from "@/app/components/layout/page-header";
-import SocialLoginButton from "@/app/components/buttons/social-login-button";
+import PageHeader from "@/components/layout/page-header";
+import SocialLoginButton from "@/components/buttons/social-login-button";
 import { useFormContext, SubmitHandler } from "react-hook-form";
 import { SignUpInputs } from "../page";
 import {
@@ -29,7 +29,7 @@ interface SignUpProps {
 
 export default function SignUp({ nextStep = () => {} }: SignUpProps) {
   const router = useRouter();
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   const [error, setError] = useState<string>();
   const {
     register,

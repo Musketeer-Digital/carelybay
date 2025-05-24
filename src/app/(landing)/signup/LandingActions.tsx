@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Button } from "@mui/material";
-import CustomizedSteppers from "@/app/components/stepper";
-import SignInMessage from "@/app/components/SignInMessage";
+import CustomizedSteppers from "@/components/stepper";
+import SignInMessage from "@/components/SignInMessage";
 
 interface LandingActionsProps {
   nextStep: () => void;

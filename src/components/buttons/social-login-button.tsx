@@ -26,7 +26,7 @@ export default function SocialLoginButton({
     <Button
       {...buttonProps}
       fullWidth
-      onClick={() => signIn(provider)}
+      onClick={() => signIn(provider, { redirectTo: "/" })}
       sx={{
         border: "1px solid rgba(77, 73, 87, 0.6)",
         color: "#000000",

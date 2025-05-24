@@ -1,17 +1,13 @@
 "use client";
 
-import { Box, Grid, Typography } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography"
 import Link from "next/link";
-import ProfileHeader from "../components/profile-header";
-import CustomButton from "../components/CustomButton";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import ProfileHeader from "@/components/profile-header";
+import CustomButton from "@/components/CustomButton";
 
 const LandingScreen: React.FC = () => {
-  const { data: session } = useSession()
-  const router = useRouter()
-  if (!session) router.push('/signin')
-  
   return (
     <Box
       sx={{
@@ -26,7 +22,7 @@ const LandingScreen: React.FC = () => {
         alignItems="center"
         justifyContent="space-between"
       >
-        <Grid item xs={12} sm={6} md={6} lg={4}>
+        <Grid size={{ xs: 12, sm: 6, md: 6, lg: 4 }}>
           <Typography variant="h4" sx={{ fontWeight: "bold" }}>
             Your Profile
           </Typography>
@@ -35,16 +31,12 @@ const LandingScreen: React.FC = () => {
             settings section.
           </Typography>
           <Box display="flex" justifyContent={{ xs: "center", sm: "flex-start" }}>
-            <ProfileHeader session={session}/>
+            <ProfileHeader/>
           </Box>
         </Grid>
 
         <Grid
-          item
-          xs={12}
-          sm={8}
-          md={8}
-          lg={6}
+          size={{ xs: 12, sm: 8, md: 8, lg: 6 }}
           sx={{
             textAlign: { xs: "center", sm: "left" },
             paddingLeft: { md: 5, sm: 3, xs: 0 }, 

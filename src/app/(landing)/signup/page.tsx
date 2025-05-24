@@ -3,10 +3,10 @@ import React from "react";
 import { Box, Container } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import UserNotificationMessage from "./_components_/UserNotificationMessage";
-import SignupMarketingPanel from "@/app/components/signup-marketing-panel/signup-marketing-panel";
-import SignInMessage from "@/app/components/SignInMessage";
+import SignupMarketingPanel from "@/components/signup-marketing-panel/signup-marketing-panel";
+import SignInMessage from "@/components/SignInMessage";
 import SignUp from "./_components_/signup";
-import SessionControls from "@/app/components/session-controls";
+// import SessionControls from "@/components/session-controls";
 
 export type SignUpInputs = {
   email: string;
@@ -63,7 +63,7 @@ export default function SignupPages() {
           <SignInMessage sx={{ mb: { xs: 2, md: 5 } }} />
 
           {/* TODO: Remove after debugging */}
-          <SessionControls />
+          {/* <SessionControls /> */}
         </Container>
       </Box>
 

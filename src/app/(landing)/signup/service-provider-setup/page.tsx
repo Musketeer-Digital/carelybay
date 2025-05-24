@@ -5,7 +5,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useUserStore } from "@/store/userStore";
 import UserNotificationMessage from "../_components_/UserNotificationMessage";
 import LandingActions from "../LandingActions";
-import SignInMessage from "@/app/components/SignInMessage";
+import SignInMessage from "@/components/SignInMessage";
 import { serviceProviderSteps as steps } from "../steps";
 
 export type SignUpInputs = {
