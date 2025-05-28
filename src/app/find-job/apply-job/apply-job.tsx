@@ -15,6 +15,7 @@ interface IApplyJob {
   isApplied: boolean;
   existingMessage: string;
   checkExistingApplication: () => void;
+  applyClicked: boolean;
 }
 
 const ApplyJob = ({
@@ -22,6 +23,7 @@ const ApplyJob = ({
   isApplied,
   existingMessage,
   checkExistingApplication,
+  applyClicked,
 }: IApplyJob) => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -84,42 +86,45 @@ const ApplyJob = ({
     );
   }
 
-  return (
-    <Box mt={4} mb={5}>
-      {loading && <FullscreenSpinner />}
-      <Typography sx={{ fontSize: "24px", fontWeight: 600, mb: 1 }}>
-        Your Message
-      </Typography>
+  if (applyClicked) {
+    return (
+      <Box mt={4} mb={5}>
+        {loading && <FullscreenSpinner />}
+        <Typography sx={{ fontSize: "24px", fontWeight: 600, mb: 1 }}>
+          Your Message
+        </Typography>
 
-      <TextField
-        placeholder="Type your message..."
-        fullWidth
-        multiline
-        minRows={6}
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-      />
+        <TextField
+          placeholder="Type your message..."
+          fullWidth
+          multiline
+          minRows={6}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        />
 
-      <Stack direction="row" spacing={2} mt={2}>
-        <CustomButton
-          variant="primary"
-          sx={{ height: 40, px: 4 }}
-          onClick={handleApply}
-          disabled={loading}
-        >
-          Apply
-        </CustomButton>
-        <CustomButton
-          variant="outlined"
-          sx={{ px: 4, height: 40 }}
-          onClick={() => setApplyClicked(false)}
-          disabled={loading}
-        >
-          Cancel
-        </CustomButton>
-      </Stack>
-    </Box>
-  );
+        <Stack direction="row" spacing={2} mt={2}>
+          <CustomButton
+            variant="primary"
+            sx={{ height: 40, px: 4 }}
+            onClick={handleApply}
+            disabled={loading}
+          >
+            Apply
+          </CustomButton>
+          <CustomButton
+            variant="outlined"
+            sx={{ px: 4, height: 40 }}
+            onClick={() => setApplyClicked(false)}
+            disabled={loading}
+          >
+            Cancel
+          </CustomButton>
+        </Stack>
+      </Box>
+    );
+  }
+  return "";
 };
 
 export default ApplyJob;

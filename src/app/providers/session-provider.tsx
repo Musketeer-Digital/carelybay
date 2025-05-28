@@ -13,7 +13,7 @@ const AuthenticatedLayout = ({ children }: Props) => {
 
   return (
     <>
-      {isAuthenticated && <Header />}
+      {!isAuthenticated && <Header />}
       {children}
     </>
   );

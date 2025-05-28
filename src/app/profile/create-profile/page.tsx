@@ -17,6 +17,7 @@ const Profile = () => {
   const { setUserProfile, clearUserProfile } = useProfileStore();
   const { setUser, clearUser } = useUserStore();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { user } = useUserStore();
 
   useEffect(() => {
     initUserAndProfile();
@@ -31,10 +32,6 @@ const Profile = () => {
     setIsLoading(true);
 
     try {
-      const userId = "67ddd8d4226ba4f84adc4a74";
-      const user = await getUser(userId);
-      setUser(user);
-
       if (!user?._id) return;
 
       const profile = await getProfileByUserId(user._id);

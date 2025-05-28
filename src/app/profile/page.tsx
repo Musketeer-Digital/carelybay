@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Grid, Typography, Box } from "@mui/material";
 import ProfileHeader from "../components/ProfileHeader";
 import CustomButton from "../components/CustomButton";
@@ -8,39 +8,14 @@ import { createProfile, getProfileByUserId } from "@/utils/api/profile";
 import { useProfileStore } from "@/store/profileSlice";
 import { IUserProfile } from "@/models/ProfileModel";
 import { useRouter } from "next/navigation";
-import { getUser } from "@/utils/api/user";
 import { useUserStore } from "@/store/userSlice";
 import { FullscreenSpinner } from "../components/CustomSpinner";
 
 const LandingScreen: React.FC = () => {
   const { setUserProfile, clearUserProfile } = useProfileStore();
-  const { user, setUser, clearUser } = useUserStore();
+  const { user } = useUserStore();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
-
-  useEffect(() => {
-    if (!user || !user._id) {
-      fetchUser();
-    }
-
-    // return () => {
-    //   clearUserProfile();
-    //   clearUser();
-    // };
-  }, [user]);
-
-  const fetchUser = async () => {
-    setIsLoading(true);
-    try {
-      const userId = "67ddd8d4226ba4f84adc4a74";
-      const user = await getUser(userId);
-      setUser(user);
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Failed to fetch user:", error);
-      setIsLoading(false);
-    }
-  };
 
   const onCreateProfile = async () => {
     if (!user?._id) return;

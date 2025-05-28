@@ -212,12 +212,15 @@ const ViewJob = () => {
                 ))}
               </Grid>
             </Box>
-            <ApplyJob
-              setApplyClicked={setApplyClicked}
-              isApplied={isApplied}
-              existingMessage={existingMessage}
-              checkExistingApplication={checkExistingApplication}
-            />
+            {
+              <ApplyJob
+                setApplyClicked={setApplyClicked}
+                isApplied={isApplied}
+                existingMessage={existingMessage}
+                checkExistingApplication={checkExistingApplication}
+                applyClicked={applyClicked}
+              />
+            }
             <Typography
               variant="h6"
               mb={1}
