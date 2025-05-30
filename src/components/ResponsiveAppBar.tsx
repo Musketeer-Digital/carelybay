@@ -20,8 +20,9 @@ import type { Session } from "next-auth";
 
 const pages = ["Products", "Pricing", "Blog"];
 
-interface ResponsiveAppBar {
+interface ResponsiveAppBarProps {
   session: Session | null;
+  // children?: React.ReactNode;
 }
 
 //           {!session ? (
@@ -32,7 +33,7 @@ interface ResponsiveAppBar {
 //             <p>hello {session.user?.name}</p>
 //           )}
 
-function ResponsiveAppBar({ session }: ResponsiveAppBar) {
+export default function ResponsiveAppBar({ session }: ResponsiveAppBarProps) {
   const router = useRouter();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null,
@@ -165,10 +166,7 @@ function ResponsiveAppBar({ session }: ResponsiveAppBar) {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <UserMenu
-                onClose={handleCloseUserMenu}
-                session={session}
-              />
+              <UserMenu onClose={handleCloseUserMenu} session={session} />
             </Menu>
           </Box>
         </Toolbar>
@@ -176,4 +174,3 @@ function ResponsiveAppBar({ session }: ResponsiveAppBar) {
     </AppBar>
   );
 }
-export default ResponsiveAppBar;

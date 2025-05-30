@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import MuiThemeProvider from "@/components/providers/MuiThemeProvider";
 // import { SessionProvider } from "@/components/providers/session-provider";
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
+import ResponsiveAppBar from "@/components/ResponsiveAppBar";
+import { auth } from "@/lib/auth";
 
 import "@fontsource/poppins/300.css";
 import "@fontsource/poppins/400.css";
@@ -20,6 +22,7 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  // const session = await auth();
   return (
     <html lang="en" style={{ height: "100%" }}>
       <body
@@ -27,6 +30,7 @@ export default async function RootLayout({
       >
         <AppRouterCacheProvider>
           <MuiThemeProvider>
+            <ResponsiveAppBar session={await auth()} />
             {children}
           </MuiThemeProvider>
         </AppRouterCacheProvider>
