@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import PageHeader from "@/app/components/layout/page-header";
+import PageHeader from "@/components/layout/page-header";
 import { useFormContext, SubmitHandler } from "react-hook-form";
 import { VerificationInputs } from "./page";
 import { useUserStore } from "@/store/userStore";
@@ -14,7 +14,7 @@ import {
   Container,
   Link,
 } from "@mui/material";
-import { OTPInput } from "@/app/components/forms/otp-input";
+import { OTPInput } from "@/components/forms/otp-input";
 import { signIn, useSession } from "next-auth/react";
 
 export default function VerifyEmailCode() {

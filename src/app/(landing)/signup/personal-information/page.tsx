@@ -3,8 +3,8 @@ import React from "react";
 import { Box, Container } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import UserNotificationMessage from "../_components_/UserNotificationMessage";
-import SignupMarketingPanel from "@/app/components/signup-marketing-panel/signup-marketing-panel";
-import SignInMessage from "@/app/components/SignInMessage";
+import SignupMarketingPanel from "@/components/signup-marketing-panel/signup-marketing-panel";
+import SignInMessage from "@/components/SignInMessage";
 import PersonalInformation, {
   PersonalInformationInputs,
 } from "../_components_/personal-information";

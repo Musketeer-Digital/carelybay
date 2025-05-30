@@ -1,4 +1,4 @@
-import PageHeader from "@/app/components/layout/page-header";
+import PageHeader from "@/components/layout/page-header";
 import { useForm, SubmitHandler } from "react-hook-form";
 import {
   Container,

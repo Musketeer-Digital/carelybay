@@ -4,8 +4,8 @@ import { Box, Container } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import { useUserStore } from "@/store/userStore";
 import UserNotificationMessage from "../_components_/UserNotificationMessage";
-import SignupMarketingPanel from "@/app/components/signup-marketing-panel/signup-marketing-panel";
-import SignInMessage from "@/app/components/SignInMessage";
+import SignupMarketingPanel from "@/components/signup-marketing-panel/signup-marketing-panel";
+import SignInMessage from "@/components/SignInMessage";
 import VerifyEmailCode from "./verify-email-code";
 
 export type VerificationInputs = {
