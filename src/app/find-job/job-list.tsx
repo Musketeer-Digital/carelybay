@@ -4,8 +4,6 @@ import JobCard from "./job-card";
 import { useEffect, useState } from "react";
 import { getJobs } from "@/utils/api/findJob";
 import { FullscreenSpinner } from "../components/CustomSpinner";
-import { Dayjs } from "dayjs";
-import { DateRange } from "@mui/x-date-pickers-pro/models";
 
 interface IJobListProps {
   filters: {

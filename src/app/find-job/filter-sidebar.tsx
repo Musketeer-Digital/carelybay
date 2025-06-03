@@ -3,13 +3,13 @@
 import { Box, Typography, Chip, Stack } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useState, useEffect } from "react";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { StaticDateRangePicker } from "@mui/x-date-pickers-pro/StaticDateRangePicker";
 import CustomButton from "../components/CustomButton";
-import { DateRange } from "@mui/x-date-pickers-pro/models";
-import { Dayjs } from "dayjs";
 import { TextField } from "@mui/material";
+import { DateRange } from "react-date-range";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
+import { format } from "date-fns";
+import { COLORS } from "@/constants/colors";
 
 interface FilterSidebarProps {
   filters: {
@@ -26,21 +26,53 @@ const FilterSidebar = ({ filters, setFilters }: FilterSidebarProps) => {
   const [showCalendar, setShowCalendar] = useState(true);
   const [showServices, setShowServices] = useState(true);
 
-  const [localDateRange, setLocalDateRange] = useState<DateRange<Dayjs>>([
-    null,
-    null,
+  const [localDateRange, setLocalDateRange] = useState([
+    {
+      startDate: null,
+      endDate: null,
+      key: "selection",
+    },
   ]);
   const [localServices, setLocalServices] = useState<string[]>([]);
   const [localLocation, setLocalLocation] = useState(filters.location);
 
   useEffect(() => {
-    setLocalDateRange(filters.dateRange);
+    // If filters.dateRange is in the old format, convert it
+    if (
+      Array.isArray(filters.dateRange) &&
+      filters.dateRange.length === 2 &&
+      (filters.dateRange[0] || filters.dateRange[1])
+    ) {
+      setLocalDateRange([
+        {
+          startDate: filters.dateRange[0],
+          endDate: filters.dateRange[1],
+          key: "selection",
+        },
+      ]);
+    } else if (
+      Array.isArray(filters.dateRange) &&
+      filters.dateRange[0] &&
+      filters.dateRange[0].startDate
+    ) {
+      setLocalDateRange(filters.dateRange);
+    } else {
+      setLocalDateRange([
+        {
+          startDate: null,
+          endDate: null,
+          key: "selection",
+        },
+      ]);
+    }
     setLocalServices(filters.selectedServices);
     setLocalLocation(filters.location);
   }, [filters]);
 
   const currentMonthLabel =
-    localDateRange?.[0]?.format("MMM YYYY") || "Date Range";
+    localDateRange[0].startDate && localDateRange[0].endDate
+      ? `${format(localDateRange[0].startDate, "MMM dd, yyyy")} - ${format(localDateRange[0].endDate, "MMM dd, yyyy")}`
+      : "Date Range";
 
   const toggleService = (service: string) => {
     setLocalServices((prev) =>
@@ -62,7 +94,13 @@ const FilterSidebar = ({ filters, setFilters }: FilterSidebarProps) => {
   const resetFilters = () => {
     const defaultFilters = {
       location: "",
-      dateRange: [null, null] as DateRange<Dayjs>,
+      dateRange: [
+        {
+          startDate: null,
+          endDate: null,
+          key: "selection",
+        },
+      ],
       selectedServices: [],
     };
 
@@ -131,22 +169,15 @@ const FilterSidebar = ({ filters, setFilters }: FilterSidebarProps) => {
 
         {showCalendar && (
           <Box mb={2}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <StaticDateRangePicker
-                displayStaticWrapperAs="desktop"
-                value={localDateRange}
-                onChange={(newValue) => setLocalDateRange(newValue)}
-                calendars={1}
-                slotProps={{
-                  actionBar: { actions: [] },
-                }}
-                sx={{
-                  backgroundColor: "transparent",
-                  border: "1px solid #F1F1F1",
-                  borderRadius: "15px",
-                }}
-              />
-            </LocalizationProvider>
+            <DateRange
+              editableDateInputs={true}
+              onChange={(item: any) => setLocalDateRange([item.selection])}
+              moveRangeOnFirstSelection={false}
+              ranges={localDateRange}
+              rangeColors={[COLORS.PRIMARY_COLOR]}
+              minDate={new Date()}
+              style={{ borderRadius: "15px", border: "1px solid #F1F1F1" }}
+            />
           </Box>
         )}
 
