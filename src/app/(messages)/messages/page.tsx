@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Container,
   Box,
@@ -113,10 +113,15 @@ export default function Messages() {
   const [activeConversation, setActiveConversation] =
     useState<Conversation | null>();
   const [messages, setMessages] = useState<Message[]>([]);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setConversations(conversationSet1);
   }, []);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <Container sx={{ display: "flex", flexDirection: "row" }}>
@@ -530,6 +535,7 @@ export default function Messages() {
                         </Box>
                       </Box>
                     </Box>
+                    <div ref={messagesEndRef} />
                   </Box>
                 );
               })}
