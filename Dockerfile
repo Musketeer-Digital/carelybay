@@ -45,6 +45,7 @@ COPY --from=builder /app/public ./public
 # COPY --from=builder /app/prisma ./prisma # Prisma schema required for migrations
 
 # Set environment variable for MongoDB connection (for runtime)
+ARG MONGODB_URL
 ENV MONGODB_URL=$MONGODB_URL
 
 EXPOSE 3000
