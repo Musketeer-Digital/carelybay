@@ -1,38 +1,28 @@
 "use client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import PageLoader from "./components/page-loader";
 
 export default function Home() {
   // * Check if session exists, if not, redirect to signin
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Wait until session status is determined
     if (status === "loading") {
-      return; // Do nothing while loading
+      return;
     }
+
+    setLoading(false);
 
     if (!session?.user?.email) {
-      router.push("/signin"); // Redirect if not authenticated
+      router.push("/signin");
+    } else {
+      router.push("/profile");
     }
-    // Optional: Redirect authenticated users to a dashboard or profile page
-    // else {
-    //   router.push("/profile");
-    // }
-  }, [session, status, router]); // Add dependencies
+  }, [session, status, router]);
 
-  // Render loading state or placeholder for authenticated users
-  if (status === "loading") {
-    return <div>Loading...</div>; // Or return null;
-  }
-
-  if (session?.user?.email) {
-    // TODO: Replace with actual content for authenticated users or redirect
-    return <div>Welcome, authenticated user!</div>;
-  }
-
-  // Render null or a loading indicator while redirecting unauthenticated users
-  return null;
+  return loading ? <PageLoader /> : null;
 }
