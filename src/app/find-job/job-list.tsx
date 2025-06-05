@@ -4,8 +4,6 @@ import JobCard from "./job-card";
 import { useEffect, useState } from "react";
 import { getJobs } from "@/utils/api/findJob";
 import { FullscreenSpinner } from "../components/CustomSpinner";
-import { Dayjs } from "dayjs";
-import { DateRange } from "@mui/x-date-pickers-pro/models";
 
 interface IJobListProps {
   filters: {
@@ -13,19 +11,23 @@ interface IJobListProps {
     dateRange: any;
     selectedServices: string[];
   };
+  activeTab: number;
 }
 
-const JobList = ({ filters }: IJobListProps) => {
+const JobList = ({ filters, activeTab }: IJobListProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [jobPosts, setJobPosts] = useState([]);
 
   useEffect(() => {
     fetchJobPosts();
-  }, []);
+  }, [filters, activeTab]);
 
   const fetchJobPosts = async () => {
     setIsLoading(true);
     try {
+      let type = "all";
+      if (activeTab === 1) type = "best-match";
+      if (activeTab === 2) type = "saved";
       const jobs = await getJobs();
       setJobPosts(jobs);
       setIsLoading(false);

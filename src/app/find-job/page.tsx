@@ -39,7 +39,7 @@ const FindJob = () => {
         {[0, 1, 2].includes(tab) && (
           <>
             <Box sx={{ flex: 3 }}>
-              <JobList filters={filters} />
+              <JobList filters={filters} activeTab={tab} />
             </Box>
             {!isMobile && (
               <Box sx={{ flex: 1 }}>
