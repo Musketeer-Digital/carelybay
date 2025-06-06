@@ -16,7 +16,6 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 
 # Set environment variable for MongoDB connection (for build stage)
-ARG MONGODB_URL
 ENV MONGODB_URL=$MONGODB_URL
 
 # Generate Prisma Client
