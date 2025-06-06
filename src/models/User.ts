@@ -3,11 +3,7 @@ import mongoose, { Schema, model } from "mongoose";
 export interface UserDocument {
   _id: string;
   email: string;
-  name: string;
-  phone: string;
-  image: string;
-  createdAt: Date;
-  updatedAt: Date;
+  password?: string;
 }
 
 const UserSchema = new Schema<UserDocument>(
@@ -20,6 +16,9 @@ const UserSchema = new Schema<UserDocument>(
         /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
         "Email is invalid",
       ],
+    },
+    password: {
+      type: String,
     },
   },
   {
