@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import ClientProvider from "./providers/client-provider";
 import { SessionProvider } from "./providers/session-provider";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import "@fontsource/poppins/300.css";
 import "@fontsource/poppins/400.css";
@@ -21,13 +23,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" style={{ height: "100%" }}>
-      <body
-        style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
-      >
+    <html lang="en">
+      <body>
         <ClientProvider>
           <SessionProvider>{children}</SessionProvider>
         </ClientProvider>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable={false}
+          pauseOnHover
+          theme="light"
+        />
       </body>
     </html>
   );

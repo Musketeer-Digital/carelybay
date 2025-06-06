@@ -1,47 +1,52 @@
 "use client";
 
-import { Button } from "@mui/material";
-import { ReactNode } from "react";
+import React from "react";
+import { Button, CircularProgress, ButtonProps } from "@mui/material";
+import Link from "next/link";
 
-interface CustomButtonProps {
-  icon?: ReactNode;
-  children: ReactNode;
-  className?: string;
-  type?: "button" | "submit" | "reset";
-  color?:
-    | "primary"
-    | "secondary"
-    | "inherit"
-    | "success"
-    | "error"
-    | "info"
-    | "warning";
-  [key: string]: any;
+interface CustomButtonProps extends ButtonProps {
+  href?: string;
+  loading?: boolean;
 }
 
-const CustomButton = ({
-  icon,
+const CustomButton: React.FC<CustomButtonProps> = ({
   children,
-  className = "",
-  type = "button",
-  color = "primary",
+  href,
+  loading = false,
+  startIcon,
+  endIcon,
+  disabled,
+  size,
+  variant,
+  sx = {},
   ...props
-}: CustomButtonProps) => {
-  return (
+}) => {
+  const buttonContent = (
     <Button
-      variant="contained"
-      color={color}
-      className={`flex items-center gap-2 ${className}`}
-      sx={{
-        color: color === "primary" ? "white !important" : "inherit",
-        "&:hover": {
-          color: color === "primary" ? "white !important" : "inherit",
-        },
-      }}
       {...props}
+      variant={variant ? variant : "primary"}
+      disabled={loading || disabled}
+      size={size ? size : "medium"}
+      startIcon={!loading ? startIcon : null}
+      endIcon={endIcon}
+      sx={{
+        textTransform: "none",
+        px: 3,
+        py: 1.2,
+        borderRadius: 20,
+        ...sx,
+      }}
     >
-      {icon && <span className="mr-2">{icon}</span>} {children}
+      {loading ? <CircularProgress size={24} color="inherit" /> : children}
     </Button>
+  );
+
+  return href ? (
+    <Link href={href} passHref legacyBehavior>
+      {buttonContent}
+    </Link>
+  ) : (
+    buttonContent
   );
 };
 
