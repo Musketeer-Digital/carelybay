@@ -67,7 +67,7 @@ const LandingScreen: React.FC = () => {
         alignItems="center"
         justifyContent="space-between"
       >
-        <Grid item xs={12} sm={6} md={6} lg={4}>
+        <Grid size={{ xs: 12, sm: 6, md: 6, lg: 4 }}>
           <Typography variant="h4" sx={{ fontWeight: "bold" }}>
             Your Profile
           </Typography>
@@ -84,11 +84,7 @@ const LandingScreen: React.FC = () => {
         </Grid>
 
         <Grid
-          item
-          xs={12}
-          sm={8}
-          md={8}
-          lg={6}
+          size={{ xs: 12, sm: 8, md: 8, lg: 6 }}
           sx={{
             textAlign: { xs: "center", sm: "left" },
             ml: { md: 20, sm: 10, xs: 0 },
