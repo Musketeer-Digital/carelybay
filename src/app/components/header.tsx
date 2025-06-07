@@ -154,7 +154,7 @@ const Header = () => {
             }}
           >
             <Typography variant="h6" sx={{ fontSize: 28, fontWeight: "bold" }}>
-              {getFirstLetter(user?.name ?? "S")}
+              {getFirstLetter(user?.email || "S")}
             </Typography>
           </IconButton>
         </Toolbar>

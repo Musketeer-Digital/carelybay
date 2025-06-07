@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
-import UserProfile from "@/models/ProfileModel";
+import UserProfile from "@/models/UserProfile";
 
 export async function PATCH(req: NextRequest) {
   await connectDB();

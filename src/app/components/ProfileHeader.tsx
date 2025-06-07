@@ -6,9 +6,11 @@ import { COLORS } from "@/constants/colors";
 import { ChildCareIcon } from "./icons/childcare-icon";
 import { useUserStore } from "@/store/userSlice";
 import { getFirstLetter } from "@/utils/utils";
+import { useProfileStore } from "@/store/profileSlice";
 
 const ProfileHeader = () => {
   const { user } = useUserStore();
+  const { userProfile } = useProfileStore();
 
   return (
     <Card
@@ -35,11 +37,11 @@ const ProfileHeader = () => {
             color: COLORS.BLACK_COLOR,
           }}
         >
-          {getFirstLetter(user?.name ?? "S")}
+          {getFirstLetter(userProfile?.name ?? "S")}
         </Avatar>
       </Box>
       <Typography variant="h5" sx={{ fontWeight: "bold", marginTop: 2 }}>
-        {user?.name ?? ""}
+        {userProfile?.name ?? ""}
       </Typography>
       <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
         <Box

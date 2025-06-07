@@ -90,10 +90,8 @@ const ServiceAdditionalInfoModal: React.FC<ServiceAdditionalInfoModalProps> = ({
           );
           return (
             <Grid
-              item
               key={item.id + index}
-              xs={6}
-              sm={3}
+              size={{ xs: 6, sm: 3 }}
               textAlign="center"
               sx={{ cursor: "pointer" }}
               onClick={() => {

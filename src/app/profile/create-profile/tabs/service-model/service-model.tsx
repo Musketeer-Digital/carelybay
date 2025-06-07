@@ -96,7 +96,7 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
         {servicesList.map((service) => {
           const isSelected = selectedServices.some((s) => s.id === service.id);
           return (
-            <Grid item key={service.id}>
+            <Grid key={service.id}>
               <Chip
                 label={service.label}
                 icon={
