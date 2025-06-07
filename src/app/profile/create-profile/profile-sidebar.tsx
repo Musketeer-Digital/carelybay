@@ -19,10 +19,12 @@ import { ElderAgeIcon } from "../../components/icons/elderage-icon";
 import { InfoIcon } from "../../components/icons/info-icon";
 import { CheckIcon } from "../../components/icons/check-icon";
 import { useUserStore } from "@/store/userSlice";
+import { useProfileStore } from "@/store/profileSlice";
 import CustomButton from "@/app/components/CustomButton";
 
 const ProfileSidebar = () => {
   const { user } = useUserStore();
+  const { userProfile } = useProfileStore();
 
   const confirmedInfo = [
     { title: "Email address", verified: true },
@@ -49,7 +51,7 @@ const ProfileSidebar = () => {
             color: "black",
           }}
         >
-          {user?.name?.charAt(0) ?? ""}
+          {userProfile?.firstName ? userProfile.firstName.charAt(0) : ""}
         </Avatar>
         <CustomButton
           variant="outlined"
@@ -67,11 +69,9 @@ const ProfileSidebar = () => {
         >
           Add
         </CustomButton>
-        <Typography
-          variant="h4"
-          fontWeight="bold"
-          sx={{ mt: 2 }}
-        >{`${user?.name ?? ""}`}</Typography>
+        <Typography variant="h4" fontWeight="bold" sx={{ mt: 2 }}>
+          {userProfile?.firstName || ""} {userProfile?.lastName || ""}
+        </Typography>
       </Box>
 
       <Card
@@ -160,7 +160,8 @@ const ProfileSidebar = () => {
         }}
       >
         <Typography variant="h6" fontWeight="bold">
-          {`${user?.name}`} confirmed info
+          {userProfile?.firstName || ""} {userProfile?.lastName || ""} confirmed
+          info
         </Typography>
         <List>
           {confirmedInfo.map((item, index) => (

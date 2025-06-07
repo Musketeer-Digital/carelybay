@@ -6,7 +6,7 @@ import CustomButton from "../components/CustomButton";
 import Link from "next/link";
 import { createProfile, getProfileByUserId } from "@/utils/api/profile";
 import { useProfileStore } from "@/store/profileSlice";
-import { IUserProfile } from "@/models/ProfileModel";
+import { UserProfileDocument } from "@/models/UserProfile";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store/userSlice";
 import { FullscreenSpinner } from "../components/CustomSpinner";
@@ -23,13 +23,13 @@ const LandingScreen: React.FC = () => {
     setIsLoading(true);
 
     try {
-      let profile: IUserProfile | null = null;
+      let profile: UserProfileDocument | null = null;
 
       try {
         profile = await getProfileByUserId(user._id);
       } catch (error: any) {
         if (error === "Profile not found") {
-          const initialProfileDetails: Partial<IUserProfile> = {
+          const initialProfileDetails: Partial<UserProfileDocument> = {
             userId: user._id,
             firstName: "New User",
             lastName: "Profile",

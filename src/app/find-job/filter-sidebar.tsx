@@ -28,8 +28,8 @@ const FilterSidebar = ({ filters, setFilters }: FilterSidebarProps) => {
 
   const [localDateRange, setLocalDateRange] = useState([
     {
-      startDate: null,
-      endDate: null,
+      startDate: undefined,
+      endDate: undefined,
       key: "selection",
     },
   ]);
@@ -59,8 +59,8 @@ const FilterSidebar = ({ filters, setFilters }: FilterSidebarProps) => {
     } else {
       setLocalDateRange([
         {
-          startDate: null,
-          endDate: null,
+          startDate: undefined,
+          endDate: undefined,
           key: "selection",
         },
       ]);
@@ -96,8 +96,8 @@ const FilterSidebar = ({ filters, setFilters }: FilterSidebarProps) => {
       location: "",
       dateRange: [
         {
-          startDate: null,
-          endDate: null,
+          startDate: undefined,
+          endDate: undefined,
           key: "selection",
         },
       ],
@@ -168,17 +168,17 @@ const FilterSidebar = ({ filters, setFilters }: FilterSidebarProps) => {
         </Box>
 
         {showCalendar && (
-          <Box mb={2}>
-            <DateRange
-              editableDateInputs={true}
-              onChange={(item: any) => setLocalDateRange([item.selection])}
-              moveRangeOnFirstSelection={false}
-              ranges={localDateRange}
-              rangeColors={[COLORS.PRIMARY_COLOR]}
-              minDate={new Date()}
-              style={{ borderRadius: "15px", border: "1px solid #F1F1F1" }}
-            />
-          </Box>
+          <Box
+            mb={2}
+            component={DateRange}
+            sx={{ borderRadius: "15px", border: "1px solid #F1F1F1" }}
+            editableDateInputs={true}
+            onChange={(item: any) => setLocalDateRange([item.selection])}
+            moveRangeOnFirstSelection={false}
+            ranges={localDateRange}
+            rangeColors={[COLORS.PRIMARY_COLOR]}
+            minDate={new Date()}
+          />
         )}
 
         {/* Services */}

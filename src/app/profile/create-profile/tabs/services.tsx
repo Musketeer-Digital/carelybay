@@ -349,8 +349,7 @@ const Services = () => {
         {storedAdditionalInfo.length > 0 && (
           <Grid container spacing={3} alignItems="center" sx={{ mt: 2 }}>
             {storedAdditionalInfo.map(({ id, label, icon }) => (
-              <Grid
-                item
+              <Box
                 key={id}
                 sx={{
                   display: "flex",
@@ -389,7 +388,7 @@ const Services = () => {
                 >
                   {label}
                 </Typography>
-              </Grid>
+              </Box>
             ))}
           </Grid>
         )}

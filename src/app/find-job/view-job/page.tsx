@@ -105,9 +105,7 @@ const ViewJob = () => {
 
       <Grid container spacing={2}>
         <Grid
-          item
-          xs={12}
-          md={9}
+          size={{ xs: 12, md: 9 }}
           sx={{
             borderRight: { md: "1px solid #E0E0E0" },
           }}
@@ -171,7 +169,7 @@ const ViewJob = () => {
                 </Box>
               </Typography>
 
-              <Grid container spacing={2} mt={2}>
+              <Grid container spacing={2} sx={{ mt: 2 }}>
                 {[
                   {
                     label: "Number of kids:",
@@ -195,12 +193,13 @@ const ViewJob = () => {
                   },
                 ].map((item, index) => (
                   <Grid
-                    item
-                    md={isMobile ? 3 : 2}
-                    xs={12}
-                    sm={6}
-                    lg={3}
-                    xl={2}
+                    size={{
+                      xs: 12,
+                      sm: 6,
+                      md: isMobile ? 3 : 2,
+                      lg: 3,
+                      xl: 2,
+                    }}
                     key={index}
                   >
                     <InformationCard
@@ -223,18 +222,15 @@ const ViewJob = () => {
             }
             <Typography
               variant="h6"
-              mb={1}
               sx={{ fontSize: "24px", fontWeight: 600, mb: 1 }}
             >
               Job Description
             </Typography>
-            <Typography mb={3}>{jobPost?.description}</Typography>
+            <Typography sx={{ mb: 3 }}>{jobPost?.description}</Typography>
             <Divider />
             <Typography
               variant="h6"
-              mb={2}
-              mt={4}
-              sx={{ fontSize: "24px", fontWeight: 600, mb: 1 }}
+              sx={{ fontSize: "24px", fontWeight: 600, mb: 1, mt: 4 }}
             >
               Availability
             </Typography>
@@ -254,20 +250,18 @@ const ViewJob = () => {
             <Divider />
             <Typography
               variant="h6"
-              mb={2}
-              mt={4}
-              sx={{ fontSize: "24px", fontWeight: 600, mb: 1 }}
+              sx={{ fontSize: "24px", fontWeight: 600, mb: 1, mt: 4 }}
             >
               Must have skills
             </Typography>
-            <Stack direction="row" spacing={1} flexWrap="wrap" mb={3}>
+            <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 3 }}>
               <Grid container spacing={1}>
                 {servicesList.map((service) => {
                   const isSelected = selectedServices.some(
                     (s) => s.id === service.id,
                   );
                   return (
-                    <Grid item key={service.id}>
+                    <Grid key={service.id}>
                       <Chip
                         label={service.label}
                         icon={
@@ -338,9 +332,7 @@ const ViewJob = () => {
             <Divider />
             <Typography
               variant="h6"
-              mb={1}
-              mt={4}
-              sx={{ fontSize: "24px", fontWeight: 600, mb: 1 }}
+              sx={{ fontSize: "24px", fontWeight: 600, mb: 1, mt: 4 }}
             >
               Additional requirements
             </Typography>
@@ -354,10 +346,8 @@ const ViewJob = () => {
                 .map((item, index) => {
                   return (
                     <Grid
-                      item
                       key={item.id + index}
-                      xs={6}
-                      sm={1.5}
+                      size={{ xs: 6, sm: 1.5 }}
                       textAlign="center"
                       sx={{ cursor: "default" }}
                     >
@@ -394,7 +384,7 @@ const ViewJob = () => {
             </Grid>
           </Box>
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid size={{ xs: 12, md: 3 }}>
           <JobReviews jobId={selectedJob?._id} />
         </Grid>
       </Grid>
